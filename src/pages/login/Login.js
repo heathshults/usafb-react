@@ -3,15 +3,17 @@ import $ from 'jquery';
 
 import Container from './components/container/Container';
 import Header from './components/header/Header';
-import FormContainer from './components/form/Form';
+import Form from './components/form/Form';
 import FormImage from './components/form/components/logo/Logo';
+import InputGroup from './components/form/components/input-group/InputGroup';
+import EmailInput from './components/form/components/input-group/components/email/Email';
 
 export default class Login extends Component {
   constructor() {
     super();
 
     this.state = {
-      username: '',
+      email: '',
       password: '',
     };
   }
@@ -25,15 +27,24 @@ export default class Login extends Component {
     $('#si-form').fadeIn(500);
   }
 
+  updateEmail = () => {
+    console.log('testing');
+  }
+
   render() {
     return (
       <Container>
         <Header />
-
-        <FormContainer>
+        <Form>
           <FormImage />
-          <div />
-        </FormContainer>
+          <InputGroup>
+            <EmailInput
+              value={this.state.email}
+              onChange={this.updateEmail}
+            />
+            <div />
+          </InputGroup>
+        </Form>
       </Container>
     );
   }

@@ -9,7 +9,6 @@ import createHistory from 'history/createBrowserHistory';
 import store from 'services/redux/store';
 import Login from 'pages/login/Login';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 const history = createHistory();

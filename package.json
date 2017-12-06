@@ -15,6 +15,7 @@
     "redux-saga": "^0.16.0"
   },
   "devDependencies": {
+    "babel-eslint": "7.2.3",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-config-react-app": "^1.0.4",
@@ -22,11 +23,17 @@
     "eslint-plugin-flowtype": "2.33.0",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
-    "eslint-plugin-react": "7.0.1"
+    "eslint-plugin-react": "7.0.1",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.1.2"
   },
   "scripts": {
-    "start": "NODE_PATH=./src react-scripts start",
-    "build": "NODE_PATH=./src react-scripts build",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "NODE_PATH=./src npm-run-all -p watch-css start-js",
+    "build-js": "react-scripts build",
+    "build": "NODE_PATH=./src npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

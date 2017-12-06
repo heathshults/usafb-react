@@ -3,6 +3,7 @@ import $ from 'jquery';
 
 import Container from './components/container/Container';
 import Header from './components/header/Header';
+import FormContainer from './components/form/Form';
 
 export default class Login extends Component {
   constructor() {
@@ -28,7 +29,10 @@ export default class Login extends Component {
       <Container>
         <Header />
 
-        <div />
+        <FormContainer>
+          <div />
+          <div />
+        </FormContainer>
       </Container>
     );
   }

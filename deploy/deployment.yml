@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: npdb-usafb-ui
+  namespace: staging
+  labels:
+    app: npdb-usafb-ui
+    track: stable
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: npdb-usafb-ui
+        track: stable
+    spec:
+      containers:
+      - name: npdb-usafb-ui
+        image:
+          registry.gitlab.com/bluestarsports/npdb-usafb-ui:latest
+        imagePullPolicy: Always
+        env:
+        - name: FOR_GODS_SAKE_PLEASE_REDEPLOY
+          value: 'THIS_STRING_IS_REPLACED_DURING_BUILD'
+        envFrom:
+          - secretRef:
+              name: npdb-usafb-ui-secrets
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: mikeregsecret

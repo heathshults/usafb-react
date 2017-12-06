@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Container from './components/container/Container';
+import Header from './components/header/Header';
 
 export default class Login extends Component {
   constructor() {
@@ -9,15 +10,13 @@ export default class Login extends Component {
     this.state = {
       username: '',
       password: '',
-    }
+    };
   }
 
   render() {
     return (
       <Container>
-        <div>
-          Login
-        </div>
+        <Header />
 
         <div />
       </Container>

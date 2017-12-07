@@ -1,4 +1,4 @@
-.login-page__email-label {
+.login-page__input-label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -10,7 +10,7 @@
   border: 0;
 }
 
-.login-page__email-label-focusable:active, .login-page__email-label-focusable:focus {
+.login-page__input-label-focusable:active, .login-page__input-label-focusable:focus {
   position: static;
   width: auto;
   height: auto;

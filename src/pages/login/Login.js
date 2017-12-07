@@ -7,6 +7,7 @@ import Form from './components/form/Form';
 import FormImage from './components/logo/Logo';
 import InputGroup from './components/input-group/InputGroup';
 import Input from './components/input/Input';
+import RememberMe from './components/remember-me/RememberMe';
 
 export default class Login extends Component {
   constructor() {
@@ -56,6 +57,7 @@ export default class Login extends Component {
               onChange={this.updatePassword}
             />
           </InputGroup>
+          <RememberMe />
         </Form>
       </Container>
     );

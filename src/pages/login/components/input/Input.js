@@ -8,7 +8,7 @@ import './input.css';
 const input = props => (
   <div className="row form-group">
     <div className="col-md-12 input-group">
-      <label htmlFor="txtEmail" className="login-page__email-label sr-only">
+      <label htmlFor="txtEmail" className="login-page__input-label sr-only">
         {props.placeholder}
       </label>
       <div className="col input-wrapper">

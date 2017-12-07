@@ -8,6 +8,7 @@ import FormImage from './components/logo/Logo';
 import InputGroup from './components/input-group/InputGroup';
 import Input from './components/input/Input';
 import RememberMe from './components/remember-me/RememberMe';
+import LoginButton from './components/login-button/LoginButton';
 
 export default class Login extends Component {
   constructor() {
@@ -36,6 +37,8 @@ export default class Login extends Component {
     password: event.target.value
   });
 
+  login = () => console.log("logging in");
+
   render() {
     return (
       <Container>
@@ -58,6 +61,9 @@ export default class Login extends Component {
             />
           </InputGroup>
           <RememberMe />
+          <LoginButton
+            onClick={this.login}
+          />
         </Form>
       </Container>
     );

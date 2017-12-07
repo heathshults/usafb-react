@@ -4,9 +4,9 @@ import $ from 'jquery';
 import Container from './components/container/Container';
 import Header from './components/header/Header';
 import Form from './components/form/Form';
-import FormImage from './components/form/components/logo/Logo';
+import FormImage from './components/logo/Logo';
 import InputGroup from './components/input-group/InputGroup';
-import EmailInput from './components/email/Email';
+import Input from './components/input/Input';
 
 export default class Login extends Component {
   constructor() {
@@ -31,6 +31,10 @@ export default class Login extends Component {
     email: event.target.value
   });
 
+  updatePassword = event => this.setState({
+    password: event.target.value
+  });
+
   render() {
     return (
       <Container>
@@ -38,11 +42,19 @@ export default class Login extends Component {
         <Form>
           <FormImage />
           <InputGroup>
-            <EmailInput
+            <Input
+              icon="envelope"
+              placeholder="Email"
               value={this.state.email}
               onChange={this.updateEmail}
             />
-            <div />
+            <Input
+              icon="lock"
+              placeholder="Password"
+              inputType="password"
+              value={this.state.password}
+              onChange={this.updatePassword}
+            />
           </InputGroup>
         </Form>
       </Container>

@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 
 import FontAwesome from 'react-fontawesome';
 
-import './email.css';
+import './input.css';
 
-const emailInput = props => (
+const input = props => (
   <div className="row form-group">
     <div className="col-md-12 input-group">
       <label htmlFor="txtEmail" className="login-page__email-label sr-only">
-        Email
+        {props.placeholder}
       </label>
       <div className="col input-wrapper">
-        <FontAwesome name="envelope" className="fa-layer" />
+        <FontAwesome name={props.icon} className="fa-layer" />
         <input
-          type="text"
+          type={props.inputType}
           className="form-control form-control-theme"
           id="txtEmail"
-          placeholder="Email"
+          placeholder={props.placeholder}
           value={props.value}
           onChange={props.onChange}
         />
@@ -26,9 +26,16 @@ const emailInput = props => (
   </div>
 );
 
-emailInput.propTypes = {
+input.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  icon: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  inputType: PropTypes.string
 };
 
-export default emailInput;
+input.defaultProps = {
+  inputType: 'text'
+};
+
+export default input;

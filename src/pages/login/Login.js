@@ -45,7 +45,9 @@ export default class Login extends Component {
         <Header />
         <Form>
           <FormImage />
-          <InputGroup>
+          <InputGroup
+            action={this.login}
+          >
             <Input
               icon="envelope"
               placeholder="Email"

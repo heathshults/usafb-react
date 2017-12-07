@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './form.css';
+
 const form = props => (
   <div className="col-md-4">
     <div id="si-form" className="width-si-form" style={{ display: 'none' }}>

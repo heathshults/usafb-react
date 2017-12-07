@@ -5,8 +5,8 @@ import Container from './components/container/Container';
 import Header from './components/header/Header';
 import Form from './components/form/Form';
 import FormImage from './components/form/components/logo/Logo';
-import InputGroup from './components/form/components/input-group/InputGroup';
-import EmailInput from './components/form/components/input-group/components/email/Email';
+import InputGroup from './components/input-group/InputGroup';
+import EmailInput from './components/email/Email';
 
 export default class Login extends Component {
   constructor() {

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import FontAwesome from 'react-fontawesome';
+
 import './email.css';
 
 const emailInput = props => (
@@ -10,7 +12,7 @@ const emailInput = props => (
         Email
       </label>
       <div className="col input-wrapper">
-        <i className="fa fa-envelope fa-layer" />
+        <FontAwesome name="envelope" />
         <input
           type="text"
           className="form-control form-control-theme"

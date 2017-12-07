@@ -25,3 +25,11 @@
   top: .4375rem;
   left: .25rem;
 }
+
+.fa-layer {
+  display: flex;
+  z-index: 500;
+  margin: 0 6px;
+  color: #868e96;
+  font-size: 1.25rem;
+}

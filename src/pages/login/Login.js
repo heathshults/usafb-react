@@ -27,9 +27,9 @@ export default class Login extends Component {
     $('#si-form').fadeIn(500);
   }
 
-  updateEmail = () => {
-    console.log('testing');
-  }
+  updateEmail = event => this.setState({
+    email: event.target.value
+  });
 
   render() {
     return (

@@ -8,11 +8,11 @@ import './email.css';
 const emailInput = props => (
   <div className="row form-group">
     <div className="col-md-12 input-group">
-      <label htmlFor="txtEmail" className="login-page__email-label">
+      <label htmlFor="txtEmail" className="login-page__email-label sr-only">
         Email
       </label>
       <div className="col input-wrapper">
-        <FontAwesome name="envelope" />
+        <FontAwesome name="envelope" className="fa-layer" />
         <input
           type="text"
           className="form-control form-control-theme"

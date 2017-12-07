@@ -1,4 +1,20 @@
 .input-group__form-container {
   margin-top: 1.875rem;
   color: #fff;
+
+  & input[type="password"], input[type="text"] {
+    border: 0;
+    margin-left: .625rem;
+    width: 100%;
+    height: 36px;
+
+    // &:focus {
+    //   outline: none !important;
+    //   border: none !important;
+    // }
+  }
+
+  .form-control:focus {
+    box-shadow: none !important;
+  }
 }

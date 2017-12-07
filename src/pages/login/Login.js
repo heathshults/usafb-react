@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import $ from 'jquery';
+
+import { LOGIN } from './dux/actions';
 
 import Container from './components/container/Container';
 import Header from './components/header/Header';
@@ -10,7 +14,7 @@ import Input from './components/input/Input';
 import RememberMe from './components/remember-me/RememberMe';
 import LoginButton from './components/login-button/LoginButton';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
@@ -37,7 +41,7 @@ export default class Login extends Component {
     password: event.target.value
   });
 
-  login = () => console.log("logging in");
+  login = () => this.props.login(this.state.email, this.state.password);
 
   render() {
     return (
@@ -71,3 +75,16 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired
+};
+
+const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
+const mapDispatchToProps = dispatch => (
+  {
+    login: (email, password) => dispatch({ type: LOGIN, payload: { email, password } })
+  }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

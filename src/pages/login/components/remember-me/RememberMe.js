@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-const rememberMe = props => (
+const rememberMe = () => (
   <div className="row form-group d-inline-flex">
     <div className="col-md-12 input-group justify-content-center">
       <label className="form-check-label">

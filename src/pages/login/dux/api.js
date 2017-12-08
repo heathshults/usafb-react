@@ -1,13 +1,16 @@
-const login = data =>
+import * as headers from 'services/api/headers';
+
+export const login = data =>
   fetch(`${process.env.REACT_APP_API_URL}/login`, {
     method: 'POST',
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
+    headers: headers.postHeader(),
     body: JSON.stringify({
       email: data.email,
       password: data.password
     })
   });
 
-export default login;
+export const getUserData = () =>
+  fetch(`${process.env.REACT_APP_API_URL}/me`, {
+    headers: headers.authorizedHeader()
+  });

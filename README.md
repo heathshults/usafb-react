@@ -53,6 +53,8 @@ directory/name structure that mimics the urls they are mounted to.
 
 - FileName.js
 - fileName.scss
+- fileName.reducer.js
+- fileName.duck.js
 
 # Redux Modules
 

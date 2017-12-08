@@ -82,6 +82,12 @@ PascalCase
 
 camelCase
 
+## Rational & Paradigms
+
+All main views will be **pages**. Within each page will live a **components** folder where all singly used components will be. If a component is used throughout the app, it should live within the **shared-components** folder.
+
+All other page related files will similary live in the page's folder under the appropriate folder.
+
 ## Structure
 
 All modules may contain any combination of the following files:

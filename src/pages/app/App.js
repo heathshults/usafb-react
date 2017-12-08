@@ -8,6 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 
 import store from 'services/redux/store';
 import Login from 'pages/login/Login';
+import Players from 'pages/players/Players';
 
 import './app.css';
 
@@ -18,6 +19,7 @@ const app = () => (
     <Router history={history}>
       <Switch>
         <Route exact path="/" component={Login} />
+        <Route exact path="/players" component={Players} />
       </Switch>
     </Router>
   </Provider>

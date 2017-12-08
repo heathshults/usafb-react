@@ -42,7 +42,11 @@ class Login extends Component {
     password: event.target.value
   });
 
-  login = () => this.props.login(this.state.email, this.state.password);
+  login = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.login(this.state.email, this.state.password);
+  }
 
   render() {
     return (
@@ -69,11 +73,11 @@ class Login extends Component {
               value={this.state.password}
               onChange={this.updatePassword}
             />
+            <RememberMe />
+            <LoginButton
+              onClick={this.login}
+            />
           </InputGroup>
-          <RememberMe />
-          <LoginButton
-            onClick={this.login}
-          />
         </Form>
       </Container>
     );

@@ -83,7 +83,7 @@ Login.propTypes = {
 const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
 const mapDispatchToProps = dispatch => (
   {
-    login: (email, password) => dispatch({ type: LOGIN, payload: { email, password } })
+    login: (email, password) => dispatch({ type: LOGIN, data: { email, password } })
   }
 );
 

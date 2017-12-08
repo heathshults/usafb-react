@@ -19,7 +19,7 @@ function* loginSaga(data) {
       yield call(loginSuccess, tokenData);
     } else {
       const errorData = yield response.json();
-      yield put({ type: actions.LOGIN_ERROR, payload: errorData[0].error });
+      yield put({ type: actions.LOGIN_ERROR, payload: errorData.errors[0].error });
     }
   } catch (error) {
     const errorMessage = `An error occurred when we tried to log you in.

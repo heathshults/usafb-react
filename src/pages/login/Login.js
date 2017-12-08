@@ -9,6 +9,7 @@ import Container from './components/container/Container';
 import Header from './components/header/Header';
 import Form from './components/form/Form';
 import FormImage from './components/logo/Logo';
+import ErrorMessage from './components/error/Error';
 import InputGroup from './components/input-group/InputGroup';
 import Input from './components/input/Input';
 import RememberMe from './components/remember-me/RememberMe';
@@ -20,7 +21,7 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: '',
+      password: ''
     };
   }
 
@@ -49,6 +50,9 @@ class Login extends Component {
         <Header />
         <Form>
           <FormImage />
+          <ErrorMessage
+            message={this.props.loginReducer.loginError}
+          />
           <InputGroup
             action={this.login}
           >
@@ -77,7 +81,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  loginReducer: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ loginReducer }) => ({ loginReducer });

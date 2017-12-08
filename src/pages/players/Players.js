@@ -19,6 +19,7 @@ class Players extends Component {
         <DataHeader
           userType="players"
           numberOfUsers={1000}
+          importModalID="player-import-modal"
         />
         <ImportModal />
       </Container>

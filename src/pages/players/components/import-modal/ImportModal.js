@@ -1,7 +1,7 @@
 import React from 'react';
 
 const importModal = () => (
-  <div className="modal fade" id="importer" tabIndex="-1" role="dialog" aria-labelledby="#modal-title-l" aria-hidden="true">
+  <div className="modal fade" id="player-import-modal" tabIndex="-1" role="dialog" aria-labelledby="#modal-title-l" aria-hidden="true">
     <div className="modal-dialog" role="document">
       <div className="modal-content">
         <div className="modal-header text-center">

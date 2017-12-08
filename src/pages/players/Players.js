@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Container from 'components/containers/Container';
 import DataHeader from 'components/data-header/DataHeader';
+import ImportModal from './components/import-modal/ImportModal';
 
 class Players extends Component {
   constructor() {
@@ -19,6 +20,7 @@ class Players extends Component {
           userType="players"
           numberOfUsers={1000}
         />
+        <ImportModal />
         Players page
       </Container>
     );

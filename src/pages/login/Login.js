@@ -54,7 +54,7 @@ class Login extends Component {
             message={this.props.loginReducer.loginError}
           />
           <InputGroup
-            action={this.login}
+            login={this.login}
           >
             <Input
               icon="envelope"

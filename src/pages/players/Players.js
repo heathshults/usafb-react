@@ -21,7 +21,6 @@ class Players extends Component {
           numberOfUsers={1000}
         />
         <ImportModal />
-        Players page
       </Container>
     );
   }

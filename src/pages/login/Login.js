@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import $ from 'jquery';
+import $ from 'jquery'; // Already imported from index.html. Do we need this? [KK]
 
 import { LOGIN } from './dux/actions';
 

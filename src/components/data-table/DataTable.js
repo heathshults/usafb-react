@@ -14,7 +14,10 @@ const getNoDataText = loading => (loading ? <Loading /> : 'No data available');
 
 const dataTable = props => (
   <div className="row">
-    <BootstrapTable className="col-md-12" options={{ noDataText: getNoDataText(props.loading) }}>
+    <BootstrapTable
+      className="col-md-12"
+      options={{ noDataText: getNoDataText(props.loading) }}
+    >
       {props.headers.map(header => (
         <TableHeaderColumn
           dataField={header.dataField}

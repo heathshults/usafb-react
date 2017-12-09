@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 
 import Container from 'components/containers/Container';
 import DataHeader from 'components/data-header/DataHeader';
+import DataTable from 'components/data-table/DataTable';
 import ImportModal from './components/import-modal/ImportModal';
+
+import TableSettings from './models/table-settings';
 
 class Players extends Component {
   constructor() {
     super();
+
+    this.tableSettings = new TableSettings();
 
     this.state = {
 
@@ -16,12 +21,15 @@ class Players extends Component {
   render() {
     return (
       <Container>
+        <ImportModal />
         <DataHeader
           userType="players"
           numberOfUsers={1000}
           importModalID="player-import-modal"
         />
-        <ImportModal />
+        <DataTable
+          headers={this.tableSettings.getHeaders()}
+        />
       </Container>
     );
   }

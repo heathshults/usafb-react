@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
 import Upload from './components/upload/Upload';
@@ -9,7 +9,7 @@ import Upload from './components/upload/Upload';
 // so we had to bring it in here.
 import './dropzone.css';
 
-const dropzone = props => (
+const dropzone = () => (
   <Dropzone
     className="usafb__dropzone pt-0"
     children={Upload} // eslint-disable-line

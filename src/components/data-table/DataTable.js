@@ -9,20 +9,22 @@ const headerStyle = {
 };
 
 const dataTable = props => (
-  <BootstrapTable options={{ noDataText: 'This is custom text for empty data' }}>
-    {props.headers.map(header => (
-      <TableHeaderColumn
-        dataField={header.dataField}
-        isKey={header.isKey}
-        key={uuidv4()}
-        dataSort={header.dataSort}
-        className="usafb__table-header"
-        thStyle={headerStyle}
-      >
-        {header.label.toUpperCase()}
-      </TableHeaderColumn>
-    ))}
-  </BootstrapTable>
+  <div className="row">
+    <BootstrapTable className="col-md-12" options={{ noDataText: 'This is custom text for empty data' }}>
+      {props.headers.map(header => (
+        <TableHeaderColumn
+          dataField={header.dataField}
+          isKey={header.isKey}
+          key={uuidv4()}
+          dataSort={header.dataSort}
+          className="usafb__table-header"
+          thStyle={headerStyle}
+        >
+          {header.label.toUpperCase()}
+        </TableHeaderColumn>
+      ))}
+    </BootstrapTable>
+  </div>
 );
 
 dataTable.propTypes = {

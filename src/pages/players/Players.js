@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Container from 'components/containers/Container';
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
+import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from './components/import-modal/ImportModal';
 
 import TableSettings from './models/table-settings';
@@ -27,6 +28,7 @@ class Players extends Component {
           numberOfUsers={1000}
           importModalID="player-import-modal"
         />
+        <DataTableFilter />
         <DataTable
           headers={this.tableSettings.getHeaders()}
         />

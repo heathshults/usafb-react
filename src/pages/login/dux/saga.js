@@ -42,7 +42,7 @@ function* getUserInfoSaga() {
   const response = yield call(getUserData);
   if (response.ok) {
     const userInfo = yield response.json();
-    window.lcoalStorage.setItem('profile_info', JSON.stringify(userInfo));
+    window.localStorage.setItem('profile_info', JSON.stringify(userInfo));
   } else {
     const errorData = yield response.json();
     yield put({ type: actions.LOGIN_ERROR, payload: errorData[0].error });

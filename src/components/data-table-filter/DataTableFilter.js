@@ -7,10 +7,12 @@ import Refresh from './components/refresh/Refresh';
 import './data-table-filter.css';
 
 const dataTableFilter = () => (
-  <div className="btn-group data-table-filter">
-    <Filters />
-    <AdvancedSearch />
-    <Refresh />
+  <div className="row">
+    <div className="col-md-12 btn-group data-table-filter">
+      <Filters />
+      <AdvancedSearch />
+      <Refresh />
+    </div>
   </div>
 );
 

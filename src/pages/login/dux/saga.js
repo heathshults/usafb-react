@@ -28,18 +28,19 @@ function* loginSaga(data) {
   }
 }
 
-// TODO this will automatically redirect to dashboard even after
-// getUserInfo fails. Must have the logic laid out as above
 function* loginSuccess(tokenData) {
   window.localStorage.setItem('id_token', tokenData.id_token);
   window.localStorage.setItem('access_token', tokenData.access_token);
 
-  yield getUserInfoSaga();
-  yield put(push('/dashboard'));
+  const userInfoOk = yield getUserInfoSaga();
+  if (userInfoOk) {
+    yield put(push('/dashboard'));
+  }
 }
 
 function* getUserInfoSaga() {
   const response = yield call(getUserData);
+
   if (response.ok) {
     const userInfo = yield response.json();
     window.localStorage.setItem('profile_info', JSON.stringify(userInfo));
@@ -47,4 +48,6 @@ function* getUserInfoSaga() {
     const errorData = yield response.json();
     yield put({ type: actions.LOGIN_ERROR, payload: errorData[0].error });
   }
+
+  return response.ok;
 }

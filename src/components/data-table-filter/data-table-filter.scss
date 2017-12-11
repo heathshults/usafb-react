@@ -1,8 +1,18 @@
+.data-table-filter {
+  :nth-child(1) {
+    border-right: none;
+  }
+
+  :nth-child(3) {
+    border-left: none;
+  }
+}
+
 .data-table-filter__button {
   background: #ededed;
   color: #333;
-  font-size: 0.875rem !important;
-  border: solid 0.125rem #d8d8d8 !important;
+  font-size: 0.875rem;
+  border: solid 0.125rem #d8d8d8;
   margin: 0;
   border-radius: 0;
   z-index: 1;
@@ -11,10 +21,14 @@
   &:hover {
     color: #fff;
     background-color: #26579C;
-    border: solid 0.125rem #26579C !important;
+    border: solid 0.125rem #26579C;
   }
 
   &:focus {
     outline: none;
   }
+}
+
+.data-table-filter__label {
+  margin: 0 10px;
 }

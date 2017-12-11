@@ -2,18 +2,17 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
-const filters = () => (
+const refresh = () => (
   <button className="data-table-filter__button">
-    <FontAwesome name="filter" />
+    <FontAwesome name="refresh" />
     <span className="data-table-filter__label">
-      Filters
+      Refresh
     </span>
-    <FontAwesome name="caret-down" />
   </button>
 );
 
-filters.propTypes = {
+refresh.propTypes = {
 
 };
 
-export default filters;
+export default refresh;

@@ -2,18 +2,17 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
-const filters = () => (
+const advancedSearch = () => (
   <button className="data-table-filter__button">
-    <FontAwesome name="filter" />
+    <FontAwesome name="search" />
     <span className="data-table-filter__label">
-      Filters
+      Advanced Search
     </span>
-    <FontAwesome name="caret-down" />
   </button>
 );
 
-filters.propTypes = {
+advancedSearch.propTypes = {
 
 };
 
-export default filters;
+export default advancedSearch;

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Read input changes  1`] = `
+<div
+  className="row form-group"
+>
+  <div
+    className="col-md-12 input-group"
+  >
+    <label
+      className="login-page__input-label sr-only"
+      htmlFor="txtEmail"
+    >
+      Email
+    </label>
+    <div
+      className="col input-wrapper"
+    >
+      <span
+        aria-hidden={true}
+        className="fa fa-envelope fa-layer"
+      />
+      <input
+        className="form-control form-control-theme"
+        id="txtEmail"
+        onChange={[Function]}
+        placeholder="Email"
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;

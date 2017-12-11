@@ -1,15 +1,16 @@
 import React from 'react';
 import Input from './Input';
+import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
-test('Read input changes ', () => {
-  const email = '';
+test('[LOGIN PAGE] input field update', () => {
+  let email = '';
 
   const updateEmail = (event) => {
     email = event.target.value;
   }
 
-  const component = renderer.create(
+  const inputField = shallow(
     <Input
       icon="envelope"
       placeholder="Email"
@@ -18,20 +19,7 @@ test('Read input changes ', () => {
     />,
   );
 
-  let tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  inputField.find('input').simulate('change', { target: { value: 'Testing' } });
 
-  console.log(tree.props);
-
-  // // manually trigger the callback
-  // tree.props.onMouseEnter();
-  // // re-rendering
-  // tree = component.toJSON();
-  // expect(tree).toMatchSnapshot();
-
-  // // manually trigger the callback
-  // tree.props.onMouseLeave();
-  // // re-rendering
-  // tree = component.toJSON();
-  // expect(tree).toMatchSnapshot();
+  expect(email).toEqual('Testing');
 });

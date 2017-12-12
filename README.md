@@ -143,5 +143,4 @@ do a "brew install watchman".
 Tests should lie in their respected components folder, inside a directory named "tests". For the sake of consistency and clarity, we will name each 
 test as {component}.test.js. 
 
-Because we are following the architecture of smart/dumb components, our tests should test each component the same way. For example, a smart component will
-only test for business logic while dumb components will test for visual changes.
+Our tests are using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html#content), [Enzyme](https://github.com/airbnb/enzyme/blob/master/docs/guides/jest.md), and [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing)

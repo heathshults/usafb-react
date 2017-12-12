@@ -15,7 +15,7 @@ import Input from './components/input/Input';
 import RememberMe from './components/remember-me/RememberMe';
 import LoginButton from './components/login-button/LoginButton';
 
-class Login extends Component {
+export class Login extends Component {
   constructor() {
     super();
 

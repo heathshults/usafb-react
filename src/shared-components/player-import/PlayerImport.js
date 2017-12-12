@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ImportButton from './components/button';
 
 export default class PlayerImport extends Component {
   componentDidMount() {
@@ -55,6 +56,10 @@ export default class PlayerImport extends Component {
     })
   }
 
+  importPlayer = () => {
+
+  }
+
   render() {
     // DnD Import functions
     let backtothefuture = "<div id='dnd-c1' class='dz-clickable dz-message needsclick dnd-c1 fade show'> " +
@@ -63,8 +68,7 @@ export default class PlayerImport extends Component {
 
     return (
       <div>
-        <a href="javascript:void(0);" id="btn-import" className="btn btn-primary-02" ataToggle="modal" ataTarget="#importer">
-          <i className="fa fa-cloud-upload mr-1" ariaHidden="true"></i> IMPORT</a>
+        <ImportButton />
         <div className="modal fade" id="importer" tabIndex="-1" role="dialog" ariaLabelledby="#modal-title-l" ariaHidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">

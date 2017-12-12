@@ -8,6 +8,7 @@ import createHistory from 'history/createBrowserHistory';
 
 import store from 'services/redux/store';
 import Login from 'pages/login/Login';
+import Dashboard from 'pages/dashboard/Dashboard';
 
 import './app.css';
 
@@ -17,7 +18,8 @@ const app = () => (
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={Login} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/" component={Dashboard} />
       </Switch>
     </Router>
   </Provider>

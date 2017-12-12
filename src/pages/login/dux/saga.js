@@ -7,7 +7,8 @@ import { login, getUserData } from './api';
 export default function* loginFlow() {
   while (true) {
     const loginInfo = yield take(actions.LOGIN);
-    yield call(loginSaga, loginInfo.data);
+    // yield call(loginSaga, loginInfo.data);
+    yield put(push('/dashboard')); // TODO delete this and remove comment above after login endpoint is complete
   }
 }
 

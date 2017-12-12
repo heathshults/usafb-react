@@ -1,27 +1,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import renderer from 'react-test-renderer';
+// import renderer from 'react-test-renderer';
+// import configureStore from 'redux-mock-store';
 
-import { Login } from './Login';
-import Container from './components/container/Container';
-import Header from './components/header/Header';
-import Form from './components/form/Form';
-import Logo from './components/logo/Logo';
-import ErrorMessage from './components/error/Error';
-import InputGroup from './components/input-group/InputGroup';
-import Input from './components/input/Input';
-import RememberMe from './components/remember-me/RememberMe';
-import LoginButton from './components/login-button/LoginButton';
-
-let email = '';
-let password = '';
-
-const updateEmail = (event) => {
-  email = event.target.value;
-};
-const updatePassword = (event) => {
-  password = event.target.value;
-};
+import LoginWithRedux, { Login } from '../Login';
+import Container from '../components/container/Container';
+import Header from '../components/header/Header';
+import Form from '../components/form/Form';
+import Logo from '../components/logo/Logo';
+import ErrorMessage from '../components/error/Error';
+import InputGroup from '../components/input-group/InputGroup';
+import Input from '../components/input/Input';
+import RememberMe from '../components/remember-me/RememberMe';
+import LoginButton from '../components/login-button/LoginButton';
 
 const setupLoginComponent = () => {
   const props = {
@@ -75,7 +66,25 @@ describe('[LOGIN PAGE] UI components test', () => {
     expect(loginWrapper.find(RememberMe).length).toBe(1);
   });
 
-  test('login button', () => {
+  test('login button exists', () => {
     expect(loginWrapper.find(LoginButton).length).toBe(1);
   });
 });
+
+// describe('[LOGIN PAGE] functionality test', () => {
+//   test('login test', () => {
+//     const { loginWrapper } = setupLoginComponent();
+
+//     loginWrapper.setState({
+//       email: 'testemail@gmail.com',
+//       password: 'password123'
+//     });
+
+//     const loginButton = loginWrapper.find(LoginButton);
+//     console.log(loginButton);
+
+//     // const loginComponent = renderer.create(loginWrapper);
+//     // let tree = loginComponent.toJSON();
+//     // console.log(tree);
+//   });
+// });

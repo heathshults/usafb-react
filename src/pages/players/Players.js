@@ -3,19 +3,21 @@ import React, { Component } from 'react';
 import Container from 'components/containers/Container';
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
+
+import Columns from 'components/data-table/models/columns';
+
 import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from './components/import-modal/ImportModal';
-
-import TableSettings from './models/table-settings';
 
 class Players extends Component {
   constructor() {
     super();
 
-    this.tableSettings = new TableSettings();
+    this.columns = new Columns();
 
     this.state = {
-
+      filters: this.columns,
+      columns: this.columns.getColumnsForTableHeader()
     };
   }
 
@@ -28,9 +30,11 @@ class Players extends Component {
           numberOfUsers={1000}
           importModalID="player-import-modal"
         />
-        <DataTableFilter />
+        <DataTableFilter
+          filters={this.state.filters}
+        />
         <DataTable
-          headers={this.tableSettings.getHeaders()}
+          columns={this.state.columns}
         />
       </Container>
     );

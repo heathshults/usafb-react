@@ -18,18 +18,20 @@ const dataTable = props => (
       className="col-md-12"
       options={{ noDataText: getNoDataText(props.loading) }}
     >
-      {props.headers.map(header => (
-        <TableHeaderColumn
-          dataField={header.dataField}
-          isKey={header.isKey}
-          key={uuidv4()}
-          dataSort={header.dataSort}
-          className="usafb__table-header"
-          thStyle={headerStyle}
-        >
-          {header.label.toUpperCase()}
-        </TableHeaderColumn>
-      ))}
+      {props.columns.map(column =>
+        (
+          <TableHeaderColumn
+            dataField={column.label}
+            isKey={column.isKey}
+            key={uuidv4()}
+            dataSort={column.dataSort}
+            className="usafb__table-header"
+            thStyle={headerStyle}
+          >
+            {column.label}
+          </TableHeaderColumn>
+        )
+      )}
     </BootstrapTable>
   </div>
 );
@@ -37,7 +39,7 @@ const dataTable = props => (
 dataTable.propTypes = {
   loading: PropTypes.bool,
   data: PropTypes.array,
-  headers: PropTypes.array.isRequired,
+  columns: PropTypes.array.isRequired,
 };
 
 dataTable.defaultProps = {

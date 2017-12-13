@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-// import renderer from 'react-test-renderer';
+import renderer from 'react-test-renderer';
 // import configureStore from 'redux-mock-store';
 
 import LoginWithRedux, { Login } from '../Login';
@@ -68,5 +68,36 @@ describe('[LOGIN PAGE] UI components test', () => {
 
   test('login button exists', () => {
     expect(loginWrapper.find(LoginButton).length).toBe(1);
+  });
+});
+
+describe('[LOGIN PAGE] functionality test', () => {
+  const { loginWrapper } = setupLoginComponent();
+
+  test('Login functionality', () => {
+
+    // console.log(process.env);
+    // get a snapshot of the login screen without any user input
+    let component = renderer.create(loginWrapper);
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+
+    loginWrapper.setState({
+      email: 'footballautomation@gmail.com',
+      password: 'password123'
+    });
+
+    loginWrapper.find(Input).first().value = loginWrapper.state().email;
+    loginWrapper.find(Input).last().value = loginWrapper.state().password;
+
+    // get a snapshot of user inputs
+    component = renderer.create(loginWrapper);
+    tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+
+    const loginButton = loginWrapper.find(LoginButton).simulate('click');
+    const loggedInComponent = renderer.create(loginWrapper);
+    tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

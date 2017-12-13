@@ -1,8 +1,7 @@
 /* global $ */
-
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
 const displayFilters = () => (
@@ -39,7 +38,7 @@ const filters = () => (
 );
 
 filters.propTypes = {
-
+  filters: PropTypes.array.isRequired
 };
 
 export default filters;

@@ -8,6 +8,13 @@ export default class Filters {
     this.sports = this.getSports();
   }
 
+  getColumnsForFilters = () => [
+    this.generalInfo,
+    this.social,
+    this.parentsAndGuardians,
+    this.sports
+  ];
+
   getColumnsForTableHeader = () => {
     const getSelectedColumns = column => column.selected;
 

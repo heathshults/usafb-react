@@ -16,9 +16,13 @@ class Players extends Component {
     this.columns = new Columns();
 
     this.state = {
-      filters: this.columns,
+      filters: this.columns.getColumnsForFilters(),
       columns: this.columns.getColumnsForTableHeader()
     };
+  }
+
+  componentWillMount() {
+    console.dir(this.state);
   }
 
   render() {

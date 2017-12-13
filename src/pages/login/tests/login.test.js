@@ -70,21 +70,3 @@ describe('[LOGIN PAGE] UI components test', () => {
     expect(loginWrapper.find(LoginButton).length).toBe(1);
   });
 });
-
-// describe('[LOGIN PAGE] functionality test', () => {
-//   test('login test', () => {
-//     const { loginWrapper } = setupLoginComponent();
-
-//     loginWrapper.setState({
-//       email: 'testemail@gmail.com',
-//       password: 'password123'
-//     });
-
-//     const loginButton = loginWrapper.find(LoginButton);
-//     console.log(loginButton);
-
-//     // const loginComponent = renderer.create(loginWrapper);
-//     // let tree = loginComponent.toJSON();
-//     // console.log(tree);
-//   });
-// });

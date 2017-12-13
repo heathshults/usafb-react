@@ -6,12 +6,11 @@ import { login, getUserData } from './api';
 export default function* loginFlow() {
   while (true) {
     const loginInfo = yield take(actions.LOGIN);
-    // yield call(loginSaga, loginInfo.data);
-    yield goToDashboard(); // TODO delete this and remove comment above after login endpoint is complete
+    yield call(loginSaga, loginInfo.data);
   }
 }
 
-function* loginSaga(data) {
+export function* loginSaga(data) {
   try {
     const response = yield call(login, data);
     if (response.ok) {

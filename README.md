@@ -143,4 +143,6 @@ do a "brew install watchman".
 Tests should lie in their respected components folder, inside a directory named "tests". For the sake of consistency and clarity, we will name each 
 test as {component}.test.js. 
 
-Our tests are using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html#content), [Enzyme](https://github.com/airbnb/enzyme/blob/master/docs/guides/jest.md), and [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing)
+Our tests are using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html#content), [Enzyme](https://github.com/airbnb/enzyme/blob/master/docs/guides/jest.md), and [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing).
+
+For acceptance test, we are using [Nightmare](https://github.com/segmentio/nightmare). If you want to read the article that influenced this project to use nightmare, [click here](https://www.viget.com/articles/acceptance-testing-react-apps-with-jest-and-nightmare).

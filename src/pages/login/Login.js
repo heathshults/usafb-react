@@ -65,6 +65,7 @@ export class Login extends Component {
               placeholder="Email"
               value={this.state.email}
               onChange={this.updateEmail}
+              inputId="userEmail"
             />
             <Input
               icon="lock"
@@ -72,6 +73,7 @@ export class Login extends Component {
               inputType="password"
               value={this.state.password}
               onChange={this.updatePassword}
+              inputId="userPassword"
             />
             <RememberMe />
             <LoginButton

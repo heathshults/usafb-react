@@ -18,6 +18,7 @@ test('[LOGIN PAGE] input field test', () => {
       placeholder="Email"
       value={email}
       onChange={updateEmail}
+      inputId="userEmail"
     />,
   );
 

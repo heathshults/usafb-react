@@ -3,6 +3,8 @@ import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 // import configureStore from 'redux-mock-store';
 
+import nightmareRedirect from 'services/testing/nightmare';
+
 import LoginWithRedux, { Login } from '../Login';
 import Container from '../components/container/Container';
 import Header from '../components/header/Header';
@@ -71,33 +73,20 @@ describe('[LOGIN PAGE] UI components test', () => {
   });
 });
 
-describe('[LOGIN PAGE] functionality test', () => {
-  const { loginWrapper } = setupLoginComponent();
-
-  test('Login functionality', () => {
-
-    // console.log(process.env);
-    // get a snapshot of the login screen without any user input
-    let component = renderer.create(loginWrapper);
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-
-    loginWrapper.setState({
-      email: 'footballautomation@gmail.com',
-      password: 'password123'
-    });
-
-    loginWrapper.find(Input).first().value = loginWrapper.state().email;
-    loginWrapper.find(Input).last().value = loginWrapper.state().password;
-
-    // get a snapshot of user inputs
-    component = renderer.create(loginWrapper);
-    tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-
-    const loginButton = loginWrapper.find(LoginButton).simulate('click');
-    const loggedInComponent = renderer.create(loginWrapper);
-    tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+describe('[LOGIN PAGE] acceptance test', () => {
+  test('going to login page', async function () {
+    const page = await nightmareRedirect('/login')
+      .click('#userEmail')
+      .wait(100)
+      .insert('#userEmail', 'footballautomation@gmail.com')
+      .click('#userPassword')
+      .wait(100)
+      .insert('#userPassword', 'password123')
+      .click('button[type="submit"]')
+      .wait(100)
+      .end(() => document.location.pathname)
+      .then((url) => {
+        expect(url).toBe('/');
+      });
   });
 });

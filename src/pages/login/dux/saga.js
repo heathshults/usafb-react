@@ -6,7 +6,8 @@ import { login, getUserData } from './api';
 export default function* loginFlow() {
   while (true) {
     const loginInfo = yield take(actions.LOGIN);
-    yield call(loginSaga, loginInfo.data);
+    yield goToDashboard();
+    // yield call(loginSaga, loginInfo.data);
   }
 }
 
@@ -38,7 +39,7 @@ function* loginSuccess(tokenData) {
 }
 
 function goToDashboard() {
-  window.location.replace('/dashboard');
+  window.location.replace('/');
 }
 
 function* getUserInfoSaga() {

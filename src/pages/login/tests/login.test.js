@@ -74,7 +74,7 @@ describe('[LOGIN PAGE] UI components test', () => {
 });
 
 describe('[LOGIN PAGE] acceptance test', () => {
-  test('going to login page', async function () {
+  test('login page acceptance test', async function () {
     const page = await nightmareRedirect('/login')
       .click('#userEmail')
       .wait(100)

@@ -36,7 +36,14 @@ export default class Filters {
   }
 
   updateFilters = (filter) => {
-    console.dir(filter);
+    this.updateGeneralInfoColumns(filter);
+  }
+
+  updateGeneralInfoColumns = (filter) => {
+    const updatedFilter = this.generalInfo.columns.find(generalInfoFilter => generalInfoFilter === filter);
+    if (updatedFilter) {
+      updatedFilter.selected = !updatedFilter.selected;
+    }
   }
 
   getGeneralInfoColumns = () => ({
@@ -51,9 +58,6 @@ export default class Filters {
       new Column('Gender', true),
       new Column('Date of Birth', true),
       new Column('Middle Name'),
-      new Column('Source', true),
-      new Column('Gender', true),
-      new Column('Date of Birth', true),
       new Column('Age Group', true),
       new Column('Address 1'),
       new Column('Address 2'),

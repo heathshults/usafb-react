@@ -1,6 +1,4 @@
-/* global $ */
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import uuidv4 from 'uuid/v4';

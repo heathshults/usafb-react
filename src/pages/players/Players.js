@@ -22,11 +22,20 @@ class Players extends Component {
     };
   }
 
-  toggleFilters = () => this.setState({
-    displayFilters: !this.state.displayFilters
-  });
+  toggleFilters = () => {
+    this.setState({
+      displayFilters: !this.state.displayFilters
+    });
+  }
 
-  updateFilters = filter => this.columns.updateFilters(filter);
+  updateFilters = (filter) => {
+    this.columns.updateFilters(filter);
+
+    this.setState({
+      filters: this.columns.getColumnsForFilters(),
+      columns: this.columns.getColumnsForTableHeader()
+    });
+  }
 
   render() {
     return (

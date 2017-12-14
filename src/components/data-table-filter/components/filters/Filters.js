@@ -13,8 +13,11 @@ const filters = (props) => {
       {props.filters.map((filter) => {
         if (filter.label) {
           return (
-            <li key={uuidv4()}>
-              {filter.label}
+            <li className="data-table-filter__checkbox" key={uuidv4()}>
+              <label htmlFor={filter.label}>
+                <input id={filter.label} type="checkbox" checked={filter.selected} />
+                {filter.label}
+              </label>
             </li>
           );
         }

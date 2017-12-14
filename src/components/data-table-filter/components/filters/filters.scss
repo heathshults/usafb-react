@@ -20,3 +20,11 @@
   border-bottom: 1px solid #adb5bd;
   text-transform: uppercase;
 }
+
+.data-table-filter__checkbox {
+  list-style-type: none;
+  
+  input {
+    margin-right: 5px;
+  }
+}

@@ -36,11 +36,14 @@ export default class Filters {
   }
 
   updateFilters = (filter) => {
-    this.updateGeneralInfoColumns(filter);
+    this.updateColumnsIfFilterExists(filter, this.generalInfo);
+    this.updateColumnsIfFilterExists(filter, this.social);
+    this.updateColumnsIfFilterExists(filter, this.parentsAndGuardians);
+    this.updateColumnsIfFilterExists(filter, this.sports);
   }
 
-  updateGeneralInfoColumns = (filter) => {
-    const updatedFilter = this.generalInfo.columns.find(generalInfoFilter => generalInfoFilter === filter);
+  updateColumnsIfFilterExists = (filter, columns) => {
+    const updatedFilter = columns.columns.find(generalInfoFilter => generalInfoFilter === filter);
     if (updatedFilter) {
       updatedFilter.selected = !updatedFilter.selected;
     }

@@ -35,7 +35,7 @@ const filters = props => (
       tabIndex={0} //eslint-disable-line
       className="data-table-filter__button"
       id="filterPopoverButton"
-      onClick={props.toggleFilters}
+      onClick={props.toggle}
     >
       <FontAwesome name="filter" />
       <span className="data-table-filter__label">
@@ -45,9 +45,9 @@ const filters = props => (
     </button>
     <Popover
       placement="bottom"
-      isOpen={props.displayFilters}
+      isOpen={props.display}
       target="filterPopoverButton"
-      toggle={props.toggleFilters}
+      toggle={props.toggle}
     >
       <PopoverBody>
         {displayFilters(props.filters, props.updateFilters)}
@@ -59,8 +59,8 @@ const filters = props => (
 filters.propTypes = {
   filters: PropTypes.array.isRequired,
   updateFilters: PropTypes.func.isRequired,
-  toggleFilters: PropTypes.func.isRequired,
-  displayFilters: PropTypes.bool.isRequired
+  display: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired
 };
 
 export default filters;

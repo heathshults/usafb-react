@@ -18,7 +18,8 @@ class Players extends Component {
     this.state = {
       filters: this.columns.getColumnsForFilters(),
       columns: this.columns.getColumnsForTableHeader(),
-      displayFilters: false
+      displayFilters: false,
+      displayAdvancedSearch: false
     };
   }
 
@@ -37,6 +38,12 @@ class Players extends Component {
     });
   }
 
+  toggleAdvancedSearch = () => {
+    this.setState({
+      displayAdvancedSearch: !this.state.displayAdvancedSearch
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -47,10 +54,12 @@ class Players extends Component {
           importModalID="player-import-modal"
         />
         <DataTableFilter
-          displayFilters={this.state.displayFilters}
-          toggleFilters={this.toggleFilters}
           filters={this.state.filters}
           updateFilters={this.updateFilters}
+          displayFilters={this.state.displayFilters}
+          toggleFilters={this.toggleFilters}
+          displayAdvancedSearch={this.state.displayAdvancedSearch}
+          toggleAdvancedSearch={this.toggleAdvancedSearch}
         />
         <DataTable
           columns={this.state.columns}

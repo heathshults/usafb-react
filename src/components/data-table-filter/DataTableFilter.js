@@ -12,10 +12,13 @@ const dataTableFilter = props => (
       <Filters
         filters={props.filters}
         updateFilters={props.updateFilters}
-        displayFilters={props.displayFilters}
-        toggleFilters={props.toggleFilters}
+        display={props.displayFilters}
+        toggle={props.toggleFilters}
       />
-      <AdvancedSearch />
+      <AdvancedSearch
+        display={props.displayAdvancedSearch}
+        toggle={props.toggleAdvancedSearch}
+      />
       <Refresh />
     </div>
   </div>
@@ -25,7 +28,9 @@ dataTableFilter.propTypes = {
   filters: PropTypes.array.isRequired,
   updateFilters: PropTypes.func.isRequired,
   displayFilters: PropTypes.bool.isRequired,
-  toggleFilters: PropTypes.func.isRequired
+  toggleFilters: PropTypes.func.isRequired,
+  displayAdvancedSearch: PropTypes.bool.isRequired,
+  toggleAdvancedSearch: PropTypes.func.isRequired
 };
 
 export default dataTableFilter;

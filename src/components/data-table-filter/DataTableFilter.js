@@ -11,6 +11,7 @@ const dataTableFilter = props => (
     <div className="col-md-12 btn-group data-table-filter">
       <Filters
         filters={props.filters}
+        updateFilters={props.updateFilters}
       />
       <AdvancedSearch />
       <Refresh />
@@ -19,7 +20,8 @@ const dataTableFilter = props => (
 );
 
 dataTableFilter.propTypes = {
-  filters: PropTypes.array.isRequired
+  filters: PropTypes.array.isRequired,
+  updateFilters: PropTypes.func.isRequired,
 };
 
 export default dataTableFilter;

@@ -25,6 +25,11 @@ class Players extends Component {
     console.dir(this.state);
   }
 
+  updateFilters = (filter) => {
+    console.dir(filter);
+    this.columns.updateFilters(filter);
+  }
+
   render() {
     return (
       <Container>
@@ -36,6 +41,7 @@ class Players extends Component {
         />
         <DataTableFilter
           filters={this.state.filters}
+          updateFilters={this.updateFilters}
         />
         <DataTable
           columns={this.state.columns}

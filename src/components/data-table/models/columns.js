@@ -35,6 +35,9 @@ export default class Filters {
     ];
   }
 
+  updateFilters = (filter) => {
+    console.dir(filter);
+  }
 
   getGeneralInfoColumns = () => ({
     category: 'general info',

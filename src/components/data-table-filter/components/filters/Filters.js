@@ -15,7 +15,12 @@ const filters = (props) => {
           return (
             <li className="data-table-filter__checkbox" key={uuidv4()}>
               <label htmlFor={filter.label}>
-                <input id={filter.label} type="checkbox" checked={filter.selected} />
+                <input
+                  id={filter.label}
+                  type="checkbox"
+                  checked={filter.selected}
+                  onChange={() => props.updateFilters(filter)}
+                />
                 {filter.label}
               </label>
             </li>
@@ -29,7 +34,7 @@ const filters = (props) => {
   $(function () {
     $('[data-filter-toggle="popover"]').popover({
       html: true,
-      content: ReactDOMServer.renderToString(displayFilters()),
+      content: displayFilters,
       container: 'body',
       placement: 'bottom'
     });
@@ -54,7 +59,8 @@ const filters = (props) => {
 };
 
 filters.propTypes = {
-  filters: PropTypes.array.isRequired
+  filters: PropTypes.array.isRequired,
+  updateFilters: PropTypes.func.isRequired
 };
 
 export default filters;

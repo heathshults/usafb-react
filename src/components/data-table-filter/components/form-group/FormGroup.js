@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './form-group.css';
+
 const formGroup = props => (
-  <div className="form-group input-row">
+  <div className="form-group form-group__input-row">
     <label className="control-label" htmlFor={`advancedsearch-${props.label}`}>
       {props.label}
     </label>

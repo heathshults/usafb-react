@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+import FormGroupContainer from '../form-group-container/FormGroupContainer';
 import FormGroup from '../form-group/FormGroup';
 
 class AdvancedSearch extends Component {
@@ -47,16 +48,18 @@ class AdvancedSearch extends Component {
             Advanced Search
           </ModalHeader>
           <ModalBody>
-            <FormGroup
-              label="Last Name"
-              value={this.state.lastName}
-              onChange={this.updateLastName}
-            />
-            <FormGroup
-              label="First Name"
-              value={this.state.firstName}
-              onChange={this.updateFirstName}
-            />
+            <FormGroupContainer>
+              <FormGroup
+                label="Last Name"
+                value={this.state.lastName}
+                onChange={this.updateLastName}
+              />
+              <FormGroup
+                label="First Name"
+                value={this.state.firstName}
+                onChange={this.updateFirstName}
+              />
+            </FormGroupContainer>
           </ModalBody>
           <ModalFooter>
             <Button id="btn-cancel" className="btn btn-red mr-2">

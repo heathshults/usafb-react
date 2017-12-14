@@ -3,26 +3,32 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import uuidv4 from 'uuid/v4';
 
 import './filters.css';
 
 const filters = (props) => {
   const displayFilters = () => (
-    <div className="data-table-filter">
-      {props.filters.map(filter => (
-        <div key={filter.category}>
-          <h5 className="data-table-filter__category">
-            {filter.category}
-          </h5>
-        </div>
-      ))}
-    </div>
+    <ul className="data-table-filter__popover">
+      {props.filters.map((filter) => {
+        if (filter.label) {
+          return (
+            <li key={uuidv4()}>
+              {filter.label}
+            </li>
+          );
+        }
+        return <h5 key={uuidv4()} className="data-table-filter__category">{filter}</h5>;
+      })}
+    </ul>
   );
 
   $(function () {
     $('[data-filter-toggle="popover"]').popover({
       html: true,
-      content: ReactDOMServer.renderToString(displayFilters())
+      content: ReactDOMServer.renderToString(displayFilters()),
+      container: 'body',
+      placement: 'bottom'
     });
   });
 
@@ -31,11 +37,8 @@ const filters = (props) => {
       <button
         tabIndex={0} //eslint-disable-line
         className="data-table-filter__button"
-        data-container="body"
         data-filter-toggle="popover"
-        data-trigger="focus"
-        data-placement="bottom"
-        data-html="true"
+        data-trigger="click"
       >
         <FontAwesome name="filter" />
         <span className="data-table-filter__label">

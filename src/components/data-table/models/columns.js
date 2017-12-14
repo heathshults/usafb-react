@@ -9,10 +9,14 @@ export default class Filters {
   }
 
   getColumnsForFilters = () => [
-    this.generalInfo,
-    this.social,
-    this.parentsAndGuardians,
-    this.sports
+    this.generalInfo.category,
+    ...this.generalInfo.columns,
+    this.social.category,
+    ...this.social.columns,
+    this.parentsAndGuardians.category,
+    ...this.parentsAndGuardians.columns,
+    this.sports.category,
+    ...this.sports.columns
   ];
 
   getColumnsForTableHeader = () => {

@@ -57,7 +57,6 @@ export default class Filters {
       new Column('Source', true),
       new Column('Gender', true),
       new Column('Date of Birth', true),
-      new Column('Middle Name'),
       new Column('Age Group', true),
       new Column('Address 1'),
       new Column('Address 2'),

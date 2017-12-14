@@ -17,18 +17,16 @@ class Players extends Component {
 
     this.state = {
       filters: this.columns.getColumnsForFilters(),
-      columns: this.columns.getColumnsForTableHeader()
+      columns: this.columns.getColumnsForTableHeader(),
+      displayFilters: false
     };
   }
 
-  componentWillMount() {
-    console.dir(this.state);
-  }
+  toggleFilters = () => this.setState({
+    displayFilters: !this.state.displayFilters
+  });
 
-  updateFilters = (filter) => {
-    console.dir(filter);
-    this.columns.updateFilters(filter);
-  }
+  updateFilters = filter => this.columns.updateFilters(filter);
 
   render() {
     return (
@@ -40,6 +38,8 @@ class Players extends Component {
           importModalID="player-import-modal"
         />
         <DataTableFilter
+          displayFilters={this.state.displayFilters}
+          toggleFilters={this.toggleFilters}
           filters={this.state.filters}
           updateFilters={this.updateFilters}
         />

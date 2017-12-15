@@ -36,26 +36,32 @@ class Label extends Component {
           <DropdownToggle caret>
             {this.state.rowsPerPage}
           </DropdownToggle>
-          <DropdownMenu>
+          <DropdownMenu
+            className="pagination__label-dropdown-menu"
+          >
             <DropdownItem
+              className={`${this.state.rowsPerPage === 10 ? 'pagination__label-dropdown-active' : 'pagination__label-dropdown-item'}`}
               onClick={this.updateRowsPerPage}
               value={10}
             >
               10
             </DropdownItem>
             <DropdownItem
+              className={`${this.state.rowsPerPage === 25 ? 'pagination__label-dropdown-active' : 'pagination__label-dropdown-item'}`}
               onClick={this.updateRowsPerPage}
               value={25}
             >
               25
             </DropdownItem>
             <DropdownItem
+              className={`${this.state.rowsPerPage === 50 ? 'pagination__label-dropdown-active' : 'pagination__label-dropdown-item'}`}
               onClick={this.updateRowsPerPage}
               value={50}
             >
               50
             </DropdownItem>
             <DropdownItem
+              className={`${this.state.rowsPerPage === 100 ? 'pagination__label-dropdown-active' : 'pagination__label-dropdown-item'}`}
               onClick={this.updateRowsPerPage}
               value={100}
             >

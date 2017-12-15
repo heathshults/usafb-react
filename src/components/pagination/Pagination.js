@@ -9,13 +9,15 @@ class PaginationComponent extends Component {
     super();
     this.state = {
       rowsPerPage: 10,
-      dropdownOpen: false
+      dropdownOpen: false,
     };
   }
 
-  componentWillMount() {
-    console.dir(this.props);
-  }
+  // Used to determine the starting index the data table is displaying
+  calculateStartingIndex = () => (this.props.currentPage * this.state.rowsPerPage) - this.state.rowsPerPage + 1;
+
+  // Used to determine the ending index the data table is displaying
+  calculateEndingIndex = () => this.props.currentPage * this.state.rowsPerPage;
 
   toggleDropdown = () => this.setState({
     dropdownOpen: !this.state.dropdownOpen
@@ -31,6 +33,8 @@ class PaginationComponent extends Component {
     return (
       <div className="row d-flex justify-content-between mt-3 mb-3">
         <Label
+          startingIndex={this.calculateStartingIndex()}
+          endingIndex={this.calculateEndingIndex()}
           currentPage={this.props.currentPage}
           totalItems={this.props.totalItems}
           rowsPerPage={this.state.rowsPerPage}

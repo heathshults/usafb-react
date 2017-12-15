@@ -7,7 +7,7 @@ import './label.css';
 const label = props => (
   <div className="d-flex align-items-center">
     <p className="pagination__label">
-      Showing 1 to 10 of {props.totalItems} rows
+      Showing {props.startingIndex} to {props.endingIndex} of {props.totalItems} rows
   </p>
     <ButtonDropdown
       isOpen={props.dropdownOpen}
@@ -57,7 +57,8 @@ const label = props => (
 );
 
 label.propTypes = {
-  currentPage: PropTypes.number.isRequired,
+  startingIndex: PropTypes.number.isRequired,
+  endingIndex: PropTypes.number.isRequired,
   totalItems: PropTypes.number.isRequired,
   dropdownOpen: PropTypes.bool.isRequired,
   rowsPerPage: PropTypes.number.isRequired,

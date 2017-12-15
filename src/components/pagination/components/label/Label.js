@@ -26,7 +26,7 @@ class Label extends Component {
 
   render() {
     return (
-      <div className="d-flex align-items-center mt-2">
+      <div className="d-flex align-items-center">
         <p className="pagination__label">
           Showing 1 to 10 of {this.props.totalItems} rows
         </p>

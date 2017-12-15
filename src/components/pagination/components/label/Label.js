@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
+import './label.css';
+
 class Label extends Component {
   constructor() {
     super();
@@ -22,11 +24,15 @@ class Label extends Component {
 
   render() {
     return (
-      <div className="d-flex">
-        <p>
+      <div className="d-flex align-items-center mt-2">
+        <p className="pagination__label">
           Showing 1 to 10 of {this.props.totalItems} rows
         </p>
-        <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+        <ButtonDropdown
+          isOpen={this.state.dropdownOpen}
+          toggle={this.toggleDropdown}
+          className="pagination__label-dropdown"
+        >
           <DropdownToggle caret>
             {this.state.rowsPerPage}
           </DropdownToggle>
@@ -57,7 +63,7 @@ class Label extends Component {
             </DropdownItem>
           </DropdownMenu>
         </ButtonDropdown>
-        <p style={{ marginLeft: 10 }}>
+        <p className="pagination__label">
           rows per page
         </p>
       </div>

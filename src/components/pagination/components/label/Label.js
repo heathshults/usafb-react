@@ -19,7 +19,9 @@ class Label extends Component {
   });
 
   updateRowsPerPage = (event) => {
-    console.log(event.target.value);
+    this.setState({
+      rowsPerPage: +event.target.value
+    });
   }
 
   render() {

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Container from 'components/containers/Container';
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
+import Pagination from 'components/pagination/Pagination';
 
 import Columns from 'components/data-table/models/columns';
 
@@ -19,7 +20,9 @@ class Players extends Component {
       filters: this.columns.getColumnsForFilters(),
       columns: this.columns.getColumnsForTableHeader(),
       displayFilters: false,
-      displayAdvancedSearch: false
+      displayAdvancedSearch: false,
+      currentPage: 1,
+      totalItems: 100
     };
   }
 
@@ -63,6 +66,10 @@ class Players extends Component {
         />
         <DataTable
           columns={this.state.columns}
+        />
+        <Pagination
+          currentPage={this.state.currentPage}
+          totalItems={this.state.totalItems}
         />
       </Container>
     );

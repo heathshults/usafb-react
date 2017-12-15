@@ -22,8 +22,26 @@ class Players extends Component {
       displayFilters: false,
       displayAdvancedSearch: false,
       currentPage: 1,
-      totalItems: 100
+      totalItems: 100,
+      players: []
     };
+  }
+
+  componentWillMount() {
+    const players = [...Array(10)].map((val, index) => ({
+      'USAFB#': index,
+      'Last Name': 'Test',
+      'First Name': 'Test',
+      Source: 'Test',
+      Gender: 'M',
+      'Date of Birth': '1-17-91',
+      'Age Group': 'Derp',
+      Organization: 'Blue Star'
+    }));
+
+    this.setState({
+      players
+    });
   }
 
   toggleFilters = () => {
@@ -66,6 +84,7 @@ class Players extends Component {
         />
         <DataTable
           columns={this.state.columns}
+          data={this.state.players}
         />
         <Pagination
           currentPage={this.state.currentPage}

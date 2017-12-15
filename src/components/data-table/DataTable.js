@@ -16,6 +16,7 @@ const dataTable = props => (
   <div className="row">
     <BootstrapTable
       className="col-md-12"
+      data={props.data}
       options={{ noDataText: getNoDataText(props.loading) }}
     >
       {props.columns.map(column =>

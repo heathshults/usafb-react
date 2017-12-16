@@ -36,14 +36,22 @@ class PaginationComponent extends Component {
   }
 
   getPaginationLinks = () =>
-    [...Array(7)].map((val, index) => {
-      if (index === 7) {
+    [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {
+      if (index === 6) {
         return this.getStandardPaginationLink(this.calculateTotalPages());
       } else if (this.displayMorePagesAvailable(index)) {
         return this.getStandardPaginationLink('...');
       }
       return this.getStandardPaginationLink(index + 1);
     });
+
+  calculateTotalPaginationLinks = () => {
+    if (this.calculateTotalPages() <= 5) {
+      return 5;
+    }
+
+    return 7;
+  }
 
   getStandardPaginationLink = value => (
     <PaginationItem key={uuidv4()} active={this.props.currentPage === value}>
@@ -57,6 +65,8 @@ class PaginationComponent extends Component {
     if (this.calculateTotalPages() < 7) {
       return false;
     } else if (this.props.currentPage <= 5 && index === 5) {
+      return true;
+    } else if (this.props.currentPage > 5 && this.props.currentPage < this.calculateTotalPages() - 5) {
       return true;
     }
     return false;

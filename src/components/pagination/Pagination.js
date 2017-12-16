@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import uuidv4 from 'uuid/v4';
 
 import Label from './components/label/Label';
 
@@ -13,11 +14,16 @@ class PaginationComponent extends Component {
     };
   }
 
+  componentWillMount() {
+  }
+
   // Used to determine the starting index the data table is displaying
   calculateStartingIndex = () => (this.props.currentPage * this.state.rowsPerPage) - this.state.rowsPerPage + 1;
 
   // Used to determine the ending index the data table is displaying
   calculateEndingIndex = () => this.props.currentPage * this.state.rowsPerPage;
+
+  calculateTotalPages = () => Math.ceil(this.props.totalItems / this.state.rowsPerPage);
 
   toggleDropdown = () => this.setState({
     dropdownOpen: !this.state.dropdownOpen
@@ -27,6 +33,33 @@ class PaginationComponent extends Component {
     this.setState({
       rowsPerPage: +event.target.value
     });
+  }
+
+  getPaginationLinks = () =>
+    [...Array(7)].map((val, index) => {
+      if (index === 7) {
+        return this.getStandardPaginationLink(this.calculateTotalPages());
+      } else if (this.displayMorePagesAvailable(index)) {
+        return this.getStandardPaginationLink('...');
+      }
+      return this.getStandardPaginationLink(index + 1);
+    });
+
+  getStandardPaginationLink = value => (
+    <PaginationItem key={uuidv4()} active={this.props.currentPage === value}>
+      <PaginationLink >
+        {value}
+      </PaginationLink>
+    </PaginationItem>
+  );
+
+  displayMorePagesAvailable = (index) => {
+    if (this.calculateTotalPages() < 7) {
+      return false;
+    } else if (this.props.currentPage <= 5 && index === 5) {
+      return true;
+    }
+    return false;
   }
 
   render() {
@@ -46,13 +79,7 @@ class PaginationComponent extends Component {
           <PaginationItem>
             <PaginationLink previous />
           </PaginationItem>
-          {[...Array(20)].map((val, index) => (
-            <PaginationItem key={index}>
-              <PaginationLink>
-                {index}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
+          {this.getPaginationLinks()}
           <PaginationItem>
             <PaginationLink next />
           </PaginationItem>

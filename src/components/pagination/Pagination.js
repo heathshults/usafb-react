@@ -15,28 +15,76 @@ class PaginationComponent extends Component {
     };
   }
 
-  getPaginationLinks = () => {
+  getPaginationLinks = () =>
+    [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {
+      const paginationValue = this.getPageValue(index);
+      return this.getStandardPaginationLink(paginationValue);
+      // if (index === 0) {
+      //   return this.getStandardPaginationLink(1);
+      // } else if (index === 6) {
+      //   return this.getStandardPaginationLink(totalPages);
+      // } else if (this.displayMorePagesAvailable(index)) {
+      //   return this.getStandardPaginationLink('...');
+      // } else if (index === 2 && isRelevancyState) {
+      //   return this.getStandardPaginationLink(this.props.currentPage - 1);
+      // } else if (index === 3 && isRelevancyState) {
+      //   return this.getStandardPaginationLink(this.props.currentPage);
+      // } else if (index === 4 && isRelevancyState) {
+      //   return this.getStandardPaginationLink(this.props.currentPage + 1);
+      // }
+      // return this.getStandardPaginationLink(index + 1);
+    });
+
+  getPageValue = (index) => {
     const totalPages = this.calculateTotalPages();
     // isRelevancyState will determine if the current page is between the [...] buttons
     // http://patternry.com/p=search-pagination/
-    const isRelevancyState = this.props.currentPage >= 5 && this.props.currentPage <= totalPages - 5;
+    const isRelevancyState = this.props.currentPage >= 5 && this.props.currentPage < totalPages - 3;
+    const onLastThreePages = this.props.currentPage >= totalPages - 3;
 
-    return [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {
-      if (index === 0) {
-        return this.getStandardPaginationLink(1);
-      } else if (index === 6) {
-        return this.getStandardPaginationLink(totalPages);
-      } else if (this.displayMorePagesAvailable(index)) {
-        return this.getStandardPaginationLink('...');
-      } else if (index === 2 && isRelevancyState) {
-        return this.getStandardPaginationLink(this.props.currentPage - 1);
-      } else if (index === 3 && isRelevancyState) {
-        return this.getStandardPaginationLink(this.props.currentPage);
-      } else if (index === 4 && isRelevancyState) {
-        return this.getStandardPaginationLink(this.props.currentPage + 1);
-      }
-      return this.getStandardPaginationLink(index + 1);
-    });
+    switch (index) {
+      case 0: // first page
+        return 1;
+      case 1:
+        if (isRelevancyState || (this.props.currentPage > 5 && totalPages > 5)) {
+          return '...';
+        }
+        return index + 1;
+      case 2:
+        if (onLastThreePages) {
+          return this.props.currentPage - 1;
+        }
+        if (isRelevancyState) {
+          return this.props.currentPage - 1;
+        }
+        return index + 1;
+      case 3:
+        if (isRelevancyState) {
+          return this.props.currentPage;
+        }
+        if (onLastThreePages) {
+          return totalPages - 3;
+        }
+        return index + 1;
+      case 4:
+        if (onLastThreePages) {
+          return totalPages - 2;
+        }
+        if (isRelevancyState) {
+          return this.props.currentPage + 1;
+        }
+        return index + 1;
+      case 5:
+        if (isRelevancyState || (this.props.currentPage < 5 && totalPages > 5)) {
+          return '...';
+        }
+        if (onLastThreePages) {
+          return totalPages - 1;
+        }
+        return index + 1;
+      default: // last page
+        return totalPages;
+    }
   }
 
   getStandardPaginationLink = value => (
@@ -44,13 +92,19 @@ class PaginationComponent extends Component {
       key={uuidv4()}
       active={this.props.currentPage === value}
       className={`${value !== '...' ? 'usafb-pagination__link' : 'usafb-pagination__more-pages'}`}
-      onClick={() => this.props.setPage(value)}
+      onClick={() => this.setPage(value)}
     >
       <PaginationLink >
         {value}
       </PaginationLink>
     </PaginationItem>
   );
+
+  setPage = (value) => {
+    if (value !== '...' || value !== this.props.currentPage) {
+      this.props.setPage(value);
+    }
+  }
 
   calculateTotalPaginationLinks = () => {
     if (this.calculateTotalPages() <= 5) {
@@ -61,9 +115,10 @@ class PaginationComponent extends Component {
   }
 
   displayMorePagesAvailable = (index) => {
+    const totalPages = this.calculateTotalPages();
     if (this.calculateTotalPages() < 7) {
       return false;
-    } else if (this.props.currentPage <= 5 && index === 5) {
+    } else if (this.props.currentPage <= totalPages - 3 && index === 5) {
       return true;
     } else if (this.props.currentPage >= 5 && index === 1) {
       return true;

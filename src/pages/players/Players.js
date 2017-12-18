@@ -21,7 +21,7 @@ class Players extends Component {
       columns: this.columns.getColumnsForTableHeader(),
       displayFilters: false,
       displayAdvancedSearch: false,
-      currentPage: 5,
+      currentPage: 1,
       totalItems: 100,
       players: []
     };
@@ -44,6 +44,12 @@ class Players extends Component {
     });
   }
 
+  setPage = (page) => {
+    this.setState({
+      currentPage: page
+    });
+  }
+
   toggleFilters = () => {
     this.setState({
       displayFilters: !this.state.displayFilters
@@ -63,14 +69,6 @@ class Players extends Component {
     this.setState({
       displayAdvancedSearch: !this.state.displayAdvancedSearch
     });
-  }
-
-  setPage = (page) => {
-    if (page !== this.state.currentPage) {
-      this.setState({
-        currentPage: page
-      });
-    }
   }
 
   render() {

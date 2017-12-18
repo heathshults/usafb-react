@@ -19,20 +19,6 @@ class PaginationComponent extends Component {
     [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {
       const paginationValue = this.getPageValue(index);
       return this.getStandardPaginationLink(paginationValue);
-      // if (index === 0) {
-      //   return this.getStandardPaginationLink(1);
-      // } else if (index === 6) {
-      //   return this.getStandardPaginationLink(totalPages);
-      // } else if (this.displayMorePagesAvailable(index)) {
-      //   return this.getStandardPaginationLink('...');
-      // } else if (index === 2 && isRelevancyState) {
-      //   return this.getStandardPaginationLink(this.props.currentPage - 1);
-      // } else if (index === 3 && isRelevancyState) {
-      //   return this.getStandardPaginationLink(this.props.currentPage);
-      // } else if (index === 4 && isRelevancyState) {
-      //   return this.getStandardPaginationLink(this.props.currentPage + 1);
-      // }
-      // return this.getStandardPaginationLink(index + 1);
     });
 
   getPageValue = (index) => {
@@ -52,7 +38,7 @@ class PaginationComponent extends Component {
         return index + 1;
       case 2:
         if (onLastThreePages) {
-          return this.props.currentPage - 1;
+          return totalPages - 4;
         }
         if (isRelevancyState) {
           return this.props.currentPage - 1;

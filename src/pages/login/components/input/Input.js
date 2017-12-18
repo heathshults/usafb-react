@@ -8,7 +8,7 @@ import './input.css';
 const input = props => (
   <div className="row form-group">
     <div className="col-md-12 input-group">
-      <label htmlFor="txtEmail" className="login-page__input-label sr-only">
+      <label htmlFor={props.inputId} className="login-page__input-label sr-only">
         {props.placeholder}
       </label>
       <div className="col input-wrapper">
@@ -16,7 +16,7 @@ const input = props => (
         <input
           type={props.inputType}
           className="form-control form-control-theme"
-          id="txtEmail"
+          id={props.inputId}
           placeholder={props.placeholder}
           value={props.value}
           onChange={props.onChange}
@@ -31,7 +31,8 @@ input.propTypes = {
   onChange: PropTypes.func.isRequired,
   icon: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  inputType: PropTypes.string
+  inputType: PropTypes.string,
+  inputId: PropTypes.string.isRequired
 };
 
 input.defaultProps = {

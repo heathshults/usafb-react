@@ -28,8 +28,6 @@ export function* loginSaga(data) {
   }
 }
 
-// TODO this will automatically redirect to dashboard even after
-// getUserInfo fails. Must have the logic laid out as above
 function* loginSuccess(tokenData) {
   window.localStorage.setItem('id_token', tokenData.id_token);
   window.localStorage.setItem('access_token', tokenData.access_token);

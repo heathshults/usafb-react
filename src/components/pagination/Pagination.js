@@ -130,6 +130,20 @@ class PaginationComponent extends Component {
     });
   }
 
+  previousPage = () => {
+    if (this.props.currentPage !== 1) {
+      this.props.setPage(this.props.currentPage - 1);
+    }
+  }
+
+  nextPage = () => {
+    const totalPages = this.calculateTotalPages();
+
+    if (this.props.currentPage !== totalPages) {
+      this.props.setPage(this.props.currentPage + 1);
+    }
+  }
+
   render() {
     return (
       <div className="row d-flex justify-content-between mt-3 mb-3">
@@ -144,11 +158,11 @@ class PaginationComponent extends Component {
           updateRowsPerPage={this.updateRowsPerPage}
         />
         <Pagination className="mb-0">
-          <PaginationItem className="usafb-pagination__link">
+          <PaginationItem className="usafb-pagination__link" onClick={this.previousPage}>
             <PaginationLink previous />
           </PaginationItem>
           {this.getPaginationLinks()}
-          <PaginationItem className="usafb-pagination__link">
+          <PaginationItem className="usafb-pagination__link" onClick={this.nextPage}>
             <PaginationLink next />
           </PaginationItem>
         </Pagination>

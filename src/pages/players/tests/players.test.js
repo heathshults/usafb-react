@@ -8,6 +8,7 @@ import Players from '../Players';
 import Container from 'components/containers/Container';
 import DataHeader from 'components/data-header/DataHeader';
 import ImportModal from '../components/import-modal/ImportModal';
+import DataTable from 'components/data-table/DataTable';
 
 const setupPlayerComponent = () => {
   const props = {};
@@ -32,5 +33,9 @@ describe('[Players Pane] UI components test', () => {
 
   test('ImportModal exists', () => {
     expect(playerWrapper.find(ImportModal).length).toBe(1);
+  });
+
+  test('DataTable exists', () => {
+    expect(playerWrapper.find(DataTable).length).toBe(1);
   });
 });

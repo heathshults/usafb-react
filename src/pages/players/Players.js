@@ -65,6 +65,14 @@ class Players extends Component {
     });
   }
 
+  setPage = (page) => {
+    if (page !== this.state.currentPage) {
+      this.setState({
+        currentPage: page
+      });
+    }
+  }
+
   render() {
     return (
       <Container>
@@ -89,6 +97,7 @@ class Players extends Component {
         <Pagination
           currentPage={this.state.currentPage}
           totalItems={this.state.totalItems}
+          setPage={this.setPage}
         />
       </Container>
     );

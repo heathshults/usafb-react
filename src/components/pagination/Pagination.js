@@ -4,6 +4,7 @@ import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import uuidv4 from 'uuid/v4';
 
 import Label from './components/label/Label';
+import './pagination.css';
 
 class PaginationComponent extends Component {
   constructor() {
@@ -54,7 +55,12 @@ class PaginationComponent extends Component {
   }
 
   getStandardPaginationLink = value => (
-    <PaginationItem key={uuidv4()} active={this.props.currentPage === value}>
+    <PaginationItem
+      key={uuidv4()}
+      active={this.props.currentPage === value}
+      className={`${value !== '...' ? 'usafb-pagination__link' : 'usafb-pagination__more-pages'}`}
+      onClick={() => this.props.setPage(value)}
+    >
       <PaginationLink >
         {value}
       </PaginationLink>
@@ -86,11 +92,11 @@ class PaginationComponent extends Component {
           updateRowsPerPage={this.updateRowsPerPage}
         />
         <Pagination className="mb-0">
-          <PaginationItem>
+          <PaginationItem className="usafb-pagination__link">
             <PaginationLink previous />
           </PaginationItem>
           {this.getPaginationLinks()}
-          <PaginationItem>
+          <PaginationItem className="usafb-pagination__link">
             <PaginationLink next />
           </PaginationItem>
         </Pagination>
@@ -101,7 +107,8 @@ class PaginationComponent extends Component {
 
 PaginationComponent.propTypes = {
   currentPage: PropTypes.number.isRequired,
-  totalItems: PropTypes.number.isRequired
+  totalItems: PropTypes.number.isRequired,
+  setPage: PropTypes.func.isRequired
 };
 
 export default PaginationComponent;

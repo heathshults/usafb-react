@@ -21,7 +21,7 @@ class Players extends Component {
       columns: this.columns.getColumnsForTableHeader(),
       displayFilters: false,
       displayAdvancedSearch: false,
-      currentPage: 1,
+      currentPage: 5,
       totalItems: 100,
       players: []
     };

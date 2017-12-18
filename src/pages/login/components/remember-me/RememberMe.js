@@ -4,9 +4,13 @@ import React from 'react';
 const rememberMe = () => (
   <div className="row form-group d-inline-flex">
     <div className="col-md-12 input-group justify-content-center">
-      <label className="form-check-label">
+      <label htmlFor="rememberMe" className="form-check-label">
         <span className="checkbox-theme">
-          <input type="checkbox" className="form-check-input text-center" />
+          <input
+            id="rememberMe"
+            type="checkbox"
+            className="form-check-input text-center"
+          />
           <small className="text-white">
             Remember Me
           </small>

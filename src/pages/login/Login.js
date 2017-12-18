@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import $ from 'jquery'; // Already imported from index.html. Do we need this? [KK]
+import $ from 'jquery';
 
 import { LOGIN } from './dux/actions';
 
@@ -15,7 +15,7 @@ import Input from './components/input/Input';
 import RememberMe from './components/remember-me/RememberMe';
 import LoginButton from './components/login-button/LoginButton';
 
-class Login extends Component {
+export class Login extends Component {
   constructor() {
     super();
 
@@ -65,6 +65,7 @@ class Login extends Component {
               placeholder="Email"
               value={this.state.email}
               onChange={this.updateEmail}
+              inputId="userEmail"
             />
             <Input
               icon="lock"
@@ -72,6 +73,7 @@ class Login extends Component {
               inputType="password"
               value={this.state.password}
               onChange={this.updatePassword}
+              inputId="userPassword"
             />
             <RememberMe />
             <LoginButton

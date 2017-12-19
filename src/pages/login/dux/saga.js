@@ -5,7 +5,7 @@ import { login, getUserData } from './api';
 
 export default function* loginFlow() {
   while (true) {
-    const loginInfo = yield take(actions.LOGIN);
+    const loginInfo = yield take(actions.LOGIN); //eslint-disable-line
     yield goToDashboard();
     // yield call(loginSaga, loginInfo.data);
   }

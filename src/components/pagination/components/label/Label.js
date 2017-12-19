@@ -8,7 +8,7 @@ const label = props => (
   <div className="d-flex align-items-center">
     <p className="pagination__label">
       Showing {props.startingIndex} to {props.endingIndex} of {props.totalItems} rows
-  </p>
+    </p>
     <ButtonDropdown
       isOpen={props.dropdownOpen}
       toggle={props.toggleDropdown}
@@ -26,33 +26,33 @@ const label = props => (
           value={10}
         >
           10
-      </DropdownItem>
+        </DropdownItem>
         <DropdownItem
           className={`${props.rowsPerPage === 25 ? 'pagination__label-dropdown-active' : 'pagination__label-dropdown-item'}`}
           onClick={props.updateRowsPerPage}
           value={25}
         >
           25
-      </DropdownItem>
+        </DropdownItem>
         <DropdownItem
           className={`${props.rowsPerPage === 50 ? 'pagination__label-dropdown-active' : 'pagination__label-dropdown-item'}`}
           onClick={props.updateRowsPerPage}
           value={50}
         >
           50
-      </DropdownItem>
+        </DropdownItem>
         <DropdownItem
           className={`${props.rowsPerPage === 100 ? 'pagination__label-dropdown-active' : 'pagination__label-dropdown-item'}`}
           onClick={props.updateRowsPerPage}
           value={100}
         >
           100
-      </DropdownItem>
+        </DropdownItem>
       </DropdownMenu>
     </ButtonDropdown>
     <p className="pagination__label">
       rows per page
-  </p>
+    </p>
   </div>
 );
 

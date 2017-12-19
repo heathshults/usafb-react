@@ -6,6 +6,7 @@ import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
 import DataTableFilter from 'components/data-table-filter/DataTableFilter';
+import ImportModal from './components/import-modal/ImportModal';
 
 class Coaches extends Component {
   constructor() {
@@ -71,10 +72,11 @@ class Coaches extends Component {
   render() {
     return (
       <Container>
+        <ImportModal />
         <DataHeader
           userType="coaches"
           numberOfUsers={1000}
-          importModalID="player-import-modal"
+          importModalID="coach-import-modal"
         />
         <DataTableFilter
           filters={this.state.filters}

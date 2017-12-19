@@ -17,7 +17,7 @@ const dataHeader = props => (
       message={props.messageBody}
     />
     <ButtonGroup
-      importModalID={props.importModalID}
+      showModal={props.showModal}
     />
   </Container>
 );
@@ -27,7 +27,7 @@ dataHeader.propTypes = {
   numberOfUsers: PropTypes.number.isRequired,
   messageTitle: PropTypes.string,
   messageBody: PropTypes.string,
-  importModalID: PropTypes.string.isRequired,
+  showModal: PropTypes.func.isRequired,
   // export: PropTypes.func.isRequired,
   // import: PropTypes.func.isRequired,
 };

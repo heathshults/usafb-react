@@ -1,6 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
+import importCsv from 'utils/import';
 
 import Upload from './components/upload/Upload';
 
@@ -9,12 +10,21 @@ import Upload from './components/upload/Upload';
 // so we had to bring it in here.
 import './dropzone.css';
 
-const dropzone = () => (
-  <Dropzone
-    className="usafb__dropzone pt-0"
-    children={Upload} // eslint-disable-line
-  />
-);
+const dropzone = () => {
+  const captureFile = (acceptedFiles) => {
+    importCsv(acceptedFiles[0])
+      .then(data => data)
+      .catch(err => err);
+  };
+  return (
+    <Dropzone
+      className="usafb__dropzone pt-0"
+      children={Upload} // eslint-disable-line
+      onDrop={captureFile}
+      multiple={false}
+    />
+  );
+};
 
 dropzone.propTypes = {
 

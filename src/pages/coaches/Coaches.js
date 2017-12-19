@@ -6,6 +6,7 @@ import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
 import DataTableFilter from 'components/data-table-filter/DataTableFilter';
+import ImportModal from 'components/import-modal/ImportModal';
 
 class Coaches extends Component {
   constructor() {
@@ -20,7 +21,8 @@ class Coaches extends Component {
       displayAdvancedSearch: false,
       currentPage: 1,
       totalItems: 100,
-      coaches: []
+      coaches: [],
+      showModal: false
     };
   }
 
@@ -68,13 +70,20 @@ class Coaches extends Component {
     });
   }
 
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  }
+
   render() {
     return (
       <Container>
+        <ImportModal showModal={this.state.showModal} toggleModal={this.toggleModal} />
         <DataHeader
           userType="coaches"
           numberOfUsers={1000}
-          importModalID="player-import-modal"
+          showModal={this.toggleModal}
         />
         <DataTableFilter
           filters={this.state.filters}

@@ -9,3 +9,10 @@
     background-color: #fff !important;
   }
 }
+
+// fix padding on pagination so it aligns well with pagination label
+.page-item {
+  & > .page-link {
+    padding: 0.5rem 20px !important;
+  }
+}

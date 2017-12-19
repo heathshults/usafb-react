@@ -39,4 +39,17 @@ describe('[PLAYERS PANE] acceptance test', () => {
       .click('html > body.modal-open > div:nth-child(7) > div:nth-child(1) > div.modal.fade.show:nth-child(1) > div.modal-dialog:nth-child(1) > div.modal-content:nth-child(1) > div.modal-header:nth-child(1) > button.close:nth-child(2) > span:nth-child(1)')
       .end()
   });
+
+  test('pagination', async function () {
+    const page = await nightmareRedirect('/players')
+      .click('section#main-content > div.container-fluid:nth-child(1) > div.row.d-flex.justify-content-between.mt-3.mb-3:nth-child(5) > ul.mb-0.pagination:nth-child(2) > li.usafb-pagination__link.page-item:nth-child(5) > a.page-link:nth-child(1)')
+      .wait(500)
+      .evaluate(() =>
+        document.querySelector('.pagination__label').innerHTML
+      )
+      .end()
+      .then((result) => {
+        expect(result).toBe('Showing 31 to 40 of 100 rows');
+      });
+  });
 });

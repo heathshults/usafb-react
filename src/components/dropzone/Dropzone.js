@@ -12,11 +12,7 @@ import './dropzone.css';
 
 
 const dropzone = () => {
-  const captureFile = (acceptedFiles, rejectedFiles) => {
-    if (rejectedFiles) {
-      console.log('Files rejected', rejectedFiles); //eslint-disable-line
-      return;
-    }
+  const captureFile = (acceptedFiles) => {
     importCsv(acceptedFiles[0]);
   };
   return (

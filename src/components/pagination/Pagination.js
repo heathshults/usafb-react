@@ -87,7 +87,7 @@ class PaginationComponent extends Component {
   );
 
   setPage = (value) => {
-    if (value !== '...' || value !== this.props.currentPage) {
+    if (value !== '...' && value !== this.props.currentPage) {
       this.props.setPage(value);
     }
   }

@@ -40,7 +40,7 @@ const filters = props => (
       <FontAwesome name="filter" />
       <span className="data-table-filter__label">
         Filters
-        </span>
+      </span>
       <FontAwesome name="caret-down" />
     </button>
     <Popover

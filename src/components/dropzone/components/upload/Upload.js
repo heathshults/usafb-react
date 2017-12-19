@@ -8,7 +8,7 @@ const upload = () => (
       <i className="fa fa-cloud-upload display-4 text-secondary" aria-hidden="true" />
     </p>
     <p className="dz-clickable dz-message needsclick">Drop files here to upload or
-    <span style={{ color: '#09254a' }}>choose a file</span>
+      <span style={{ color: '#09254a' }}>choose a file</span>
     </p>
   </div>
 );

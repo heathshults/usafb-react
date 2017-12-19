@@ -6,7 +6,7 @@ import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
 import DataTableFilter from 'components/data-table-filter/DataTableFilter';
-import ImportModal from './components/import-modal/ImportModal';
+import ImportModal from 'components/import-modal/ImportModal';
 
 class Coaches extends Component {
   constructor() {
@@ -24,8 +24,6 @@ class Coaches extends Component {
       coaches: [],
       showModal: false
     };
-
-    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentWillMount() {
@@ -72,7 +70,7 @@ class Coaches extends Component {
     });
   }
 
-  toggleModal() {
+  toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal
     });

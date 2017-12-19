@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Dropzone from 'components/dropzone/Dropzone';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; //eslint-disable-line
+import { Modal, ModalBody } from 'reactstrap';
 
 const importModal = props => (
-  <Modal id="coach-import-modal" isOpen={props.showModal} toggle={props.toggleModal}>
+  <Modal id="import-modal" isOpen={props.showModal} toggle={props.toggleModal}>
     <ModalBody>
       <div className="modal-dialog" role="document">
         <div className="modal-content">

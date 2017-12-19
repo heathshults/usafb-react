@@ -18,15 +18,14 @@ yarn start
 yarn test
 ```
 
-## Run Linter
+## Linter
 
-```bash
-yarn lint
-```
+For this project, we are using eslint that will automatically display errors on your text-editor/IDE. If you are
+having trouble installing eslint, follow the instructions [here](https://www.npmjs.com/package/eslint)
 
 # Architecture
 
-## dist
+## build
 
 compiled files
 
@@ -92,12 +91,7 @@ All other page related files will similary live in the page's folder under the a
 
 All modules may contain any combination of the following files:
 
-### index.js - Action Creators
-
-The index.js file will only contain action creators and export each action creator individually. This is the primary
-exposed area of a module which will be used by React components and other modules.
-
-### constants.js - Constants
+### actions.js - Constants
 
 All module related constants will export each constant individually. Ideally no other module imports constants directly.
 
@@ -132,3 +126,17 @@ should be in the reducer.js file.
 An example of a "utility" method that is NOT wholly tied to Redux would be a date formatting function. This method
 should simply be placed in a common date-time.js file in the toplevel utils folder, even if it is currently only being
 used by a single module.
+
+
+## Testing
+
+For this project, we will be using Jest to make sure each component renders and behaves correctly. It comes preinstealled with create-react-app,
+so you shouldn't have to do anything to configure jest. If you are getting the error "Error: Error watching file for changes: EMFILE", make sure you
+do a "brew install watchman".
+
+Tests should lie in their respected components folder, inside a directory named "tests". For the sake of consistency and clarity, we will name each 
+test as {component}.test.js. 
+
+Our tests are using [Jest](https://facebook.github.io/jest/docs/en/getting-started.html#content), [Enzyme](https://github.com/airbnb/enzyme/blob/master/docs/guides/jest.md), and [redux-saga-testing](https://github.com/antoinejaussoin/redux-saga-testing).
+
+For acceptance test, we are using [Nightmare](https://github.com/segmentio/nightmare). If you want to read the article that influenced this project to use nightmare, [click here](https://www.viget.com/articles/acceptance-testing-react-apps-with-jest-and-nightmare).

@@ -44,6 +44,7 @@ function goToDashboard() {
 
 function* getUserInfoSaga() {
   const response = yield call(getUserData);
+
   if (response.ok) {
     const userInfo = yield response.json();
     window.localStorage.setItem('profile_info', JSON.stringify(userInfo));

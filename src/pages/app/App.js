@@ -1,9 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-
 import { Router } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
-
 import createHistory from 'history/createBrowserHistory';
 
 import store from 'services/redux/store';

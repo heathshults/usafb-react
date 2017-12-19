@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 
 import App from 'pages/app/App';
 import 'styles/usafb/usafb-bootstrap.css';

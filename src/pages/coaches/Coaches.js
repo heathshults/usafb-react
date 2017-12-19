@@ -21,8 +21,11 @@ class Coaches extends Component {
       displayAdvancedSearch: false,
       currentPage: 1,
       totalItems: 100,
-      coaches: []
+      coaches: [],
+      showModal: false
     };
+
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentWillMount() {
@@ -69,14 +72,20 @@ class Coaches extends Component {
     });
   }
 
+  toggleModal() {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  }
+
   render() {
     return (
       <Container>
-        <ImportModal />
+        <ImportModal showModal={this.state.showModal} toggleModal={this.toggleModal} />
         <DataHeader
           userType="coaches"
           numberOfUsers={1000}
-          importModalID="coach-import-modal"
+          showModal={this.toggleModal}
         />
         <DataTableFilter
           filters={this.state.filters}

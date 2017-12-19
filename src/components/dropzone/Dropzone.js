@@ -10,10 +10,11 @@ import Upload from './components/upload/Upload';
 // so we had to bring it in here.
 import './dropzone.css';
 
-
 const dropzone = () => {
   const captureFile = (acceptedFiles) => {
-    importCsv(acceptedFiles[0]);
+    importCsv(acceptedFiles[0])
+      .then(data => data)
+      .catch(err => err);
   };
   return (
     <Dropzone

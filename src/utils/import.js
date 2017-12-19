@@ -18,8 +18,5 @@ export default function importCsv(file, type) {
     secretAccessKey: 'tbd',
   };
 
-
-  ReactS3.upload(file, config)
-    .then(data => data)
-    .catch(err => err);
+  return ReactS3.upload(file, config);
 }

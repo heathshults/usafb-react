@@ -19,7 +19,7 @@ const buttonGroup = props => (
       id="btn-import"
       className="btn btn-primary-02 text-white"
       data-toggle="modal"
-      data-target={`#${props.importModalID}`}
+      onClick={props.showModal}
     >
       <i
         className="fa fa-cloud-upload mr-1"
@@ -31,7 +31,7 @@ const buttonGroup = props => (
 );
 
 buttonGroup.propTypes = {
-  importModalID: PropTypes.string.isRequired
+  showModal: PropTypes.func.isRequired
 };
 
 export default buttonGroup;

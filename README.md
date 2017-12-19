@@ -33,39 +33,27 @@ compiled files
 
 includes images, fonts
 
-## css
-based on ITCSS architecture. For reference https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/
-Settings – font, colors definitions.
-Tools – globally used mixins and functions.
-Generic – reset and/or normalize styles, box-sizing definition.
-Elements – styling for bare HTML elements.
-Objects – class-based selectors which define undecorated design patterns.
-Components – specific UI components.
-Utilities – utilities and helper classes to override any style (using !important)
-
-## ducks
-modules separated in folders following ducks pattern from Redux
-
 ## services
+
+### Redux
+
+Contains the store and reducers
+
+## utils
+
 Services and config parameters
 
-# Components
-
-## Classification
-
-All components can be found/grouped in one of 2 categories:
-
-### Components
-
-All **Components** are those that have no side effects (read: they are not connected to the redux store, all data comes
-in via props and nothing global is accessed or produced).
-
-They are found in `src/components/`.
-
-### Pages
+## Pages
 
 All **Pages** are those *Containers* that are directly mounted into a `<Route>` handler. They are stored in a
 directory/name structure that mimics the urls they are mounted to.
+
+### These *Containers* will be structured as the following:
+
+- FileName.js
+- fileName.scss
+- fileName.reducer.js
+- fileName.duck.js
 
 # Redux Modules
 
@@ -92,6 +80,12 @@ PascalCase
 ### Other Files
 
 camelCase
+
+## Rational & Paradigms
+
+All main views will be **pages**. Within each page will live a **components** folder where all singly used components will be. If a component is used throughout the app, it should live within the **shared-components** folder.
+
+All other page related files will similary live in the page's folder under the appropriate folder.
 
 ## Structure
 

@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
 import Container from './components/container/Container';
+import Logo from './components/logo/Logo';
 
 const navBar = (props) => {
   if (props.location.pathname === '/login') {
@@ -11,7 +12,8 @@ const navBar = (props) => {
 
   return (
     <Container>
-      {JSON.stringify(props)}
+      <Logo />
+      <div />
     </Container>
   );
 };

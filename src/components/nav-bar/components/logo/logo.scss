@@ -1,0 +1,26 @@
+.nav-bar__logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.nav-bar__logo {
+  width: 150px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.nav-bar__header {
+  color: #fff !important;
+  font-family: "Roboto", Roboto, sans-serif;
+  text-transform: uppercase;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  border-left: solid;
+  margin-left: 10px;
+
+  h4 {
+    margin: 0;
+  }
+}

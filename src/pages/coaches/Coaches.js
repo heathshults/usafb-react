@@ -7,6 +7,7 @@ import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
 import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from 'components/import-modal/ImportModal';
+import importCsv from 'utils/import';
 
 class Coaches extends Component {
   constructor() {
@@ -22,7 +23,8 @@ class Coaches extends Component {
       currentPage: 1,
       totalItems: 100,
       coaches: [],
-      showModal: false
+      showModal: false,
+      uploadedFile: null,
     };
   }
 
@@ -72,14 +74,33 @@ class Coaches extends Component {
 
   toggleModal = () => {
     this.setState({
+      uploadedFile: null,
       showModal: !this.state.showModal
     });
+  }
+
+  updateFileInParentState = (uploadedFile) => {
+    this.setState({
+      uploadedFile
+    });
+  }
+
+  uploadFile = () => {
+    importCsv(this.state.uploadedFile)
+      .then(data => data)
+      .catch(err => err);
   }
 
   render() {
     return (
       <Container>
-        <ImportModal showModal={this.state.showModal} toggleModal={this.toggleModal} />
+        <ImportModal
+          showModal={this.state.showModal}
+          toggleModal={this.toggleModal}
+          updateFileInParentState={this.updateFileInParentState}
+          uploadFile={this.uploadFile}
+          uploadedFile={this.state.uploadedFile}
+        />
         <DataHeader
           userType="coaches"
           numberOfUsers={1000}

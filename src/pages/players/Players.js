@@ -10,6 +10,8 @@ import Columns from 'components/data-table/models/columns';
 import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from 'components/import-modal/ImportModal';
 
+import importCsv from 'utils/import';
+
 class Players extends Component {
   constructor() {
     super();
@@ -24,7 +26,8 @@ class Players extends Component {
       currentPage: 1,
       totalItems: 100,
       players: [],
-      showModal: false
+      showModal: false,
+      uploadedFile: null
     };
   }
 
@@ -74,14 +77,33 @@ class Players extends Component {
 
   toggleModal = () => {
     this.setState({
+      uploadedFile: null,
       showModal: !this.state.showModal
     });
+  }
+
+  updateFileInParentState = (uploadedFile) => {
+    this.setState({
+      uploadedFile
+    });
+  }
+
+  uploadFile = () => {
+    importCsv(this.state.uploadedFile)
+      .then(data => data)
+      .catch(err => err);
   }
 
   render() {
     return (
       <Container>
-        <ImportModal showModal={this.state.showModal} toggleModal={this.toggleModal} />
+        <ImportModal
+          showModal={this.state.showModal}
+          toggleModal={this.toggleModal}
+          updateFileInParentState={this.updateFileInParentState}
+          uploadFile={this.uploadFile}
+          uploadedFile={this.state.uploadedFile}
+        />
         <DataHeader
           userType="players"
           numberOfUsers={1000}

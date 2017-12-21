@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Container from './components/container/Container';
 import Logo from './components/logo/Logo';
+import Navigation from './components/navigation/Navigation';
 
 const navBar = (props) => {
   if (props.location.pathname === '/login') {
@@ -13,7 +14,7 @@ const navBar = (props) => {
   return (
     <Container>
       <Logo />
-      <div />
+      <Navigation />
     </Container>
   );
 };

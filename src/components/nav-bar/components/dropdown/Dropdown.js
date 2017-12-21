@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Link } from 'react-router-dom';
 
 import User from '../user/User';
 import './dropdown.css';
@@ -32,26 +31,18 @@ class NavDropdown extends Component {
           <User />
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem>
-            <Link to="/profile">
-              My Profile
-            </Link>
+          <DropdownItem href="/profile" className="nav-bar__dropdown-button-item">
+            My Profile
           </DropdownItem>
-          <DropdownItem>
-            <Link to="/users">
-              Manage Users
-            </Link>
+          <DropdownItem href="/users" className="nav-bar__dropdown-button-item">
+            Manage Users
           </DropdownItem>
-          <DropdownItem>
-            <Link to="/help">
-              Help / FAQ
-            </Link>
+          <DropdownItem href="/help" className="nav-bar__dropdown-button-item">
+            Help / FAQ
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem>
-            <Link to="/profile">
-              Sign Out
-            </Link>
+          <DropdownItem href="/profile" className="nav-bar__dropdown-button-item">
+            Sign Out
           </DropdownItem>
         </DropdownMenu>
       </ButtonDropdown>

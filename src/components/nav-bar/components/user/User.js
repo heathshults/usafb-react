@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import testImg from 'images/test/profile.jpg';
+import testImg from 'images/sample/profile.jpg';
 import './user.css';
 
 const user = () => (

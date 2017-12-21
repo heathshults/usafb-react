@@ -1,6 +1,6 @@
 import React from 'react';
 
-import logoImage from './usafb-logo.png';
+import logoImage from 'images/logo/usafb-logo.png';
 import './logo.css';
 
 const logo = () => (

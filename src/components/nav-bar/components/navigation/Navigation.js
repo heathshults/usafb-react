@@ -1,23 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './navigation.css';
 
 const navigation = () => (
   <ul className="d-flex nav-bar__navigation mr-auto mt-2 mt-lg-0 ml-auto">
     <li>
-      <a className="nav-bar__link" href="./dashboard.html">Home</a>
+      <Link className="nav-bar__link" to="/">Home</Link>
     </li>
     <span className="nav-bar__separator" />
     <li>
-      <a className="nav-bar__link active" href="./players-list.html">Players</a>
+      <Link className="nav-bar__link" to="/players">Players</Link>
     </li>
     <span className="nav-bar__separator" />
     <li>
-      <a className="nav-bar__link" href="./coaches-list.html">Coaches</a>
+      <Link className="nav-bar__link" to="/coaches">Coaches</Link>
     </li>
     <span className="nav-bar__separator" />
     <li>
-      <a className="nav-bar__link" href="./dashboard01.html">Dashboard</a>
+      <Link className="nav-bar__link" to="/dashboard">Dashboard</Link>
     </li>
   </ul>
 );

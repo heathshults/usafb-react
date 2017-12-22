@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Container from './components/container/Container';
+import Header from './components/header/Header';
+
 class Users extends Component {
   constructor() {
     super();
@@ -10,9 +13,10 @@ class Users extends Component {
 
   render() {
     return (
-      <div>
-        User Management Page
-      </div>
+      <Container>
+        <Header />
+        <div />
+      </Container>
     );
   }
 }

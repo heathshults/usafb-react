@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
 
 import store from 'services/redux/store';
+import NavBar from 'components/nav-bar/NavBar';
 import Login from 'pages/login/Login';
 import Players from 'pages/players/Players';
 import Dashboard from 'pages/dashboard/Dashboard';
@@ -17,12 +18,15 @@ const history = createHistory();
 const app = () => (
   <Provider store={store}>
     <Router history={history}>
-      <Switch>
-        <Route exact path="/" component={Dashboard} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/players" component={Players} />
-        <Route exact path="/coaches" component={Coaches} />
-      </Switch>
+      <div>
+        <NavBar />
+        <Switch>
+          <Route exact path="/" component={Dashboard} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/players" component={Players} />
+          <Route exact path="/coaches" component={Coaches} />
+        </Switch>
+      </div>
     </Router>
   </Provider>
 );

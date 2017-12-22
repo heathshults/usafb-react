@@ -1,17 +1,18 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const createUserButton = () => (
+const createUserButton = props => (
   <div className="col-5">
     <div className="d-flex h-100">
-      <a href="users-add.html" className="btn btn-primary-02 ml-auto" data-toggle="modal" data-target="#create-u">
-        <i className="fa fa-user" aria-hidden="true" /> Create New</a>
+      <button className="btn btn-primary-02 ml-auto" onClick={props.toggle}>
+        <i className="fa fa-user" aria-hidden="true" /> Create New
+      </button>
     </div>
   </div>
 );
 
 createUserButton.propTypes = {
-
+  toggle: PropTypes.func.isRequired
 };
 
 export default createUserButton;

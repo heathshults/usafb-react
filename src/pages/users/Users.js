@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import Container from './components/container/Container';
+import MainContainer from 'components/containers/Container';
+import HeaderContainer from './components/header-container/HeaderContainer';
 import Header from './components/header/Header';
 
 class Users extends Component {
@@ -13,10 +14,13 @@ class Users extends Component {
 
   render() {
     return (
-      <Container>
-        <Header />
+      <MainContainer>
+        <HeaderContainer>
+          <Header />
+          <div />
+        </HeaderContainer>
         <div />
-      </Container>
+      </MainContainer>
     );
   }
 }

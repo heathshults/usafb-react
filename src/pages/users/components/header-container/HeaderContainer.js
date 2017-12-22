@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const container = props => (
-  <section id="main-content" className="h-100 w-100">
-    <div className="container-fluid">
-      {React.Children.map(props.children, child => child)}
+  <div className="row">
+    <div className="col-12">
+      <div className="row d-flex align-items-center">
+        {React.Children.map(props.children, child => child)}
+      </div>
     </div>
-  </section>
+  </div>
 );
 
 container.propTypes = {

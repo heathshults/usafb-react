@@ -18,7 +18,9 @@ class Users extends Component {
     this.columns = new Columns();
     this.state = {
       users: [],
-      createUserModalOpen: false
+      createUserModalOpen: false,
+      firstName: '',
+      lastName: ''
     };
   }
 
@@ -28,12 +30,28 @@ class Users extends Component {
     });
   }
 
+  updateFirstName = (event) => {
+    this.setState({
+      firstName: event.target.value
+    });
+  }
+
+  updateLastName = (event) => {
+    this.setState({
+      lastName: event.target.value
+    });
+  }
+
   render() {
     return (
       <MainContainer>
         <CreateUserModal
           open={this.state.createUserModalOpen}
           toggle={this.toggleCreateUserModal}
+          firstName={this.state.firstName}
+          updateFirstName={this.updateFirstName}
+          lastName={this.state.lastName}
+          updateLastName={this.updateLastName}
         />
         <HeaderContainer>
           <Header />

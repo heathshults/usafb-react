@@ -2,11 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+import InputField from '../input-field/InputField';
+
 const createUserModal = props => (
   <Modal isOpen={props.open} toggle={props.toggle}>
-    <ModalHeader toggle={props.toggle}>Modal title</ModalHeader>
+    <ModalHeader toggle={props.toggle}>
+      <i className="fa fa-user" aria-hidden="true" /> Create New User
+    </ModalHeader>
     <ModalBody>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div className="form-group">
+        <div className="row">
+          <div className="col-md-6 input-group">
+            <InputField
+              icon="user-o"
+              label="First Name"
+              value={props.firstName}
+              onChange={props.updateFirstName}
+            />
+          </div>
+          <div className="col-md-6 input-group">
+            <InputField
+              icon="user-o"
+              label="Last Name"
+              value={props.lastName}
+              onChange={props.updateLastName}
+            />
+          </div>
+        </div>
+      </div>
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={props.toggle}>Do Something</Button>{' '}
@@ -17,7 +40,11 @@ const createUserModal = props => (
 
 createUserModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired
+  toggle: PropTypes.func.isRequired,
+  firstName: PropTypes.string.isRequired,
+  updateFirstName: PropTypes.func.isRequired,
+  lastName: PropTypes.string.isRequired,
+  updateLastName: PropTypes.func.isRequired
 };
 
 export default createUserModal;

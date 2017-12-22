@@ -9,7 +9,7 @@ import ButtonGroup from './components/button-group/ButtonGroup';
 const dataHeader = props => (
   <Container>
     <Header
-      userType={props.userType}
+      header={props.header}
       numberOfUsers={props.numberOfUsers}
     />
     <Message
@@ -23,13 +23,11 @@ const dataHeader = props => (
 );
 
 dataHeader.propTypes = {
-  userType: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
   numberOfUsers: PropTypes.number.isRequired,
   messageTitle: PropTypes.string,
   messageBody: PropTypes.string,
-  showModal: PropTypes.func.isRequired,
-  // export: PropTypes.func.isRequired,
-  // import: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired
 };
 
 dataHeader.defaultProps = {

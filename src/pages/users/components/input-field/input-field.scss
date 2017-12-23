@@ -6,9 +6,7 @@
   border-top-right-radius: 0.25rem !important;
   border-bottom-right-radius: 0.25rem !important;
 
-  &:hover {
-    box-shadow: 0 !important;
-  }
+  box-shadow: none !important;
 }
 
 .user-management__input-group-icon {

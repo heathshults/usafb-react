@@ -20,7 +20,16 @@ class Users extends Component {
       users: [],
       createUserModalOpen: false,
       firstName: '',
-      lastName: ''
+      lastName: '',
+      email: '',
+      role: '',
+      phone: '',
+      organization: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: ''
     };
   }
 
@@ -30,17 +39,60 @@ class Users extends Component {
     });
   }
 
-  updateFirstName = (event) => {
+  updateFirstName = event =>
     this.setState({
       firstName: event.target.value
     });
-  }
 
-  updateLastName = (event) => {
+  updateLastName = event =>
     this.setState({
       lastName: event.target.value
     });
-  }
+
+  updateEmail = event =>
+    this.setState({
+      email: event.target.value
+    });
+
+  updateRole = event =>
+    this.setState({
+      role: event.target.value
+    });
+
+  updatePhone = event =>
+    this.setState({
+      phone: event.target.value
+    });
+
+  updateOrganization = event =>
+    this.setState({
+      organization: event.target.value
+    });
+
+  updateAddress1 = event =>
+    this.setState({
+      address1: event.target.value
+    });
+
+  updateAddress2 = event =>
+    this.setState({
+      address2: event.target.value
+    });
+
+  updateCity = event =>
+    this.setState({
+      city: event.target.value
+    });
+
+  updateState = event =>
+    this.setState({
+      state: event.target.value
+    });
+
+  updateZip = event =>
+    this.setState({
+      zip: event.target.value
+    });
 
   render() {
     return (
@@ -52,6 +104,24 @@ class Users extends Component {
           updateFirstName={this.updateFirstName}
           lastName={this.state.lastName}
           updateLastName={this.updateLastName}
+          email={this.state.email}
+          updateEmail={this.updateEmail}
+          role={this.state.role}
+          updateRole={this.updateRole}
+          phone={this.state.phone}
+          updatePhone={this.updatePhone}
+          organization={this.state.organization}
+          updateOrganization={this.updateOrganization}
+          address1={this.state.address1}
+          updateAddress1={this.updateAddress1}
+          address2={this.state.address2}
+          updateAddress2={this.updateAddress2}
+          city={this.state.city}
+          updateCity={this.updateCity}
+          state={this.state.state}
+          updateState={this.updateState}
+          zip={this.state.zip}
+          updateZip={this.updateZip}
         />
         <HeaderContainer>
           <Header />

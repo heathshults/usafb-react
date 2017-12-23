@@ -1,6 +1,6 @@
 export default [
   {
-    value: undefined,
+    value: '',
     label: 'State'
   },
   {

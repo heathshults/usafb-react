@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-// models
 import Columns from 'components/data-table/models/user-columns';
 
 import MainContainer from 'components/containers/Container';
@@ -12,10 +11,13 @@ import HeaderMessage from './components/header-message/HeaderMessage';
 import CreateUserButton from './components/create-user-button/CreateUserButton';
 import CreateUserModal from './components/create-user-modal/CreateUserModal';
 
+import states from './models/states';
+
 class Users extends Component {
   constructor() {
     super();
     this.columns = new Columns();
+    this.states = states;
     this.state = {
       users: [],
       createUserModalOpen: false,
@@ -29,7 +31,7 @@ class Users extends Component {
       address2: '',
       city: '',
       state: '',
-      zip: ''
+      zip: '',
     };
   }
 
@@ -122,6 +124,7 @@ class Users extends Component {
           updateState={this.updateState}
           zip={this.state.zip}
           updateZip={this.updateZip}
+          states={this.states}
         />
         <HeaderContainer>
           <Header />

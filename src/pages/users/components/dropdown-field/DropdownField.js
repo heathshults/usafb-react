@@ -6,7 +6,7 @@ const getDropdownId = label => `user-input-${label.replace(/ /g, '')}`;
 
 const dropdownField = props => (
   <div className="input-group">
-    <label htmlFor={getInputId(props.label)} className="sr-only">
+    <label htmlFor={getDropdownId(props.label)} className="sr-only">
       {props.label}
     </label>
     <span className="input-group-addon user-management__input-group-icon">
@@ -14,7 +14,11 @@ const dropdownField = props => (
     </span>
     <select name={getDropdownId(props.label)} id={getDropdownId(props.label)}>
       {props.options.map(option => (
-        <option value={option.value} selected={props.selected === option.value}>
+        <option
+          value={option.value}
+          selected={props.value === option.value}
+          key={option.value}
+        >
           {option.label}
         </option>
       ))}
@@ -26,7 +30,7 @@ dropdownField.propTypes = {
   label: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
-  selected: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired
 };
 
 export default dropdownField;

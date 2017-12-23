@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import InputField from '../input-field/InputField';
+import DropdownField from '../dropdown-field/DropdownField';
 import './create-user-modal.css';
 
 const createUserModal = props => (
@@ -98,11 +99,12 @@ const createUserModal = props => (
             />
           </div>
           <div className="col-md-4 users__input-container">
-            <InputField
+            <DropdownField
               icon="map"
               label="State"
               value={props.state}
               onChange={props.updateState}
+              options={props.states}
             />
           </div>
           <div className="col-md-4 users__input-container">
@@ -148,6 +150,7 @@ createUserModal.propTypes = {
   updateState: PropTypes.func.isRequired,
   zip: PropTypes.string.isRequired,
   updateZip: PropTypes.func.isRequired,
+  states: PropTypes.array.isRequired
 };
 
 export default createUserModal;

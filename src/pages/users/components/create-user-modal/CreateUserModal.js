@@ -117,8 +117,8 @@ const createUserModal = props => (
       </div>
     </ModalBody>
     <ModalFooter>
-      <Button color="primary" onClick={props.toggle}>Do Something</Button>{' '}
-      <Button color="secondary" onClick={props.toggle}>Cancel</Button>
+      <Button color="secondary" onClick={props.toggle}>Close</Button>{' '}
+      <Button color="primary" onClick={props.toggle}>Save</Button>
     </ModalFooter>
   </Modal>
 );

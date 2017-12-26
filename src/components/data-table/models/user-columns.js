@@ -16,15 +16,16 @@ export default class UserColumns {
 
   setUserColumns = () => {
     columns.push(
-      new Column('Last Name', true, true),
-      new Column('First Name', true),
-      new Column('Status', true),
-      new Column('Role', true),
-      new Column('Create Date', true),
-      new Column('Phone', true),
-      new Column('Location', true),
-      new Column('Organization', true),
-      new Column('Actions', true)
+      new Column('ID', 'id_external', false, true, true),
+      new Column('Last Name', 'name_last', true),
+      new Column('First Name', 'name_first', true),
+      new Column('Status', 'Status', true),
+      new Column('Role', 'role_id', true),
+      new Column('Create Date', 'created_at', true),
+      new Column('Phone', 'phone', true),
+      new Column('Location', 'location', true),
+      new Column('Organization', 'organization', true),
+      new Column('Actions', 'actions', true)
     );
   }
 

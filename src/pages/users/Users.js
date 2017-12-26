@@ -45,8 +45,6 @@ class Users extends Component {
     // using 1 and 10 as parameters because that is what
     // the pagination default is set to
     this.updateUsers(1, 10);
-
-    setTimeout(() => console.dir(this.props), 4000); //eslint-disable-line
   }
 
   updateUsers = (currentPage, perPage) => {
@@ -152,7 +150,7 @@ class Users extends Component {
         </HeaderContainer>
         <DataTable
           columns={this.columns.getUserColumns()}
-          data={this.state.users}
+          data={this.props.users}
         />
         <Pagination
           totalItems={this.props.totalUsers}
@@ -166,6 +164,7 @@ class Users extends Component {
 Users.propTypes = {
   getUsers: PropTypes.func.isRequired,
   totalUsers: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;

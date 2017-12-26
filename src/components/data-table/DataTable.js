@@ -26,7 +26,7 @@ const dataTable = props => (
       {props.columns.map(column =>
         (
           <TableHeaderColumn
-            dataField={column.label}
+            dataField={column.dataField}
             isKey={column.isKey}
             key={uuidv4()}
             dataSort={column.dataSort}

@@ -92,7 +92,7 @@ class PaginationComponent extends Component {
     if (value !== '...' && value !== this.state.currentPage) {
       this.setState({
         currentPage: value
-      });
+      }, this.callback);
     }
   }
 
@@ -133,7 +133,7 @@ class PaginationComponent extends Component {
     if (this.state.currentPage !== 1) {
       this.setState({
         currentPage: this.state.currentPage - 1
-      });
+      }, this.callback);
     }
   }
 
@@ -143,7 +143,7 @@ class PaginationComponent extends Component {
     if (this.state.currentPage !== totalPages) {
       this.setState({
         currentPage: this.state.currentPage + 1
-      });
+      }, this.callback);
     }
   }
 

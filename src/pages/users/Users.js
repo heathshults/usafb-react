@@ -26,7 +26,6 @@ class Users extends Component {
     this.roles = roles;
     this.totalItems = 90;
     this.state = {
-      users: [],
       createUserModalOpen: false,
       firstName: '',
       lastName: '',
@@ -46,6 +45,8 @@ class Users extends Component {
     // using 1 and 10 as parameters because that is what
     // the pagination default is set to
     this.updateUsers(1, 10);
+
+    setTimeout(() => console.dir(this.props), 4000); //eslint-disable-line
   }
 
   updateUsers = (currentPage, perPage) => {
@@ -154,7 +155,7 @@ class Users extends Component {
           data={this.state.users}
         />
         <Pagination
-          totalItems={this.totalItems}
+          totalItems={this.props.totalUsers}
           onChange={this.updateUsers}
         />
       </MainContainer>
@@ -163,7 +164,8 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-  getUsers: PropTypes.func.isRequired
+  getUsers: PropTypes.func.isRequired,
+  totalUsers: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;

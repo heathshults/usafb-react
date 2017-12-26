@@ -105,11 +105,16 @@ class PaginationComponent extends Component {
     return 7;
   }
 
-  // Used to determine the starting index the data table is displaying
+  // Used to determine the starting index the pagination label is displaying
   calculateStartingIndex = () => (this.state.currentPage * this.state.rowsPerPage) - this.state.rowsPerPage + 1;
 
-  // Used to determine the ending index the data table is displaying
-  calculateEndingIndex = () => this.state.currentPage * this.state.rowsPerPage;
+  // Used to determine the ending index the pagination label is displaying
+  calculateEndingIndex = () => {
+    if (this.state.currentPage === this.calculateTotalPages()) {
+      return this.props.totalItems;
+    }
+    return this.state.currentPage * this.state.rowsPerPage;
+  }
 
   calculateTotalPages = () => Math.ceil(this.props.totalItems / this.state.rowsPerPage);
 
@@ -119,7 +124,8 @@ class PaginationComponent extends Component {
 
   updateRowsPerPage = (event) => {
     this.setState({
-      rowsPerPage: +event.target.value
+      rowsPerPage: +event.target.value,
+      currentPage: 1
     }, this.callback);
   }
 

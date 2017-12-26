@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import Columns from 'components/data-table/models/user-columns';
 
 import MainContainer from 'components/containers/Container';
 import DataTable from 'components/data-table/DataTable';
+import Pagination from 'components/pagination/Pagination';
 
 import HeaderContainer from './components/header-container/HeaderContainer';
 import Header from './components/header/Header';
@@ -20,6 +21,8 @@ class Users extends Component {
     this.columns = new Columns();
     this.states = states;
     this.roles = roles;
+    this.currentPage = 1;
+    this.totalItems = 10;
     this.state = {
       users: [],
       createUserModalOpen: false,
@@ -36,6 +39,12 @@ class Users extends Component {
       zip: '',
     };
   }
+
+  componentWillMount() {
+    console.dir(this.props); //eslint-disable-line
+  }
+
+  setPage = () => { };
 
   toggleCreateUserModal = () => {
     this.setState({
@@ -138,9 +147,16 @@ class Users extends Component {
           columns={this.columns.getUserColumns()}
           data={this.state.users}
         />
+        <Pagination
+          currentPage={this.currentPage}
+          totalItems={this.totalItems}
+          setPage={this.setPage}
+        />
       </MainContainer>
     );
   }
 }
 
-export default Users;
+const mapStateToProps = ({ usersReducer }) => usersReducer;
+
+export default connect(mapStateToProps)(Users);

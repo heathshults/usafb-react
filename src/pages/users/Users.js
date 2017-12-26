@@ -25,7 +25,7 @@ class Users extends Component {
     this.states = states;
     this.roles = roles;
     this.currentPage = 1;
-    this.totalItems = 50;
+    this.totalItems = 60;
     this.state = {
       users: [],
       createUserModalOpen: false,
@@ -48,6 +48,10 @@ class Users extends Component {
   }
 
   setPage = () => { };
+
+  updateUsers = (currentPage, perPage) => {
+    console.log(currentPage, perPage); //eslint-disable-line
+  }
 
   toggleCreateUserModal = () => {
     this.setState({
@@ -154,6 +158,7 @@ class Users extends Component {
           currentPage={this.currentPage}
           totalItems={this.totalItems}
           setPage={this.setPage}
+          onChange={this.updateUsers}
         />
       </MainContainer>
     );

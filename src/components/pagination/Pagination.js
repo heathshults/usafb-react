@@ -12,6 +12,7 @@ class PaginationComponent extends Component {
     this.state = {
       rowsPerPage: 10,
       dropdownOpen: false,
+      currentPage: 1
     };
   }
 
@@ -25,43 +26,44 @@ class PaginationComponent extends Component {
     const totalPages = this.calculateTotalPages();
     // isRelevancyState will determine if the current page is between the [...] buttons
     // http://patternry.com/p=search-pagination/
-    const isRelevancyState = this.props.currentPage >= 5 && this.props.currentPage < totalPages - 3;
-    const onLastThreePages = this.props.currentPage >= totalPages - 3;
+    const isRelevancyState = this.state.currentPage >= 5 && this.state.currentPage < totalPages - 3;
+    const onLastThreePages = this.state.currentPage >= totalPages - 3;
+    const isFivePagesOrLess = totalPages <= 5;
 
     switch (index) {
       case 0: // first page
         return 1;
       case 1:
-        if (isRelevancyState || (this.props.currentPage > 5 && totalPages > 5)) {
+        if (isRelevancyState || (this.state.currentPage > 5 && totalPages > 5)) {
           return '...';
         }
         return index + 1;
       case 2:
-        if (onLastThreePages) {
+        if (onLastThreePages && !isFivePagesOrLess) {
           return totalPages - 4;
         }
         if (isRelevancyState) {
-          return this.props.currentPage - 1;
+          return this.state.currentPage - 1;
         }
         return index + 1;
       case 3:
         if (isRelevancyState) {
-          return this.props.currentPage;
+          return this.state.currentPage;
         }
-        if (onLastThreePages) {
+        if (onLastThreePages && !isFivePagesOrLess) {
           return totalPages - 3;
         }
         return index + 1;
       case 4:
-        if (onLastThreePages) {
+        if (onLastThreePages && !isFivePagesOrLess) {
           return totalPages - 2;
         }
         if (isRelevancyState) {
-          return this.props.currentPage + 1;
+          return this.state.currentPage + 1;
         }
         return index + 1;
       case 5:
-        if (isRelevancyState || (this.props.currentPage < 5 && totalPages > 5)) {
+        if (isRelevancyState || (this.state.currentPage < 5 && totalPages > 5)) {
           return '...';
         }
         if (onLastThreePages) {
@@ -76,7 +78,7 @@ class PaginationComponent extends Component {
   getStandardPaginationLink = value => (
     <PaginationItem
       key={uuidv4()}
-      active={this.props.currentPage === value}
+      active={this.state.currentPage === value}
       className={`${value !== '...' ? 'usafb-pagination__link' : 'usafb-pagination__more-pages'}`}
       onClick={() => this.setPage(value)}
     >
@@ -87,14 +89,15 @@ class PaginationComponent extends Component {
   );
 
   setPage = (value) => {
-    if (value !== '...' && value !== this.props.currentPage) {
-      this.props.setPage(value);
+    if (value !== '...' && value !== this.state.currentPage) {
+      this.setState({
+        currentPage: value
+      });
     }
   }
 
   calculateTotalPaginationLinks = () => {
     const totalPages = this.calculateTotalPages();
-
     if (totalPages <= 5) {
       return totalPages;
     }
@@ -102,23 +105,11 @@ class PaginationComponent extends Component {
     return 7;
   }
 
-  displayMorePagesAvailable = (index) => {
-    const totalPages = this.calculateTotalPages();
-    if (this.calculateTotalPages() < 7) {
-      return false;
-    } else if (this.props.currentPage <= totalPages - 3 && index === 5) {
-      return true;
-    } else if (this.props.currentPage >= 5 && index === 1) {
-      return true;
-    }
-    return false;
-  }
-
   // Used to determine the starting index the data table is displaying
-  calculateStartingIndex = () => (this.props.currentPage * this.state.rowsPerPage) - this.state.rowsPerPage + 1;
+  calculateStartingIndex = () => (this.state.currentPage * this.state.rowsPerPage) - this.state.rowsPerPage + 1;
 
   // Used to determine the ending index the data table is displaying
-  calculateEndingIndex = () => this.props.currentPage * this.state.rowsPerPage;
+  calculateEndingIndex = () => this.state.currentPage * this.state.rowsPerPage;
 
   calculateTotalPages = () => Math.ceil(this.props.totalItems / this.state.rowsPerPage);
 
@@ -129,21 +120,25 @@ class PaginationComponent extends Component {
   updateRowsPerPage = (event) => {
     this.setState({
       rowsPerPage: +event.target.value
-    });
+    }, this.callback);
   }
 
   previousPage = () => {
-    if (this.props.currentPage !== 1) {
-      this.props.setPage(this.props.currentPage - 1);
+    if (this.state.currentPage !== 1) {
+      this.props.setPage(this.state.currentPage - 1);
     }
   }
 
   nextPage = () => {
     const totalPages = this.calculateTotalPages();
 
-    if (this.props.currentPage !== totalPages) {
-      this.props.setPage(this.props.currentPage + 1);
+    if (this.state.currentPage !== totalPages) {
+      this.props.setPage(this.state.currentPage + 1);
     }
+  }
+
+  callback = () => {
+    this.props.onChange(this.state.currentPage, this.state.rowsPerPage);
   }
 
   render() {
@@ -152,7 +147,7 @@ class PaginationComponent extends Component {
         <Label
           startingIndex={this.calculateStartingIndex()}
           endingIndex={this.calculateEndingIndex()}
-          currentPage={this.props.currentPage}
+          currentPage={this.state.currentPage}
           totalItems={this.props.totalItems}
           rowsPerPage={this.state.rowsPerPage}
           dropdownOpen={this.state.dropdownOpen}
@@ -174,9 +169,9 @@ class PaginationComponent extends Component {
 }
 
 PaginationComponent.propTypes = {
-  currentPage: PropTypes.number.isRequired,
   totalItems: PropTypes.number.isRequired,
-  setPage: PropTypes.func.isRequired
+  setPage: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default PaginationComponent;

@@ -28,18 +28,18 @@ class PaginationComponent extends Component {
     // http://patternry.com/p=search-pagination/
     const isRelevancyState = this.state.currentPage >= 5 && this.state.currentPage < totalPages - 3;
     const onLastThreePages = this.state.currentPage >= totalPages - 3;
-    const isFivePagesOrLess = totalPages <= 5;
+    const isSevenPagesOrLess = totalPages <= 7;
 
     switch (index) {
       case 0: // first page
         return 1;
       case 1:
-        if (isRelevancyState || (this.state.currentPage > 5 && totalPages > 5)) {
+        if (isRelevancyState || (this.state.currentPage >= 5 && totalPages > 7)) {
           return '...';
         }
         return index + 1;
       case 2:
-        if (onLastThreePages && !isFivePagesOrLess) {
+        if (onLastThreePages && !isSevenPagesOrLess) {
           return totalPages - 4;
         }
         if (isRelevancyState) {
@@ -50,12 +50,12 @@ class PaginationComponent extends Component {
         if (isRelevancyState) {
           return this.state.currentPage;
         }
-        if (onLastThreePages && !isFivePagesOrLess) {
+        if (onLastThreePages && !isSevenPagesOrLess) {
           return totalPages - 3;
         }
         return index + 1;
       case 4:
-        if (onLastThreePages && !isFivePagesOrLess) {
+        if (onLastThreePages && !isSevenPagesOrLess) {
           return totalPages - 2;
         }
         if (isRelevancyState) {
@@ -63,10 +63,10 @@ class PaginationComponent extends Component {
         }
         return index + 1;
       case 5:
-        if (isRelevancyState || (this.state.currentPage < 5 && totalPages > 5)) {
+        if (isRelevancyState || (this.state.currentPage < 5 && totalPages > 7)) {
           return '...';
         }
-        if (onLastThreePages) {
+        if (onLastThreePages && !isSevenPagesOrLess) {
           return totalPages - 1;
         }
         return index + 1;
@@ -98,7 +98,7 @@ class PaginationComponent extends Component {
 
   calculateTotalPaginationLinks = () => {
     const totalPages = this.calculateTotalPages();
-    if (totalPages <= 5) {
+    if (totalPages <= 7) {
       return totalPages;
     }
 

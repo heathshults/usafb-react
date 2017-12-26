@@ -25,7 +25,7 @@ class Users extends Component {
     this.states = states;
     this.roles = roles;
     this.currentPage = 1;
-    this.totalItems = 60;
+    this.totalItems = 90;
     this.state = {
       users: [],
       createUserModalOpen: false,

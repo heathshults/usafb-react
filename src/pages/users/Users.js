@@ -12,12 +12,14 @@ import CreateUserButton from './components/create-user-button/CreateUserButton';
 import CreateUserModal from './components/create-user-modal/CreateUserModal';
 
 import states from './models/states';
+import roles from './models/roles';
 
 class Users extends Component {
   constructor() {
     super();
     this.columns = new Columns();
     this.states = states;
+    this.roles = roles;
     this.state = {
       users: [],
       createUserModalOpen: false,
@@ -125,6 +127,7 @@ class Users extends Component {
           zip={this.state.zip}
           updateZip={this.updateZip}
           states={this.states}
+          roles={this.roles}
         />
         <HeaderContainer>
           <Header />

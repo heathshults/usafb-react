@@ -43,11 +43,13 @@ const createUserModal = props => (
         </div>
         <div className="row">
           <div className="col-md-6 users__input-container">
-            <InputField
+            <DropdownField
               icon="users"
               label="Role"
               value={props.role}
               onChange={props.updateRole}
+              options={props.roles}
+              width={170}
             />
           </div>
           <div className="col-md-6 users__input-container">
@@ -150,7 +152,8 @@ createUserModal.propTypes = {
   updateState: PropTypes.func.isRequired,
   zip: PropTypes.string.isRequired,
   updateZip: PropTypes.func.isRequired,
-  states: PropTypes.array.isRequired
+  states: PropTypes.array.isRequired,
+  roles: PropTypes.array.isRequired
 };
 
 export default createUserModal;

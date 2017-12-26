@@ -93,8 +93,10 @@ class PaginationComponent extends Component {
   }
 
   calculateTotalPaginationLinks = () => {
-    if (this.calculateTotalPages() <= 5) {
-      return 5;
+    const totalPages = this.calculateTotalPages();
+
+    if (totalPages <= 5) {
+      return totalPages;
     }
 
     return 7;

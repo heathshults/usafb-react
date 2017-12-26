@@ -10,6 +10,7 @@ import Login from 'pages/login/Login';
 import Players from 'pages/players/Players';
 import Dashboard from 'pages/dashboard/Dashboard';
 import Coaches from 'pages/coaches/Coaches';
+import Profile from 'pages/profile/Profile';
 
 import './app.css';
 
@@ -25,6 +26,8 @@ const app = () => (
           <Route exact path="/login" component={Login} />
           <Route exact path="/players" component={Players} />
           <Route exact path="/coaches" component={Coaches} />
+          <Route exact path="/players/:id" component={Profile} />
+          <Route exact path="/coaches/:id" component={Profile} />
         </Switch>
       </div>
     </Router>

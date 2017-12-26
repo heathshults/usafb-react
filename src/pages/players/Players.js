@@ -60,6 +60,7 @@ class Players extends Component {
     });
   }
 
+  // TODO: Need to update pathname with the final play profile route
   linkToPlayerFormatter = (cell, row) => (
     <Link to={{ pathname: '/player', state: row }}>{cell}</Link>
   )

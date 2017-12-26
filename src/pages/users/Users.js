@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Columns from 'components/data-table/models/user-columns';
 
@@ -14,6 +15,8 @@ import CreateUserModal from './components/create-user-modal/CreateUserModal';
 
 import states from './models/states';
 import roles from './models/roles';
+
+import { GET_USERS } from './dux/actions';
 
 class Users extends Component {
   constructor() {
@@ -41,7 +44,7 @@ class Users extends Component {
   }
 
   componentWillMount() {
-    console.dir(this.props); //eslint-disable-line
+    this.props.getUsers(this.currentPage, 10);
   }
 
   setPage = () => { };
@@ -157,6 +160,13 @@ class Users extends Component {
   }
 }
 
-const mapStateToProps = ({ usersReducer }) => usersReducer;
+Users.propTypes = {
+  getUsers: PropTypes.func.isRequired
+};
 
-export default connect(mapStateToProps)(Users);
+const mapStateToProps = ({ usersReducer }) => usersReducer;
+const mapDispatchToProps = dispatch => ({
+  getUsers: (page, perPage) => dispatch({ type: GET_USERS, data: { page, perPage } })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

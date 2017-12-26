@@ -14,7 +14,7 @@ import ImportModal from 'components/import-modal/ImportModal';
 
 import importCsv from 'utils/import';
 
-class Players extends Component {
+class Player extends Component {
   constructor() {
     super();
 
@@ -60,9 +60,7 @@ class Players extends Component {
     });
   }
 
-  linkToPlayerFormatter = (cell, row) => (
-    <Link to={{ pathname: '/player', state: row }}>{cell}</Link>
-  )
+  linkToPlayerFormatter = cell => <Link to="/about">{cell}</Link>
 
   toggleFilters = () => {
     this.setState({
@@ -142,4 +140,4 @@ class Players extends Component {
   }
 }
 
-export default Players;
+export default Player;

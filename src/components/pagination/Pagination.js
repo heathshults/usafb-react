@@ -131,7 +131,9 @@ class PaginationComponent extends Component {
 
   previousPage = () => {
     if (this.state.currentPage !== 1) {
-      this.props.setPage(this.state.currentPage - 1);
+      this.setState({
+        currentPage: this.state.currentPage - 1
+      });
     }
   }
 
@@ -139,7 +141,9 @@ class PaginationComponent extends Component {
     const totalPages = this.calculateTotalPages();
 
     if (this.state.currentPage !== totalPages) {
-      this.props.setPage(this.state.currentPage + 1);
+      this.setState({
+        currentPage: this.state.currentPage + 1
+      });
     }
   }
 
@@ -176,7 +180,6 @@ class PaginationComponent extends Component {
 
 PaginationComponent.propTypes = {
   totalItems: PropTypes.number.isRequired,
-  setPage: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired
 };
 

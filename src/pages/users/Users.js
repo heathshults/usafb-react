@@ -24,7 +24,6 @@ class Users extends Component {
     this.columns = new Columns();
     this.states = states;
     this.roles = roles;
-    this.currentPage = 1;
     this.totalItems = 90;
     this.state = {
       users: [],
@@ -44,13 +43,13 @@ class Users extends Component {
   }
 
   componentWillMount() {
-    this.props.getUsers(this.currentPage, 10);
+    // using 1 and 10 as parameters because that is what
+    // the pagination default is set to
+    this.updateUsers(1, 10);
   }
 
-  setPage = () => { };
-
   updateUsers = (currentPage, perPage) => {
-    console.log(currentPage, perPage); //eslint-disable-line
+    this.props.getUsers(currentPage, perPage);
   }
 
   toggleCreateUserModal = () => {
@@ -155,9 +154,7 @@ class Users extends Component {
           data={this.state.users}
         />
         <Pagination
-          currentPage={this.currentPage}
           totalItems={this.totalItems}
-          setPage={this.setPage}
           onChange={this.updateUsers}
         />
       </MainContainer>
@@ -171,7 +168,7 @@ Users.propTypes = {
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
 const mapDispatchToProps = dispatch => ({
-  getUsers: (page, perPage) => dispatch({ type: GET_USERS, data: { page, perPage } })
+  getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

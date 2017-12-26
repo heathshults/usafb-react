@@ -1,0 +1,19 @@
+.user-management__dropdown-field {
+  border-top: 0.125rem solid rgba(9, 37, 74, 0.15) !important;
+  border-right: 0.125rem solid rgba(9, 37, 74, 0.15) !important;
+  border-bottom: 0.125rem solid rgba(9, 37, 74, 0.15) !important;
+  border-left: none;
+  
+  border-top-right-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+
+  box-shadow: none !important;
+
+  height: 42px
+}
+
+.user-management__dropdown-icon {
+  border-right: 0.125rem solid rgba(9, 37, 74, 0.15) !important;
+}

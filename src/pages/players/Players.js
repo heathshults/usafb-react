@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Container from 'components/containers/Container';
 import DataHeader from 'components/data-header/DataHeader';
@@ -6,6 +7,7 @@ import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 
 import Columns from 'components/data-table/models/columns';
+// import Cell from 'components/data-table/models/cell';
 
 import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from 'components/import-modal/ImportModal';
@@ -21,6 +23,10 @@ class Players extends Component {
     this.state = {
       filters: this.columns.getColumnsForFilters(),
       columns: this.columns.getColumnsForTableHeader(),
+      cellFormatters: {
+        'First Name': this.linkToPlayerFormatter.bind(this),
+        'Last Name': this.linkToPlayerFormatter.bind(this)
+      },
       displayFilters: false,
       displayAdvancedSearch: false,
       currentPage: 1,
@@ -53,6 +59,11 @@ class Players extends Component {
       currentPage: page
     });
   }
+
+  // TODO: Need to update pathname with the final play profile route
+  linkToPlayerFormatter = (cell, row) => (
+    <Link to={{ pathname: '/player', state: row }}>{cell}</Link>
+  )
 
   toggleFilters = () => {
     this.setState({
@@ -120,6 +131,7 @@ class Players extends Component {
         <DataTable
           columns={this.state.columns}
           data={this.state.players}
+          formatters={this.state.cellFormatters}
         />
         <Pagination
           currentPage={this.state.currentPage}

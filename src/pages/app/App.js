@@ -11,6 +11,7 @@ import Players from 'pages/players/Players';
 import Dashboard from 'pages/dashboard/Dashboard';
 import Coaches from 'pages/coaches/Coaches';
 import Users from 'pages/users/Users';
+import Player from 'pages/player/Player';
 
 import './app.css';
 
@@ -25,6 +26,7 @@ const app = () => (
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/players" component={Players} />
+          <Route exact path="/player" component={Player} />
           <Route exact path="/coaches" component={Coaches} />
           <Route exact path="/users" component={Users} />
         </Switch>

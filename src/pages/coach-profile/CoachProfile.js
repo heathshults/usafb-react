@@ -106,7 +106,7 @@ class CoachProfile extends Component {
                     <div className="card-red player-info card-red-mspacing-top">
                       <div className="card-red-body">
                         <p>
-                          <img src="./content/users/avatar/user-01.jpg" alt="@HeathShults" className="user-avatar-red-md" />
+                          <img src="../assets/profile/user-01.jpg" alt="@HeathShults" className="user-avatar-red-md" />
                         </p>
                         <p className="theme-red-title">Don Coachler</p>
                         <p>Male - 34 years - 1982

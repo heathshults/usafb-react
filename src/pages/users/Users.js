@@ -29,7 +29,8 @@ class Users extends Component {
     this.roles = roles;
     this.totalItems = 90;
     this.state = {
-      createUserModalOpen: false,
+      userModalOpen: false,
+      userModalHeader: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -75,66 +76,25 @@ class Users extends Component {
     this.props.getUsers(currentPage, perPage);
   }
 
-  toggleCreateUserModal = () => {
+  toggleUserModal = () => {
     this.setState({
-      createUserModalOpen: !this.state.createUserModalOpen
+      userModalOpen: !this.state.userModalOpen
     });
   }
 
-  updateFirstName = event =>
+  toggleCreateUserModal = () => {
     this.setState({
-      firstName: event.target.value
+      userModalHeader: 'create new user',
+      userModalOpen: !this.state.userModalOpen
     });
+  }
 
-  updateLastName = event =>
+  toggleEditUserModal = () => {
     this.setState({
-      lastName: event.target.value
+      userModalHeader: 'edit user',
+      userModalOpen: !this.state.userModalOpen
     });
-
-  updateEmail = event =>
-    this.setState({
-      email: event.target.value
-    });
-
-  updateRole = event =>
-    this.setState({
-      role: event.target.value
-    });
-
-  updatePhone = event =>
-    this.setState({
-      phone: event.target.value
-    });
-
-  updateOrganization = event =>
-    this.setState({
-      organization: event.target.value
-    });
-
-  updateAddress1 = event =>
-    this.setState({
-      address1: event.target.value
-    });
-
-  updateAddress2 = event =>
-    this.setState({
-      address2: event.target.value
-    });
-
-  updateCity = event =>
-    this.setState({
-      city: event.target.value
-    });
-
-  updateState = event =>
-    this.setState({
-      state: event.target.value
-    });
-
-  updateZip = event =>
-    this.setState({
-      zip: event.target.value
-    });
+  }
 
   renderUserStatusToggleButton = () => (
     <a className="user-management__status-disabled">
@@ -143,7 +103,12 @@ class Users extends Component {
   );
 
   renderEditUserButton = () => (
-    <a className="user-management__edit-user-button">
+    <a
+      className="user-management__edit-user-button"
+      onClick={this.toggleEditUserModal}
+      role="button"
+      tabIndex={0}
+    >
       <i className="fa fa-edit pl-2 text-lg" />
     </a>
   );
@@ -152,32 +117,9 @@ class Users extends Component {
     return (
       <MainContainer>
         <UserModal
-          open={this.state.createUserModalOpen}
-          toggle={this.toggleCreateUserModal}
-          firstName={this.state.firstName}
-          updateFirstName={this.updateFirstName}
-          lastName={this.state.lastName}
-          updateLastName={this.updateLastName}
-          email={this.state.email}
-          updateEmail={this.updateEmail}
-          role={this.state.role}
-          updateRole={this.updateRole}
-          phone={this.state.phone}
-          updatePhone={this.updatePhone}
-          organization={this.state.organization}
-          updateOrganization={this.updateOrganization}
-          address1={this.state.address1}
-          updateAddress1={this.updateAddress1}
-          address2={this.state.address2}
-          updateAddress2={this.updateAddress2}
-          city={this.state.city}
-          updateCity={this.updateCity}
-          state={this.state.state}
-          updateState={this.updateState}
-          zip={this.state.zip}
-          updateZip={this.updateZip}
-          states={this.states}
-          roles={this.roles}
+          header={this.state.userModalHeader}
+          open={this.state.userModalOpen}
+          toggle={this.toggleUserModal}
         />
         <HeaderContainer>
           <Header />

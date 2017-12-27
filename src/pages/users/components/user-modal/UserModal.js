@@ -13,7 +13,10 @@ class UserModal extends Component {
     super();
     this.roles = roles;
     this.states = states;
+    this.EDIT_USER_STATUS = 'edit user';
+    this.CREATE_USER_STATUS = 'create user';
     this.state = {
+      status: this.CREATE_USER_STATUS,
       firstName: '',
       lastName: '',
       email: '',
@@ -29,8 +32,10 @@ class UserModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // only set the state if the user object is not empty
     if (Object.keys(nextProps.user).length !== 0) {
       this.setState({
+        status: this.EDIT_USER_STATUS,
         firstName: nextProps.user.name_first,
         lastName: nextProps.user.name_last,
         email: nextProps.user.email,
@@ -42,6 +47,10 @@ class UserModal extends Component {
         city: '',
         state: '',
         zip: ''
+      });
+    } else {
+      this.setState({
+        status: this.CREATE_USER_STATUS
       });
     }
   }
@@ -101,9 +110,15 @@ class UserModal extends Component {
       zip: event.target.value
     });
 
+  modalClosedCallback = () => this.props.onClosed(this.state);
+
   render() {
     return (
-      <Modal isOpen={this.props.open} toggle={this.props.toggle}>
+      <Modal
+        isOpen={this.props.open}
+        toggle={this.props.toggle}
+        onClosed={this.modalClosedCallback}
+      >
         <ModalHeader toggle={this.props.toggle}>
           <i className="fa fa-user" aria-hidden="true" /> {this.props.header}
         </ModalHeader>
@@ -229,7 +244,8 @@ UserModal.propTypes = {
   header: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  onClosed: PropTypes.func.isRequired
 };
 
 export default UserModal;

@@ -85,6 +85,9 @@ class Users extends Component {
     });
   }
 
+  // TODO either edit the user sent back, or create a new one
+  modalDismissed = (status) => console.log(status); //eslint-disable-line
+
   renderUserStatusToggleButton = () => (
     <a className="user-management__status-disabled">
       <i className="fa fa-minus-square pr-2 text-lg" />
@@ -110,6 +113,7 @@ class Users extends Component {
           open={this.state.userModalOpen}
           toggle={this.toggleUserModal}
           user={this.state.editableUser}
+          onClosed={this.modalDismissed}
         />
         <HeaderContainer>
           <Header />

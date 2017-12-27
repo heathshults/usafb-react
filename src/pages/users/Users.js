@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Columns from 'components/data-table/models/user-columns';
 
 import MainContainer from 'components/containers/Container';
@@ -11,12 +12,14 @@ import HeaderContainer from './components/header-container/HeaderContainer';
 import Header from './components/header/Header';
 import HeaderMessage from './components/header-message/HeaderMessage';
 import CreateUserButton from './components/create-user-button/CreateUserButton';
-import CreateUserModal from './components/create-user-modal/CreateUserModal';
+import UserModal from './components/user-modal/UserModal';
 
 import states from './models/states';
 import roles from './models/roles';
 
 import { GET_USERS } from './dux/actions';
+
+import './users.css';
 
 class Users extends Component {
   constructor() {
@@ -26,18 +29,9 @@ class Users extends Component {
     this.roles = roles;
     this.totalItems = 90;
     this.state = {
-      createUserModalOpen: false,
-      firstName: '',
-      lastName: '',
-      email: '',
-      role: '',
-      phone: '',
-      organization: '',
-      address1: '',
-      address2: '',
-      city: '',
-      state: '',
-      zip: '',
+      userModalOpen: false,
+      userModalHeader: '',
+      editableUser: {}
     };
   }
 
@@ -47,101 +41,79 @@ class Users extends Component {
     this.updateUsers(1, 10);
   }
 
+  getCellFormatters = () => ({
+    Actions: this.actionsFormatter,
+    'Create Date': this.createdDateFormatter
+  });
+
+  actionsFormatter = (cell, row) => (
+    <div className="text-center">
+      {this.renderUserStatusToggleButton()}
+      {this.renderEditUserButton(row)}
+    </div>
+  );
+
+  createdDateFormatter = cell => (
+    <div>
+      {moment(cell).format('MMM do YYYY')}
+    </div>
+  );
+
   updateUsers = (currentPage, perPage) => {
     this.props.getUsers(currentPage, perPage);
   }
 
-  toggleCreateUserModal = () => {
+  toggleUserModal = () => {
     this.setState({
-      createUserModalOpen: !this.state.createUserModalOpen
+      userModalOpen: !this.state.userModalOpen
     });
   }
 
-  updateFirstName = event =>
+  toggleCreateUserModal = () => {
     this.setState({
-      firstName: event.target.value
+      userModalHeader: 'create new user',
+      userModalOpen: !this.state.userModalOpen,
+      editableUser: {}
     });
+  }
 
-  updateLastName = event =>
+  toggleEditUserModal = (user) => {
     this.setState({
-      lastName: event.target.value
+      userModalHeader: 'edit user',
+      userModalOpen: !this.state.userModalOpen,
+      editableUser: user
     });
+  }
 
-  updateEmail = event =>
-    this.setState({
-      email: event.target.value
-    });
+  // TODO either edit the user sent back, or create a new one
+  modalDismissed = (status) => console.log(status); //eslint-disable-line
 
-  updateRole = event =>
-    this.setState({
-      role: event.target.value
-    });
+  renderUserStatusToggleButton = () => (
+    <a className="user-management__status-disabled">
+      <i className="fa fa-minus-square pr-2 text-lg" />
+    </a>
+  );
 
-  updatePhone = event =>
-    this.setState({
-      phone: event.target.value
-    });
-
-  updateOrganization = event =>
-    this.setState({
-      organization: event.target.value
-    });
-
-  updateAddress1 = event =>
-    this.setState({
-      address1: event.target.value
-    });
-
-  updateAddress2 = event =>
-    this.setState({
-      address2: event.target.value
-    });
-
-  updateCity = event =>
-    this.setState({
-      city: event.target.value
-    });
-
-  updateState = event =>
-    this.setState({
-      state: event.target.value
-    });
-
-  updateZip = event =>
-    this.setState({
-      zip: event.target.value
-    });
+  renderEditUserButton = user => (
+    <a
+      className="user-management__edit-user-button"
+      onClick={() => this.toggleEditUserModal(user)}
+      role="button"
+      tabIndex={0}
+    >
+      <i className="fa fa-edit pl-2 text-lg" />
+    </a>
+  );
 
   render() {
     return (
       <MainContainer>
-        <CreateUserModal
-          open={this.state.createUserModalOpen}
-          toggle={this.toggleCreateUserModal}
-          firstName={this.state.firstName}
-          updateFirstName={this.updateFirstName}
-          lastName={this.state.lastName}
-          updateLastName={this.updateLastName}
-          email={this.state.email}
-          updateEmail={this.updateEmail}
-          role={this.state.role}
-          updateRole={this.updateRole}
-          phone={this.state.phone}
-          updatePhone={this.updatePhone}
-          organization={this.state.organization}
-          updateOrganization={this.updateOrganization}
-          address1={this.state.address1}
-          updateAddress1={this.updateAddress1}
-          address2={this.state.address2}
-          updateAddress2={this.updateAddress2}
-          city={this.state.city}
-          updateCity={this.updateCity}
-          state={this.state.state}
-          updateState={this.updateState}
-          zip={this.state.zip}
-          updateZip={this.updateZip}
-          states={this.states}
-          roles={this.roles}
+        <UserModal
+          header={this.state.userModalHeader}
+          open={this.state.userModalOpen}
+          toggle={this.toggleUserModal}
+          user={this.state.editableUser}
+          onClosed={this.modalDismissed}
         />
         <HeaderContainer>
           <Header />
@@ -151,6 +123,7 @@ class Users extends Component {
         <DataTable
           columns={this.columns.getUserColumns()}
           data={this.props.users}
+          formatters={this.getCellFormatters()}
         />
         <Pagination
           totalItems={this.props.totalUsers}

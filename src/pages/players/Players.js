@@ -23,10 +23,6 @@ class Players extends Component {
     this.state = {
       filters: this.columns.getColumnsForFilters(),
       columns: this.columns.getColumnsForTableHeader(),
-      cellFormatters: {
-        'First Name': this.linkToPlayerFormatter.bind(this),
-        'Last Name': this.linkToPlayerFormatter.bind(this)
-      },
       displayFilters: false,
       displayAdvancedSearch: false,
       currentPage: 1,
@@ -59,6 +55,11 @@ class Players extends Component {
       currentPage: page
     });
   }
+
+  getCellFormatters = () => ({
+    'First Name': this.linkToPlayerFormatter,
+    'Last Name': this.linkToPlayerFormatter
+  });
 
   // TODO: Need to update pathname with the final play profile route
   linkToPlayerFormatter = (cell, row) => (
@@ -131,7 +132,7 @@ class Players extends Component {
         <DataTable
           columns={this.state.columns}
           data={this.state.players}
-          formatters={this.state.cellFormatters}
+          formatters={this.getCellFormatters()}
         />
         <Pagination
           currentPage={this.state.currentPage}

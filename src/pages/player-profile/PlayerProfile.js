@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { GET_PLAYER_PROFILE } from './dux/actions';
+
 class PlayerProfile extends Component {
   static get contextTypes() {
     return {
@@ -61,7 +63,11 @@ class PlayerProfile extends Component {
 
   componentWillMount() {
     const id = this.props.match.params.id; //eslint-disable-line 
-    // make API call through an action to set store with redux info
+    this.getPlayerProfile(id);
+  }
+
+  getPlayerProfile = (id) => {
+    this.props.getPlayerProfile(id);
   }
 
   render() {
@@ -400,8 +406,13 @@ class PlayerProfile extends Component {
   }
 }
 
-function mapStateToProps() {
-  return {};
-}
+PlayerProfile.propTypes = {
+  getPlayerProfile: PropTypes.func.isRequired
+};
 
-export default connect(mapStateToProps)(PlayerProfile);
+const mapStateToProps = ({ playerProfileReducer }) => playerProfileReducer;
+const mapDispatchToProps = dispatch => ({
+  getPlayerProfile: playerId => dispatch({ type: GET_PLAYER_PROFILE, data: { playerId } })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerProfile);

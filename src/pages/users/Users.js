@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Columns from 'components/data-table/models/user-columns';
 
 import MainContainer from 'components/containers/Container';
 import DataTable from 'components/data-table/DataTable';
+import Pagination from 'components/pagination/Pagination';
 
 import HeaderContainer from './components/header-container/HeaderContainer';
 import Header from './components/header/Header';
@@ -14,14 +16,16 @@ import CreateUserModal from './components/create-user-modal/CreateUserModal';
 import states from './models/states';
 import roles from './models/roles';
 
+import { GET_USERS } from './dux/actions';
+
 class Users extends Component {
   constructor() {
     super();
     this.columns = new Columns();
     this.states = states;
     this.roles = roles;
+    this.totalItems = 90;
     this.state = {
-      users: [],
       createUserModalOpen: false,
       firstName: '',
       lastName: '',
@@ -35,6 +39,16 @@ class Users extends Component {
       state: '',
       zip: '',
     };
+  }
+
+  componentWillMount() {
+    // using 1 and 10 as parameters because that is what
+    // the pagination default is set to
+    this.updateUsers(1, 10);
+  }
+
+  updateUsers = (currentPage, perPage) => {
+    this.props.getUsers(currentPage, perPage);
   }
 
   toggleCreateUserModal = () => {
@@ -136,11 +150,26 @@ class Users extends Component {
         </HeaderContainer>
         <DataTable
           columns={this.columns.getUserColumns()}
-          data={this.state.users}
+          data={this.props.users}
+        />
+        <Pagination
+          totalItems={this.props.totalUsers}
+          onChange={this.updateUsers}
         />
       </MainContainer>
     );
   }
 }
 
-export default Users;
+Users.propTypes = {
+  getUsers: PropTypes.func.isRequired,
+  totalUsers: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired
+};
+
+const mapStateToProps = ({ usersReducer }) => usersReducer;
+const mapDispatchToProps = dispatch => ({
+  getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

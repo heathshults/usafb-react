@@ -1,5 +1,9 @@
 import Column from './column';
 
+/**
+ * This class is going to be used to construct the columns
+ * in the players/coaches search page.
+ */
 export default class Filters {
   constructor() {
     this.generalInfo = this.getGeneralInfoColumns();

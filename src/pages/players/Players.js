@@ -116,7 +116,7 @@ class Players extends Component {
           uploadedFile={this.state.uploadedFile}
         />
         <DataHeader
-          userType="players"
+          header="Number of Players"
           numberOfUsers={1000}
           showModal={this.toggleModal}
         />

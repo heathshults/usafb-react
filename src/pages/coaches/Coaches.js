@@ -102,7 +102,7 @@ class Coaches extends Component {
           uploadedFile={this.state.uploadedFile}
         />
         <DataHeader
-          userType="coaches"
+          header="Number of Coaches"
           numberOfUsers={1000}
           showModal={this.toggleModal}
         />

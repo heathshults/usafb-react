@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Columns from 'components/data-table/models/user-columns';
 
 import MainContainer from 'components/containers/Container';
@@ -50,7 +51,8 @@ class Users extends Component {
   }
 
   getCellFormatters = () => ({
-    Actions: this.actionsFormatter
+    Actions: this.actionsFormatter,
+    'Create Date': this.createdDateFormatter
   });
 
   actionsFormatter = (cell, row) => {
@@ -62,6 +64,12 @@ class Users extends Component {
       </div>
     );
   }
+
+  createdDateFormatter = cell => (
+    <div>
+      {moment(cell).format('MMM do YYYY')}
+    </div>
+  );
 
   updateUsers = (currentPage, perPage) => {
     this.props.getUsers(currentPage, perPage);

@@ -1,5 +1,9 @@
 import Column from './column';
 
+/**
+ * This class is going to be used to construct the columns
+ * in the players/coaches search page.
+ */
 export default class Filters {
   constructor() {
     this.generalInfo = this.getGeneralInfoColumns();
@@ -52,15 +56,15 @@ export default class Filters {
   getGeneralInfoColumns = () => ({
     category: 'general info',
     columns: [
-      new Column('USAFB#', true, true),
-      new Column('Salesforce ID'),
-      new Column('Last Name', true),
-      new Column('First Name', true),
+      new Column('USAFB#', 'USAFB#', true, true),
+      new Column('Salesforce ID', 'Salesforce ID'),
+      new Column('Last Name', 'Last Name', true),
+      new Column('First Name', 'First Name', true),
       new Column('Middle Name'),
-      new Column('Source', true),
-      new Column('Gender', true),
-      new Column('Date of Birth', true),
-      new Column('Age Group', true),
+      new Column('Source', 'Source', true),
+      new Column('Gender', 'Gender', true),
+      new Column('Date of Birth', 'Date of Birth', true),
+      new Column('Age Group', 'Age Group', true),
       new Column('Address 1'),
       new Column('Address 2'),
       new Column('City'),
@@ -112,7 +116,7 @@ export default class Filters {
       new Column('Level of Play'),
       new Column('Season'),
       new Column('# of Years in Sports'),
-      new Column('Organization', true),
+      new Column('Organization', 'Organization', true),
       new Column('Organization State'),
       new Column('District'),
       new Column('School Attending'),

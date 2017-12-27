@@ -26,10 +26,11 @@ const dataTable = props => (
       {props.columns.map(column =>
         (
           <TableHeaderColumn
-            dataField={column.label}
+            dataField={column.dataField}
             isKey={column.isKey}
             key={uuidv4()}
             dataSort={column.dataSort}
+            dataFormat={props.formatters[column.label]}
             className="usafb__table-header"
             thStyle={headerStyle}
           >
@@ -45,11 +46,13 @@ dataTable.propTypes = {
   loading: PropTypes.bool,
   data: PropTypes.array,
   columns: PropTypes.array.isRequired,
+  formatters: PropTypes.object
 };
 
 dataTable.defaultProps = {
   data: [],
-  loading: true
+  loading: true,
+  formatters: {}
 };
 
 export default dataTable;

@@ -5,7 +5,7 @@ const header = props => (
   <div className="col-4 page-title-container">
     <h1 className="page-title offset-top-10">
       <span className="offset-top-8 mr-2">
-        <b>NUMBER OF {props.userType.toUpperCase()}</b>
+        <b>{props.header.toUpperCase()}</b>
       </span>
       <span className="font-xl">
         <label id="numOfPlayers">{props.numberOfUsers}</label>
@@ -15,7 +15,7 @@ const header = props => (
 );
 
 header.propTypes = {
-  userType: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
   numberOfUsers: PropTypes.number.isRequired
 };
 

@@ -31,17 +31,7 @@ class Users extends Component {
     this.state = {
       userModalOpen: false,
       userModalHeader: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      role: '',
-      phone: '',
-      organization: '',
-      address1: '',
-      address2: '',
-      city: '',
-      state: '',
-      zip: '',
+      editableUser: {}
     };
   }
 
@@ -56,15 +46,12 @@ class Users extends Component {
     'Create Date': this.createdDateFormatter
   });
 
-  actionsFormatter = (cell, row) => {
-    console.dir(row); //eslint-disable-line
-    return (
-      <div className="text-center">
-        {this.renderUserStatusToggleButton()}
-        {this.renderEditUserButton()}
-      </div>
-    );
-  }
+  actionsFormatter = (cell, row) => (
+    <div className="text-center">
+      {this.renderUserStatusToggleButton()}
+      {this.renderEditUserButton(row)}
+    </div>
+  );
 
   createdDateFormatter = cell => (
     <div>
@@ -85,14 +72,16 @@ class Users extends Component {
   toggleCreateUserModal = () => {
     this.setState({
       userModalHeader: 'create new user',
-      userModalOpen: !this.state.userModalOpen
+      userModalOpen: !this.state.userModalOpen,
+      editableUser: {}
     });
   }
 
-  toggleEditUserModal = () => {
+  toggleEditUserModal = (user) => {
     this.setState({
       userModalHeader: 'edit user',
-      userModalOpen: !this.state.userModalOpen
+      userModalOpen: !this.state.userModalOpen,
+      editableUser: user
     });
   }
 
@@ -102,10 +91,10 @@ class Users extends Component {
     </a>
   );
 
-  renderEditUserButton = () => (
+  renderEditUserButton = user => (
     <a
       className="user-management__edit-user-button"
-      onClick={this.toggleEditUserModal}
+      onClick={() => this.toggleEditUserModal(user)}
       role="button"
       tabIndex={0}
     >
@@ -120,6 +109,7 @@ class Users extends Component {
           header={this.state.userModalHeader}
           open={this.state.userModalOpen}
           toggle={this.toggleUserModal}
+          user={this.state.editableUser}
         />
         <HeaderContainer>
           <Header />

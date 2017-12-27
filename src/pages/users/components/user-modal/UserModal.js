@@ -28,6 +28,24 @@ class UserModal extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (Object.keys(nextProps.user).length !== 0) {
+      this.setState({
+        firstName: nextProps.user.name_first,
+        lastName: nextProps.user.name_last,
+        email: nextProps.user.email,
+        role: nextProps.user.role_id,
+        phone: nextProps.user.phone,
+        organization: '',
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zip: ''
+      });
+    }
+  }
+
   updateFirstName = event =>
     this.setState({
       firstName: event.target.value
@@ -210,7 +228,8 @@ class UserModal extends Component {
 UserModal.propTypes = {
   header: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired
+  toggle: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 export default UserModal;

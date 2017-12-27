@@ -17,7 +17,7 @@ import UserModal from './components/user-modal/UserModal';
 import states from './models/states';
 import roles from './models/roles';
 
-import { GET_USERS } from './dux/actions';
+import { GET_USERS, CREATE_USER } from './dux/actions';
 
 import './users.css';
 
@@ -85,8 +85,13 @@ class Users extends Component {
     });
   }
 
-  // TODO either edit the user sent back, or create a new one
-  modalDismissed = (status) => console.log(status); //eslint-disable-line
+  modalDismissed = (data) => {
+    if (data.dismissStatus === 'saved') {
+      if (data.status === 'create user') {
+        this.props.createUser(data);
+      }
+    }
+  }
 
   renderUserStatusToggleButton = () => (
     <a className="user-management__status-disabled">
@@ -137,12 +142,14 @@ class Users extends Component {
 Users.propTypes = {
   getUsers: PropTypes.func.isRequired,
   totalUsers: PropTypes.number.isRequired,
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
+  createUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
 const mapDispatchToProps = dispatch => ({
-  getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } })
+  getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } }),
+  createUser: data => dispatch({ type: CREATE_USER, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

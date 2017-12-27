@@ -15,8 +15,11 @@ class UserModal extends Component {
     this.states = states;
     this.EDIT_USER_STATUS = 'edit user';
     this.CREATE_USER_STATUS = 'create user';
+    this.CANCELED = 'canceled';
+    this.SAVED = 'saved';
     this.state = {
       status: this.CREATE_USER_STATUS,
+      dismissStatus: this.CANCELED,
       firstName: '',
       lastName: '',
       email: '',
@@ -35,6 +38,7 @@ class UserModal extends Component {
     // only set the state if the user object is not empty
     if (Object.keys(nextProps.user).length !== 0) {
       this.setState({
+        dismissStatus: this.CANCELED,
         status: this.EDIT_USER_STATUS,
         firstName: nextProps.user.name_first,
         lastName: nextProps.user.name_last,
@@ -111,6 +115,12 @@ class UserModal extends Component {
     });
 
   modalClosedCallback = () => this.props.onClosed(this.state);
+
+  dismissModal = (value) => {
+    this.setState({
+      dismissStatus: value
+    }, this.props.toggle);
+  }
 
   render() {
     return (
@@ -232,8 +242,8 @@ class UserModal extends Component {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={this.props.toggle}>Close</Button>{' '}
-          <Button color="primary" onClick={this.props.toggle}>Save</Button>
+          <Button color="secondary" onClick={() => this.dismissModal(this.CANCELED)}>Close</Button>{' '}
+          <Button color="primary" onClick={() => this.dismissModal(this.SAVED)}>Save</Button>
         </ModalFooter>
       </Modal>
     );

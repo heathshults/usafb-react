@@ -8,3 +8,8 @@ export default (data) => {
   });
 };
 
+export const createUser = data =>
+  fetch(`${process.env.REACT_APP_API_URL}/users`, {
+    headers: headers.postHeader(),
+    body: JSON.stringify(data)
+  });

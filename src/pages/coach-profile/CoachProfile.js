@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { GET_COACH_PROFILE } from './dux/actions';
+
 class CoachProfile extends Component {
   static get contextTypes() {
     return {
@@ -86,8 +88,13 @@ class CoachProfile extends Component {
 
   componentWillMount() {
     const id = this.props.match.params.id; //eslint-disable-line 
-    // make API call through an action to set store with redux info
+    this.getCoachProfile(id);
   }
+
+  getCoachProfile = (id) => {
+    this.props.getCoachProfile(id);
+  }
+
 
   render() {
     return (
@@ -423,8 +430,13 @@ class CoachProfile extends Component {
   }
 }
 
-function mapStateToProps() {
-  return {};
-}
+CoachProfile.propTypes = {
+  getCoachProfile: PropTypes.func.isRequired
+};
 
-export default connect(mapStateToProps)(CoachProfile);
+const mapStateToProps = ({ coachProfileReducer }) => coachProfileReducer;
+const mapDispatchToProps = dispatch => ({
+  getCoachProfile: coachId => dispatch({ type: GET_COACH_PROFILE, data: { coachId } })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoachProfile);

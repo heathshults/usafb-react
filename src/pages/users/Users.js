@@ -18,6 +18,8 @@ import roles from './models/roles';
 
 import { GET_USERS } from './dux/actions';
 
+import './users.css';
+
 class Users extends Component {
   constructor() {
     super();
@@ -45,6 +47,20 @@ class Users extends Component {
     // using 1 and 10 as parameters because that is what
     // the pagination default is set to
     this.updateUsers(1, 10);
+  }
+
+  getCellFormatters = () => ({
+    Actions: this.actionsFormatter
+  });
+
+  actionsFormatter = (cell, row) => {
+    console.dir(row); //eslint-disable-line
+    return (
+      <div className="text-center">
+        {this.renderUserStatusToggleButton()}
+        {this.renderEditUserButton()}
+      </div>
+    );
   }
 
   updateUsers = (currentPage, perPage) => {
@@ -112,6 +128,18 @@ class Users extends Component {
       zip: event.target.value
     });
 
+  renderUserStatusToggleButton = () => (
+    <a className="user-management__status-disabled">
+      <i className="fa fa-minus-square pr-2 text-lg" />
+    </a>
+  );
+
+  renderEditUserButton = () => (
+    <a className="user-management__edit-user-button">
+      <i className="fa fa-edit pl-2 text-lg" />
+    </a>
+  );
+
   render() {
     return (
       <MainContainer>
@@ -151,6 +179,7 @@ class Users extends Component {
         <DataTable
           columns={this.columns.getUserColumns()}
           data={this.props.users}
+          formatters={this.getCellFormatters()}
         />
         <Pagination
           totalItems={this.props.totalUsers}

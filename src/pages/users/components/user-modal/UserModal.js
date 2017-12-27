@@ -4,7 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import InputField from '../input-field/InputField';
 import DropdownField from '../dropdown-field/DropdownField';
-import './create-user-modal.css';
+import './user-modal.css';
 
 const createUserModal = props => (
   <Modal isOpen={props.open} toggle={props.toggle}>

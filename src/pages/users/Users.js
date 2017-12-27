@@ -12,7 +12,7 @@ import HeaderContainer from './components/header-container/HeaderContainer';
 import Header from './components/header/Header';
 import HeaderMessage from './components/header-message/HeaderMessage';
 import CreateUserButton from './components/create-user-button/CreateUserButton';
-import CreateUserModal from './components/create-user-modal/CreateUserModal';
+import UserModal from './components/user-modal/UserModal';
 
 import states from './models/states';
 import roles from './models/roles';
@@ -151,7 +151,7 @@ class Users extends Component {
   render() {
     return (
       <MainContainer>
-        <CreateUserModal
+        <UserModal
           open={this.state.createUserModalOpen}
           toggle={this.toggleCreateUserModal}
           firstName={this.state.firstName}

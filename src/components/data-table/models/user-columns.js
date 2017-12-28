@@ -23,8 +23,6 @@ export default class UserColumns {
       new Column('Role', 'role_id', true),
       new Column('Create Date', 'created_at', true),
       new Column('Phone', 'phone', true),
-      new Column('Location', 'location', true),
-      new Column('Organization', 'organization', true),
       new Column('Actions', 'actions', true)
     );
   }

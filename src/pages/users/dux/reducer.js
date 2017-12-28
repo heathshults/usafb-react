@@ -5,7 +5,12 @@ const initialState = {
   totalUsers: 0,
   gettingUsers: false,
   retrievedUsers: false,
-  gettingUsersError: ''
+  creatingUser: false,
+  userCreated: false,
+  headerMessage: '',
+  headerStatus: '',
+  headerMessageOpen: false,
+  rowsPerPage: 10
 };
 
 export default (state = initialState, action) => {
@@ -15,7 +20,37 @@ export default (state = initialState, action) => {
     case actions.USERS_RECEIVED:
       return { ...state, gettingUsers: false, retrievedUsers: true, users: action.users, totalUsers: action.total };
     case actions.GET_USERS_ERROR:
-      return { ...state, gettingUsers: false, gettingUsersError: action.gettingUsersError };
+      return {
+        ...state,
+        gettingUsers: false,
+        headerMessage: action.gettingUsersError,
+        headerMessageOpen: true,
+        headerStatus: 'danger'
+      };
+    case actions.CREATE_USER:
+      return { ...state, creatingUser: true, userCreated: false };
+    case actions.USER_CREATED:
+      return {
+        ...state,
+        creatingUser: false,
+        userCreated: true,
+        headerMessage: 'New user has been added!',
+        headerMessageOpen: true,
+        headerStatus: 'success'
+      };
+    case actions.CREATE_USER_ERROR:
+      return {
+        ...state,
+        creatingUser: false,
+        userCreated: false,
+        headerMessage: action.createUserError,
+        headerMessageOpen: true,
+        headerStatus: 'danger'
+      };
+    case actions.DISMISS_HEADER_MESSAGE:
+      return { ...state, headerMessageOpen: false };
+    case actions.UPDATE_ROWS_PER_PAGE:
+      return { ...state, rowsPerPage: action.rowsPerPage };
     default:
       return state;
   }

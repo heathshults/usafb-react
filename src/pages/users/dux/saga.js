@@ -62,9 +62,19 @@ function* editUserFlow() {
     const response = yield call(editUser, data);
     if (response.ok) {
       yield put({ type: actions.USER_EDITED });
+      const { users, totalUsers } = yield select(userManagementSelector);
+      const updatedUser = yield extractUserData(data);
+      const updatedUsers = yield updateUser(users, updatedUser);
+      yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
     } else {
       const responseData = yield response.json();
       yield put({ type: actions.EDIT_USER_ERROR, editUserError: responseData.errors[0] });
     }
   }
+}
+
+function updateUser(users, updatedUser) {
+  let userToUpdate = users.find(user => user._id === updatedUser._id); //eslint-disable-line
+  users[users.findIndex(user => user === userToUpdate)] = updatedUser; //eslint-disable-line
+  return users;
 }

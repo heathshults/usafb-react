@@ -33,7 +33,6 @@ class Users extends Component {
     this.columns = new Columns();
     this.states = states;
     this.roles = roles;
-    this.totalItems = 0;
     this.state = {
       userModalOpen: false,
       userModalHeader: '',

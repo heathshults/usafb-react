@@ -24,11 +24,30 @@ function* getUserFlow() {
   }
 }
 
+// We need to extract the id and name of each role
+// and set them as value and label so the dropdown
+// in the user modal will display properly
+const extractRoles = (roles) => {
+  const userRoles = [{
+    value: '',
+    label: 'Role'
+  }];
+
+  const extractedRoles = roles.map(role => ({
+    value: role._id, //eslint-disable-line
+    label: role.name
+  }));
+
+  return [...userRoles, ...extractedRoles];
+};
+
 function* getRolesFlow() {
   const response = yield call(getRoles);
   const responseData = yield response.json();
   if (response.ok) {
-    yield put({ type: actions.SET_ROLES, roles: responseData.data });
+    const roles = yield extractRoles(responseData.data);
+    yield console.dir(roles); //eslint-disable-line
+    yield put({ type: actions.SET_ROLES, roles });
   }
 }
 

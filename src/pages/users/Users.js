@@ -15,7 +15,6 @@ import CreateUserButton from './components/create-user-button/CreateUserButton';
 import UserModal from './components/user-modal/UserModal';
 
 import states from './models/states';
-import roles from './models/roles';
 
 import {
   GET_USERS,
@@ -32,7 +31,6 @@ class Users extends Component {
     super();
     this.columns = new Columns();
     this.states = states;
-    this.roles = roles;
     this.state = {
       userModalOpen: false,
       userModalHeader: '',
@@ -48,7 +46,8 @@ class Users extends Component {
 
   getCellFormatters = () => ({
     Actions: this.actionsFormatter,
-    'Create Date': this.createdDateFormatter
+    'Create Date': this.createdDateFormatter,
+    // Role: this.roleFormatter
   });
 
   actionsFormatter = (cell, row) => (
@@ -63,6 +62,10 @@ class Users extends Component {
       {moment(cell).format('MMM do YYYY')}
     </div>
   );
+
+  // roleFormatter = cell => (
+  //   const role
+  // )
 
   updateUsers = (currentPage, perPage) => {
     this.props.getUsers(currentPage, perPage);
@@ -126,6 +129,7 @@ class Users extends Component {
           toggle={this.toggleUserModal}
           user={this.state.editableUser}
           onClosed={this.modalDismissed}
+          roles={this.props.roles}
         />
         <HeaderContainer>
           <Header />
@@ -165,7 +169,8 @@ Users.propTypes = {
   creatingUser: PropTypes.bool.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
-  editUser: PropTypes.func.isRequired
+  editUser: PropTypes.func.isRequired,
+  roles: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;

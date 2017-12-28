@@ -4,14 +4,12 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import InputField from '../input-field/InputField';
 import DropdownField from '../dropdown-field/DropdownField';
-import roles from '../../models/roles';
 import states from '../../models/states';
 import './user-modal.css';
 
 class UserModal extends Component {
   constructor() {
     super();
-    this.roles = roles;
     this.states = states;
     this.EDIT_USER_STATUS = 'edit user';
     this.CREATE_USER_STATUS = 'create user';
@@ -220,7 +218,7 @@ class UserModal extends Component {
                   label="Role"
                   value={this.state.role}
                   onChange={this.updateRole}
-                  options={this.roles}
+                  options={this.props.roles}
                   width={170}
                 />
               </div>
@@ -306,7 +304,8 @@ UserModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  onClosed: PropTypes.func.isRequired
+  onClosed: PropTypes.func.isRequired,
+  roles: PropTypes.array.isRequired
 };
 
 export default UserModal;

@@ -118,6 +118,17 @@ class UserModal extends Component {
 
   dismissModal = (value) => {
     this.setState({
+      name_first: '',
+      name_last: '',
+      email: '',
+      role: '',
+      phone: '',
+      organization_name: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: '',
       dismissStatus: value
     }, this.props.toggle);
   }

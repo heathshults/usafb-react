@@ -1,7 +1,7 @@
 import { all, take, call, put } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getUsers, { createUser } from './api'; //eslint-disable-line
+import getUsers, { createUser } from './api';
 
 export default function* userManagementFlow() {
   yield all({
@@ -21,9 +21,26 @@ function* getUserFlow() {
   }
 }
 
+const extractUserData = (data) => {
+  const userData = data;
+
+  delete data.dismissStatus; //eslint-disable-line
+  delete data.modalStatus; //eslint-disable-line
+
+  return userData;
+};
+
 function* createUserFlow() {
   while (true) {
     const { data } = yield take(actions.CREATE_USER);
-    console.dir(data); //eslint-disable-line
+    const userData = yield extractUserData(data);
+    const response = yield call(createUser, userData);
+    const responseData = yield response.json();
+    if (response.ok) {
+      yield put({ type: actions.USER_CREATED });
+      yield getUserFlow();
+    } else {
+      yield put({ type: actions.CREATE_USER_ERROR, createUserError: responseData.errors[0] });
+    }
   }
 }

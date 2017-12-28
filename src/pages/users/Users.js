@@ -87,7 +87,7 @@ class Users extends Component {
 
   modalDismissed = (data) => {
     if (data.dismissStatus === 'saved') {
-      if (data.status === 'create user') {
+      if (data.modalStatus === 'create user') {
         this.props.createUser(data);
       }
     }

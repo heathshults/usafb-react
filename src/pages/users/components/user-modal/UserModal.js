@@ -18,14 +18,14 @@ class UserModal extends Component {
     this.CANCELED = 'canceled';
     this.SAVED = 'saved';
     this.state = {
-      status: this.CREATE_USER_STATUS,
+      modalStatus: this.CREATE_USER_STATUS,
       dismissStatus: this.CANCELED,
-      firstName: '',
-      lastName: '',
+      name_first: '',
+      name_last: '',
       email: '',
       role: '',
       phone: '',
-      organization: '',
+      organization_name: '',
       address1: '',
       address2: '',
       city: '',
@@ -39,13 +39,13 @@ class UserModal extends Component {
     if (Object.keys(nextProps.user).length !== 0) {
       this.setState({
         dismissStatus: this.CANCELED,
-        status: this.EDIT_USER_STATUS,
-        firstName: nextProps.user.name_first,
-        lastName: nextProps.user.name_last,
+        modalStatus: this.EDIT_USER_STATUS,
+        name_first: nextProps.user.name_first,
+        name_last: nextProps.user.name_last,
         email: nextProps.user.email,
         role: nextProps.user.role_id,
         phone: nextProps.user.phone,
-        organization: '',
+        organization_name: '',
         address1: '',
         address2: '',
         city: '',
@@ -54,19 +54,19 @@ class UserModal extends Component {
       });
     } else {
       this.setState({
-        status: this.CREATE_USER_STATUS
+        modalStatus: this.CREATE_USER_STATUS
       });
     }
   }
 
   updateFirstName = event =>
     this.setState({
-      firstName: event.target.value
+      name_first: event.target.value
     });
 
   updateLastName = event =>
     this.setState({
-      lastName: event.target.value
+      name_last: event.target.value
     });
 
   updateEmail = event =>
@@ -86,7 +86,7 @@ class UserModal extends Component {
 
   updateOrganization = event =>
     this.setState({
-      organization: event.target.value
+      organization_name: event.target.value
     });
 
   updateAddress1 = event =>
@@ -139,7 +139,7 @@ class UserModal extends Component {
                 <InputField
                   icon="user-o"
                   label="First Name"
-                  value={this.state.firstName}
+                  value={this.state.name_first}
                   onChange={this.updateFirstName}
                 />
               </div>
@@ -147,7 +147,7 @@ class UserModal extends Component {
                 <InputField
                   icon="user-o"
                   label="Last Name"
-                  value={this.state.lastName}
+                  value={this.state.name_last}
                   onChange={this.updateLastName}
                 />
               </div>
@@ -182,16 +182,16 @@ class UserModal extends Component {
                 />
               </div>
             </div>
-            {/* <div className="row">
+            <div className="row">
               <div className="col-md-12 users__input-container">
                 <InputField
                   icon="building"
                   label="Organization"
-                  value={this.organization}
+                  value={this.state.organization_name}
                   onChange={this.updateOrganization}
                 />
               </div>
-            </div> */}
+            </div>
             <div className="row">
               <div className="col-md-12 users__input-container">
                 <InputField

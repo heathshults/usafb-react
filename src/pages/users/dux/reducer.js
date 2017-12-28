@@ -6,7 +6,9 @@ const initialState = {
   gettingUsers: false,
   retrievedUsers: false,
   gettingUsersError: '',
-  creatingUser: false
+  creatingUser: false,
+  userCreated: false,
+  createUserError: ''
 };
 
 export default (state = initialState, action) => {
@@ -18,7 +20,11 @@ export default (state = initialState, action) => {
     case actions.GET_USERS_ERROR:
       return { ...state, gettingUsers: false, gettingUsersError: action.gettingUsersError };
     case actions.CREATE_USER:
-      return { ...state, creatingUser: true };
+      return { ...state, creatingUser: true, userCreated: false };
+    case actions.USER_CREATED:
+      return { ...state, creatingUser: false, userCreated: true };
+    case actions.CREATE_USER_ERROR:
+      return { ...steate, creatingUser: false, userCreated: false, createUserError: action.createUserError };
     default:
       return state;
   }

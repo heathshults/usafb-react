@@ -51,6 +51,22 @@ export default (state = initialState, action) => {
       return { ...state, headerMessageOpen: false };
     case actions.UPDATE_ROWS_PER_PAGE:
       return { ...state, rowsPerPage: action.rowsPerPage };
+    case actions.USER_EDITED:
+      return {
+        ...state,
+        headerMessage: 'User successfully updated!',
+        headerMessageOpen: true,
+        headerStatus: 'success'
+      };
+    case actions.EDIT_USER_ERROR:
+      return {
+        ...state,
+        creatingUser: false,
+        userCreated: false,
+        headerMessage: action.editUserError,
+        headerMessageOpen: true,
+        headerStatus: 'danger'
+      };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-export const postHeader = () => new Headers({
+export const jsonHeader = () => new Headers({
   'Content-Type': 'application/json'
 });
 

@@ -39,6 +39,7 @@ class UserModal extends Component {
     if (!this.state.modalActive) {
       // only set the state if the user object is not empty
       if (Object.keys(nextProps.user).length !== 0) {
+        console.dir(nextProps.user); //eslint-disable-line
         this.setState({
           modalStatus: this.EDIT_USER_STATUS,
           dismissStatus: this.CANCELED,
@@ -48,11 +49,11 @@ class UserModal extends Component {
           role_id: nextProps.user.role_id,
           phone: nextProps.user.phone,
           organization_name: '',
-          address1: '',
-          address2: '',
-          city: '',
-          state: '',
-          zip: '',
+          address1: nextProps.user.address.street_1,
+          address2: nextProps.user.address.street_2,
+          city: nextProps.user.address.city,
+          state: nextProps.user.address.state,
+          zip: nextProps.user.address.postal_code,
           id_external: nextProps.user.id_external,
           _id: nextProps.user._id //eslint-disable-line
         });

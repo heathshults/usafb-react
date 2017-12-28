@@ -1,4 +1,4 @@
-import { all, take, call, put } from 'redux-saga/effects';
+import { all, take, call, put, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
 import getUsers, { createUser } from './api';
@@ -46,7 +46,9 @@ function* createUserFlow() {
 }
 
 function* getUpdatedUsers() {
-  const response = yield call(getUsers, { page: 1, per_page: 10 });
+  const usersReducerSelector = state => state.usersReducer;
+  const state = yield select(usersReducerSelector);
+  const response = yield call(getUsers, { page: 1, per_page: state.rowsPerPage });
   const responseData = yield response.json();
   if (response.ok) {
     yield put({ type: actions.USERS_RECEIVED, users: responseData.data, total: responseData.meta.pagination.total });

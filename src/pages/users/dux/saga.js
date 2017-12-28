@@ -1,7 +1,7 @@
 import { all, take, call, put, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getUsers, { createUser, editUser } from './api';
+import getUsers, { createUser, editUser, getRoles } from './api';
 import userManagementSelector from './selectors.js';
 
 export default function* userManagementFlow() {
@@ -19,7 +19,16 @@ function* getUserFlow() {
     const responseData = yield response.json();
     if (response.ok) {
       yield put({ type: actions.USERS_RECEIVED, users: responseData.data, total: responseData.meta.pagination.total });
+      yield getRolesFlow();
     }
+  }
+}
+
+function* getRolesFlow() {
+  const response = yield call(getRoles);
+  const responseData = yield response.json();
+  if (response.ok) {
+    yield put({ type: actions.SET_ROLES, roles: responseData.data });
   }
 }
 

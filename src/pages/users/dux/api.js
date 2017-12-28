@@ -23,3 +23,8 @@ export const editUser = data =>
     headers: headers.jsonHeader(),
     body: JSON.stringify(data)
   });
+
+export const getRoles = () =>
+  fetch(`${process.env.REACT_APP_API_URL}/roles`, {
+    headers: headers.authorizedHeader()
+  });

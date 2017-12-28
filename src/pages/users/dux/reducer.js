@@ -2,6 +2,7 @@ import * as actions from './actions';
 
 const initialState = {
   users: [],
+  roles: [],
   totalUsers: 0,
   gettingUsers: false,
   retrievedUsers: false,
@@ -67,6 +68,8 @@ export default (state = initialState, action) => {
         headerMessageOpen: true,
         headerStatus: 'danger'
       };
+    case actions.SET_ROLES:
+      return { ...state, roles: action.roles };
     default:
       return state;
   }

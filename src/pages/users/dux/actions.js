@@ -9,3 +9,4 @@ export const UPDATE_ROWS_PER_PAGE = 'user-management update rows per page';
 export const EDIT_USER = 'user-management edit user';
 export const USER_EDITED = 'user-management user edited';
 export const EDIT_USER_ERROR = 'user-management user edit error';
+export const SET_ROLES = 'user-management set roles';

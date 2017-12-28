@@ -130,7 +130,7 @@ class Users extends Component {
             message={this.props.headerMessage}
             toggle={this.props.dismissHeaderMessage}
           />
-          <CreateUserButton toggle={this.toggleCreateUserModal} />
+          <CreateUserButton creatingUser={this.props.creatingUser} toggle={this.toggleCreateUserModal} />
         </HeaderContainer>
         <DataTable
           columns={this.columns.getUserColumns()}
@@ -154,7 +154,8 @@ Users.propTypes = {
   dismissHeaderMessage: PropTypes.func.isRequired,
   headerMessageOpen: PropTypes.bool.isRequired,
   headerStatus: PropTypes.string.isRequired,
-  headerMessage: PropTypes.string.isRequired
+  headerMessage: PropTypes.string.isRequired,
+  creatingUser: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;

@@ -1,12 +1,13 @@
 import { all, take, call, put, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getUsers, { createUser } from './api';
+import getUsers, { createUser, editUser } from './api';
 
 export default function* userManagementFlow() {
   yield all({
     getUserFlow: call(getUserFlow),
-    createUserFlow: call(createUserFlow)
+    createUserFlow: call(createUserFlow),
+    editUserFlow: call(editUserFlow)
   });
 }
 
@@ -52,5 +53,18 @@ function* getUpdatedUsers() {
   const responseData = yield response.json();
   if (response.ok) {
     yield put({ type: actions.USERS_RECEIVED, users: responseData.data, total: responseData.meta.pagination.total });
+  }
+}
+
+function* editUserFlow() {
+  while (true) {
+    const { data } = yield take(actions.EDIT_USER);
+    const response = yield call(editUser, data);
+    if (response.ok) {
+      yield put({ type: actions.USER_EDITED });
+    } else {
+      const responseData = yield response.json();
+      yield put({ type: actions.EDIT_USER_ERROR, editUserError: responseData.errors[0] });
+    }
   }
 }

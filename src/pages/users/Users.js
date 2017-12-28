@@ -47,7 +47,7 @@ class Users extends Component {
   getCellFormatters = () => ({
     Actions: this.actionsFormatter,
     'Create Date': this.createdDateFormatter,
-    // Role: this.roleFormatter
+    Role: this.roleFormatter
   });
 
   actionsFormatter = (cell, row) => (
@@ -63,9 +63,12 @@ class Users extends Component {
     </div>
   );
 
-  // roleFormatter = cell => (
-  //   const role
-  // )
+  roleFormatter = (cell) => {
+    const userRole = this.props.roles.find(role => role === cell);
+    return (
+      <div> {userRole} </div>
+    );
+  };
 
   updateUsers = (currentPage, perPage) => {
     this.props.getUsers(currentPage, perPage);
@@ -94,6 +97,7 @@ class Users extends Component {
   }
 
   modalDismissed = (data) => {
+    console.dir(data); //eslint-disable-line
     if (data.dismissStatus === 'saved') {
       if (data.modalStatus === 'create user') {
         this.props.createUser(data);

@@ -46,7 +46,6 @@ function* getRolesFlow() {
   const responseData = yield response.json();
   if (response.ok) {
     const roles = yield extractRoles(responseData.data);
-    yield console.dir(roles); //eslint-disable-line
     yield put({ type: actions.SET_ROLES, roles });
   }
 }

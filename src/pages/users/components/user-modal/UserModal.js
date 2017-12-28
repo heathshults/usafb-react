@@ -18,6 +18,9 @@ class UserModal extends Component {
     this.CANCELED = 'canceled';
     this.SAVED = 'saved';
     this.state = {
+      // this variable will indicate whether or not
+      // the modal should update state on componentWillReceiveProps
+      modalActive: false,
       modalStatus: this.CREATE_USER_STATUS,
       dismissStatus: this.CANCELED,
       name_first: '',
@@ -35,85 +38,118 @@ class UserModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // only set the state if the user object is not empty
-    if (Object.keys(nextProps.user).length !== 0) {
-      this.setState({
-        modalStatus: this.EDIT_USER_STATUS,
-        name_first: nextProps.user.name_first,
-        name_last: nextProps.user.name_last,
-        email: nextProps.user.email,
-        role: nextProps.user.role_id,
-        phone: nextProps.user.phone,
-        organization_name: '',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: ''
-      });
-    } else {
-      this.setState({
-        modalStatus: this.CREATE_USER_STATUS
-      });
+    if (!this.state.modalActive) {
+      // only set the state if the user object is not empty
+      if (Object.keys(nextProps.user).length !== 0) {
+        this.setState({
+          modalStatus: this.EDIT_USER_STATUS,
+          dismissStatus: this.CANCELED,
+          name_first: nextProps.user.name_first,
+          name_last: nextProps.user.name_last,
+          email: nextProps.user.email,
+          role: nextProps.user.role_id,
+          phone: nextProps.user.phone,
+          organization_name: '',
+          address1: '',
+          address2: '',
+          city: '',
+          state: '',
+          zip: '',
+          id_external: nextProps.user.id_external,
+          _id: nextProps.user._id //eslint-disable-line
+        });
+      } else {
+        this.setState({
+          modalStatus: this.CREATE_USER_STATUS,
+          dismissStatus: this.CANCELED,
+          name_first: '',
+          name_last: '',
+          email: '',
+          role: '',
+          phone: '',
+          organization_name: '',
+          address1: '',
+          address2: '',
+          city: '',
+          state: '',
+          zip: '',
+        });
+      }
     }
   }
-
+  // TODO data is not getting saved when editing users beacuse
+  // the updated state isn't getting passed through correctly
   updateFirstName = event =>
     this.setState({
-      name_first: event.target.value
-    });
+      name_first: event.target.value,
+      modalActive: true
+    }); //eslint-disable-line
 
   updateLastName = event =>
     this.setState({
-      name_last: event.target.value
+      name_last: event.target.value,
+      modalActive: true
     });
 
   updateEmail = event =>
     this.setState({
-      email: event.target.value
+      email: event.target.value,
+      modalActive: true
     });
 
   updateRole = event =>
     this.setState({
-      role: event.target.value
+      role: event.target.value,
+      modalActive: true
     });
 
   updatePhone = event =>
     this.setState({
-      phone: event.target.value
+      phone: event.target.value,
+      modalActive: true
     });
 
   updateOrganization = event =>
     this.setState({
-      organization_name: event.target.value
+      organization_name: event.target.value,
+      modalActive: true
     });
 
   updateAddress1 = event =>
     this.setState({
-      address1: event.target.value
+      address1: event.target.value,
+      modalActive: true
     });
 
   updateAddress2 = event =>
     this.setState({
-      address2: event.target.value
+      address2: event.target.value,
+      modalActive: true
     });
 
   updateCity = event =>
     this.setState({
-      city: event.target.value
+      city: event.target.value,
+      modalActive: true
     });
 
   updateState = event =>
     this.setState({
-      state: event.target.value
+      state: event.target.value,
+      modalActive: true
     });
 
   updateZip = event =>
     this.setState({
-      zip: event.target.value
+      zip: event.target.value,
+      modalActive: true
     });
 
-  modalClosedCallback = () => this.props.onClosed(this.state);
+  modalClosedCallback = () => {
+    this.setState({
+      modalActive: false
+    }, this.props.onClosed(this.state));
+  }
 
   dismissModal = (value) => {
     if (value === this.CANCELED) {

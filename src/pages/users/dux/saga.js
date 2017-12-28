@@ -2,6 +2,7 @@ import { all, take, call, put, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
 import getUsers, { createUser, editUser } from './api';
+import userManagementSelector from './selectors.js';
 
 export default function* userManagementFlow() {
   yield all({
@@ -47,8 +48,7 @@ function* createUserFlow() {
 }
 
 function* getUpdatedUsers() {
-  const usersReducerSelector = state => state.usersReducer;
-  const state = yield select(usersReducerSelector);
+  const state = yield select(userManagementSelector);
   const response = yield call(getUsers, { page: 1, per_page: state.rowsPerPage });
   const responseData = yield response.json();
   if (response.ok) {

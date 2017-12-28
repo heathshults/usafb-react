@@ -9,7 +9,8 @@ const initialState = {
   userCreated: false,
   headerMessage: '',
   headerStatus: '',
-  headerMessageOpen: false
+  headerMessageOpen: false,
+  rowsPerPage: 10
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +49,8 @@ export default (state = initialState, action) => {
       };
     case actions.DISMISS_HEADER_MESSAGE:
       return { ...state, headerMessageOpen: false };
+    case actions.UPDATE_ROWS_PER_PAGE:
+      return { ...state, rowsPerPage: action.rowsPerPage };
     default:
       return state;
   }

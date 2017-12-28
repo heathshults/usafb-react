@@ -17,7 +17,7 @@ import UserModal from './components/user-modal/UserModal';
 import states from './models/states';
 import roles from './models/roles';
 
-import { GET_USERS, CREATE_USER, DISMISS_HEADER_MESSAGE } from './dux/actions';
+import { GET_USERS, CREATE_USER, DISMISS_HEADER_MESSAGE, UPDATE_ROWS_PER_PAGE } from './dux/actions';
 
 import './users.css';
 
@@ -27,7 +27,7 @@ class Users extends Component {
     this.columns = new Columns();
     this.states = states;
     this.roles = roles;
-    this.totalItems = 90;
+    this.totalItems = 0;
     this.state = {
       userModalOpen: false,
       userModalHeader: '',
@@ -39,8 +39,6 @@ class Users extends Component {
     // using 1 and 10 as parameters because that is what
     // the pagination default is set to
     this.updateUsers(1, 10);
-
-    console.dir(this.props); //eslint-disable-line
   }
 
   getCellFormatters = () => ({
@@ -140,6 +138,8 @@ class Users extends Component {
         <Pagination
           totalItems={this.props.totalUsers}
           onChange={this.updateUsers}
+          rowsPerPage={this.props.rowsPerPage}
+          updateRowsPerPage={this.props.updateRowsPerPage}
         />
       </MainContainer>
     );
@@ -155,14 +155,17 @@ Users.propTypes = {
   headerMessageOpen: PropTypes.bool.isRequired,
   headerStatus: PropTypes.string.isRequired,
   headerMessage: PropTypes.string.isRequired,
-  creatingUser: PropTypes.bool.isRequired
+  creatingUser: PropTypes.bool.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
 const mapDispatchToProps = dispatch => ({
   getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } }),
   createUser: data => dispatch({ type: CREATE_USER, data }),
-  dismissHeaderMessage: () => dispatch({ type: DISMISS_HEADER_MESSAGE })
+  dismissHeaderMessage: () => dispatch({ type: DISMISS_HEADER_MESSAGE }),
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

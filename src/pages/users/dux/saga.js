@@ -38,8 +38,17 @@ function* createUserFlow() {
     const responseData = yield response.json();
     if (response.ok) {
       yield put({ type: actions.USER_CREATED });
+      yield call(getUpdatedUsers);
     } else {
       yield put({ type: actions.CREATE_USER_ERROR, createUserError: responseData.errors[0] });
     }
+  }
+}
+
+function* getUpdatedUsers() {
+  const response = yield call(getUsers, { page: 1, per_page: 10 });
+  const responseData = yield response.json();
+  if (response.ok) {
+    yield put({ type: actions.USERS_RECEIVED, users: responseData.data, total: responseData.meta.pagination.total });
   }
 }

@@ -64,9 +64,14 @@ class Users extends Component {
   );
 
   roleFormatter = (cell) => {
-    const userRole = this.props.roles.find(role => role === cell);
+    const userRole = this.props.roles.find(role => role.value === cell);
+    if (userRole) {
+      return (
+        <div> {userRole.label} </div>
+      );
+    }
     return (
-      <div> {userRole} </div>
+      <div />
     );
   };
 
@@ -97,7 +102,6 @@ class Users extends Component {
   }
 
   modalDismissed = (data) => {
-    console.dir(data); //eslint-disable-line
     if (data.dismissStatus === 'saved') {
       if (data.modalStatus === 'create user') {
         this.props.createUser(data);

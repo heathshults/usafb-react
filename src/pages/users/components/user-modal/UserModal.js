@@ -77,13 +77,12 @@ class UserModal extends Component {
       }
     }
   }
-  // TODO data is not getting saved when editing users beacuse
-  // the updated state isn't getting passed through correctly
+
   updateFirstName = event =>
     this.setState({
       name_first: event.target.value,
       modalActive: true
-    }); //eslint-disable-line
+    });
 
   updateLastName = event =>
     this.setState({

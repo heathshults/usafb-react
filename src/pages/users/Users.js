@@ -17,7 +17,7 @@ import UserModal from './components/user-modal/UserModal';
 import states from './models/states';
 import roles from './models/roles';
 
-import { GET_USERS } from './dux/actions';
+import { GET_USERS, CREATE_USER, DISMISS_HEADER_MESSAGE, UPDATE_ROWS_PER_PAGE } from './dux/actions';
 
 import './users.css';
 
@@ -27,7 +27,7 @@ class Users extends Component {
     this.columns = new Columns();
     this.states = states;
     this.roles = roles;
-    this.totalItems = 90;
+    this.totalItems = 0;
     this.state = {
       userModalOpen: false,
       userModalHeader: '',
@@ -85,8 +85,13 @@ class Users extends Component {
     });
   }
 
-  // TODO either edit the user sent back, or create a new one
-  modalDismissed = (status) => console.log(status); //eslint-disable-line
+  modalDismissed = (data) => {
+    if (data.dismissStatus === 'saved') {
+      if (data.modalStatus === 'create user') {
+        this.props.createUser(data);
+      }
+    }
+  }
 
   renderUserStatusToggleButton = () => (
     <a className="user-management__status-disabled">
@@ -117,8 +122,13 @@ class Users extends Component {
         />
         <HeaderContainer>
           <Header />
-          <HeaderMessage />
-          <CreateUserButton toggle={this.toggleCreateUserModal} />
+          <HeaderMessage
+            isOpen={this.props.headerMessageOpen}
+            color={this.props.headerStatus}
+            message={this.props.headerMessage}
+            toggle={this.props.dismissHeaderMessage}
+          />
+          <CreateUserButton creatingUser={this.props.creatingUser} toggle={this.toggleCreateUserModal} />
         </HeaderContainer>
         <DataTable
           columns={this.columns.getUserColumns()}
@@ -128,6 +138,8 @@ class Users extends Component {
         <Pagination
           totalItems={this.props.totalUsers}
           onChange={this.updateUsers}
+          rowsPerPage={this.props.rowsPerPage}
+          updateRowsPerPage={this.props.updateRowsPerPage}
         />
       </MainContainer>
     );
@@ -137,12 +149,23 @@ class Users extends Component {
 Users.propTypes = {
   getUsers: PropTypes.func.isRequired,
   totalUsers: PropTypes.number.isRequired,
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
+  createUser: PropTypes.func.isRequired,
+  dismissHeaderMessage: PropTypes.func.isRequired,
+  headerMessageOpen: PropTypes.bool.isRequired,
+  headerStatus: PropTypes.string.isRequired,
+  headerMessage: PropTypes.string.isRequired,
+  creatingUser: PropTypes.bool.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
 const mapDispatchToProps = dispatch => ({
-  getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } })
+  getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } }),
+  createUser: data => dispatch({ type: CREATE_USER, data }),
+  dismissHeaderMessage: () => dispatch({ type: DISMISS_HEADER_MESSAGE }),
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

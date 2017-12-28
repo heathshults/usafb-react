@@ -10,7 +10,6 @@ class PaginationComponent extends Component {
   constructor() {
     super();
     this.state = {
-      rowsPerPage: 10,
       dropdownOpen: false,
       currentPage: 1
     };
@@ -106,27 +105,34 @@ class PaginationComponent extends Component {
   }
 
   // Used to determine the starting index the pagination label is displaying
-  calculateStartingIndex = () => (this.state.currentPage * this.state.rowsPerPage) - this.state.rowsPerPage + 1;
+  calculateStartingIndex = () => (this.state.currentPage * this.props.rowsPerPage) - this.props.rowsPerPage + 1;
 
   // Used to determine the ending index the pagination label is displaying
   calculateEndingIndex = () => {
     if (this.state.currentPage === this.calculateTotalPages()) {
       return this.props.totalItems;
     }
-    return this.state.currentPage * this.state.rowsPerPage;
+    return this.state.currentPage * this.props.rowsPerPage;
   }
 
-  calculateTotalPages = () => Math.ceil(this.props.totalItems / this.state.rowsPerPage);
+  calculateTotalPages = () => Math.ceil(this.props.totalItems / this.props.rowsPerPage);
 
   toggleDropdown = () => this.setState({
     dropdownOpen: !this.state.dropdownOpen
   });
 
   updateRowsPerPage = (event) => {
+    event.persist();
     this.setState({
-      rowsPerPage: +event.target.value,
       currentPage: 1
-    }, this.callback);
+    }, () => this.updateRowsPerPageCallback(+event.target.value));
+  }
+
+  updateRowsPerPageCallback = (value) => {
+    this.props.updateRowsPerPage(value);
+    setTimeout(() => {
+      this.callback();
+    });
   }
 
   previousPage = () => {
@@ -148,7 +154,7 @@ class PaginationComponent extends Component {
   }
 
   callback = () => {
-    this.props.onChange(this.state.currentPage, this.state.rowsPerPage);
+    this.props.onChange(this.state.currentPage, this.props.rowsPerPage);
   }
 
   render() {
@@ -159,7 +165,7 @@ class PaginationComponent extends Component {
           endingIndex={this.calculateEndingIndex()}
           currentPage={this.state.currentPage}
           totalItems={this.props.totalItems}
-          rowsPerPage={this.state.rowsPerPage}
+          rowsPerPage={this.props.rowsPerPage}
           dropdownOpen={this.state.dropdownOpen}
           toggleDropdown={this.toggleDropdown}
           updateRowsPerPage={this.updateRowsPerPage}
@@ -180,7 +186,9 @@ class PaginationComponent extends Component {
 
 PaginationComponent.propTypes = {
   totalItems: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired
 };
 
 export default PaginationComponent;

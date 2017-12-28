@@ -17,7 +17,13 @@ import UserModal from './components/user-modal/UserModal';
 import states from './models/states';
 import roles from './models/roles';
 
-import { GET_USERS, CREATE_USER, DISMISS_HEADER_MESSAGE, UPDATE_ROWS_PER_PAGE } from './dux/actions';
+import {
+  GET_USERS,
+  CREATE_USER,
+  DISMISS_HEADER_MESSAGE,
+  UPDATE_ROWS_PER_PAGE,
+  EDIT_USER
+} from './dux/actions';
 
 import './users.css';
 
@@ -89,6 +95,8 @@ class Users extends Component {
     if (data.dismissStatus === 'saved') {
       if (data.modalStatus === 'create user') {
         this.props.createUser(data);
+      } else {
+        this.props.editUser(data);
       }
     }
   }
@@ -157,7 +165,8 @@ Users.propTypes = {
   headerMessage: PropTypes.string.isRequired,
   creatingUser: PropTypes.bool.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  updateRowsPerPage: PropTypes.func.isRequired
+  updateRowsPerPage: PropTypes.func.isRequired,
+  editUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
@@ -165,7 +174,8 @@ const mapDispatchToProps = dispatch => ({
   getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } }),
   createUser: data => dispatch({ type: CREATE_USER, data }),
   dismissHeaderMessage: () => dispatch({ type: DISMISS_HEADER_MESSAGE }),
-  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
+  editUser: data => dispatch({ type: EDIT_USER, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

@@ -38,7 +38,6 @@ class UserModal extends Component {
     // only set the state if the user object is not empty
     if (Object.keys(nextProps.user).length !== 0) {
       this.setState({
-        dismissStatus: this.CANCELED,
         modalStatus: this.EDIT_USER_STATUS,
         name_first: nextProps.user.name_first,
         name_last: nextProps.user.name_last,
@@ -117,20 +116,26 @@ class UserModal extends Component {
   modalClosedCallback = () => this.props.onClosed(this.state);
 
   dismissModal = (value) => {
-    this.setState({
-      name_first: '',
-      name_last: '',
-      email: '',
-      role: '',
-      phone: '',
-      organization_name: '',
-      address1: '',
-      address2: '',
-      city: '',
-      state: '',
-      zip: '',
-      dismissStatus: value
-    }, this.props.toggle);
+    if (value === this.CANCELED) {
+      this.setState({
+        name_first: '',
+        name_last: '',
+        email: '',
+        role: '',
+        phone: '',
+        organization_name: '',
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zip: '',
+        dismissStatus: value
+      }, this.props.toggle);
+    } else {
+      this.setState({
+        dismissStatus: value
+      }, this.props.toggle);
+    }
   }
 
   render() {

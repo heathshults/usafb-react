@@ -88,11 +88,11 @@ class CoachProfile extends Component {
 
   componentWillMount() {
     const id = this.props.match.params.id; //eslint-disable-line 
-    this.getCoachProfile(id);
+    this.getCoachProfile({ id });
   }
 
-  getCoachProfile = (id) => {
-    this.props.getCoachProfile(id);
+  getCoachProfile = (data) => {
+    this.props.getCoachProfile(data);
   }
 
 

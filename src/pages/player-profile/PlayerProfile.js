@@ -63,11 +63,12 @@ class PlayerProfile extends Component {
 
   componentWillMount() {
     const id = this.props.match.params.id; //eslint-disable-line 
-    this.getPlayerProfile(id);
+    console.log('id', id); // eslint-disable-line
+    this.getPlayerProfile({ id });
   }
 
-  getPlayerProfile = (id) => {
-    this.props.getPlayerProfile(id);
+  getPlayerProfile = (data) => {
+    this.props.getPlayerProfile(data);
   }
 
   render() {
@@ -89,13 +90,15 @@ class PlayerProfile extends Component {
                         <p>
                           <img src="assets/profile/user-01.jpg" alt="@HeathShults" className="user-avatar-red-md" />
                         </p>
-                        <p className="theme-red-title">Dell Cumberledge</p>
-                        <p>Male - 11 years - 2008 - 7th Grade
-                          <br /> Harris Middle School - CO 2028
-                          <br /> Other Sports: Soccer
+                        <p className="theme-red-title">{this.props.playerData.name_first} {this.props.playerData.name_last}</p>
+                        <p>{this.props.playerData.gender} - {this.props.playerData.years_experience} years - {this.props.playerData.graduation_year} - {this.props.playerData.grade} Grade
+                          <br /> Harris Middle School - CO {this.props.playerData.graduation_year}
+                          <br /> Other Sports: {
+                            this.props.playerData.sports && this.props.playerData.sports.map(sport => `${sport} `)
+                          }
                           <div className="theme-red-padded-line">
                             <div className="theme-red-badge">
-                              <strong>Player ID: HVEU9D7</strong>
+                              <strong>Player ID: {this.props.playerData.id_external}</strong>
                             </div>
                           </div>
                           Position: Line Backer
@@ -126,47 +129,37 @@ class PlayerProfile extends Component {
                         </p>
                       </div>
                     </div>
+                    {
+                      /* eslint-disable */
+                    }
                     <div className="card-red card-red-mspacing-top">
-                      <div className="card-red-header">
-                        <i id="editIcon" className="fa fa-edit float-right mt-1" ariaHidden="true" /> Parent/
-                        <strong>Guardian</strong>
-                      </div>
-                      <div className="card-red-body">
-                        <p>
-                          <a className="card-red-link-inverted" data-toggle="collapse" href="#collapseInfo1" aria-expanded="false" aria-controls="collapseExample">Parent: George Doe
-                            <i className="fa fa-chevron-down font-75 mt-2 float-right" />
-                          </a>
-                        </p>
-                        <div className="collapse indent" id="collapseInfo1">
-                          <p>
-                            <span>Mobile:</span> 333-333-3333
-                            <br />
-                            <span>Home:</span> 333-333-3333
-                            <br />
-                            <span>Work:</span> 333-333-3333
-                            <br />
-                            <span>Email:</span>
-                            <a href="tel:333-333-3333" className="card-red-link">1234@gmail.com</a>
-                          </p>
-                        </div>
-                        <p>
-                          <a className="card-red-link-inverted" data-toggle="collapse" href="#collapseInfo2" aria-expanded="false" aria-controls="collapseExample">Parent: Sally Doe
-                            <i className="fa fa-chevron-down font-75 offset-top--4 ml-2 float-right" />
-                          </a>
-                        </p>
-                        <div className="collapse indent" id="collapseInfo2">
-                          <p>
-                            <span>Mobile:</span> 333-333-3333
-                            <br />
-                            <span>Home:</span> 333-333-3333
-                            <br />
-                            <span>Work:</span> 333-333-3333
-                            <br />
-                            <span>Email:</span>
-                            <a href="mailto:1234@gmail.com" className="card-red-link">1234@gmail.com</a>
-                          </p>
-                        </div>
-                      </div>
+                      {this.props.playerData.guardians && this.props.playerData.guardians.map(guardian => (
+                        <span key={guardian._id}>
+                          <div className="card-red-header">
+                            <i id="editIcon" className="fa fa-edit float-right mt-1" ariaHidden="true" /> Parent/
+                            <strong>Guardian</strong>
+                          </div>
+                          <div className="card-red-body">
+                            <p>
+                              <a className="card-red-link-inverted" data-toggle="collapse" href="#collapseInfo1" aria-expanded="false" aria-controls="collapseExample">Parent: {guardian.name_first} {guardian.name_last}
+                                <i className="fa fa-chevron-down font-75 mt-2 float-right" />
+                              </a>
+                            </p>
+                            <div className="collapse indent" id="collapseInfo1">
+                              <p>
+                                <span>Mobile:</span> {guardian.phone_mobile}
+                                <br />
+                                <span>Home:</span> {guardian.phone_home}
+                                <br />
+                                <span>Work:</span> {guardian.phone_work}
+                                <br />
+                                <span>Email:</span>
+                                <a href="tel:333-333-3333" className="card-red-link">{guardian.email || 'N/A'}</a>
+                              </p>
+                            </div>
+                          </div>
+                        </span>
+                      ))}
                     </div>
                   </div>
                   <div className="col h-100 bg-clear-white player-info red-theme whiteTools-wrapper">
@@ -400,19 +393,39 @@ class PlayerProfile extends Component {
               </div>
             </div>
           </div>
-        </section>
-      </div>
+        </section >
+      </div >
     );
   }
 }
 
 PlayerProfile.propTypes = {
-  getPlayerProfile: PropTypes.func.isRequired
+  getPlayerProfile: PropTypes.func.isRequired,
+  playerData: PropTypes.shape({
+    years_experience: PropTypes.number.isRequired,
+    name_first: PropTypes.string.isRequired,
+    name_last: PropTypes.string.isRequired,
+    gender: PropTypes.string.isRequired,
+    graduation_year: PropTypes.number.isRequired,
+    grade: PropTypes.number.isRequired,
+    sports: PropTypes.array,
+    guardians: PropTypes.array,
+    id_external: PropTypes.number.isRequired
+  }).isRequired
 };
 
-const mapStateToProps = ({ playerProfileReducer }) => playerProfileReducer;
+PlayerProfile.defaultProps = {
+  playerData: {
+    sports: [],
+    guardians: []
+  }
+};
+
+const mapStateToProps = ({ playerProfileReducer }) => {
+  return { playerData: playerProfileReducer.playerData }
+};
 const mapDispatchToProps = dispatch => ({
-  getPlayerProfile: playerId => dispatch({ type: GET_PLAYER_PROFILE, data: { playerId } })
+  getPlayerProfile: player => dispatch({ type: GET_PLAYER_PROFILE, data: { player } })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerProfile);

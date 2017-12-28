@@ -38,7 +38,6 @@ function* createUserFlow() {
     const responseData = yield response.json();
     if (response.ok) {
       yield put({ type: actions.USER_CREATED });
-      yield getUserFlow();
     } else {
       yield put({ type: actions.CREATE_USER_ERROR, createUserError: responseData.errors[0] });
     }

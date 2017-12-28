@@ -17,7 +17,7 @@ import UserModal from './components/user-modal/UserModal';
 import states from './models/states';
 import roles from './models/roles';
 
-import { GET_USERS, CREATE_USER } from './dux/actions';
+import { GET_USERS, CREATE_USER, DISMISS_HEADER_MESSAGE } from './dux/actions';
 
 import './users.css';
 
@@ -39,6 +39,8 @@ class Users extends Component {
     // using 1 and 10 as parameters because that is what
     // the pagination default is set to
     this.updateUsers(1, 10);
+
+    console.dir(this.props); //eslint-disable-line
   }
 
   getCellFormatters = () => ({
@@ -122,7 +124,12 @@ class Users extends Component {
         />
         <HeaderContainer>
           <Header />
-          <HeaderMessage />
+          <HeaderMessage
+            isOpen={this.props.headerMessageOpen}
+            color={this.props.headerStatus}
+            message={this.props.headerMessage}
+            toggle={this.props.dismissHeaderMessage}
+          />
           <CreateUserButton toggle={this.toggleCreateUserModal} />
         </HeaderContainer>
         <DataTable
@@ -143,13 +150,18 @@ Users.propTypes = {
   getUsers: PropTypes.func.isRequired,
   totalUsers: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
-  createUser: PropTypes.func.isRequired
+  createUser: PropTypes.func.isRequired,
+  dismissHeaderMessage: PropTypes.func.isRequired,
+  headerMessageOpen: PropTypes.bool.isRequired,
+  headerStatus: PropTypes.string.isRequired,
+  headerMessage: PropTypes.string.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
 const mapDispatchToProps = dispatch => ({
   getUsers: (page, per_page) => dispatch({ type: GET_USERS, data: { page, per_page } }),
-  createUser: data => dispatch({ type: CREATE_USER, data })
+  createUser: data => dispatch({ type: CREATE_USER, data }),
+  dismissHeaderMessage: () => dispatch({ type: DISMISS_HEADER_MESSAGE })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

@@ -5,10 +5,11 @@ const initialState = {
   totalUsers: 0,
   gettingUsers: false,
   retrievedUsers: false,
-  gettingUsersError: '',
   creatingUser: false,
   userCreated: false,
-  createUserError: ''
+  headerMessage: '',
+  headerStatus: '',
+  headerMessageOpen: false
 };
 
 export default (state = initialState, action) => {
@@ -18,13 +19,35 @@ export default (state = initialState, action) => {
     case actions.USERS_RECEIVED:
       return { ...state, gettingUsers: false, retrievedUsers: true, users: action.users, totalUsers: action.total };
     case actions.GET_USERS_ERROR:
-      return { ...state, gettingUsers: false, gettingUsersError: action.gettingUsersError };
+      return {
+        ...state,
+        gettingUsers: false,
+        headerMessage: action.gettingUsersError,
+        headerMessageOpen: true,
+        headerStatus: 'danger'
+      };
     case actions.CREATE_USER:
       return { ...state, creatingUser: true, userCreated: false };
     case actions.USER_CREATED:
-      return { ...state, creatingUser: false, userCreated: true };
+      return {
+        ...state,
+        creatingUser: false,
+        userCreated: true,
+        headerMessage: 'New user has been added!',
+        headerMessageOpen: true,
+        headerStatus: 'success'
+      };
     case actions.CREATE_USER_ERROR:
-      return { ...steate, creatingUser: false, userCreated: false, createUserError: action.createUserError };
+      return {
+        ...state,
+        creatingUser: false,
+        userCreated: false,
+        headerMessage: action.createUserError,
+        headerMessageOpen: true,
+        headerStatus: 'danger'
+      };
+    case actions.DISMISS_HEADER_MESSAGE:
+      return { ...state, headerMessageOpen: false };
     default:
       return state;
   }

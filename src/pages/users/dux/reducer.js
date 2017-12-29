@@ -70,6 +70,13 @@ export default (state = initialState, action) => {
       };
     case actions.SET_ROLES:
       return { ...state, roles: action.roles };
+    case actions.USER_STATUS_UPDATED:
+      return {
+        ...state,
+        headerMessage: 'User status updated!',
+        headerMessageOpen: true,
+        headerStatus: 'success'
+      };
     default:
       return state;
   }

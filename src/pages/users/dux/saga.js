@@ -116,6 +116,7 @@ function* activateUserFlow() {
     yield user.active = true;
     const updatedUsers = yield updateUser(users, user);
     yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+    yield put({ type: actions.USER_STATUS_UPDATED });
   }
 }
 
@@ -127,5 +128,6 @@ function* deactivateUserFlow() {
     yield user.active = false;
     const updatedUsers = yield updateUser(users, user);
     yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+    yield put({ type: actions.USER_STATUS_UPDATED });
   }
 }

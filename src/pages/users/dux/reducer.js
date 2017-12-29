@@ -2,10 +2,7 @@ import * as actions from './actions';
 
 const initialState = {
   users: [],
-  roles: [{
-    value: '',
-    label: 'Role'
-  }],
+  roles: [],
   totalUsers: 0,
   gettingUsers: false,
   retrievedUsers: false,

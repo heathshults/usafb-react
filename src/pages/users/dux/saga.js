@@ -1,14 +1,16 @@
 import { all, take, call, put, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getUsers, { createUser, editUser, getRoles } from './api';
+import getUsers, { createUser, editUser, getRoles, activateUser, deactivateUser } from './api';
 import userManagementSelector from './selectors.js';
 
 export default function* userManagementFlow() {
   yield all({
     getUserFlow: call(getUserFlow),
     createUserFlow: call(createUserFlow),
-    editUserFlow: call(editUserFlow)
+    editUserFlow: call(editUserFlow),
+    activateUserFlow: call(activateUserFlow),
+    deactivateUser: call(deactivateUserFlow)
   });
 }
 
@@ -104,4 +106,24 @@ function updateUser(users, updatedUser) {
   let userToUpdate = users.find(user => user._id === updatedUser._id); //eslint-disable-line
   users[users.findIndex(user => user === userToUpdate)] = updatedUser; //eslint-disable-line
   return users;
+}
+
+function* activateUserFlow() {
+  const { user } = yield take(actions.ACTIVATE_USER);
+  const response = yield call(activateUser, user._id); //eslint-disable-line
+  if (response.ok) {
+    const { users } = yield select(userManagementSelector);
+    yield user.active = true;
+    yield updateUser(users, user);
+  }
+}
+
+function* deactivateUserFlow() {
+  const { user } = yield take(actions.DEACTIVATE_USER);
+  const response = yield call(deactivateUser, user._id); //eslint-disable-line
+  if (response.ok) {
+    const { users } = yield select(userManagementSelector);
+    yield user.active = false;
+    yield updateUser(users, user);
+  }
 }

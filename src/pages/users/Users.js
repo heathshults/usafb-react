@@ -21,7 +21,9 @@ import {
   CREATE_USER,
   DISMISS_HEADER_MESSAGE,
   UPDATE_ROWS_PER_PAGE,
-  EDIT_USER
+  EDIT_USER,
+  ACTIVATE_USER,
+  DEACTIVATE_USER
 } from './dux/actions';
 
 import './users.css';
@@ -131,14 +133,24 @@ class Users extends Component {
   renderUserStatusToggleButton = (user) => {
     if (user.active) {
       return (
-        <a className="user-management__status-disabled">
+        <a
+          className="user-management__status-disabled"
+          onClick={() => this.props.deactivateUser(user)}
+          role="button"
+          tabIndex={0}
+        >
           <i className="fa fa-minus-square pr-2 text-lg" />
         </a>
       );
     }
 
     return (
-      <a className="user-management__status-enabled">
+      <a
+        className="user-management__status-enabled"
+        onClick={() => this.props.activateUser(user)}
+        role="button"
+        tabIndex={0}
+      >
         <i className="fa pr-2 fa-plus-square status-enabled text-lg" />
       </a>
     );
@@ -206,6 +218,8 @@ Users.propTypes = {
   updateRowsPerPage: PropTypes.func.isRequired,
   editUser: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
+  activateUser: PropTypes.func.isRequired,
+  deactivateUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
@@ -214,7 +228,9 @@ const mapDispatchToProps = dispatch => ({
   createUser: data => dispatch({ type: CREATE_USER, data }),
   dismissHeaderMessage: () => dispatch({ type: DISMISS_HEADER_MESSAGE }),
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
-  editUser: data => dispatch({ type: EDIT_USER, data })
+  editUser: data => dispatch({ type: EDIT_USER, data }),
+  activateUser: user => dispatch({ type: ACTIVATE_USER, user }),
+  deactivateUser: user => dispatch({ type: DEACTIVATE_USER, user })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

@@ -48,7 +48,7 @@ class PlayerProfile extends Component {
                     <div className="card-red player-info card-red-mspacing-top">
                       <div className="card-red-body">
                         <p>
-                          <img src="assets/profile/user-01.jpg" alt="@HeathShults" className="user-avatar-red-md" />
+                          <img src="assets/profile/user-01.jpg" alt={`${this.props.playerData.name_first} ${this.props.playerData.name_last}`} className="user-avatar-red-md" />
                         </p>
                         <p className="theme-red-title">{this.props.playerData.name_first} {this.props.playerData.name_last}</p>
                         <p>{this.props.playerData.gender} - {this.props.playerData.years_experience} years - {this.props.playerData.graduation_year} - {this.props.playerData.grade}th Grade

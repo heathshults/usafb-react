@@ -57,8 +57,7 @@ class CoachProfile extends Component {
                               <strong>Coach ID: {this.props.coachData.id_external}</strong>
                             </div>
                           </div>
-                          Certifications: {this.props.currentTeam.certifications}
-                          <br /> Experience: 2017-2018</p>
+                          Certifications: {this.props.currentTeam.certifications}</p>
                       </div>
                     </div>
 

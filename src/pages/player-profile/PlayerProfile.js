@@ -61,8 +61,7 @@ class PlayerProfile extends Component {
                               <strong>Player ID: {this.props.playerData.id_external}</strong>
                             </div>
                           </div>
-                          Position: Line Backer
-                          <br /> Experience: 2017-2018</p>
+                          Position: {this.props.currentTeam.position}</p>
                       </div>
                     </div>
 
@@ -146,7 +145,7 @@ class PlayerProfile extends Component {
                                   <div className="tats-wrapper">
                                     <div className="row text-center mt-2">
                                       <div className="col-3 current-stats">
-                                        <div className="stat-title divider-br">WIDE RECEIVER</div>
+                                        <div className="stat-title divider-br">{team.position}</div>
                                       </div>
                                       <div className="col-3 current-stats">
                                         <div className="stat-title divider-br">
@@ -187,7 +186,7 @@ class PlayerProfile extends Component {
                                       <div className="tats-wrapper">
                                         <div className="row text-center mt-2">
                                           <div className="col-3 current-stats">
-                                            <div className="stat-title divider-br">WIDE RECEIVER</div>
+                                            <div className="stat-title divider-br">{team.position}</div>
                                           </div>
                                           <div className="col-3 current-stats">
                                             <div className="stat-title divider-br">
@@ -261,9 +260,7 @@ PlayerProfile.defaultProps = {
 };
 
 const mapStateToProps = ({ playerProfileReducer }) => {
-  console.log('playerProfileReducer.playerData', playerProfileReducer.playerData)
   const currentTeam = _.find(playerProfileReducer.playerData.registrations, team => team.current === true);
-  console.log('current team', currentTeam);
   return { playerData: playerProfileReducer.playerData, currentTeam };
 };
 const mapDispatchToProps = dispatch => ({

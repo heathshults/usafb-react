@@ -47,11 +47,11 @@ class CoachProfile extends Component {
 
                     <div className="card-red player-info card-red-mspacing-top">
                       <div className="card-red-body">
-                        <p>
+                        {/* <p>
                           <img src="../assets/profile/user-01.jpg" alt={`${this.props.coachData.name_first} ${this.props.coachData.name_last}`} className="user-avatar-red-md" />
-                        </p>
+                        </p> */}
                         <p className="theme-red-title">{this.props.coachData.name_first} {this.props.coachData.name_middle} {this.props.coachData.name_last}</p>
-                        <p>{this.props.coachData.gender} - {this.props.coachData.years_experience} years - 1982
+                        <p>{this.props.coachData.gender} - {this.props.coachData.years_experience} years
                           <div className="theme-red-padded-line">
                             <div className="theme-red-badge">
                               <strong>Coach ID: {this.props.coachData.id_external}</strong>
@@ -103,7 +103,10 @@ class CoachProfile extends Component {
                           <div className="tats-wrapper">
                             <div className="row text-center mt-2">
                               <div className="col-3 current-stats">
-                                <div className="stat-title divider-br">{this.props.currentTeam.positions && this.props.currentTeam.positions[0]}</div>
+                                <div className="stat-title divider-br">{this.props.currentTeam.positions && this.props.currentTeam.positions.map(position => `${position}, `)}</div>
+                              </div>
+                              <div className="col-3 current-stats">
+                                <div className="stat-title divider-br">{this.props.currentTeam.level_type}</div>
                               </div>
                               <div className="col-3 current-stats">
                                 <div className="stat-title divider-br">{this.props.currentTeam.organization_name}</div>
@@ -134,10 +137,13 @@ class CoachProfile extends Component {
                                     <div className="stats-wrapper">
                                       <div className="row text-center mt-2">
                                         <div className="col-3 current-stats">
-                                          <div className="stat-title divider-br">{team.positions[0]}</div>
+                                          <div className="stat-title divider-br">{team.positions && team.positions.map(position => `${position}, `)}</div>
                                         </div>
                                         <div className="col-3 current-stats">
-                                          <div className="stat-title  divider-br">{team.organization_name}</div>
+                                          <div className="stat-title divider-br">{team.level_type}</div>
+                                        </div>
+                                        <div className="col-3 current-stats">
+                                          <div className="stat-title divider-br">{team.organization_name}</div>
                                         </div>
                                         <div className="col-3 current-stats">
                                           <div className="stat-title">{team.season} {team.season_year}</div>
@@ -191,7 +197,7 @@ CoachProfile.defaultProps = {
     name_first: '',
     name_middle: '',
     name_last: '',
-    gender: '',
+    gender: 'Male',
     graduation_year: 2025,
     grade: 0,
     school_name: '',

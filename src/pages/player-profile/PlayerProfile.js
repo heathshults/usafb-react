@@ -47,9 +47,9 @@ class PlayerProfile extends Component {
 
                     <div className="card-red player-info card-red-mspacing-top">
                       <div className="card-red-body">
-                        <p>
+                        {/* <p>
                           <img src="assets/profile/user-01.jpg" alt={`${this.props.playerData.name_first} ${this.props.playerData.name_last}`} className="user-avatar-red-md" />
-                        </p>
+                        </p> */}
                         <p className="theme-red-title">{this.props.playerData.name_first} {this.props.playerData.name_last}</p>
                         <p>{this.props.playerData.gender} - {this.props.playerData.years_experience} years - {this.props.playerData.graduation_year} - {this.props.playerData.grade}th Grade
                           <br /> {this.props.currentTeam.school_name} - {this.props.currentTeam.school_state} {this.props.playerData.graduation_year}
@@ -61,7 +61,7 @@ class PlayerProfile extends Component {
                               <strong>Player ID: {this.props.playerData.id_external}</strong>
                             </div>
                           </div>
-                          Position: {this.props.currentTeam.position}</p>
+                          Position: {this.props.currentTeam.positions && this.props.currentTeam.positions.map(position => `${position}, `)}</p>
                       </div>
                     </div>
 
@@ -88,10 +88,7 @@ class PlayerProfile extends Component {
                         </p>
                       </div>
                     </div>
-
-                    {
-                      /* eslint-disable */
-                    }
+                    {/* eslint-disable */}
                     <div className="card-red card-red-mspacing-top">
                       {this.props.playerData.guardians && this.props.playerData.guardians.map(guardian => (
                         <span key={guardian._id}>
@@ -145,7 +142,12 @@ class PlayerProfile extends Component {
                                   <div className="tats-wrapper">
                                     <div className="row text-center mt-2">
                                       <div className="col-3 current-stats">
-                                        <div className="stat-title divider-br">{team.position}</div>
+                                        <div className="stat-title divider-br">
+                                          {team.positions && team.positions.map(position => `${position}, `)}
+                                        </div>
+                                      </div>
+                                      <div className="col-3 current-stats">
+                                        <div className="stat-title divider-br">{team.organization_name}</div>
                                       </div>
                                       <div className="col-3 current-stats">
                                         <div className="stat-title divider-br">
@@ -186,7 +188,10 @@ class PlayerProfile extends Component {
                                       <div className="tats-wrapper">
                                         <div className="row text-center mt-2">
                                           <div className="col-3 current-stats">
-                                            <div className="stat-title divider-br">{team.position}</div>
+                                            <div className="stat-title divider-br">{team.positions && team.positions.map(position => `${position}, `)}</div>
+                                          </div>
+                                          <div className="col-3 current-stats">
+                                            <div className="stat-title divider-br">{team.organization_name}</div>
                                           </div>
                                           <div className="col-3 current-stats">
                                             <div className="stat-title divider-br">

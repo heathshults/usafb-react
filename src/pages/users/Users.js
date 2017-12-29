@@ -53,7 +53,7 @@ class Users extends Component {
 
   actionsFormatter = (cell, row) => (
     <div className="text-center">
-      {this.renderUserStatusToggleButton()}
+      {this.renderUserStatusToggleButton(row)}
       {this.renderEditUserButton(row)}
     </div>
   );
@@ -128,11 +128,21 @@ class Users extends Component {
     }
   }
 
-  renderUserStatusToggleButton = () => (
-    <a className="user-management__status-disabled">
-      <i className="fa fa-minus-square pr-2 text-lg" />
-    </a>
-  );
+  renderUserStatusToggleButton = (user) => {
+    if (user.active) {
+      return (
+        <a className="user-management__status-disabled">
+          <i className="fa fa-minus-square pr-2 text-lg" />
+        </a>
+      );
+    }
+
+    return (
+      <a className="user-management__status-enabled">
+        <i className="fa pr-2 fa-plus-square status-enabled text-lg" />
+      </a>
+    );
+  }
 
   renderEditUserButton = user => (
     <a

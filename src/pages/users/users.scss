@@ -1,4 +1,4 @@
-.user-management__status-disabled, .user-management__edit-user-button {
+.user-management__status-disabled, .user-management__edit-user-button, .user-management__status-enabled {
   :hover {
     cursor: pointer;
   }
@@ -7,6 +7,13 @@
 .user-management__status-disabled {
   i {
     color: #9e0a0f;
+    text-decoration: none;
+  }
+}
+
+.user-management__status-enabled {
+  i {
+    color: #28a745;
     text-decoration: none;
   }
 }

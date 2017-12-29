@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import { GET_PLAYER_PROFILE } from './dux/actions';
 
@@ -21,49 +22,8 @@ class PlayerProfile extends Component {
     };
   }
 
-  // {
-  //   "data": {
-  //     "id": "string",
-  //     "id_usafb": "string",
-  //     "name_first": "string",
-  //     "name_middle": "string",
-  //     "name_last": "string",
-  //     "dob": "string",
-  //     "address": {
-  //       "street_1": "string",
-  //       "street_2": "string",
-  //       "city": "string",
-  //       "county": "string",
-  //       "state": "string",
-  //       "postal_code": "string",
-  //       "country_code": "string"
-  //     },
-  //     "registrations": [
-  //       {
-  //         "current": true,
-  //         "season": "string",
-  //         "season_year": 0,
-  //         "level": "string",
-  //         "level_type": "string",
-  //         "organization_name": "string",
-  //         "organization_state": "string",
-  //         "league_name": "string",
-  //         "school_name": "string",
-  //         "school_district": "string",
-  //         "school_state": "string",
-  //         "team_name": "string",
-  //         "team_gender": "string",
-  //         "created_at_yyyymmdd": "string",
-  //         "created_at": "2017-12-26T18:43:05.460Z",
-  //         "updated_at": "2017-12-26T18:43:05.460Z"
-  //       }
-  //     ]
-  //   }
-  // }
-
   componentWillMount() {
-    const id = this.props.match.params.id; //eslint-disable-line 
-    console.log('id', id); // eslint-disable-line
+    const id = this.props.match.params.id; //eslint-disable-line
     this.getPlayerProfile({ id });
   }
 
@@ -91,8 +51,8 @@ class PlayerProfile extends Component {
                           <img src="assets/profile/user-01.jpg" alt="@HeathShults" className="user-avatar-red-md" />
                         </p>
                         <p className="theme-red-title">{this.props.playerData.name_first} {this.props.playerData.name_last}</p>
-                        <p>{this.props.playerData.gender} - {this.props.playerData.years_experience} years - {this.props.playerData.graduation_year} - {this.props.playerData.grade} Grade
-                          <br /> Harris Middle School - CO {this.props.playerData.graduation_year}
+                        <p>{this.props.playerData.gender} - {this.props.playerData.years_experience} years - {this.props.playerData.graduation_year} - {this.props.playerData.grade}th Grade
+                          <br /> {this.props.currentTeam.school_name} - {this.props.currentTeam.school_state} {this.props.playerData.graduation_year}
                           <br /> Other Sports: {
                             this.props.playerData.sports && this.props.playerData.sports.map(sport => `${sport} `)
                           }
@@ -113,22 +73,23 @@ class PlayerProfile extends Component {
                       </div>
                       <div className="card-red-body">
                         <div className="theme-red-padded-line">
-                          <div className="theme-red-badge">LEAGUE: XXXZZSS</div>
+                          <div className="theme-red-badge">LEAGUE: {this.props.currentTeam.id_external}</div>
                         </div>
 
                         <p className="pl-3">
-                          Dallas Cowboys
+                          {this.props.currentTeam.team_name}
                           <br /> Panthers Flag Football
                         </p>
                         <p className="pl-3 font-85">
-                          Texas, USA
+                          {this.props.currentTeam.school_state}, USA
                           <br />
-                          <span>School:</span> Brandon&#39;s School of Rock
+                          <span>School:</span> {this.props.currentTeam.school_name}
                           <br />
-                          <span>District:</span> North East Dallas
+                          <span>District:</span> {this.props.currentTeam.school_district}
                         </p>
                       </div>
                     </div>
+
                     {
                       /* eslint-disable */
                     }
@@ -165,7 +126,7 @@ class PlayerProfile extends Component {
                   <div className="col h-100 bg-clear-white player-info red-theme whiteTools-wrapper">
                     <div className="card-red-header-special">
                       <i id="editIcon" className="fa fa-edit float-right mt-1" ariaHidden="true" /> PLAYING
-                      <strong>EXPERIENCE</strong>
+                      <strong> EXPERIENCE</strong>
                     </div>
 
                     <div className="card-red player-info card-red-mspacing-top">
@@ -173,217 +134,82 @@ class PlayerProfile extends Component {
                       <div className="red-theme-title-2-container">
                         <span className="red-theme-title-2">CURRENT SEASON</span>
                       </div>
-                      <div className="card-red">
-                        <div className="card-red-body">
-                          <h4 className="mb-4">STEELERS
-                            <small className="ml-2">(Freeman)</small>
-                          </h4>
-                          <div className="tats-wrapper">
-                            <div className="row text-center mt-2">
-                              <div className="col-3 current-stats">
-                                <div className="stat-title divider-br">WIDE RECEIVER</div>
+                      {
+                        this.props.playerData.registrations && this.props.playerData.registrations.map((team) => {
+                          if (team.current) {
+                            return (
+                              <div className="card-red" key={team._id}>
+                                <div className="card-red-body">
+                                  <h4 className="mb-4">{team.team_name}
+                                    <small className="ml-2">({team.school_name})</small>
+                                  </h4>
+                                  <div className="tats-wrapper">
+                                    <div className="row text-center mt-2">
+                                      <div className="col-3 current-stats">
+                                        <div className="stat-title divider-br">WIDE RECEIVER</div>
+                                      </div>
+                                      <div className="col-3 current-stats">
+                                        <div className="stat-title divider-br">
+                                          <div className="badge-grade ar-1by1"> {this.props.playerData.grade}th
+                                            <br />
+                                            <span className="font-50">GRADE</span>
+                                          </div> {team.level}</div>
+                                      </div>
+                                      <div className="col-3 current-stats">
+                                        <div className="stat-title divider-br">{team.organization_name}</div>
+                                      </div>
+                                      <div className="col-3 current-stats">
+                                        <div className="stat-title ">{team.season} {team.season_year}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="col-3 current-stats">
-                                <div className="stat-title divider-br">
-                                  <div className="badge-grade ar-1by1"> 7th
-                                    <br />
-                                    <span className="font-50">GRADE</span>
-                                  </div> 11-player tackle</div>
-                              </div>
-                              <div className="col-3 current-stats">
-                                <div className="stat-title divider-br">BRANDON ATHLETICS</div>
-                              </div>
-                              <div className="col-3 current-stats">
-                                <div className="stat-title ">FALL 2017</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                            );
+                          }
+                        })
+                      }
                       <div className="red-theme-title-2-container">
                         <span className="red-theme-title-2 ">PAST SEASONS</span>
                       </div>
 
                       <div className="card-red">
                         <div className="card-red-body">
-                          <div className="stats-container">
-                            <h5 className="title-3">STEELERS
-                              <small className="ml-2">(Freeman)</small>
-                            </h5>
-                            <div className="stats-wrapper">
-                              <div className="row text-center mt-2">
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title divider-br">WIDE RECEIVER</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">
-                                    <div className="badge-grade ar-1by1">6th
-                                      <br />
-                                      <span className="font-50">GRADE</span>
-                                    </div> 11-player tackle</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">BRANDON ATHLETICS</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title">FALL 2016</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="stats-container">
-                            <h5 className="title-3">STEELERS
-                              <small className="ml-2">(Freeman)</small>
-                            </h5>
-                            <div className="stats-wrapper">
-                              <div className="row text-center mt-2">
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title divider-br">RUNNING BACK</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">
-                                    <div className="badge-grade ar-1by1">5th
-                                      <br />
-                                      <span className="font-50">GRADE</span>
-                                    </div> 11-player tackle</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">TIGER SPORTS CLUB</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title">FALL 2015</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="stats-container">
-                            <h5 className="title-3">STEELERS
-                              <small className="ml-2">(Freeman)</small>
-                            </h5>
-                            <div className="stats-wrapper">
-                              <div className="row text-center mt-2">
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title divider-br">RUNNING BACK</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title divider-br">
-                                    <div className="badge-grade ar-1by1">4th
-                                      <br />
-                                      <span className="font-50">GRADE</span>
-                                    </div> 7on7</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">TIGER SPORTS CLUB</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title">FALL 2014</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="stats-container">
-                            <h5 className="title-3">STEELERS
-                              <small className="ml-2">(Freeman)</small>
-                            </h5>
-                            <div className="stats-wrapper">
-                              <div className="row text-center mt-2">
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">WIDE RECEIVER</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title">
-                                    <div className="badge-grade ar-1by1">3rd
-                                      <br />
-                                      <span className="font-50">GRADE</span>
-                                    </div> 7on7</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">TIGER SPORTS CLUB</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title ">FALL 2013</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="stats-container">
-                            <h5 className="title-3">STEELERS
-                              <small className="ml-2">(Freeman)</small>
-                            </h5>
-                            <div className="stats-wrapper">
-                              <div className="row text-center mt-2">
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">TIGHT END</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title divider-br">
-                                    <div className="badge-grade ar-1by1">2nd
-                                      <br />
-                                      <span className="font-50">GRADE</span>
-                                    </div> Youth Flag</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">TIGER SPORTS CLUB</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title ">FALL 2012</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="stats-container">
-                            <h5 className="title-3">STEELERS
-                              <small className="ml-2">(Freeman)</small>
-                            </h5>
-                            <div className="stats-wrapper">
-                              <div className="row text-center mt-2">
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">SPECIAL TEAMS</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title">
-                                    <div className="badge-grade ar-1by1">1st
-                                      <br />
-                                      <span className="font-50">GRADE</span>
-                                    </div> Youth Flag</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">TIGER SPORTS CLUB</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title">FALL 2011</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="stats-container">
-                            <h5 className="title-3">STEELERS
-                              <small className="ml-2">(Freeman)</small>
-                            </h5>
-                            <div className="stats-wrapper">
-                              <div className="row text-center mt-2">
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">BENCH WARMERV</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">
-                                    <small>Pre</small> Youth Flag</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title  divider-br">ATHLETES CORNER</div>
-                                </div>
-                                <div className="col-3 current-stats">
-                                  <div className="stat-title">FALL 2010</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          {
+                            this.props.playerData.registrations && this.props.playerData.registrations.map((team) => {
+                              if (!team.current) {
+                                return (
+                                  <div className="card-red" key={team._id}>
+                                    <div className="card-red-body">
+                                      <h4 className="mb-4">{team.team_name}
+                                        <small className="ml-2">({team.school_name})</small>
+                                      </h4>
+                                      <div className="tats-wrapper">
+                                        <div className="row text-center mt-2">
+                                          <div className="col-3 current-stats">
+                                            <div className="stat-title divider-br">WIDE RECEIVER</div>
+                                          </div>
+                                          <div className="col-3 current-stats">
+                                            <div className="stat-title divider-br">
+                                              <div className="badge-grade ar-1by1"> {this.props.playerData.grade}th
+                                                <br />
+                                                <span className="font-50">GRADE</span>
+                                              </div> {team.level}</div>
+                                          </div>
+                                          <div className="col-3 current-stats">
+                                            <div className="stat-title divider-br">{team.organization_name}</div>
+                                          </div>
+                                          <div className="col-3 current-stats">
+                                            <div className="stat-title ">{team.season} {team.season_year}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              }
+                            })
+                          }
                         </div>
                       </div>
 
@@ -402,27 +228,43 @@ class PlayerProfile extends Component {
 PlayerProfile.propTypes = {
   getPlayerProfile: PropTypes.func.isRequired,
   playerData: PropTypes.shape({
-    years_experience: PropTypes.number.isRequired,
-    name_first: PropTypes.string.isRequired,
-    name_last: PropTypes.string.isRequired,
-    gender: PropTypes.string.isRequired,
-    graduation_year: PropTypes.number.isRequired,
-    grade: PropTypes.number.isRequired,
+    years_experience: PropTypes.number,
+    name_first: PropTypes.string,
+    name_last: PropTypes.string,
+    gender: PropTypes.string,
+    graduation_year: PropTypes.number,
+    grade: PropTypes.number,
     sports: PropTypes.array,
     guardians: PropTypes.array,
-    id_external: PropTypes.number.isRequired
-  }).isRequired
+    school_name: PropTypes.string,
+    id_external: PropTypes.number,
+    registrations: PropTypes.array
+  }).isRequired,
+  currentTeam: PropTypes.object
 };
 
 PlayerProfile.defaultProps = {
   playerData: {
     sports: [],
-    guardians: []
-  }
+    guardians: [],
+    registrations: [],
+    years_experience: 0,
+    name_first: '',
+    name_last: '',
+    gender: '',
+    graduation_year: 2025,
+    grade: 0,
+    school_name: '',
+    id_external: 0
+  },
+  currentTeam: {}
 };
 
 const mapStateToProps = ({ playerProfileReducer }) => {
-  return { playerData: playerProfileReducer.playerData }
+  console.log('playerProfileReducer.playerData', playerProfileReducer.playerData)
+  const currentTeam = _.find(playerProfileReducer.playerData.registrations, team => team.current === true);
+  console.log('current team', currentTeam);
+  return { playerData: playerProfileReducer.playerData, currentTeam };
 };
 const mapDispatchToProps = dispatch => ({
   getPlayerProfile: player => dispatch({ type: GET_PLAYER_PROFILE, data: { player } })

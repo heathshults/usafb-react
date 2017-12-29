@@ -47,7 +47,8 @@ class Users extends Component {
   getCellFormatters = () => ({
     Actions: this.actionsFormatter,
     'Create Date': this.createdDateFormatter,
-    Role: this.roleFormatter
+    Role: this.roleFormatter,
+    Status: this.statusFormatter
   });
 
   actionsFormatter = (cell, row) => (
@@ -74,6 +75,22 @@ class Users extends Component {
       <div />
     );
   };
+
+  statusFormatter = (cell) => {
+    if (cell) {
+      return (
+        <div className="status-enabled">
+          <i className="fa fa-check-circle" />
+        </div>
+      );
+    }
+
+    return (
+      <div className="status-disabled">
+        <i className="stat-icon fa fa-minus-circle" />
+      </div>
+    );
+  }
 
   updateUsers = (currentPage, perPage) => {
     this.props.getUsers(currentPage, perPage);

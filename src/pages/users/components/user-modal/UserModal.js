@@ -39,7 +39,6 @@ class UserModal extends Component {
     if (!this.state.modalActive) {
       // only set the state if the user object is not empty
       if (Object.keys(nextProps.user).length !== 0) {
-        console.dir(nextProps.user); //eslint-disable-line
         this.setState({
           modalStatus: this.EDIT_USER_STATUS,
           dismissStatus: this.CANCELED,

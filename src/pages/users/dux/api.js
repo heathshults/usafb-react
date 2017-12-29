@@ -23,3 +23,20 @@ export const editUser = data =>
     headers: headers.jsonHeader(),
     body: JSON.stringify(data)
   });
+
+export const getRoles = () =>
+  fetch(`${process.env.REACT_APP_API_URL}/roles`, {
+    headers: headers.authorizedHeader()
+  });
+
+export const activateUser = id =>
+  fetch(`${apiUrl}/${id}/activate`, {
+    method: 'PUT',
+    headers: headers.jsonHeader()
+  });
+
+export const deactivateUser = id =>
+  fetch(`${apiUrl}/${id}/deactivate`, {
+    method: 'PUT',
+    headers: headers.jsonHeader()
+  });

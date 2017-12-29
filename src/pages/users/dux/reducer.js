@@ -2,6 +2,7 @@ import * as actions from './actions';
 
 const initialState = {
   users: [],
+  roles: [],
   totalUsers: 0,
   gettingUsers: false,
   retrievedUsers: false,
@@ -66,6 +67,15 @@ export default (state = initialState, action) => {
         headerMessage: action.editUserError,
         headerMessageOpen: true,
         headerStatus: 'danger'
+      };
+    case actions.SET_ROLES:
+      return { ...state, roles: action.roles };
+    case actions.USER_STATUS_UPDATED:
+      return {
+        ...state,
+        headerMessage: 'User status updated!',
+        headerMessageOpen: true,
+        headerStatus: 'success'
       };
     default:
       return state;

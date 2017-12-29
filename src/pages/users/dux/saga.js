@@ -1,14 +1,16 @@
 import { all, take, call, put, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getUsers, { createUser, editUser } from './api';
+import getUsers, { createUser, editUser, getRoles, activateUser, deactivateUser } from './api';
 import userManagementSelector from './selectors.js';
 
 export default function* userManagementFlow() {
   yield all({
     getUserFlow: call(getUserFlow),
     createUserFlow: call(createUserFlow),
-    editUserFlow: call(editUserFlow)
+    editUserFlow: call(editUserFlow),
+    activateUserFlow: call(activateUserFlow),
+    deactivateUser: call(deactivateUserFlow)
   });
 }
 
@@ -19,7 +21,34 @@ function* getUserFlow() {
     const responseData = yield response.json();
     if (response.ok) {
       yield put({ type: actions.USERS_RECEIVED, users: responseData.data, total: responseData.meta.pagination.total });
+      yield getRolesFlow();
     }
+  }
+}
+
+// We need to extract the id and name of each role
+// and set them as value and label so the dropdown
+// in the user modal will display properly
+const extractRoles = (roles) => {
+  const userRoles = [{
+    value: '',
+    label: 'Role'
+  }];
+
+  const extractedRoles = roles.map(role => ({
+    value: role._id, //eslint-disable-line
+    label: role.name
+  }));
+
+  return [...userRoles, ...extractedRoles];
+};
+
+function* getRolesFlow() {
+  const response = yield call(getRoles);
+  const responseData = yield response.json();
+  if (response.ok) {
+    const roles = yield extractRoles(responseData.data);
+    yield put({ type: actions.SET_ROLES, roles });
   }
 }
 
@@ -75,6 +104,30 @@ function* editUserFlow() {
 
 function updateUser(users, updatedUser) {
   let userToUpdate = users.find(user => user._id === updatedUser._id); //eslint-disable-line
-  users[users.findIndex(user => user === userToUpdate)] = updatedUser; //eslint-disable-line
+  users[users.findIndex(user => user._id === userToUpdate._id)] = updatedUser; //eslint-disable-line
   return users;
+}
+
+function* activateUserFlow() {
+  const { user } = yield take(actions.ACTIVATE_USER);
+  const response = yield call(activateUser, user._id); //eslint-disable-line
+  if (response.ok) {
+    const { users, totalUsers } = yield select(userManagementSelector);
+    yield user.active = true;
+    const updatedUsers = yield updateUser(users, user);
+    yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+    yield put({ type: actions.USER_STATUS_UPDATED });
+  }
+}
+
+function* deactivateUserFlow() {
+  const { user } = yield take(actions.DEACTIVATE_USER);
+  const response = yield call(deactivateUser, user._id); //eslint-disable-line
+  if (response.ok) {
+    const { users, totalUsers } = yield select(userManagementSelector);
+    yield user.active = false;
+    const updatedUsers = yield updateUser(users, user);
+    yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+    yield put({ type: actions.USER_STATUS_UPDATED });
+  }
 }

@@ -4,14 +4,12 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import InputField from '../input-field/InputField';
 import DropdownField from '../dropdown-field/DropdownField';
-import roles from '../../models/roles';
 import states from '../../models/states';
 import './user-modal.css';
 
 class UserModal extends Component {
   constructor() {
     super();
-    this.roles = roles;
     this.states = states;
     this.EDIT_USER_STATUS = 'edit user';
     this.CREATE_USER_STATUS = 'create user';
@@ -26,7 +24,7 @@ class UserModal extends Component {
       name_first: '',
       name_last: '',
       email: '',
-      role: '',
+      role_id: '',
       phone: '',
       organization_name: '',
       address1: '',
@@ -47,14 +45,14 @@ class UserModal extends Component {
           name_first: nextProps.user.name_first,
           name_last: nextProps.user.name_last,
           email: nextProps.user.email,
-          role: nextProps.user.role_id,
+          role_id: nextProps.user.role_id,
           phone: nextProps.user.phone,
           organization_name: '',
-          address1: '',
-          address2: '',
-          city: '',
-          state: '',
-          zip: '',
+          address1: nextProps.user.address.street_1,
+          address2: nextProps.user.address.street_2,
+          city: nextProps.user.address.city,
+          state: nextProps.user.address.state,
+          zip: nextProps.user.address.postal_code,
           id_external: nextProps.user.id_external,
           _id: nextProps.user._id //eslint-disable-line
         });
@@ -65,7 +63,7 @@ class UserModal extends Component {
           name_first: '',
           name_last: '',
           email: '',
-          role: '',
+          role_id: '',
           phone: '',
           organization_name: '',
           address1: '',
@@ -98,7 +96,7 @@ class UserModal extends Component {
 
   updateRole = event =>
     this.setState({
-      role: event.target.value,
+      role_id: event.target.value,
       modalActive: true
     });
 
@@ -145,9 +143,37 @@ class UserModal extends Component {
     });
 
   modalClosedCallback = () => {
+    const transformedData = this.transformData();
     this.setState({
       modalActive: false
-    }, this.props.onClosed(this.state));
+    }, this.props.onClosed(transformedData));
+  }
+
+  transformData = () => {
+    const data = {
+      modalStatus: this.state.modalStatus,
+      dismissStatus: this.state.dismissStatus,
+      name_first: this.state.name_first,
+      name_last: this.state.name_last,
+      email: this.state.email,
+      role_id: this.state.role_id,
+      phone: this.state.phone,
+      organization_name: this.state.organization_name,
+      address: {
+        city: this.state.city,
+        postal_code: this.state.zip,
+        state: this.state.state,
+        street_1: this.state.address1,
+        street_2: this.state.address2
+      }
+    };
+
+    if (this.state.modalStatus === this.EDIT_USER_STATUS) {
+      data._id = this.state._id; //eslint-disable-line
+      data.id_external = this.state.id_external;
+    }
+
+    return data;
   }
 
   dismissModal = (value) => {
@@ -156,7 +182,7 @@ class UserModal extends Component {
         name_first: '',
         name_last: '',
         email: '',
-        role: '',
+        role_id: '',
         phone: '',
         organization_name: '',
         address1: '',
@@ -218,9 +244,9 @@ class UserModal extends Component {
                 <DropdownField
                   icon="users"
                   label="Role"
-                  value={this.state.role}
+                  value={this.state.role_id}
                   onChange={this.updateRole}
-                  options={this.roles}
+                  options={this.props.roles}
                   width={170}
                 />
               </div>
@@ -306,7 +332,8 @@ UserModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  onClosed: PropTypes.func.isRequired
+  onClosed: PropTypes.func.isRequired,
+  roles: PropTypes.array.isRequired
 };
 
 export default UserModal;

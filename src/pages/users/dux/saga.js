@@ -104,7 +104,7 @@ function* editUserFlow() {
 
 function updateUser(users, updatedUser) {
   let userToUpdate = users.find(user => user._id === updatedUser._id); //eslint-disable-line
-  users[users.findIndex(user => user === userToUpdate)] = updatedUser; //eslint-disable-line
+  users[users.findIndex(user => user._id === userToUpdate._id)] = updatedUser; //eslint-disable-line
   return users;
 }
 
@@ -112,9 +112,10 @@ function* activateUserFlow() {
   const { user } = yield take(actions.ACTIVATE_USER);
   const response = yield call(activateUser, user._id); //eslint-disable-line
   if (response.ok) {
-    const { users } = yield select(userManagementSelector);
+    const { users, totalUsers } = yield select(userManagementSelector);
     yield user.active = true;
-    yield updateUser(users, user);
+    const updatedUsers = yield updateUser(users, user);
+    yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
   }
 }
 
@@ -122,8 +123,9 @@ function* deactivateUserFlow() {
   const { user } = yield take(actions.DEACTIVATE_USER);
   const response = yield call(deactivateUser, user._id); //eslint-disable-line
   if (response.ok) {
-    const { users } = yield select(userManagementSelector);
+    const { users, totalUsers } = yield select(userManagementSelector);
     yield user.active = false;
-    yield updateUser(users, user);
+    const updatedUsers = yield updateUser(users, user);
+    yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
   }
 }

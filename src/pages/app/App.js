@@ -10,6 +10,8 @@ import Login from 'pages/login/Login';
 import Players from 'pages/players/Players';
 import Dashboard from 'pages/dashboard/Dashboard';
 import Coaches from 'pages/coaches/Coaches';
+import PlayerProfile from 'pages/player-profile/PlayerProfile';
+import CoachProfile from 'pages/coach-profile/CoachProfile';
 import Users from 'pages/users/Users';
 import Player from 'pages/player/Player';
 
@@ -28,6 +30,8 @@ const app = () => (
           <Route exact path="/players" component={Players} />
           <Route exact path="/player" component={Player} />
           <Route exact path="/coaches" component={Coaches} />
+          <Route exact path="/players/:id" component={PlayerProfile} />
+          <Route exact path="/coaches/:id" component={CoachProfile} />
           <Route exact path="/users" component={Users} />
         </Switch>
       </div>

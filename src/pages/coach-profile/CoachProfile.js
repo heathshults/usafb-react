@@ -5,22 +5,6 @@ import PropTypes from 'prop-types';
 import { GET_COACH_PROFILE } from './dux/actions';
 
 class CoachProfile extends Component {
-  static get contextTypes() {
-    return {
-      history: PropTypes.object,
-      location: PropTypes.object,
-      router: PropTypes.object
-    };
-  }
-
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-
-    };
-  }
-
   componentWillMount() {
     const id = this.props.match.params.id; //eslint-disable-line 
     this.getCoachProfile({ id });
@@ -208,7 +192,7 @@ CoachProfile.defaultProps = {
 
 const mapStateToProps = ({ coachProfileReducer }) => {
   const currentTeam = _.find(coachProfileReducer.coachData.registrations, team => team.current === true);
-  return { coachData: coachProfileReducer.coachDate, currentTeam };
+  return { coachData: coachProfileReducer.coachData, currentTeam };
 };
 const mapDispatchToProps = dispatch => ({
   getCoachProfile: coach => dispatch({ type: GET_COACH_PROFILE, data: { coach } })

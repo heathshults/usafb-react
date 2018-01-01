@@ -9,7 +9,6 @@ export default function* playerProfileFlow() {
       const { data } = yield take(actions.GET_PLAYER_PROFILE);
       const response = yield call(getPlayerProfile, data);
       const responseData = yield response.json();
-      yield console.log('response', response); //eslint-disable-line
       if (response.ok) {
         yield put({ type: actions.GET_PLAYER_PROFILE_SUCCESS, playerData: responseData.data });
       }

@@ -6,22 +6,6 @@ import _ from 'lodash';
 import { GET_PLAYER_PROFILE } from './dux/actions';
 
 class PlayerProfile extends Component {
-  static get contextTypes() {
-    return {
-      history: PropTypes.object,
-      location: PropTypes.object,
-      router: PropTypes.object
-    };
-  }
-
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-
-    };
-  }
-
   componentWillMount() {
     const id = this.props.match.params.id; //eslint-disable-line
     this.getPlayerProfile({ id });

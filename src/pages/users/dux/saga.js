@@ -1,4 +1,4 @@
-import { all, take, call, put, select } from 'redux-saga/effects';
+import { fork, all, take, call, put, select } from 'redux-saga/effects';
 
 import * as actions from './actions';
 import getUsers, { createUser, editUser, getRoles, activateUser, deactivateUser } from './api';
@@ -6,11 +6,11 @@ import userManagementSelector from './selectors.js';
 
 export default function* userManagementFlow() {
   yield all({
-    getUserFlow: call(getUserFlow),
-    createUserFlow: call(createUserFlow),
-    editUserFlow: call(editUserFlow),
-    activateUserFlow: call(activateUserFlow),
-    deactivateUser: call(deactivateUserFlow)
+    getUserFlow: fork(getUserFlow),
+    createUserFlow: fork(createUserFlow),
+    editUserFlow: fork(editUserFlow),
+    activateUserFlow: fork(activateUserFlow),
+    deactivateUser: fork(deactivateUserFlow)
   });
 }
 
@@ -109,25 +109,29 @@ function updateUser(users, updatedUser) {
 }
 
 function* activateUserFlow() {
-  const { user } = yield take(actions.ACTIVATE_USER);
-  const response = yield call(activateUser, user._id); //eslint-disable-line
-  if (response.ok) {
-    const { users, totalUsers } = yield select(userManagementSelector);
-    yield user.active = true;
-    const updatedUsers = yield updateUser(users, user);
-    yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
-    yield put({ type: actions.USER_STATUS_UPDATED });
+  while (true) {
+    const { user } = yield take(actions.ACTIVATE_USER);
+    const response = yield call(activateUser, user._id); //eslint-disable-line
+    if (response.ok) {
+      const { users, totalUsers } = yield select(userManagementSelector);
+      yield user.active = true;
+      const updatedUsers = yield updateUser(users, user);
+      yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+      yield put({ type: actions.USER_STATUS_UPDATED });
+    }
   }
 }
 
 function* deactivateUserFlow() {
-  const { user } = yield take(actions.DEACTIVATE_USER);
-  const response = yield call(deactivateUser, user._id); //eslint-disable-line
-  if (response.ok) {
-    const { users, totalUsers } = yield select(userManagementSelector);
-    yield user.active = false;
-    const updatedUsers = yield updateUser(users, user);
-    yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
-    yield put({ type: actions.USER_STATUS_UPDATED });
+  while (true) {
+    const { user } = yield take(actions.DEACTIVATE_USER);
+    const response = yield call(deactivateUser, user._id); //eslint-disable-line
+    if (response.ok) {
+      const { users, totalUsers } = yield select(userManagementSelector);
+      yield user.active = false;
+      const updatedUsers = yield updateUser(users, user);
+      yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+      yield put({ type: actions.USER_STATUS_UPDATED });
+    }
   }
 }

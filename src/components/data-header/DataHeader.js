@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Container from './components/container/Container';
 import Header from './components/header/Header';
 import Message from './components/message/Message';
-import ButtonGroup from './components/button-group/ButtonGroup';
 
 const dataHeader = props => (
   <Container>
@@ -16,9 +15,7 @@ const dataHeader = props => (
       title={props.messageTitle}
       message={props.messageBody}
     />
-    <ButtonGroup
-      showModal={props.showModal}
-    />
+    {props.buttons}
   </Container>
 );
 
@@ -27,12 +24,13 @@ dataHeader.propTypes = {
   numberOfUsers: PropTypes.number.isRequired,
   messageTitle: PropTypes.string,
   messageBody: PropTypes.string,
-  showModal: PropTypes.func.isRequired
+  buttons: PropTypes.object
 };
 
 dataHeader.defaultProps = {
   messageTitle: '',
-  messageBody: ''
+  messageBody: '',
+  buttons: <div />
 };
 
 export default dataHeader;

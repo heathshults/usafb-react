@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import './nav-dropdown.css';
 
@@ -18,21 +18,24 @@ class NavDropdown extends Component {
 
   render() {
     return (
-      <ButtonDropdown
-        isOpen={this.state.open}
-        toggle={this.toggle}
-        className="nav-bar__dropdown"
-      >
-        <DropdownToggle
-          caret
-          className="nav-bar__dropdown-button"
+      <div className="d-flex align-items-center">
+        <ButtonDropdown
+          isOpen={this.state.open}
+          toggle={this.toggle}
+          className="nav-bar__dropdown"
         >
-          {this.props.label}
-        </DropdownToggle>
-        <DropdownMenu>
-          {React.Children.map(this.props.children, child => child)}
-        </DropdownMenu>
-      </ButtonDropdown>
+          <DropdownToggle
+            caret
+            className="nav-bar__dropdown-button"
+          >
+            {this.props.label}
+          </DropdownToggle>
+          <DropdownMenu>
+            {React.Children.map(this.props.children, child => child)}
+          </DropdownMenu>
+        </ButtonDropdown>
+        <div className="nav-bar__separator" />
+      </div>
     );
   }
 }

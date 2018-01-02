@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import Columns from 'components/data-table/models/user-columns';
 
-import MainContainer from 'components/containers/Container';
+import MainContainer from 'components/containers/container/Container';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 

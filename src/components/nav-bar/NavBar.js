@@ -10,24 +10,29 @@ import NavDropdownItem from './components/nav-dropdown-item/NavDropdownItem';
 import NavLink from './components/nav-link/NavLink';
 import UserDropdown from './components/user-dropdown/UserDropdown';
 
-const test = () => console.log("testing"); //eslint-disable-line
-
 const navBar = (props) => {
   if (props.location.pathname === '/login') {
     return <div />;
   }
+
+  const goToPlayers = () => props.history.push('/players');
+  const goToCoaches = () => props.history.push('/coaches');
 
   return (
     <Container>
       <Logo />
       <NavigationContainer>
         <NavLink to="/" label="Home" />
-        <NavLink to="/players" label="Players" />
         <NavDropdown label="players">
-          <NavDropdownItem label="The Players" onClick={test} />
-          <NavDropdownItem label="Import Players" onClick={test} />
+          <NavDropdownItem label="The Players" onClick={goToPlayers} />
+          <NavDropdownItem label="Import Players" onClick={() => { }} />
+          <NavDropdownItem label="Export To File" onClick={() => { }} />
         </NavDropdown>
-        <NavLink to="/coaches" label="Coaches" />
+        <NavDropdown label="coaches">
+          <NavDropdownItem label="The Coaches" onClick={goToCoaches} />
+          <NavDropdownItem label="Import Coaches" onClick={() => { }} />
+          <NavDropdownItem label="Export To File" onClick={() => { }} />
+        </NavDropdown>
         <NavLink to="/dashboard" label="Dashboard" />
       </NavigationContainer>
       <UserDropdown />
@@ -37,6 +42,7 @@ const navBar = (props) => {
 
 navBar.propTypes = {
   location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default withRouter(navBar);

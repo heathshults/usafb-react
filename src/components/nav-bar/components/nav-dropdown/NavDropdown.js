@@ -30,7 +30,7 @@ class NavDropdown extends Component {
           >
             {this.props.label}
           </DropdownToggle>
-          <DropdownMenu>
+          <DropdownMenu className="nav-bar__dropdown-menu">
             {React.Children.map(this.props.children, child => child)}
           </DropdownMenu>
         </ButtonDropdown>

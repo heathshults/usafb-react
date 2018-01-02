@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Container from 'components/containers/blue-container/BlueContainer';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
@@ -94,6 +95,7 @@ class Coaches extends Component {
   render() {
     return (
       <Container>
+        <HeaderContentDivider />
         <ImportModal
           showModal={this.state.showModal}
           toggleModal={this.toggleModal}

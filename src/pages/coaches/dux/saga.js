@@ -11,6 +11,8 @@ export default function* coachSearchFlow() {
       const responseData = yield response.json();
       if (response.ok) {
         yield put({ type: actions.SEARCH_COACHES_SUCCESS, coachSearchData: responseData.data });
+      } else {
+        yield put({ type: actions.SEARCH_COACHES_ERROR, searchingCoachesError: response.errors[0] });
       }
     } catch (e) {
       console.log('eeee', e); //eslint-disable-line

@@ -11,6 +11,8 @@ export default function* playerSearchFlow() {
       const responseData = yield response.json();
       if (response.ok) {
         yield put({ type: actions.SEARCH_PLAYERS_SUCCESS, playerSearchData: responseData.data });
+      } else {
+        yield put({ type: actions.SEARCH_PLAYERS_ERROR, searchingPlayersError: response.errors[0] });
       }
     } catch (e) {
       console.log('eeee', e); //eslint-disable-line

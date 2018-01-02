@@ -1,0 +1,43 @@
+.header-content-divider {
+  width: 100%;
+  height: 20px;
+  padding-top: 4px;
+  color: #fff;
+  background-color: #fff !important;
+}
+
+.red-skew-bar {
+  position: relative;
+  -ms-flex: 1 auto;
+  flex: 1 auto;
+  height: 16px;
+  margin-left: -40px;
+  overflow: hidden;
+  background: #9e0a0f;
+  -webkit-transform: skewX(-45deg);
+  transform: skewX(-45deg);
+}
+
+.white-skew-bar {
+  position: relative;
+  -ms-flex: 0 14px;
+  flex: 0 14px;
+  width: 14px;
+  height: 16px;
+  background: #fff;
+  -webkit-transform: skewX(-45deg);
+  transform: skewX(-45deg);
+}
+
+.blue-skew-bar {
+  position: relative;
+  -ms-flex: 0 360px;
+  flex: 0 360px;
+  width: auto;
+  height: 16px;
+  margin-right: -40px;
+  overflow: hidden;
+  background: linear-gradient(219deg, #113f69, #0d3353);
+  -webkit-transform: skewX(-45deg);
+  transform: skewX(-45deg);
+}

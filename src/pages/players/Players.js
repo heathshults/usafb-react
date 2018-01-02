@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 
@@ -109,6 +110,7 @@ class Players extends Component {
   render() {
     return (
       <Container>
+        <HeaderContentDivider />
         <ImportModal
           showModal={this.state.showModal}
           toggleModal={this.toggleModal}

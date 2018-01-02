@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 import Container from './components/container/Container';
 import Logo from './components/logo/Logo';
-import Navigation from './components/navigation/Navigation';
+import NavigationContainer from './components/navigation-container/NavigationContainer';
+import NavLink from './components/nav-link/NavLink';
 import UserDropdown from './components/user-dropdown/UserDropdown';
 
 const navBar = (props) => {
@@ -15,7 +16,12 @@ const navBar = (props) => {
   return (
     <Container>
       <Logo />
-      <Navigation />
+      <NavigationContainer>
+        <NavLink to="/" label="Home" />
+        <NavLink to="/players" label="Players" />
+        <NavLink to="/coaches" label="Coaches" />
+        <NavLink to="/dashboard" label="Dashboard" />
+      </NavigationContainer>
       <UserDropdown />
     </Container>
   );

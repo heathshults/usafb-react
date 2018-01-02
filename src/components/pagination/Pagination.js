@@ -159,26 +159,28 @@ class PaginationComponent extends Component {
 
   render() {
     return (
-      <div className="row d-flex justify-content-between mt-3 mb-3">
-        <Label
-          startingIndex={this.calculateStartingIndex()}
-          endingIndex={this.calculateEndingIndex()}
-          currentPage={this.state.currentPage}
-          totalItems={this.props.totalItems}
-          rowsPerPage={this.props.rowsPerPage}
-          dropdownOpen={this.state.dropdownOpen}
-          toggleDropdown={this.toggleDropdown}
-          updateRowsPerPage={this.updateRowsPerPage}
-        />
-        <Pagination className="mb-0">
-          <PaginationItem className="usafb-pagination__link" onClick={this.previousPage}>
-            <PaginationLink previous />
-          </PaginationItem>
-          {this.getPaginationLinks()}
-          <PaginationItem className="usafb-pagination__link" onClick={this.nextPage}>
-            <PaginationLink next />
-          </PaginationItem>
-        </Pagination>
+      <div className="row d-flex justify-content-between mb-3">
+        <div className="row col col-md-12">
+          <Label
+            startingIndex={this.calculateStartingIndex()}
+            endingIndex={this.calculateEndingIndex()}
+            currentPage={this.state.currentPage}
+            totalItems={this.props.totalItems}
+            rowsPerPage={this.props.rowsPerPage}
+            dropdownOpen={this.state.dropdownOpen}
+            toggleDropdown={this.toggleDropdown}
+            updateRowsPerPage={this.updateRowsPerPage}
+          />
+          <Pagination className="mb-0 col col-md-6 justify-content-end usafb-pagination__content">
+            <PaginationItem className="usafb-pagination__link" onClick={this.previousPage}>
+              <PaginationLink previous />
+            </PaginationItem>
+            {this.getPaginationLinks()}
+            <PaginationItem className="usafb-pagination__link" onClick={this.nextPage}>
+              <PaginationLink next />
+            </PaginationItem>
+          </Pagination>
+        </div>
       </div>
     );
   }

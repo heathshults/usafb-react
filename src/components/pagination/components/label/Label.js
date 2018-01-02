@@ -5,7 +5,7 @@ import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reac
 import './label.css';
 
 const label = props => (
-  <div className="d-flex align-items-center">
+  <div className="d-flex align-items-center col col-md-6 usafb-pagination__content">
     <p className="pagination__label">
       Showing {props.startingIndex} to {props.endingIndex} of {props.totalItems} rows
     </p>

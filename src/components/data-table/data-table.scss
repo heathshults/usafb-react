@@ -1,3 +1,9 @@
+.usafb__data-table {
+  >.react-bs-table-bordered {
+    border-radius: 0 !important;
+  }
+}
+
 .data-table__striped-row {
   background-color: rgba(0, 0, 0, 0.05);
 }

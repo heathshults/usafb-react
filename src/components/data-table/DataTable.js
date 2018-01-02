@@ -18,7 +18,7 @@ const tableRowStyle = (row, rowIndex) => (rowIndex % 2 === 0 ? 'data-table__stri
 const dataTable = props => (
   <div className="row">
     <BootstrapTable
-      className="col-md-12"
+      className="col-md-12 usafb__data-table"
       trClassName={tableRowStyle}
       data={props.data}
       options={{ noDataText: getNoDataText(props.loading) }}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Container from 'components/containers/Container';
+import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';

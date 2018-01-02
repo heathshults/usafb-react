@@ -1,3 +1,14 @@
+.usafb-pagination {
+  margin-left: auto;
+}
+
+.usafb-pagination__content {
+  background-color: #adb5bd;
+  border-radius: 0 !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .usafb-pagination__link {
   :hover {
     cursor: pointer;

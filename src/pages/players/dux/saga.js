@@ -12,10 +12,14 @@ export default function* playerSearchFlow() {
       if (response.ok) {
         yield put({ type: actions.SEARCH_PLAYERS_SUCCESS, playerSearchData: responseData.data });
       } else {
-        yield put({ type: actions.SEARCH_PLAYERS_ERROR, searchingPlayersError: response.errors[0] });
+        yield put({ type: actions.SEARCH_PLAYERS_ERROR, searchingPlayersError: response.errors[0].error });
       }
     } catch (e) {
-      console.log('eeee', e); //eslint-disable-line
+      const errorMessage = `An error occurred when we tried to search for players.
+      Please check your network connection and try again`;
+      yield put({
+        type: actions.SEARCH_PLAYERS_ERROR, searchingPlayersError: errorMessage
+      });
     }
   }
 }

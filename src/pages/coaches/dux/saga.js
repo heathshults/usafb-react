@@ -12,10 +12,14 @@ export default function* coachSearchFlow() {
       if (response.ok) {
         yield put({ type: actions.SEARCH_COACHES_SUCCESS, coachSearchData: responseData.data });
       } else {
-        yield put({ type: actions.SEARCH_COACHES_ERROR, searchingCoachesError: response.errors[0] });
+        yield put({ type: actions.SEARCH_COACHES_ERROR, searchingCoachesError: response.errors[0].error });
       }
-    } catch (e) {
-      console.log('eeee', e); //eslint-disable-line
+    } catch (error) {
+      const errorMessage = `An error occurred when we tried to search for coaches.
+      Please check your network connection and try again`;
+      yield put({
+        type: actions.SEARCH_COACHES_ERROR, searchingCoachesError: errorMessage
+      });
     }
   }
 }

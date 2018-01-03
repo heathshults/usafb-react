@@ -27,11 +27,11 @@
 .pagination__label-dropdown-menu {
   position: absolute;
   left: 2px !important;
-  top: 49px !important;
+  top: -170px !important;
   z-index: 5000;
   background-color: #fff !important;
   border: 0.125rem solid transparent;
-  border-top: 0.125rem solid #adb5bd;
+  border-bottom: 0.125rem solid #adb5bd;
   border-radius: 0.125rem;
   width: 1380px;
   transform: none !important;
@@ -41,13 +41,13 @@
     content: '';
     position: absolute;
     left: 3px;
-    top: -20px;
+    top: 144px;
     width: 0;
     height: 0;
     border-left: 1.25rem solid transparent;
     border-right: 1.25rem solid transparent;
-    border-bottom: 1.25rem solid #adb5bd;
-    border-top: 0;
+    border-top: 1.25rem solid #adb5bd;
+    border-bottom: 0;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   }
 
@@ -55,13 +55,13 @@
     content: '';
     position: absolute;
     left: 7px;
-    top: -16px;
+    top: 143px;
     width: 0;
     height: 0;
     border-left: 1rem solid transparent;
     border-right: 1rem solid transparent;
-    border-bottom: 1rem solid #fff;
-    border-top: 0;
+    border-top: 1rem solid #fff;
+    border-bottom: 0;
   }
 
   >.dropdown-item {

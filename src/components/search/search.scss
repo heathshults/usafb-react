@@ -1,7 +1,7 @@
 .search-overlay {
   z-index: 5000;
   left: 0px;
-  width: 200px;
+  width: 250px;
   background-blend-mode: multiply;
   object-fit: contain;
   transition: all .5s ease-in-out;
@@ -83,6 +83,7 @@
 
 .card-theme-blue .card-body {
   background: #d5d8dc;
+  width: 200px;
 }
 
 .form-group .form-control {

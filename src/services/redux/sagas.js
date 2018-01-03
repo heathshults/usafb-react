@@ -2,6 +2,8 @@ import { all, call } from 'redux-saga/effects';
 import login from 'pages/login/dux/saga';
 import playerProfile from 'pages/player-profile/dux/saga';
 import coachProfile from 'pages/coach-profile/dux/saga';
+import playerSearchReducer from 'pages/players/dux/saga';
+import coachSearchReducer from 'pages/coaches/dux/saga';
 import users from 'pages/users/dux/saga';
 
 export default function* rootSaga() {
@@ -9,6 +11,8 @@ export default function* rootSaga() {
     login: call(login),
     playerProfile: call(playerProfile),
     coachProfile: call(coachProfile),
+    playerSearchReducer: call(playerSearchReducer),
+    coachSearchReducer: call(coachSearchReducer),
     users: call(users)
   });
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
@@ -10,7 +9,6 @@ import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
 import Search from 'components/search/Search';
-// import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from 'components/import-modal/ImportModal';
 import importCsv from 'utils/import';
 
@@ -32,13 +30,24 @@ class Coaches extends Component {
       coaches: [],
       showModal: false,
       uploadedFile: null,
-      firstName: '',
-      lastName: '',
-      usafbId: null,
-      dateOfBirth: '',
+      first_name: '',
+      last_name: '',
+      usafb_id: null,
+      date_of_birth: '',
       city: '',
       state: ''
     };
+
+    this.callCoachesDispatch = _.debounce(() => {
+      this.props.searchCoaches({
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
+        usafb_id: this.state.usafb_id,
+        date_of_birth: this.state.date_of_birth,
+        city: this.state.city,
+        state: this.state.state
+      });
+    }, 250, { maxWait: 1000 });
   }
 
   componentWillMount() {
@@ -102,23 +111,16 @@ class Coaches extends Component {
     this.setState({
       [event.target.id]: event.target.value
     }, () => {
-      this.props.searchCoaches({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        usafbId: this.state.usafbId,
-        dateOfBirth: this.state.dateOfBirth,
-        city: this.state.city,
-        state: this.state.state
-      });
+      this.callCoachesDispatch();
     });
   }
 
   clearSearchFilters = () => {
     this.setState({
-      firstName: '',
-      lastName: '',
-      usafbId: undefined,
-      dateOfBirth: '',
+      first_name: '',
+      last_name: '',
+      usafb_id: undefined,
+      date_of_birth: '',
       city: '',
       state: ''
     });
@@ -148,10 +150,10 @@ class Coaches extends Component {
         />
         <div className="customRow">
           <Search
-            firstName={this.state.firstName}
-            lastName={this.state.lastName}
-            usafbId={this.state.usafbId}
-            dateOfBirth={this.state.dateOfBirth}
+            first_name={this.state.first_name}
+            last_name={this.state.last_name}
+            usafb_id={this.state.usafb_id}
+            date_of_birth={this.state.date_of_birth}
             city={this.state.city}
             state={this.state.state}
             updateSearchFilters={this.updateSearchFilters}
@@ -169,14 +171,6 @@ class Coaches extends Component {
             />
           </div>
         </div>
-        {/* <DataTableFilter
-          filters={this.state.filters}
-          updateFilters={this.updateFilters}
-          displayFilters={this.state.displayFilters}
-          toggleFilters={this.toggleFilters}
-          displayAdvancedSearch={this.state.displayAdvancedSearch}
-          toggleAdvancedSearch={this.toggleAdvancedSearch}
-        /> */}
       </Container>
     );
   }

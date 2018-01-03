@@ -11,16 +11,11 @@ import Pagination from 'components/pagination/Pagination';
 import Search from 'components/search/Search';
 
 import Columns from 'components/data-table/models/columns';
-// import Cell from 'components/data-table/models/cell';
-
-// import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from 'components/import-modal/ImportModal';
 
 import importCsv from 'utils/import';
 
 import { SEARCH_PLAYERS } from './dux/actions';
-
-import './players.css';
 
 class Players extends Component {
   constructor() {
@@ -38,13 +33,24 @@ class Players extends Component {
       players: [],
       showModal: false,
       uploadedFile: null,
-      firstName: '',
-      lastName: '',
-      usafbId: null,
-      dateOfBirth: '',
+      first_name: '',
+      last_name: '',
+      usafb_id: null,
+      date_of_birth: '',
       city: '',
       state: ''
     };
+
+    this.callPlayersDispatch = _.debounce(() => {
+      this.props.searchPlayers({
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
+        usafb_id: this.state.usafb_id,
+        date_of_birth: this.state.date_of_birth,
+        city: this.state.city,
+        state: this.state.state
+      });
+    }, 250, { maxWait: 1000 });
   }
 
   componentWillMount() {
@@ -118,24 +124,17 @@ class Players extends Component {
     this.setState({
       [event.target.id]: event.target.value
     }, () => {
-      this.props.searchPlayers({
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        usafbId: this.state.usafbId,
-        dateOfBirth: this.state.dateOfBirth,
-        city: this.state.city,
-        state: this.state.state
-      });
+      this.callPlayersDispatch();
     });
   }
 
 
   clearSearchFilters = () => {
     this.setState({
-      firstName: '',
-      lastName: '',
-      usafbId: undefined,
-      dateOfBirth: '',
+      first_name: '',
+      last_name: '',
+      usafb_id: undefined,
+      date_of_birth: '',
       city: '',
       state: ''
     });
@@ -163,20 +162,12 @@ class Players extends Component {
           numberOfUsers={1000}
           showModal={this.toggleModal}
         />
-        {/* <DataTableFilter
-          filters={this.state.filters}
-          updateFilters={this.updateFilters}
-          displayFilters={this.state.displayFilters}
-          toggleFilters={this.toggleFilters}
-          displayAdvancedSearch={this.state.displayAdvancedSearch}
-          toggleAdvancedSearch={this.toggleAdvancedSearch}
-        /> */}
         <div className="customRow">
           <Search
-            firstName={this.state.firstName}
-            lastName={this.state.lastName}
-            usafbId={this.state.usafbId}
-            dateOfBirth={this.state.dateOfBirth}
+            first_name={this.state.first_name}
+            last_name={this.state.last_name}
+            usafb_id={this.state.usafb_id}
+            date_of_birth={this.state.date_of_birth}
             city={this.state.city}
             state={this.state.state}
             updateSearchFilters={this.updateSearchFilters}
@@ -202,7 +193,7 @@ class Players extends Component {
 
 Players.propTypes = {
   playerSearchData: PropTypes.array, //eslint-disable-line
-  searchPlayers: PropTypes.func.isRequired //eslint-disable-line
+  searchPlayers: PropTypes.func.isRequired
 };
 
 Players.defaultProps = {

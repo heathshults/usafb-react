@@ -55,12 +55,16 @@ const Search = props => (
 Search.propTypes = {
   updateSearchFilters: PropTypes.func.isRequired,
   clearSearchFilters: PropTypes.func.isRequired,
-  usafb_id: PropTypes.any.isRequired,
+  usafb_id: PropTypes.any,
   first_name: PropTypes.string.isRequired,
   last_name: PropTypes.string.isRequired,
   date_of_birth: PropTypes.string.isRequired,
   city: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
+};
+
+Search.defaultProps = {
+  usafb_id: undefined
 };
 
 export default Search;

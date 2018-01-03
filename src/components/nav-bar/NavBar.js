@@ -17,6 +17,10 @@ const navBar = (props) => {
 
   const goToPlayers = () => props.history.push('/players');
   const goToCoaches = () => props.history.push('/coaches');
+  const logout = () => {
+    window.localStorage.clear();
+    window.location.href = '/login';
+  };
 
   return (
     <Container>
@@ -35,7 +39,7 @@ const navBar = (props) => {
         </NavDropdown>
         <NavLink to="/dashboard" label="Dashboard" />
       </NavigationContainer>
-      <UserDropdown />
+      <UserDropdown logout={logout} />
     </Container>
   );
 };

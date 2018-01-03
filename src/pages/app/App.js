@@ -15,6 +15,8 @@ import CoachProfile from 'pages/coach-profile/CoachProfile';
 import Users from 'pages/users/Users';
 import Player from 'pages/player/Player';
 
+import authHOC from 'hoc/auth/Auth';
+
 import './app.css';
 
 const history = createHistory();
@@ -25,14 +27,14 @@ const app = () => (
       <div style={{ height: '100%' }}>
         <NavBar />
         <Switch>
-          <Route exact path="/" component={Dashboard} />
+          <Route exact path="/" component={authHOC(Dashboard)} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/players" component={Players} />
+          <Route exact path="/players" component={authHOC(Players)} />
           <Route exact path="/player" component={Player} />
-          <Route exact path="/coaches" component={Coaches} />
-          <Route exact path="/players/:id" component={PlayerProfile} />
-          <Route exact path="/coaches/:id" component={CoachProfile} />
-          <Route exact path="/users" component={Users} />
+          <Route exact path="/coaches" component={authHOC(Coaches)} />
+          <Route exact path="/players/:id" component={authHOC(PlayerProfile)} />
+          <Route exact path="/coaches/:id" component={authHOC(CoachProfile)} />
+          <Route exact path="/users" component={authHOC(Users)} />
         </Switch>
       </div>
     </Router>

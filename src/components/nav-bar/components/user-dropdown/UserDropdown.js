@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import User from '../user/User';
@@ -41,7 +42,7 @@ class NavDropdown extends Component {
             Help / FAQ
           </DropdownItem>
           <DropdownItem divider />
-          <DropdownItem href="/profile" className="nav-bar__dropdown-button-item">
+          <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >
             Sign Out
           </DropdownItem>
         </DropdownMenu>
@@ -49,5 +50,9 @@ class NavDropdown extends Component {
     );
   }
 }
+
+NavDropdown.propTypes = {
+  logout: PropTypes.func.isRequired
+};
 
 export default NavDropdown;

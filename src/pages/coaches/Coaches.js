@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
@@ -6,9 +8,13 @@ import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
-import DataTableFilter from 'components/data-table-filter/DataTableFilter';
+import Search from 'components/search/Search';
 import ImportModal from 'components/import-modal/ImportModal';
 import importCsv from 'utils/import';
+
+import debounce from 'lodash/debounce';
+
+import { SEARCH_COACHES } from './dux/actions';
 
 class Coaches extends Component {
   constructor() {
@@ -26,7 +32,24 @@ class Coaches extends Component {
       coaches: [],
       showModal: false,
       uploadedFile: null,
+      first_name: '',
+      last_name: '',
+      usafb_id: null,
+      date_of_birth: '',
+      city: '',
+      state: ''
     };
+
+    this.callCoachesDispatch = debounce(() => {
+      this.props.searchCoaches({
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
+        usafb_id: this.state.usafb_id,
+        date_of_birth: this.state.date_of_birth,
+        city: this.state.city,
+        state: this.state.state
+      });
+    }, 250, { maxWait: 1000 });
   }
 
   componentWillMount() {
@@ -86,6 +109,25 @@ class Coaches extends Component {
     });
   }
 
+  updateSearchFilters = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    }, () => {
+      this.callCoachesDispatch();
+    });
+  }
+
+  clearSearchFilters = () => {
+    this.setState({
+      first_name: '',
+      last_name: '',
+      usafb_id: undefined,
+      date_of_birth: '',
+      city: '',
+      state: ''
+    });
+  }
+
   uploadFile = () => {
     importCsv(this.state.uploadedFile)
       .then(data => data)
@@ -108,26 +150,46 @@ class Coaches extends Component {
           numberOfUsers={1000}
           showModal={this.toggleModal}
         />
-        <DataTableFilter
-          filters={this.state.filters}
-          updateFilters={this.updateFilters}
-          displayFilters={this.state.displayFilters}
-          toggleFilters={this.toggleFilters}
-          displayAdvancedSearch={this.state.displayAdvancedSearch}
-          toggleAdvancedSearch={this.toggleAdvancedSearch}
-        />
-        <DataTable
-          columns={this.state.columns}
-          data={this.state.coaches}
-        />
-        <Pagination
-          currentPage={this.state.currentPage}
-          totalItems={this.state.totalItems}
-          setPage={this.setPage}
-        />
+        <div className="customRow">
+          <Search
+            first_name={this.state.first_name}
+            last_name={this.state.last_name}
+            usafb_id={this.state.usafb_id}
+            date_of_birth={this.state.date_of_birth}
+            city={this.state.city}
+            state={this.state.state}
+            updateSearchFilters={this.updateSearchFilters}
+            clearSearchFilters={this.clearSearchFilters}
+          />
+          <div className="column">
+            <DataTable
+              columns={this.state.columns}
+              data={this.state.coaches}
+            />
+            <Pagination
+              currentPage={this.state.currentPage}
+              totalItems={this.state.totalItems}
+              setPage={this.setPage}
+            />
+          </div>
+        </div>
       </Container>
     );
   }
 }
 
-export default Coaches;
+Coaches.propTypes = {
+  coachSearchData: PropTypes.array, //eslint-disable-line
+  searchCoaches: PropTypes.func.isRequired
+};
+
+Coaches.defaultProps = {
+  coachSearchData: []
+};
+
+const mapStateToProps = ({ coachSearchReducer }) => ({ coachSearchData: coachSearchReducer.coachSearchData });
+const mapDispatchToProps = dispatch => ({
+  searchCoaches: searchData => dispatch({ type: SEARCH_COACHES, data: { searchData } })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Coaches);

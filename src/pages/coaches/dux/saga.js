@@ -1,4 +1,4 @@
-import { take, call, put } from 'redux-saga/effects'; //eslint-disable-line
+import { take, call, put } from 'redux-saga/effects';
 
 import * as actions from './actions';
 import searchCoaches from './api';

@@ -1,8 +1,9 @@
 @import 'src/styles/elements/forms.scss';
-
 @import 'src/styles/objects/form.scss';
 @import 'src/styles/objects/wrappers.scss';
-
 @import 'src/styles/utilities/utilities.scss';
-
 @import 'src/styles/components/components.scss';
+.customRow {
+  display: flex;
+  flex-wrap: nowrap !important;
+}

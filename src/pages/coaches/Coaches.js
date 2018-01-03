@@ -12,6 +12,8 @@ import Search from 'components/search/Search';
 import ImportModal from 'components/import-modal/ImportModal';
 import importCsv from 'utils/import';
 
+import debounce from 'lodash/debounce';
+
 import { SEARCH_COACHES } from './dux/actions';
 
 class Coaches extends Component {
@@ -38,7 +40,7 @@ class Coaches extends Component {
       state: ''
     };
 
-    this.callCoachesDispatch = _.debounce(() => {
+    this.callCoachesDispatch = debounce(() => {
       this.props.searchCoaches({
         first_name: this.state.first_name,
         last_name: this.state.last_name,

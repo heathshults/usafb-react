@@ -15,6 +15,8 @@ import ImportModal from 'components/import-modal/ImportModal';
 
 import importCsv from 'utils/import';
 
+import debounce from 'lodash/debounce';
+
 import { SEARCH_PLAYERS } from './dux/actions';
 
 class Players extends Component {
@@ -41,7 +43,7 @@ class Players extends Component {
       state: ''
     };
 
-    this.callPlayersDispatch = _.debounce(() => {
+    this.callPlayersDispatch = debounce(() => {
       this.props.searchPlayers({
         first_name: this.state.first_name,
         last_name: this.state.last_name,

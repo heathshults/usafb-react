@@ -7,49 +7,42 @@ import LastNameInput from './components/lastName';
 import StateInput from './components/state';
 import DateOfBirthInput from './components/dateOfBirth';
 import ClearButton from './components/clearButton';
+import InputContainer from './components/inputContainer';
+import TitleContainer from './components/titleContainer';
 import './search.css';
 
 const Search = props => (
-  <div id="s-o" className="search-overlay flexi-container align-items-stretch">
-    <div id="s-f" className="flexi-container align-items-center mx-auto">
-      <div className="search-form card-theme-blue m-auto">
-        <div id="sForm" className="card">
-          <h4 className="card-header">SEARCH</h4>
-          <div className="card-body form-group">
-            <div className="column">
-              <UsafbIdInput
-                usafb_id={props.usafb_id}
-                updateSearchFilters={props.updateSearchFilters}
-              />
-              <FirstNameInput
-                first_name={props.first_name}
-                updateSearchFilters={props.updateSearchFilters}
-              />
-              <LastNameInput
-                last_name={props.last_name}
-                updateSearchFilters={props.updateSearchFilters}
-              />
-              <DateOfBirthInput
-                date_of_birth={props.date_of_birth}
-                updateSearchFilters={props.updateSearchFilters}
-              />
-              <CityInput
-                city={props.city}
-                updateSearchFilters={props.updateSearchFilters}
-              />
-              <StateInput
-                state={props.state}
-                updateSearchFilters={props.updateSearchFilters}
-              />
-            </div>
-            <ClearButton
-              clearSearchFilters={props.clearSearchFilters}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <InputContainer>
+    <TitleContainer>
+      <UsafbIdInput
+        usafb_id={props.usafb_id}
+        updateSearchFilters={props.updateSearchFilters}
+      />
+      <FirstNameInput
+        first_name={props.first_name}
+        updateSearchFilters={props.updateSearchFilters}
+      />
+      <LastNameInput
+        last_name={props.last_name}
+        updateSearchFilters={props.updateSearchFilters}
+      />
+      <DateOfBirthInput
+        date_of_birth={props.date_of_birth}
+        updateSearchFilters={props.updateSearchFilters}
+      />
+      <CityInput
+        city={props.city}
+        updateSearchFilters={props.updateSearchFilters}
+      />
+      <StateInput
+        state={props.state}
+        updateSearchFilters={props.updateSearchFilters}
+      />
+    </TitleContainer>
+    <ClearButton
+      clearSearchFilters={props.clearSearchFilters}
+    />
+  </InputContainer>
 );
 
 Search.propTypes = {

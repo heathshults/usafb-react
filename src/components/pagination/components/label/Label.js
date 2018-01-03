@@ -14,7 +14,7 @@ const label = props => (
       toggle={props.toggleDropdown}
       className="pagination__label-dropdown"
     >
-      <DropdownToggle caret>
+      <DropdownToggle>
         {props.rowsPerPage}
       </DropdownToggle>
       <DropdownMenu

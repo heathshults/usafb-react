@@ -22,7 +22,7 @@ const history = createHistory();
 const app = () => (
   <Provider store={store}>
     <Router history={history}>
-      <div>
+      <div style={{ height: '100%' }}>
         <NavBar />
         <Switch>
           <Route exact path="/" component={Dashboard} />

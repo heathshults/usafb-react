@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import User from '../user/User';
-import './dropdown.css';
+import './user-dropdown.css';
 
 class NavDropdown extends Component {
   constructor() {

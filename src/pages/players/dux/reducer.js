@@ -1,7 +1,7 @@
 import * as actions from './actions';
 
 const initialState = {
-  playerSearchData: {},
+  playerSearchData: [],
   searchingPlayers: false,
   searchedPlayers: false,
   searchingPlayersError: ''
@@ -10,8 +10,10 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case actions.SEARCH_PLAYERS:
+      console.log('searching players'); //eslint-disable-line
       return { ...state, searchingPlayers: true, searchingPlayersError: '' };
     case actions.SEARCH_PLAYERS_SUCCESS:
+      console.log('action.playerSearchData', action.playerSearchData); //eslint-disable-line
       return { ...state, searchingPlayers: false, searchedPlayers: true, playerSearchData: action.playerSearchData };
     case actions.SEARCH_PLAYERS_ERROR:
       return { ...state, searchingPlayers: false, searchingPlayersError: action.searchingPlayersError };

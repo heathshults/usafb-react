@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Container from 'components/containers/blue-container/BlueContainer';
@@ -6,14 +8,19 @@ import DataHeader from 'components/data-header/DataHeader';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
+import Search from 'components/search/Search';
 
 import Columns from 'components/data-table/models/columns';
 // import Cell from 'components/data-table/models/cell';
 
-import DataTableFilter from 'components/data-table-filter/DataTableFilter';
+// import DataTableFilter from 'components/data-table-filter/DataTableFilter';
 import ImportModal from 'components/import-modal/ImportModal';
 
 import importCsv from 'utils/import';
+
+import { SEARCH_PLAYERS } from './dux/actions';
+
+import './players.css';
 
 class Players extends Component {
   constructor() {
@@ -30,7 +37,13 @@ class Players extends Component {
       totalItems: 100,
       players: [],
       showModal: false,
-      uploadedFile: null
+      uploadedFile: null,
+      firstName: '',
+      lastName: '',
+      usafbId: null,
+      dateOfBirth: '',
+      city: '',
+      state: ''
     };
   }
 
@@ -101,6 +114,33 @@ class Players extends Component {
     });
   }
 
+  updateSearchFilters = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    }, () => {
+      this.props.searchPlayers({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        usafbId: this.state.usafbId,
+        dateOfBirth: this.state.dateOfBirth,
+        city: this.state.city,
+        state: this.state.state
+      });
+    });
+  }
+
+
+  clearSearchFilters = () => {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      usafbId: undefined,
+      dateOfBirth: '',
+      city: '',
+      state: ''
+    });
+  }
+
   uploadFile = () => {
     importCsv(this.state.uploadedFile)
       .then(data => data)
@@ -123,27 +163,55 @@ class Players extends Component {
           numberOfUsers={1000}
           showModal={this.toggleModal}
         />
-        <DataTableFilter
+        {/* <DataTableFilter
           filters={this.state.filters}
           updateFilters={this.updateFilters}
           displayFilters={this.state.displayFilters}
           toggleFilters={this.toggleFilters}
           displayAdvancedSearch={this.state.displayAdvancedSearch}
           toggleAdvancedSearch={this.toggleAdvancedSearch}
-        />
-        <DataTable
-          columns={this.state.columns}
-          data={this.state.players}
-          formatters={this.getCellFormatters()}
-        />
-        <Pagination
-          currentPage={this.state.currentPage}
-          totalItems={this.state.totalItems}
-          setPage={this.setPage}
-        />
+        /> */}
+        <div className="customRow">
+          <Search
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            usafbId={this.state.usafbId}
+            dateOfBirth={this.state.dateOfBirth}
+            city={this.state.city}
+            state={this.state.state}
+            updateSearchFilters={this.updateSearchFilters}
+            clearSearchFilters={this.clearSearchFilters}
+          />
+          <div className="column">
+            <DataTable
+              columns={this.state.columns}
+              data={this.state.players}
+              formatters={this.getCellFormatters()}
+            />
+            <Pagination
+              currentPage={this.state.currentPage}
+              totalItems={this.state.totalItems}
+              setPage={this.setPage}
+            />
+          </div>
+        </div>
       </Container>
     );
   }
 }
 
-export default Players;
+Players.propTypes = {
+  playerSearchData: PropTypes.array, //eslint-disable-line
+  searchPlayers: PropTypes.func.isRequired //eslint-disable-line
+};
+
+Players.defaultProps = {
+  playerSearchData: []
+};
+
+const mapStateToProps = ({ playerSearchReducer }) => ({ playerSearchData: playerSearchReducer.playerSearchData });
+const mapDispatchToProps = dispatch => ({
+  searchPlayers: searchData => dispatch({ type: SEARCH_PLAYERS, data: { searchData } })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Players);

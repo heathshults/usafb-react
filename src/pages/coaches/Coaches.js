@@ -8,7 +8,6 @@ import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
-import Search from 'components/search/Search';
 import ImportModal from 'components/import-modal/ImportModal';
 import importCsv from 'utils/import';
 
@@ -39,17 +38,6 @@ class Coaches extends Component {
       city: '',
       state: ''
     };
-
-    this.callCoachesDispatch = debounce(() => {
-      this.props.searchCoaches({
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        usafb_id: this.state.usafb_id,
-        date_of_birth: this.state.date_of_birth,
-        city: this.state.city,
-        state: this.state.state
-      });
-    }, 250, { maxWait: 1000 });
   }
 
   componentWillMount() {
@@ -74,6 +62,17 @@ class Coaches extends Component {
       currentPage: page
     });
   }
+
+  callCoachesDispatch = debounce(() => {
+    this.props.searchCoaches({
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      usafb_id: this.state.usafb_id,
+      date_of_birth: this.state.date_of_birth,
+      city: this.state.city,
+      state: this.state.state
+    });
+  }, 250, { maxWait: 1000 });
 
   toggleFilters = () => {
     this.setState({
@@ -150,29 +149,15 @@ class Coaches extends Component {
           numberOfUsers={1000}
           showModal={this.toggleModal}
         />
-        <div className="customRow">
-          <Search
-            first_name={this.state.first_name}
-            last_name={this.state.last_name}
-            usafb_id={this.state.usafb_id}
-            date_of_birth={this.state.date_of_birth}
-            city={this.state.city}
-            state={this.state.state}
-            updateSearchFilters={this.updateSearchFilters}
-            clearSearchFilters={this.clearSearchFilters}
-          />
-          <div className="column">
-            <DataTable
-              columns={this.state.columns}
-              data={this.state.coaches}
-            />
-            <Pagination
-              currentPage={this.state.currentPage}
-              totalItems={this.state.totalItems}
-              setPage={this.setPage}
-            />
-          </div>
-        </div>
+        <DataTable
+          columns={this.state.columns}
+          data={this.state.coaches}
+        />
+        <Pagination
+          currentPage={this.state.currentPage}
+          totalItems={this.state.totalItems}
+          setPage={this.setPage}
+        />
       </Container>
     );
   }

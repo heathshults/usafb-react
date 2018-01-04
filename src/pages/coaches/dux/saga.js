@@ -8,7 +8,9 @@ export default function* coachSearchFlow() {
     try {
       const { data } = yield take(actions.SEARCH_COACHES);
       const response = yield call(searchCoaches, data);
+      yield console.dir(response); //eslint-disable-line
       const responseData = yield response.json();
+      yield console.dir(responseData); //eslint-disable-line
       if (response.ok) {
         yield put({ type: actions.SEARCH_COACHES_SUCCESS, coachSearchData: responseData.data });
       } else {

@@ -19,6 +19,8 @@ const dataTable = props => (
   <div className="row">
     <BootstrapTable
       className="col-md-12 usafb__data-table"
+      height="500"
+      scrollTop={'Bottom'}
       trClassName={tableRowStyle}
       data={props.data}
       options={{ noDataText: getNoDataText(props.loading) }}

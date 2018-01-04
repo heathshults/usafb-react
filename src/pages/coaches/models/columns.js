@@ -3,7 +3,7 @@ import Column from 'components/data-table/models/column';
 /**
  * private variable columns
  */
-const columns = [];
+let columns = [];
 
 /**
  * This class is going to be what generates columns
@@ -17,12 +17,16 @@ export default class UserColumns {
   setCoachesColumns = () => {
     columns.push(
       new Column('ID', 'id', false, true, true),
-      new Column('Last Name', 'name_last', true),
-      new Column('First Name', 'name_first', true),
+      new Column('Last Name', 'name_last'),
+      new Column('First Name', 'name_first'),
       new Column('Date of Birth', 'dob'),
       new Column('City', 'city'),
       new Column('State', 'state')
     );
+  }
+
+  clearColumns = () => {
+    columns = [];
   }
 
   getCoachesColumns = () => columns;

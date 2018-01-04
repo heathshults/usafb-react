@@ -17,11 +17,17 @@ class Coaches extends Component {
   constructor() {
     super();
 
-    this.columns = new Columns();
-
     this.state = {
       searchModalOpen: true
     };
+  }
+
+  componentWillMount() {
+    this.columns = new Columns();
+  }
+
+  componentWillUnmount() {
+    this.columns.clearColumns();
   }
 
   getSearchButton = () => (

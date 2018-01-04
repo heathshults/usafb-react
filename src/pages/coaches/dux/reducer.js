@@ -2,6 +2,7 @@ import * as actions from './actions';
 
 const initialState = {
   coaches: [],
+  searchValues: {},
   totalCoaches: 0,
   rowsPerPage: 10,
   searchingCoaches: false,
@@ -25,6 +26,8 @@ export default (state = initialState, action) => {
       return { ...state, searchingCoaches: false, searchingCoachesError: action.searchingCoachesError };
     case actions.UPDATE_ROWS_PER_PAGE:
       return { ...state, rowsPerPage: action.rowsPerPage };
+    case actions.SET_SEARCH_VALUES:
+      return { ...state, searchValues: action.searchValues };
     default:
       return state;
   }

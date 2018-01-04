@@ -90,7 +90,7 @@ class Coaches extends Component {
         <Pagination
           totalItems={this.props.totalCoaches}
           rowsPerPage={this.props.rowsPerPage}
-          setPage={this.setPage}
+          updateRowsPerPage={this.props.updateRowsPerPage}
         />
       </Container>
     );
@@ -101,12 +101,14 @@ Coaches.propTypes = {
   coaches: PropTypes.array.isRequired,
   totalCoaches: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  searchCoaches: PropTypes.func.isRequired
+  searchCoaches: PropTypes.func.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ coachSearchReducer }) => coachSearchReducer;
 const mapDispatchToProps = dispatch => ({
-  searchCoaches: data => dispatch({ type: SEARCH_COACHES, data })
+  searchCoaches: data => dispatch({ type: SEARCH_COACHES, data }),
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coaches);

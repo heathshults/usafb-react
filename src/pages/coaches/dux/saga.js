@@ -7,6 +7,7 @@ export default function* coachSearchFlow() {
   while (true) {
     try {
       const { data } = yield take(actions.SEARCH_COACHES);
+      yield put({ type: actions.SET_SEARCH_VALUES, searchValues: data });
       const nonEmptyValues = yield getNoneEmptyValues(data);
       const response = yield call(searchCoaches, nonEmptyValues);
       const responseData = yield response.json();

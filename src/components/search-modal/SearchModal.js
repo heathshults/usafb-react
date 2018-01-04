@@ -5,6 +5,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 class SearchModal extends Component {
   constructor() {
     super();
+    this.CANCELED = 'canceled';
+    this.SAVED = 'saved';
 
     this.state = {
       usafb_id: '',
@@ -16,21 +18,42 @@ class SearchModal extends Component {
     };
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      usafb_id: '',
+      name_last: '',
+      name_first: '',
+      dob: '',
+      city: '',
+      state: ''
+    });
+  }
+
+  dismissModal = (value) => {
+    this.setState({
+      dismissStatus: value
+    }, this.toggleModal);
+  }
+
+  toggleModal = () => this.props.toggle(false);
+
+  // get input fields in place
+  // if at least one input field is valid, then allow search
+  // otherwise keep save button disabled
+  // when toggling, transform data so it is valid for API search
   render() {
     return (
       <Modal
         isOpen={this.props.open}
-        toggle={this.props.toggle}
         onClosed={this.modalClosedCallback}
       >
-        <ModalHeader toggle={this.props.toggle}>
-          <i className="fa fa-user" aria-hidden="true" /> {this.props.header}
+        <ModalHeader>
+          {this.props.header}
         </ModalHeader>
         <ModalBody>
           Search Coaches / Players
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => this.dismissModal(this.CANCELED)}>Close</Button>{' '}
           <Button color="primary" onClick={() => this.dismissModal(this.SAVED)}>Save</Button>
         </ModalFooter>
       </Modal>

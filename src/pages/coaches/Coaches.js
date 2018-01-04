@@ -142,10 +142,14 @@ class Coaches extends Component {
 
   toggle = () => console.log("test"); //eslint-disable-line
 
-  toggleSearchModal = () =>
-    this.setState({
-      searchModalOpen: !this.state.searchModalOpen
-    });
+  toggleSearchModal = (valuesInputted) => {
+    console.log(valuesInputted); //eslint-disable-line
+    // if (!valuesInputted) {
+    //   this.setState({
+    //     searchModalOpen: !this.state.searchModalOpen
+    //   });
+    // }
+  }
 
   render() {
     return (

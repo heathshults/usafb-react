@@ -9,8 +9,6 @@ import './search-modal.css';
 class SearchModal extends Component {
   constructor() {
     super();
-    this.CANCELED = 'canceled';
-    this.SAVED = 'saved';
 
     this.state = {
       usafb_id: '',
@@ -33,19 +31,22 @@ class SearchModal extends Component {
     });
   }
 
-  dismissModal = (value) => {
-    this.setState({
-      dismissStatus: value
-    }, this.toggleModal);
-  }
-
   updateSearchFilters = (event) => {
     this.setState({
       [event.target.id]: event.target.value
     });
   }
 
-  toggleModal = () => this.props.toggle(false);
+  toggleModal = () => {
+    if (this.valueInputted()) {
+      this.props.toggle(this.state);
+    }
+  }
+
+  valueInputted = () =>
+    this.state.usafb_id || this.state.name_last ||
+    this.state.name_first || this.state.dob ||
+    this.state.city || this.state.state;
 
   // get input fields in place
   // if at least one input field is valid, then allow search
@@ -120,7 +121,13 @@ class SearchModal extends Component {
           </InputGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => this.dismissModal(this.SAVED)}>Search</Button>
+          <Button
+            color="primary"
+            onClick={this.toggleModal}
+            disabled={!this.valueInputted()}
+          >
+            Search
+          </Button>
         </ModalFooter>
       </Modal>
     );

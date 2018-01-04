@@ -1,0 +1,29 @@
+import Column from 'components/data-table/models/column';
+
+/**
+ * private variable columns
+ */
+const columns = [];
+
+/**
+ * This class is going to be what generates columns
+ * for the user management page
+ */
+export default class UserColumns {
+  constructor() {
+    this.setCoachesColumns();
+  }
+
+  setCoachesColumns = () => {
+    columns.push(
+      new Column('ID', 'id', false, true, true),
+      new Column('Last Name', 'name_last', true),
+      new Column('First Name', 'name_first', true),
+      new Column('Date of Birth', 'dob'),
+      new Column('City', 'city'),
+      new Column('State', 'state')
+    );
+  }
+
+  getCoachesColumns = () => columns;
+}

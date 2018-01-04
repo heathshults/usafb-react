@@ -7,12 +7,12 @@ export default function* coachSearchFlow() {
   while (true) {
     try {
       const { data } = yield take(actions.SEARCH_COACHES);
-      const response = yield call(searchCoaches, data);
-      yield console.dir(response); //eslint-disable-line
+      const nonEmptyValues = yield getNoneEmptyValues(data);
+      const response = yield call(searchCoaches, nonEmptyValues);
       const responseData = yield response.json();
-      yield console.dir(responseData); //eslint-disable-line
+      console.dir(responseData); //eslint-disable-line
       if (response.ok) {
-        yield put({ type: actions.SEARCH_COACHES_SUCCESS, coachSearchData: responseData.data });
+        yield put({ type: actions.SEARCH_COACHES_SUCCESS, coaches: responseData.data });
       } else {
         yield put({ type: actions.SEARCH_COACHES_ERROR, searchingCoachesError: response.errors[0].error });
       }
@@ -24,4 +24,16 @@ export default function* coachSearchFlow() {
       });
     }
   }
+}
+
+function getNoneEmptyValues(data) {
+  const nonEmptyValues = {};
+
+  Object.keys(data).forEach((val) => {
+    if (data[val]) {
+      nonEmptyValues[val] = data[val];
+    }
+  });
+
+  return nonEmptyValues;
 }

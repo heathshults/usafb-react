@@ -13,7 +13,7 @@ export default function* playerProfileFlow() {
         yield put({ type: actions.GET_PLAYER_PROFILE_SUCCESS, playerData: responseData.data });
       }
     } catch (e) {
-      console.log('eeee', e); //eslint-disable-line
+      console.log('error', e); //eslint-disable-line
     }
   }
 }

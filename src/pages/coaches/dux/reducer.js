@@ -1,7 +1,7 @@
 import * as actions from './actions';
 
 const initialState = {
-  coachSearchData: {},
+  coachSearchData: [],
   searchingCoaches: false,
   searchedCoaches: false,
   searchingCoachesError: ''

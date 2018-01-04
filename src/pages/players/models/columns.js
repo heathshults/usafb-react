@@ -29,5 +29,5 @@ export default class UserColumns {
     columns = [];
   }
 
-  getCoachesColumns = () => columns;
+  getPlayersColumns = () => columns;
 }

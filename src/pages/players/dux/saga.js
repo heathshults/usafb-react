@@ -7,10 +7,16 @@ export default function* playerSearchFlow() {
   while (true) {
     try {
       const { data } = yield take(actions.SEARCH_PLAYERS);
-      const response = yield call(searchPlayer, data);
+      yield put({ type: actions.SET_SEARCH_VALUES, searchValues: data });
+      const nonEmptyValues = yield getNoneEmptyValues(data);
+      const response = yield call(searchPlayer, nonEmptyValues);
       const responseData = yield response.json();
       if (response.ok) {
-        yield put({ type: actions.SEARCH_PLAYERS_SUCCESS, playerSearchData: responseData.data });
+        yield put({
+          type: actions.SEARCH_PLAYERS_SUCCESS,
+          players: responseData.data,
+          total: responseData.meta.pagination.total
+        });
       } else {
         yield put({ type: actions.SEARCH_PLAYERS_ERROR, searchingPlayersError: response.errors[0].error });
       }
@@ -22,4 +28,16 @@ export default function* playerSearchFlow() {
       });
     }
   }
+}
+
+function getNoneEmptyValues(data) {
+  const nonEmptyValues = {};
+
+  Object.keys(data).forEach((val) => {
+    if (data[val]) {
+      nonEmptyValues[val] = data[val];
+    }
+  });
+
+  return nonEmptyValues;
 }

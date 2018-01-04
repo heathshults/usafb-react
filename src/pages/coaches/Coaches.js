@@ -34,12 +34,6 @@ class Coaches extends Component {
     <SearchButton toggle={this.displaySearchModal} searching={false} />
   )
 
-  toggleFilters = () => {
-    this.setState({
-      displayFilters: !this.state.displayFilters
-    });
-  }
-
   displaySearchModal = () =>
     this.setState({
       searchModalOpen: true
@@ -73,7 +67,6 @@ class Coaches extends Component {
         <DataHeader
           header="Number of Coaches"
           numberOfUsers={1000}
-          showModal={this.toggleModal}
           buttons={this.getSearchButton()}
         />
         <DataTable

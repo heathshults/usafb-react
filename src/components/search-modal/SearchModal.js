@@ -48,10 +48,10 @@ class SearchModal extends Component {
     this.state.name_first || this.state.dob ||
     this.state.city || this.state.state;
 
-  // get input fields in place
-  // if at least one input field is valid, then allow search
-  // otherwise keep save button disabled
-  // when toggling, transform data so it is valid for API search
+  goBack = () => {
+    window.history.back();
+  }
+
   render() {
     return (
       <Modal
@@ -121,6 +121,12 @@ class SearchModal extends Component {
           </InputGroup>
         </ModalBody>
         <ModalFooter>
+          <Button
+            color="secondary"
+            onClick={this.goBack}
+          >
+            Back
+          </Button>
           <Button
             color="primary"
             onClick={this.toggleModal}

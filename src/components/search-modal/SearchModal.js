@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, InputGroup } from 'reactstrap';
+
+import './search-modal.css';
 
 class SearchModal extends Component {
   constructor() {
@@ -35,6 +37,12 @@ class SearchModal extends Component {
     }, this.toggleModal);
   }
 
+  updateSearchFilters = (event) => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
   toggleModal = () => this.props.toggle(false);
 
   // get input fields in place
@@ -51,10 +59,57 @@ class SearchModal extends Component {
           {this.props.header}
         </ModalHeader>
         <ModalBody>
-          Search Coaches / Players
+          <InputGroup className="usafb-search-modal__input-group">
+            <Input
+              id="usafb_id"
+              value={this.state.usafb_id}
+              type="text"
+              placeholder="USAFB ID"
+              onChange={this.updateSearchFilters}
+            />
+            <Input
+              id="dob"
+              value={this.state.dob}
+              type="text"
+              placeholder="Date of Birth"
+              onChange={this.updateSearchFilters}
+            />
+          </InputGroup>
+          <InputGroup className="usafb-search-modal__input-group">
+            <Input
+              id="name_first"
+              value={this.state.name_first}
+              type="text"
+              placeholder="First Name"
+              onChange={this.updateSearchFilters}
+            />
+            <Input
+              id="name_last"
+              value={this.state.name_last}
+              type="text"
+              placeholder="Last Name"
+              onChange={this.updateSearchFilters}
+            />
+          </InputGroup>
+          <InputGroup className="usafb-search-modal__input-group">
+            <Input
+              id="city"
+              value={this.state.city}
+              type="text"
+              placeholder="City"
+              onChange={this.updateSearchFilters}
+            />
+            <Input
+              id="state"
+              value={this.state.state}
+              type="text"
+              placeholder="State"
+              onChange={this.updateSearchFilters}
+            />
+          </InputGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => this.dismissModal(this.SAVED)}>Save</Button>
+          <Button color="primary" onClick={() => this.dismissModal(this.SAVED)}>Search</Button>
         </ModalFooter>
       </Modal>
     );

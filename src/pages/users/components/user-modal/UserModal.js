@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+import states from 'services/data/states';
+
 import InputField from '../input-field/InputField';
 import DropdownField from '../dropdown-field/DropdownField';
-import states from '../../models/states';
 import './user-modal.css';
 
 class UserModal extends Component {

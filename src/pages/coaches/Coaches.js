@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
+import SearchButton from 'components/search-button/SearchButton';
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
@@ -62,6 +63,10 @@ class Coaches extends Component {
       currentPage: page
     });
   }
+
+  getSearchButton = () => (
+    <SearchButton toggle={this.toggle} searching={false} />
+  )
 
   callCoachesDispatch = debounce(() => {
     this.props.searchCoaches({
@@ -133,6 +138,8 @@ class Coaches extends Component {
       .catch(err => err);
   }
 
+  toggle = () => console.log("test"); //eslint-disable-line
+
   render() {
     return (
       <Container>
@@ -148,6 +155,7 @@ class Coaches extends Component {
           header="Number of Coaches"
           numberOfUsers={1000}
           showModal={this.toggleModal}
+          buttons={this.getSearchButton()}
         />
         <DataTable
           columns={this.state.columns}

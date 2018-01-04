@@ -88,8 +88,8 @@ class Coaches extends Component {
           data={this.props.coaches}
         />
         <Pagination
-          currentPage={this.state.currentPage}
-          totalItems={this.state.totalItems}
+          totalItems={this.props.totalCoaches}
+          rowsPerPage={this.props.rowsPerPage}
           setPage={this.setPage}
         />
       </Container>
@@ -99,6 +99,8 @@ class Coaches extends Component {
 
 Coaches.propTypes = {
   coaches: PropTypes.array.isRequired,
+  totalCoaches: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
   searchCoaches: PropTypes.func.isRequired
 };
 

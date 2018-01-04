@@ -10,9 +10,12 @@ export default function* coachSearchFlow() {
       const nonEmptyValues = yield getNoneEmptyValues(data);
       const response = yield call(searchCoaches, nonEmptyValues);
       const responseData = yield response.json();
-      console.dir(responseData); //eslint-disable-line
       if (response.ok) {
-        yield put({ type: actions.SEARCH_COACHES_SUCCESS, coaches: responseData.data });
+        yield put({
+          type: actions.SEARCH_COACHES_SUCCESS,
+          coaches: responseData.data,
+          total: responseData.meta.pagination.total
+        });
       } else {
         yield put({ type: actions.SEARCH_COACHES_ERROR, searchingCoachesError: response.errors[0].error });
       }
@@ -34,6 +37,9 @@ function getNoneEmptyValues(data) {
       nonEmptyValues[val] = data[val];
     }
   });
+
+  nonEmptyValues.page = 1;
+  nonEmptyValues.per_page = 10;
 
   return nonEmptyValues;
 }

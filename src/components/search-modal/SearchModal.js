@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, InputGroup } from 'reactstrap';
 
+import states from 'services/data/states';
+
 import './search-modal.css';
 
 class SearchModal extends Component {
@@ -99,13 +101,22 @@ class SearchModal extends Component {
               placeholder="City"
               onChange={this.updateSearchFilters}
             />
-            <Input
-              id="state"
+            <select
+              name="State"
+              id="State"
+              className="user-management__dropdown-field"
               value={this.state.state}
-              type="text"
-              placeholder="State"
               onChange={this.updateSearchFilters}
-            />
+            >
+              {states.map(state => (
+                <option
+                  value={state.value}
+                  key={state.value}
+                >
+                  {state.label}
+                </option>
+              ))}
+            </select>
           </InputGroup>
         </ModalBody>
         <ModalFooter>

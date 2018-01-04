@@ -28,9 +28,9 @@ export function* loginSaga(data) {
 }
 
 function* loginSuccess(tokenData) {
-  window.localStorage.setItem('id_token', tokenData.id_token);
-  window.localStorage.setItem('access_token', tokenData.access_token);
-  window.localStorage.setItem('refresh_token', tokenData.refresh_token);
+  yield window.localStorage.setItem('id_token', tokenData.id_token);
+  yield window.localStorage.setItem('access_token', tokenData.access_token);
+  yield window.localStorage.setItem('refresh_token', tokenData.refresh_token);
 
   yield goToDashboard();
 }

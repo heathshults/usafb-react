@@ -72,12 +72,14 @@ class Coaches extends Component {
         <DataTable
           columns={this.columns.getCoachesColumns()}
           data={this.props.coaches}
+          display={!this.state.searchModalOpen} // hide the table when the modal is open
         />
         <Pagination
           totalItems={this.props.totalCoaches}
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
+          display={!this.state.searchModalOpen} // hide pagination when the modal is open
         />
       </Container>
     );

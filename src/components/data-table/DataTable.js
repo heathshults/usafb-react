@@ -19,7 +19,7 @@ const dataTable = props => (
   <div className={`${props.display ? '' : 'usafb__data-table-hide '}row`}>
     <BootstrapTable
       className="col-md-12 usafb__data-table"
-      height="500"
+      height={`${props.display ? '500' : ''}`}
       scrollTop={'Bottom'}
       trClassName={tableRowStyle}
       data={props.data}

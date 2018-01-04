@@ -284,6 +284,7 @@ class UserModal extends Component {
               <div className="col-md-12 users__input-container">
                 <InputField
                   icon="home"
+                  id=""
                   label="Apartment, studio, or floor"
                   value={this.state.address2}
                   onChange={this.updateAddress2}

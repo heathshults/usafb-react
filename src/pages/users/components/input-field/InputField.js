@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import './input-field.css';
 
-const getInputId = label => `user-input-${label.replace(/ /g, '')}`;
+const getInputId = label => `user-input-${label.replace(/[, ]+/g, '').trim()}`;
 
 const inputField = props => (
   <div className="input-group">

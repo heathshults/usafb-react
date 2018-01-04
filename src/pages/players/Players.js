@@ -85,6 +85,7 @@ class Players extends Component {
           data={this.props.players}
           formatters={this.getCellFormatters()}
           display={!this.state.searchModalOpen} // hide the table when the modal is open
+          loading={this.props.searchingPlayers}
         />
         <Pagination
           totalItems={this.props.totalPlayers}
@@ -104,7 +105,8 @@ Players.propTypes = {
   totalPlayers: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   searchPlayers: PropTypes.func.isRequired,
-  updateRowsPerPage: PropTypes.func.isRequired
+  updateRowsPerPage: PropTypes.func.isRequired,
+  searchingPlayers: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ playerSearchReducer }) => playerSearchReducer;

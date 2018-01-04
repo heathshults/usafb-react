@@ -73,6 +73,7 @@ class Coaches extends Component {
           columns={this.columns.getCoachesColumns()}
           data={this.props.coaches}
           display={!this.state.searchModalOpen} // hide the table when the modal is open
+          loading={this.props.searchingCoaches}
         />
         <Pagination
           totalItems={this.props.totalCoaches}
@@ -88,6 +89,7 @@ class Coaches extends Component {
 
 Coaches.propTypes = {
   coaches: PropTypes.array.isRequired,
+  searchingCoaches: PropTypes.bool.isRequired,
   searchValues: PropTypes.object.isRequired,
   totalCoaches: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,

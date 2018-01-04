@@ -66,7 +66,7 @@ class Coaches extends Component {
         />
         <DataHeader
           header="Number of Coaches"
-          numberOfUsers={1000}
+          numberOfUsers={this.props.totalCoaches}
           buttons={this.getSearchButton()}
         />
         <DataTable

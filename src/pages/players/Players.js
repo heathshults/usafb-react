@@ -77,19 +77,21 @@ class Players extends Component {
         />
         <DataHeader
           header="Number of Players"
-          numberOfUsers={1000}
+          numberOfUsers={this.props.totalPlayers}
           buttons={this.getSearchButton()}
         />
         <DataTable
           columns={this.columns.getPlayersColumns()}
           data={this.props.players}
           formatters={this.getCellFormatters()}
+          display={!this.state.searchModalOpen} // hide the table when the modal is open
         />
         <Pagination
           totalItems={this.props.totalPlayers}
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
+          display={!this.state.searchModalOpen} // hide pagination when the modal is open
         />
       </Container>
     );

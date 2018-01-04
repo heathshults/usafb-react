@@ -162,7 +162,7 @@ class PaginationComponent extends Component {
 
   render() {
     return (
-      <div className="row d-flex justify-content-between mb-3">
+      <div className={`${this.props.display ? '' : 'usafb-pagination__hide '}row d-flex justify-content-between mb-3`} >
         <div className="row col col-md-12">
           <Label
             startingIndex={this.calculateStartingIndex()}
@@ -193,7 +193,12 @@ PaginationComponent.propTypes = {
   totalItems: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  updateRowsPerPage: PropTypes.func.isRequired
+  updateRowsPerPage: PropTypes.func.isRequired,
+  display: PropTypes.bool
+};
+
+PaginationComponent.defaultProps = {
+  display: true
 };
 
 export default PaginationComponent;

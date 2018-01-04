@@ -39,8 +39,5 @@ function getNoneEmptyValues(data) {
     }
   });
 
-  nonEmptyValues.page = 1;
-  nonEmptyValues.per_page = 10;
-
   return nonEmptyValues;
 }

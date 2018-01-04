@@ -6,6 +6,9 @@ import uuidv4 from 'uuid/v4';
 import Label from './components/label/Label';
 import './pagination.css';
 
+// TODO make sure currentPage and set currentPage are passed
+// in through props. This will make code cleaner and logic simpler
+// when making API calls
 class PaginationComponent extends Component {
   constructor() {
     super();

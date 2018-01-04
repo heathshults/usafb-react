@@ -9,9 +9,6 @@ import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import SearchButton from 'components/search-button/SearchButton';
 import SearchModal from 'components/search-modal/SearchModal';
-import importCsv from 'utils/import';
-
-import debounce from 'lodash/debounce';
 
 import Columns from './models/columns';
 import { SEARCH_COACHES } from './dux/actions';
@@ -23,9 +20,7 @@ class Coaches extends Component {
     this.columns = new Columns();
 
     this.state = {
-      searchModalOpen: true,
-      currentPage: 1,
-      totalItems: 100,
+      searchModalOpen: true
     };
   }
 
@@ -33,27 +28,10 @@ class Coaches extends Component {
     <SearchButton toggle={this.displaySearchModal} searching={false} />
   )
 
-  callCoachesDispatch = debounce(() => {
-    this.props.searchCoaches({
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      usafb_id: this.state.usafb_id,
-      date_of_birth: this.state.date_of_birth,
-      city: this.state.city,
-      state: this.state.state
-    });
-  }, 250, { maxWait: 1000 });
-
   toggleFilters = () => {
     this.setState({
       displayFilters: !this.state.displayFilters
     });
-  }
-
-  uploadFile = () => {
-    importCsv(this.state.uploadedFile)
-      .then(data => data)
-      .catch(err => err);
   }
 
   displaySearchModal = () =>
@@ -62,10 +40,19 @@ class Coaches extends Component {
     });
 
   modalDismissed = (data) => {
+    data.currentPage = 1; //eslint-disable-line
+    data.per_page = 10; //eslint-disable-line
     this.props.searchCoaches(data);
     this.setState({
       searchModalOpen: false
     });
+  }
+
+  paginationOnChange = (currentPage, perPage) => {
+    const data = this.props.searchValues;
+    data.currentPage = currentPage;
+    data.per_page = perPage;
+    this.props.searchCoaches(data);
   }
 
   render() {
@@ -91,6 +78,7 @@ class Coaches extends Component {
           totalItems={this.props.totalCoaches}
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
+          onChange={this.paginationOnChange}
         />
       </Container>
     );
@@ -99,6 +87,7 @@ class Coaches extends Component {
 
 Coaches.propTypes = {
   coaches: PropTypes.array.isRequired,
+  searchValues: PropTypes.object.isRequired,
   totalCoaches: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   searchCoaches: PropTypes.func.isRequired,

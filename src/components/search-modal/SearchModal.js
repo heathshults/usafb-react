@@ -103,7 +103,7 @@ class SearchModal extends Component {
             />
             <select
               name="State"
-              id="State"
+              id="state"
               className="user-management__dropdown-field"
               value={this.state.state}
               onChange={this.updateSearchFilters}

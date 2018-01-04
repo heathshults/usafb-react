@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
-import SearchButton from 'components/search-button/SearchButton';
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 import Columns from 'components/data-table/models/columns';
 import ImportModal from 'components/import-modal/ImportModal';
+import SearchButton from 'components/search-button/SearchButton';
+import SearchModal from 'components/search-modal/SearchModal';
 import importCsv from 'utils/import';
 
 import debounce from 'lodash/debounce';
@@ -25,6 +26,7 @@ class Coaches extends Component {
     this.state = {
       filters: this.columns.getColumnsForFilters(),
       columns: this.columns.getColumnsForTableHeader(),
+      searchModalOpen: true,
       displayFilters: false,
       displayAdvancedSearch: false,
       currentPage: 1,
@@ -65,7 +67,7 @@ class Coaches extends Component {
   }
 
   getSearchButton = () => (
-    <SearchButton toggle={this.toggle} searching={false} />
+    <SearchButton toggle={this.toggleSearchModal} searching={false} />
   )
 
   callCoachesDispatch = debounce(() => {
@@ -140,6 +142,11 @@ class Coaches extends Component {
 
   toggle = () => console.log("test"); //eslint-disable-line
 
+  toggleSearchModal = () =>
+    this.setState({
+      searchModalOpen: !this.state.searchModalOpen
+    });
+
   render() {
     return (
       <Container>
@@ -150,6 +157,11 @@ class Coaches extends Component {
           updateFileInParentState={this.updateFileInParentState}
           uploadFile={this.uploadFile}
           uploadedFile={this.state.uploadedFile}
+        />
+        <SearchModal
+          open={this.state.searchModalOpen}
+          toggle={this.toggleSearchModal}
+          header="Search for Coaches"
         />
         <DataHeader
           header="Number of Coaches"

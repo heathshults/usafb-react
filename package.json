@@ -74,6 +74,7 @@
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",
+    "cypress": "^1.4.1",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "eslint": "3.19.0",
@@ -95,7 +96,8 @@
     "start": "npm-run-all -p watch-css start-js",
     "build-js": "NODE_PATH=./src node scripts/build.js",
     "build": "npm-run-all build-css build-js",
-    "test": "NODE_PATH=./src node scripts/test.js --env=jsdom"
+    "test": "NODE_PATH=./src node scripts/test.js --env=jsdom",
+    "cypress:open": "cypress open"
   },
   "jest": {
     "collectCoverageFrom": [

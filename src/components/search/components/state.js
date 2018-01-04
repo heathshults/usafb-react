@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import states from 'pages/users/models/states';
+import states from 'services/data/states';
 
 const State = props => (
   <div className="input-group">

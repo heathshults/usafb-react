@@ -1,0 +1,14 @@
+.usafb-search-modal__input-group {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+
+  >input, select {
+    border: 0.125rem solid rgba(9, 37, 74, 0.15) !important;
+    margin: 0 5px;
+  }
+
+  select {
+    width: 48%;
+  }
+}

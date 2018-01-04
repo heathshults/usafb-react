@@ -7,73 +7,32 @@ import HeaderContentDivider from 'components/header-content-divider/HeaderConten
 import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
-import Columns from 'components/data-table/models/columns';
-import Search from 'components/search/Search';
-import ImportModal from 'components/import-modal/ImportModal';
-import importCsv from 'utils/import';
+import SearchButton from 'components/search-button/SearchButton';
+import SearchModal from 'components/search-modal/SearchModal';
 
-import debounce from 'lodash/debounce';
-
+import Columns from './models/columns';
 import { SEARCH_COACHES } from './dux/actions';
 
 class Coaches extends Component {
   constructor() {
     super();
 
-    this.columns = new Columns();
-
     this.state = {
-      filters: this.columns.getColumnsForFilters(),
-      columns: this.columns.getColumnsForTableHeader(),
-      displayFilters: false,
-      displayAdvancedSearch: false,
-      currentPage: 1,
-      totalItems: 100,
-      coaches: [],
-      showModal: false,
-      uploadedFile: null,
-      first_name: '',
-      last_name: '',
-      usafb_id: null,
-      date_of_birth: '',
-      city: '',
-      state: ''
+      searchModalOpen: true
     };
-
-    this.callCoachesDispatch = debounce(() => {
-      this.props.searchCoaches({
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        usafb_id: this.state.usafb_id,
-        date_of_birth: this.state.date_of_birth,
-        city: this.state.city,
-        state: this.state.state
-      });
-    }, 250, { maxWait: 1000 });
   }
 
   componentWillMount() {
-    const coaches = [...Array(10)].map((val, index) => ({
-      'USAFB#': index,
-      'Last Name': 'Test',
-      'First Name': 'Test',
-      Source: 'Test',
-      Gender: 'M',
-      'Date of Birth': '1-17-91',
-      'Age Group': 'Derp',
-      Organization: 'Blue Star'
-    }));
-
-    this.setState({
-      coaches
-    });
+    this.columns = new Columns();
   }
 
-  setPage = (page) => {
-    this.setState({
-      currentPage: page
-    });
+  componentWillUnmount() {
+    this.columns.clearColumns();
   }
+
+  getSearchButton = () => (
+    <SearchButton toggle={this.displaySearchModal} searching={false} />
+  )
 
   toggleFilters = () => {
     this.setState({
@@ -81,115 +40,70 @@ class Coaches extends Component {
     });
   }
 
-  updateFilters = (filter) => {
-    this.columns.updateFilters(filter);
-
+  displaySearchModal = () =>
     this.setState({
-      filters: this.columns.getColumnsForFilters(),
-      columns: this.columns.getColumnsForTableHeader()
+      searchModalOpen: true
+    });
+
+  modalDismissed = (data) => {
+    data.currentPage = 1; //eslint-disable-line
+    data.per_page = 10; //eslint-disable-line
+    this.props.searchCoaches(data);
+    this.setState({
+      searchModalOpen: false
     });
   }
 
-  toggleAdvancedSearch = () => {
-    this.setState({
-      displayAdvancedSearch: !this.state.displayAdvancedSearch
-    });
-  }
-
-  toggleModal = () => {
-    this.setState({
-      uploadedFile: null,
-      showModal: !this.state.showModal
-    });
-  }
-
-  updateFileInParentState = (uploadedFile) => {
-    this.setState({
-      uploadedFile
-    });
-  }
-
-  updateSearchFilters = (event) => {
-    this.setState({
-      [event.target.id]: event.target.value
-    }, () => {
-      this.callCoachesDispatch();
-    });
-  }
-
-  clearSearchFilters = () => {
-    this.setState({
-      first_name: '',
-      last_name: '',
-      usafb_id: undefined,
-      date_of_birth: '',
-      city: '',
-      state: ''
-    });
-  }
-
-  uploadFile = () => {
-    importCsv(this.state.uploadedFile)
-      .then(data => data)
-      .catch(err => err);
+  paginationOnChange = (currentPage, perPage) => {
+    const data = this.props.searchValues;
+    data.currentPage = currentPage;
+    data.per_page = perPage;
+    this.props.searchCoaches(data);
   }
 
   render() {
     return (
       <Container>
         <HeaderContentDivider />
-        <ImportModal
-          showModal={this.state.showModal}
-          toggleModal={this.toggleModal}
-          updateFileInParentState={this.updateFileInParentState}
-          uploadFile={this.uploadFile}
-          uploadedFile={this.state.uploadedFile}
+        <SearchModal
+          open={this.state.searchModalOpen}
+          toggle={this.modalDismissed}
+          header="Search for Coaches"
         />
         <DataHeader
           header="Number of Coaches"
           numberOfUsers={1000}
           showModal={this.toggleModal}
+          buttons={this.getSearchButton()}
         />
-        <div className="customRow">
-          <Search
-            first_name={this.state.first_name}
-            last_name={this.state.last_name}
-            usafb_id={this.state.usafb_id}
-            date_of_birth={this.state.date_of_birth}
-            city={this.state.city}
-            state={this.state.state}
-            updateSearchFilters={this.updateSearchFilters}
-            clearSearchFilters={this.clearSearchFilters}
-          />
-          <div className="column">
-            <DataTable
-              columns={this.state.columns}
-              data={this.state.coaches}
-            />
-            <Pagination
-              currentPage={this.state.currentPage}
-              totalItems={this.state.totalItems}
-              setPage={this.setPage}
-            />
-          </div>
-        </div>
+        <DataTable
+          columns={this.columns.getCoachesColumns()}
+          data={this.props.coaches}
+        />
+        <Pagination
+          totalItems={this.props.totalCoaches}
+          rowsPerPage={this.props.rowsPerPage}
+          updateRowsPerPage={this.props.updateRowsPerPage}
+          onChange={this.paginationOnChange}
+        />
       </Container>
     );
   }
 }
 
 Coaches.propTypes = {
-  coachSearchData: PropTypes.array, //eslint-disable-line
-  searchCoaches: PropTypes.func.isRequired
+  coaches: PropTypes.array.isRequired,
+  searchValues: PropTypes.object.isRequired,
+  totalCoaches: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  searchCoaches: PropTypes.func.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired
 };
 
-Coaches.defaultProps = {
-  coachSearchData: []
-};
-
-const mapStateToProps = ({ coachSearchReducer }) => ({ coachSearchData: coachSearchReducer.coachSearchData });
+const mapStateToProps = ({ coachSearchReducer }) => coachSearchReducer;
 const mapDispatchToProps = dispatch => ({
-  searchCoaches: searchData => dispatch({ type: SEARCH_COACHES, data: { searchData } })
+  searchCoaches: data => dispatch({ type: SEARCH_COACHES, data }),
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coaches);

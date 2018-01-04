@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import Columns from 'components/data-table/models/user-columns';
 
+import states from 'services/data/states';
+
 import MainContainer from 'components/containers/container/Container';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
@@ -13,8 +15,6 @@ import Header from './components/header/Header';
 import HeaderMessage from './components/header-message/HeaderMessage';
 import CreateUserButton from './components/create-user-button/CreateUserButton';
 import UserModal from './components/user-modal/UserModal';
-
-import states from './models/states';
 
 import {
   GET_USERS,

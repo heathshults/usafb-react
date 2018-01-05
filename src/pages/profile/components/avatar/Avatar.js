@@ -4,7 +4,7 @@ import sampleImage from 'images/sample/profile.jpg';
 import './avatar.css';
 
 const avatar = () => (
-  <div className="d-flex flex-column">
+  <div className="d-flex flex-column profile__avatar-container">
     <img
       className="profile__avatar"
       src={sampleImage}

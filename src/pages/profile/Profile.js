@@ -4,6 +4,7 @@ import BlueContainer from 'components/containers/blue-container/BlueContainer';
 import Block from './components/block/Block';
 import Header from './components/header/Header';
 import Content from './components/content/Content';
+import Avatar from './components/avatar/Avatar';
 
 class Profile extends Component {
   constructor() {
@@ -18,6 +19,7 @@ class Profile extends Component {
           <Block>
             <Header />
             <Content>
+              <Avatar />
               <div> Content goes here </div> <div />
             </Content>
           </Block>

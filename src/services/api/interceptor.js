@@ -35,7 +35,7 @@ export default class Interceptor {
       },
       requestError: error => Promise.reject(error),
       response: (response) => {
-        if (response.statusText.toUpperCase() === 'UNAUTHORIZED' && response.status === 401) {
+        if (response.statusText.toUpperCase() === 'UNAUTHORIZED' && response.status === 401 && !!window.localStorage.getItem('access_token')) {
           return this.refreshToken()
             .then(resp => resp.json())
             .then(data => this.storeTokens(data))

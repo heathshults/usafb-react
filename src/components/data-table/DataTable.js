@@ -15,11 +15,18 @@ const getNoDataText = loading => (loading ? <Loading /> : 'No data available');
 
 const tableRowStyle = (row, rowIndex) => (rowIndex % 2 === 0 ? 'data-table__striped-row' : '');
 
+const getTableHeight = (display, loading, data) => {
+  if (!display || loading || data.length === 0) {
+    return '';
+  }
+  return '500';
+};
+
 const dataTable = props => (
-  <div className="row">
+  <div className={`${props.display ? '' : 'usafb__data-table-hide '}row`}>
     <BootstrapTable
       className="col-md-12 usafb__data-table"
-      height="500"
+      height={getTableHeight(props.display, props.loading, props.data)}
       scrollTop={'Bottom'}
       trClassName={tableRowStyle}
       data={props.data}
@@ -48,13 +55,15 @@ dataTable.propTypes = {
   loading: PropTypes.bool,
   data: PropTypes.array,
   columns: PropTypes.array.isRequired,
-  formatters: PropTypes.object
+  formatters: PropTypes.object,
+  display: PropTypes.bool
 };
 
 dataTable.defaultProps = {
   data: [],
   loading: true,
-  formatters: {}
+  formatters: {},
+  display: false
 };
 
 export default dataTable;

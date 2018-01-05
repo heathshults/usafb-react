@@ -34,12 +34,6 @@ class Coaches extends Component {
     <SearchButton toggle={this.displaySearchModal} searching={false} />
   )
 
-  toggleFilters = () => {
-    this.setState({
-      displayFilters: !this.state.displayFilters
-    });
-  }
-
   displaySearchModal = () =>
     this.setState({
       searchModalOpen: true
@@ -72,19 +66,21 @@ class Coaches extends Component {
         />
         <DataHeader
           header="Number of Coaches"
-          numberOfUsers={1000}
-          showModal={this.toggleModal}
+          numberOfUsers={this.props.totalCoaches}
           buttons={this.getSearchButton()}
         />
         <DataTable
           columns={this.columns.getCoachesColumns()}
           data={this.props.coaches}
+          display={!this.state.searchModalOpen} // hide the table when the modal is open
+          loading={this.props.searchingCoaches}
         />
         <Pagination
           totalItems={this.props.totalCoaches}
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
+          display={!this.state.searchModalOpen} // hide pagination when the modal is open
         />
       </Container>
     );
@@ -93,6 +89,7 @@ class Coaches extends Component {
 
 Coaches.propTypes = {
   coaches: PropTypes.array.isRequired,
+  searchingCoaches: PropTypes.bool.isRequired,
   searchValues: PropTypes.object.isRequired,
   totalCoaches: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,

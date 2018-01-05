@@ -8,75 +8,32 @@ import DataHeader from 'components/data-header/DataHeader';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
-import Search from 'components/search/Search';
+import SearchButton from 'components/search-button/SearchButton';
+import SearchModal from 'components/search-modal/SearchModal';
 
-import Columns from 'components/data-table/models/columns';
-import ImportModal from 'components/import-modal/ImportModal';
-
-import importCsv from 'utils/import';
-
-import debounce from 'lodash/debounce';
-
+import Columns from './models/columns';
 import { SEARCH_PLAYERS } from './dux/actions';
 
 class Players extends Component {
   constructor() {
     super();
 
-    this.columns = new Columns();
-
     this.state = {
-      filters: this.columns.getColumnsForFilters(),
-      columns: this.columns.getColumnsForTableHeader(),
-      displayFilters: false,
-      displayAdvancedSearch: false,
-      currentPage: 1,
-      totalItems: 100,
-      players: [],
-      showModal: false,
-      uploadedFile: null,
-      first_name: '',
-      last_name: '',
-      usafb_id: null,
-      date_of_birth: '',
-      city: '',
-      state: ''
+      searchModalOpen: true
     };
-
-    this.callPlayersDispatch = debounce(() => {
-      this.props.searchPlayers({
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        usafb_id: this.state.usafb_id,
-        date_of_birth: this.state.date_of_birth,
-        city: this.state.city,
-        state: this.state.state
-      });
-    }, 250, { maxWait: 1000 });
   }
 
   componentWillMount() {
-    const players = [...Array(10)].map((val, index) => ({
-      'USAFB#': index,
-      'Last Name': 'Test',
-      'First Name': 'Test',
-      Source: 'Test',
-      Gender: 'M',
-      'Date of Birth': '1-17-91',
-      'Age Group': 'Derp',
-      Organization: 'Blue Star'
-    }));
-
-    this.setState({
-      players
-    });
+    this.columns = new Columns();
   }
 
-  setPage = (page) => {
-    this.setState({
-      currentPage: page
-    });
+  componentWillUnmount() {
+    this.columns.clearColumns();
   }
+
+  getSearchButton = () => (
+    <SearchButton toggle={this.displaySearchModal} searching={false} />
+  )
 
   getCellFormatters = () => ({
     'First Name': this.linkToPlayerFormatter,
@@ -88,123 +45,74 @@ class Players extends Component {
     <Link to={{ pathname: '/player', state: row }}>{cell}</Link>
   )
 
-  toggleFilters = () => {
+  displaySearchModal = () =>
     this.setState({
-      displayFilters: !this.state.displayFilters
+      searchModalOpen: true
+    });
+
+  modalDismissed = (data) => {
+    data.currentPage = 1; //eslint-disable-line
+    data.per_page = 10; //eslint-disable-line
+    this.props.searchPlayers(data);
+    this.setState({
+      searchModalOpen: false
     });
   }
 
-  updateFilters = (filter) => {
-    this.columns.updateFilters(filter);
-
-    this.setState({
-      filters: this.columns.getColumnsForFilters(),
-      columns: this.columns.getColumnsForTableHeader()
-    });
-  }
-
-  toggleAdvancedSearch = () => {
-    this.setState({
-      displayAdvancedSearch: !this.state.displayAdvancedSearch
-    });
-  }
-
-  toggleModal = () => {
-    this.setState({
-      uploadedFile: null,
-      showModal: !this.state.showModal
-    });
-  }
-
-  updateFileInParentState = (uploadedFile) => {
-    this.setState({
-      uploadedFile
-    });
-  }
-
-  updateSearchFilters = (event) => {
-    this.setState({
-      [event.target.id]: event.target.value
-    }, () => {
-      this.callPlayersDispatch();
-    });
-  }
-
-
-  clearSearchFilters = () => {
-    this.setState({
-      first_name: '',
-      last_name: '',
-      usafb_id: undefined,
-      date_of_birth: '',
-      city: '',
-      state: ''
-    });
-  }
-
-  uploadFile = () => {
-    importCsv(this.state.uploadedFile)
-      .then(data => data)
-      .catch(err => err);
+  paginationOnChange = (currentPage, perPage) => {
+    const data = this.props.searchValues;
+    data.currentPage = currentPage;
+    data.per_page = perPage;
+    this.props.searchPlayers(data);
   }
 
   render() {
     return (
       <Container>
         <HeaderContentDivider />
-        <ImportModal
-          showModal={this.state.showModal}
-          toggleModal={this.toggleModal}
-          updateFileInParentState={this.updateFileInParentState}
-          uploadFile={this.uploadFile}
-          uploadedFile={this.state.uploadedFile}
+        <SearchModal
+          open={this.state.searchModalOpen}
+          toggle={this.modalDismissed}
+          header="Search for Players"
         />
         <DataHeader
           header="Number of Players"
-          numberOfUsers={1000}
-          showModal={this.toggleModal}
+          numberOfUsers={this.props.totalPlayers}
+          buttons={this.getSearchButton()}
         />
-        <div className="customRow">
-          <Search
-            first_name={this.state.first_name}
-            last_name={this.state.last_name}
-            usafb_id={this.state.usafb_id}
-            date_of_birth={this.state.date_of_birth}
-            city={this.state.city}
-            state={this.state.state}
-            updateSearchFilters={this.updateSearchFilters}
-            clearSearchFilters={this.clearSearchFilters}
-          />
-          <div className="column">
-            <DataTable
-              columns={this.state.columns}
-              data={this.state.players}
-              formatters={this.getCellFormatters()}
-            />
-            <Pagination
-              currentPage={this.state.currentPage}
-              totalItems={this.state.totalItems}
-              setPage={this.setPage}
-            />
-          </div>
-        </div>
+        <DataTable
+          columns={this.columns.getPlayersColumns()}
+          data={this.props.players}
+          formatters={this.getCellFormatters()}
+          display={!this.state.searchModalOpen} // hide the table when the modal is open
+          loading={this.props.searchingPlayers}
+        />
+        <Pagination
+          totalItems={this.props.totalPlayers}
+          rowsPerPage={this.props.rowsPerPage}
+          updateRowsPerPage={this.props.updateRowsPerPage}
+          onChange={this.paginationOnChange}
+          display={!this.state.searchModalOpen} // hide pagination when the modal is open
+        />
       </Container>
     );
   }
 }
 
 Players.propTypes = {
-  playerSearchData: PropTypes.array, //eslint-disable-line
-  searchPlayers: PropTypes.func.isRequired
+  players: PropTypes.array.isRequired,
+  searchValues: PropTypes.object.isRequired,
+  totalPlayers: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  searchPlayers: PropTypes.func.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired,
+  searchingPlayers: PropTypes.bool.isRequired
 };
 
-Players.defaultProps = {
-  playerSearchData: []
-};
-
-const mapStateToProps = ({ playerSearchReducer }) => ({ playerSearchData: playerSearchReducer.playerSearchData });
+const mapStateToProps = ({ playerSearchReducer }) => playerSearchReducer;
 const mapDispatchToProps = dispatch => ({
-  searchPlayers: searchData => dispatch({ type: SEARCH_PLAYERS, data: { searchData } })
+  searchPlayers: data => dispatch({ type: SEARCH_PLAYERS, data }),
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);

@@ -7,7 +7,7 @@ let columns = [];
 
 /**
  * This class is going to be what generates columns
- * for the coaches search page
+ * for the players search page
  */
 export default class UserColumns {
   constructor() {
@@ -29,5 +29,5 @@ export default class UserColumns {
     columns = [];
   }
 
-  getCoachesColumns = () => columns;
+  getPlayersColumns = () => columns;
 }

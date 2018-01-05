@@ -5,6 +5,8 @@ import { Switch, Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
 
 import store from 'services/redux/store';
+import Interceptor from 'services/api/interceptor';
+
 import NavBar from 'components/nav-bar/NavBar';
 import Login from 'pages/login/Login';
 import Players from 'pages/players/Players';
@@ -14,12 +16,12 @@ import PlayerProfile from 'pages/player-profile/PlayerProfile';
 import CoachProfile from 'pages/coach-profile/CoachProfile';
 import Users from 'pages/users/Users';
 import Player from 'pages/player/Player';
-
 import authHOC from 'hoc/auth/Auth';
 
 import './app.css';
 
 const history = createHistory();
+const interceptor = new Interceptor(); //eslint-disable-line
 
 const app = () => (
   <Provider store={store}>

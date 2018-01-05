@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const Organization = props => (
   <div className="card-red card-red-mspacing-top">
     <div className="card-red-header">
-      <i id="editIcon" className="fa fa-edit float-right mt-1" aria-hidden="true" /> Team/
-      <strong>Organization</strong>
+      <i id="editIcon" className="fa fa-edit float-right mt-1" aria-hidden="true" /> TEAM/
+      <strong>ORGANIZATION</strong>
     </div>
     <div className="card-red-body">
       <div className="theme-red-padded-line">
@@ -13,11 +13,11 @@ const Organization = props => (
       </div>
 
       <p className="pl-3">
-        {props.currentTeam.team_name}
+        {props.currentTeam.name}
         <br /> {props.currentTeam.league_name}
       </p>
       <p className="pl-3 font-85">
-        {props.currentTeam.school_state}, USA
+        {props.currentTeam.organization_state}, USA
         <br />
         <span>School:</span> {props.currentTeam.school_name}
         <br />
@@ -25,28 +25,29 @@ const Organization = props => (
       </p>
     </div>
   </div>
-
 );
 
 Organization.propTypes = {
   currentTeam: PropTypes.shape({
-    team_name: PropTypes.string,
+    name: PropTypes.string,
     league_name: PropTypes.string,
     school_name: PropTypes.string,
     school_state: PropTypes.string,
     school_district: PropTypes.string,
-    id_external: PropTypes.any
+    id_external: PropTypes.any,
+    organization_state: PropTypes.string
   })
 };
 
 Organization.defaultProps = {
   currentTeam: {
-    team_name: '',
+    name: '',
     league_name: '',
     school_name: '',
     school_state: '',
     school_district: '',
-    id_external: null
+    id_external: null,
+    organization_state: ''
   }
 };
 

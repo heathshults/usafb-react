@@ -63,7 +63,7 @@ dataTable.defaultProps = {
   data: [],
   loading: true,
   formatters: {},
-  display: false
+  display: true
 };
 
 export default dataTable;

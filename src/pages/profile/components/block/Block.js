@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './profile-block.css';
+import './block.css';
 
 const profileBlock = props => (
   <div className="profile__block">

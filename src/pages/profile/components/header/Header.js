@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './profile-header.css';
+import './header.css';
 
 const profileHeader = () => (
   <div className="row profile__header">

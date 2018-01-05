@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
-import ProfileBlock from './components/profile-block/ProfileBlock';
-import ProfileHeader from './components/profile-header/ProfileHeader';
+import Block from './components/block/Block';
+import Header from './components/header/Header';
 
 class Profile extends Component {
   constructor() {
@@ -14,14 +14,14 @@ class Profile extends Component {
     return (
       <BlueContainer>
         <div className="d-flex flex-column align-items-center justify-content-center">
-          <ProfileBlock>
-            <ProfileHeader />
+          <Block>
+            <Header />
             <div />
-          </ProfileBlock>
-          <ProfileBlock>
-            <ProfileHeader />
+          </Block>
+          <Block>
+            <Header />
             <div />
-          </ProfileBlock>
+          </Block>
         </div>
       </BlueContainer>
     );

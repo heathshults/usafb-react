@@ -39,9 +39,9 @@ export default class Interceptor {
           return this.refreshToken()
             .then(resp => resp.json())
             .then(data => this.storeTokens(data))
-            .then(() => response);
+            .then(() => this.retryApiCall())
+            .then(updatedResponse => updatedResponse);
         }
-        // Modify the response object
         return response;
       },
       responseError: error => Promise.reject(error)
@@ -56,18 +56,15 @@ export default class Interceptor {
       })
     });
 
-  storeTokens = (data) => { //eslint-disable-line
-    console.log(this.url); //eslint-disable-line
-    console.dir(this.config); //eslint-disable-line
-    // window.localStorage.setItem('access_token', data.access_token);
-    // window.localStorage.setItem('access_token', data.id_token);
+  storeTokens = (data) => {
+    window.localStorage.setItem('access_token', data.access_token);
+    window.localStorage.setItem('id_token', data.id_token);
   }
 
-  retryApiCall = () =>
-    fetch(this.url, {
-      method: this.config.method || 'GET',
-      headers: jsonHeader()
-    })
+  retryApiCall = () => {
+    const data = getFetchData();
+    return fetch(this.url, data);
+  }
 
   getFetchData = () => {
     const data = {};
@@ -78,6 +75,10 @@ export default class Interceptor {
       data.headers = headers.jsonHeader();
     } else {
       data.headers = headers.authorizedHeader();
+    }
+
+    if (this.config.body) {
+      data.body = this.config.body;
     }
 
     return data;

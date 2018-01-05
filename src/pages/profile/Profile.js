@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
 import Block from './components/block/Block';
 import Header from './components/header/Header';
+import Content from './components/content/Content';
 
 class Profile extends Component {
   constructor() {
@@ -16,11 +17,9 @@ class Profile extends Component {
         <div className="d-flex flex-column align-items-center justify-content-center">
           <Block>
             <Header />
-            <div />
-          </Block>
-          <Block>
-            <Header />
-            <div />
+            <Content>
+              <div> Content goes here </div> <div />
+            </Content>
           </Block>
         </div>
       </BlueContainer>

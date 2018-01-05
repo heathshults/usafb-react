@@ -62,7 +62,7 @@ export default class Interceptor {
   }
 
   retryApiCall = () => {
-    const data = getFetchData();
+    const data = this.getFetchData();
     return fetch(this.url, data);
   }
 

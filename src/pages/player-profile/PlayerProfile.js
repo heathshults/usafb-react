@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import Container from './components/container/Container';
+import SeasonsContainer from './components/seasons-container/SeasonsContainer';
+import ExperienceContainer from './components/experience-container/ExperienceContainer';
+import PlayerContainer from './components/player-container/PlayerContainer';
+
 import PlayerInfo from './components/player-info/PlayerInfo';
 import Organization from './components/organization/Organization';
 import Guardians from './components/guardians/Guardians';
@@ -10,11 +15,6 @@ import ExperienceTitle from './components/experience-title/ExperienceTitle';
 import PlayerInformationTitle from './components/player-information-title/PlayerInformationTitle';
 import CurrentSeason from './components/current-season/CurrentSeason';
 import PastSeason from './components/past-season/PastSeason';
-
-import Container from './components/container/Container';
-import SeasonsContainer from './components/seasons-container/SeasonsContainer';
-import ExperienceContainer from './components/experience-container/ExperienceContainer';
-import PlayerContainer from './components/player-container/PlayerContainer';
 
 import { GET_PLAYER_PROFILE } from './dux/actions';
 

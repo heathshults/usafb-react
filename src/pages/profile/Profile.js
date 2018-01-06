@@ -17,7 +17,12 @@ class Profile extends Component {
       editing: false,
       firstName: 'Kent',
       lastName: 'Kawahara',
-      phone: '808-389-7264'
+      phone: '808-389-7264',
+      email: 'kent.kawahara@verys.com',
+      password: '************',
+      role: 'Super User',
+      organization: 'Verys',
+      status: true
     };
   }
 
@@ -55,6 +60,34 @@ class Profile extends Component {
                   editing={this.state.editing}
                 />
               </div>
+            </Content>
+
+            <Content className="flex-column">
+              <InputField
+                label="Email"
+                value={this.state.email}
+                editing={this.state.editing}
+              />
+              <InputField
+                label="Password"
+                value={this.state.password}
+                editing={this.state.editing}
+              />
+              <InputField
+                label="Role"
+                value={this.state.role}
+                editing={this.state.editing}
+              />
+              <InputField
+                label="Organization"
+                value={this.state.organization}
+                editing={this.state.editing}
+              />
+              <InputField
+                label="Status"
+                value={this.state.status}
+                editing={this.state.editing}
+              />
             </Content>
           </Block>
         </div>

@@ -6,6 +6,7 @@ import Header from './components/header/Header';
 import Content from './components/content/Content';
 import Avatar from './components/avatar/Avatar';
 import ContactInformationHeader from './components/contact-information-header/ContactInformationHeader';
+import InputField from './components/input-field/InputField';
 
 import './profile.css';
 
@@ -13,7 +14,8 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      editing: false
+      editing: false,
+      firstName: 'Kent'
     };
   }
 
@@ -34,6 +36,11 @@ class Profile extends Component {
                 <ContactInformationHeader
                   editing={this.state.editing}
                   toggleEdit={this.toggleEdit}
+                />
+                <InputField
+                  label="First Name"
+                  value={this.state.firstName}
+                  editing={this.state.editing}
                 />
               </div>
             </Content>

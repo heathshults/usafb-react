@@ -26,11 +26,9 @@ class Profile extends Component {
     return (
       <BlueContainer>
         <div className="d-flex flex-column align-items-center">
-          <Block
-            editing={this.state.editing}
-          >
+          <Block editing={this.state.editing}>
             <Header />
-            <Content>
+            <Content editing={this.state.editing}>
               <Avatar />
               <div className="d-flex flex-column profile__contact-information">
                 <ContactInformationHeader

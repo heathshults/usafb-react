@@ -15,7 +15,9 @@ class Profile extends Component {
     super();
     this.state = {
       editing: false,
-      firstName: 'Kent'
+      firstName: 'Kent',
+      lastName: 'Kawahara',
+      phone: '808-389-7264'
     };
   }
 
@@ -40,6 +42,16 @@ class Profile extends Component {
                 <InputField
                   label="First Name"
                   value={this.state.firstName}
+                  editing={this.state.editing}
+                />
+                <InputField
+                  label="Last Name"
+                  value={this.state.lastName}
+                  editing={this.state.editing}
+                />
+                <InputField
+                  label="Phone"
+                  value={this.state.phone}
                   editing={this.state.editing}
                 />
               </div>

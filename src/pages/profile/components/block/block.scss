@@ -1,8 +1,15 @@
-.profile__block {
-  background: rgba(0, 0, 0, 0.35) !important;
+.profile__block, .profile__block-editing {
   border: 1px solid #0288d5 !important;
   transition: opacity .2s ease;
-  max-width: 800px;
+  max-width: 1000px;
   width: 70%;
   margin: 20px 0;
+}
+
+.profile__block {
+  background: transparent !important;
+}
+
+.profile__block-editing {
+  background: rgba(0, 0, 0, 0.35) !important;
 }

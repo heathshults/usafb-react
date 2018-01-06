@@ -12,19 +12,31 @@ import './profile.css';
 class Profile extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      editing: false
+    };
   }
+
+  toggleEdit = () =>
+    this.setState({
+      editing: !this.state.editing
+    });
 
   render() {
     return (
       <BlueContainer>
         <div className="d-flex flex-column align-items-center">
-          <Block>
+          <Block
+            editing={this.state.editing}
+          >
             <Header />
             <Content>
               <Avatar />
               <div className="d-flex flex-column profile__contact-information">
-                <ContactInformationHeader />
+                <ContactInformationHeader
+                  editing={this.state.editing}
+                  toggleEdit={this.toggleEdit}
+                />
               </div>
             </Content>
           </Block>

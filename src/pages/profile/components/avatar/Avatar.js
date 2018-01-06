@@ -12,7 +12,7 @@ const avatar = () => (
     />
     <button className="profile__edit-user-button">
       <i id="editAvatarIcon" className="fa fa-edit action-button-icon" aria-hidden="true" />&nbsp;
-      edit
+      update
     </button>
   </div>
 );

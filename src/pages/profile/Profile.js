@@ -31,6 +31,46 @@ class Profile extends Component {
       editing: !this.state.editing
     });
 
+  changeFirstName = event =>
+    this.setState({
+      firstName: event.target.value
+    });
+
+  changeLastName = event =>
+    this.setState({
+      lastName: event.target.value
+    });
+
+  changePhone = event =>
+    this.setState({
+      phone: event.target.value
+    });
+
+  changeEmail = event =>
+    this.setState({
+      email: event.target.value
+    });
+
+  changePassword = event =>
+    this.setState({
+      password: event.target.value
+    });
+
+  changeRole = event =>
+    this.setState({
+      role: event.target.value
+    });
+
+  changeOrganization = event =>
+    this.setState({
+      organization: event.target.value
+    });
+
+  changeStatus = event =>
+    this.setState({
+      status: event.target.value
+    });
+
   render() {
     return (
       <BlueContainer>
@@ -48,45 +88,53 @@ class Profile extends Component {
                   label="First Name"
                   value={this.state.firstName}
                   editing={this.state.editing}
+                  onChange={this.changeFirstName}
                 />
                 <InputField
                   label="Last Name"
                   value={this.state.lastName}
                   editing={this.state.editing}
+                  onChange={this.changeLastName}
                 />
                 <InputField
                   label="Phone"
                   value={this.state.phone}
                   editing={this.state.editing}
+                  onChange={this.changePhone}
                 />
               </div>
             </Content>
 
-            <Content className="flex-column">
+            <Content editing={this.state.editing} className="flex-column">
               <InputField
                 label="Email"
                 value={this.state.email}
                 editing={this.state.editing}
+                onChange={this.changeEmail}
               />
               <InputField
                 label="Password"
                 value={this.state.password}
                 editing={this.state.editing}
+                onChange={this.changePassword}
               />
               <InputField
                 label="Role"
                 value={this.state.role}
                 editing={this.state.editing}
+                onChange={this.changeRole}
               />
               <InputField
                 label="Organization"
                 value={this.state.organization}
                 editing={this.state.editing}
+                onChange={this.changeOrganization}
               />
               <InputField
                 label="Status"
-                value={this.state.status}
+                value={this.state.status ? 'Active' : 'Disabled'}
                 editing={this.state.editing}
+                onChange={this.changeStatus}
               />
             </Content>
           </Block>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Container from 'components/profile/components/container/Container';
 import ExperienceContainer from 'components/profile/components/experience-container/ExperienceContainer';
-import CoachContainer from 'components/profile/components/person-container/PersonContainer';
+import PersonContainer from 'components/profile/components/person-container/PersonContainer';
 import SeasonsContainer from 'components/profile/components/seasons-container/SeasonsContainer';
 
 import CurrentSeason from 'components/profile/components/current-season/CurrentSeason';
@@ -29,11 +29,11 @@ class CoachProfile extends Component {
   render() {
     return (
       <Container>
-        <CoachContainer>
+        <PersonContainer>
           <CoachInformationTitle />
           <CoachInfo props={this.props} />
           <Organization props={this.props} />
-        </CoachContainer>
+        </PersonContainer>
         <ExperienceContainer>
           <ExperienceTitle />
           <SeasonsContainer>

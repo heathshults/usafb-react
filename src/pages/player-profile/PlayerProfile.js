@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Container from './components/container/Container';
-import SeasonsContainer from './components/seasons-container/SeasonsContainer';
-import ExperienceContainer from './components/experience-container/ExperienceContainer';
-import PlayerContainer from './components/player-container/PlayerContainer';
+import Container from 'components/profile/components/container/Container';
+import ExperienceContainer from 'components/profile/components/experience-container/ExperienceContainer';
+import PersonContainer from 'components/profile/components/person-container/PersonContainer';
+import SeasonsContainer from 'components/profile/components/seasons-container/SeasonsContainer';
+
+import CurrentSeason from 'components/profile/components/current-season/CurrentSeason';
+import ExperienceTitle from 'components/profile/components/experience-title/ExperienceTitle';
 
 import PlayerInfo from './components/player-info/PlayerInfo';
 import Organization from './components/organization/Organization';
 import Guardians from './components/guardians/Guardians';
-import ExperienceTitle from './components/experience-title/ExperienceTitle';
 import PlayerInformationTitle from './components/player-information-title/PlayerInformationTitle';
-import CurrentSeason from './components/current-season/CurrentSeason';
 import PastSeason from './components/past-season/PastSeason';
 
 import { GET_PLAYER_PROFILE } from './dux/actions';
@@ -31,12 +32,12 @@ class PlayerProfile extends Component {
   render() {
     return (
       <Container>
-        <PlayerContainer>
+        <PersonContainer>
           <PlayerInformationTitle />
           <PlayerInfo props={this.props} />
           <Organization props={this.props} />
           <Guardians props={this.props} />
-        </PlayerContainer>
+        </PersonContainer>
         <ExperienceContainer>
           <ExperienceTitle />
           <SeasonsContainer>

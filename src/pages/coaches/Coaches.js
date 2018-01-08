@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
@@ -32,6 +33,15 @@ class Coaches extends Component {
 
   getSearchButton = () => (
     <SearchButton toggle={this.displaySearchModal} searching={false} />
+  )
+
+  getCellFormatters = () => ({
+    'First Name': this.linkToCoachFormatter,
+    'Last Name': this.linkToCoachFormatter
+  });
+
+  linkToCoachFormatter = (cell, row) => (
+    <Link to={{ pathname: `/coaches/${row.id}` }}>{cell}</Link>
   )
 
   displaySearchModal = () =>
@@ -72,6 +82,7 @@ class Coaches extends Component {
         <DataTable
           columns={this.columns.getCoachesColumns()}
           data={this.props.coaches}
+          formatters={this.getCellFormatters()}
           display={!this.state.searchModalOpen} // hide the table when the modal is open
           loading={this.props.searchingCoaches}
         />

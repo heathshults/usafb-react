@@ -34,15 +34,15 @@ class PlayerProfile extends Component {
       <Container>
         <PersonContainer>
           <InformationTitle title={'Player'} />
-          <PlayerInfo props={this.props} />
-          <Organization props={this.props} />
-          <Guardians props={this.props} />
+          <PlayerInfo playerData={this.props.playerData} currentTeam={this.props.currentTeam} />
+          <Organization playerData={this.props.playerData} currentTeam={this.props.currentTeam} />
+          <Guardians playerData={this.props.playerData} />
         </PersonContainer>
         <ExperienceContainer>
-          <ExperienceTitle />
+          <ExperienceTitle title={'PLAYING'} />
           <SeasonsContainer>
-            <CurrentSeason props={this.props} />
-            <PastSeason props={this.props} />
+            <CurrentSeason playerData={this.props.playerData} currentTeam={this.props.currentTeam} />
+            <PastSeason playerData={this.props.playerData} />
           </SeasonsContainer>
         </ExperienceContainer>
       </Container>
@@ -51,7 +51,14 @@ class PlayerProfile extends Component {
 }
 
 PlayerProfile.propTypes = {
-  getPlayerProfile: PropTypes.func.isRequired
+  getPlayerProfile: PropTypes.func.isRequired,
+  playerData: PropTypes.object,
+  currentTeam: PropTypes.object
+};
+
+PlayerProfile.defaultProps = {
+  playerData: {},
+  currentTeam: {}
 };
 
 const mapStateToProps = ({ playerProfileReducer }) => {

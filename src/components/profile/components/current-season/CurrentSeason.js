@@ -37,7 +37,7 @@ CurrentSeason.propTypes = {
     team_name: PropTypes.string,
     positions: PropTypes.array,
     level_type: PropTypes.string,
-    season_year: PropTypes.string,
+    season_year: PropTypes.number,
     season: PropTypes.string,
     organization_name: PropTypes.string
   })
@@ -48,7 +48,7 @@ CurrentSeason.defaultProps = {
     team_name: '',
     position: PropTypes.array,
     organization_name: '',
-    season_year: '',
+    season_year: 1980,
     season: '',
     level_type: ''
   }

@@ -7,7 +7,7 @@ const Guardians = props => (
     {props.playerData.guardians && props.playerData.guardians.map(guardian => (
       <span key={guardian._id}>
         <div className="card-red-header">
-          <i id="editIcon" className="fa fa-edit float-right mt-1" ariaHidden="true" /> Parent/
+          <i id="editIcon" className="fa fa-edit float-right mt-1" aria-hidden="true" /> Parent/
           <strong>Guardian</strong>
         </div>
         <div className="card-red-body">

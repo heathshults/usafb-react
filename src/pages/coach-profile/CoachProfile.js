@@ -32,14 +32,14 @@ class CoachProfile extends Component {
       <Container>
         <PersonContainer>
           <InformationTitle title={'Coach'} />
-          <CoachInfo props={this.props} />
-          <Organization props={this.props} />
+          <CoachInfo coachData={this.props.coachData} currentTeam={this.props.currentTeam} />
+          <Organization coachData={this.props.coachData} currentTeam={this.props.currentTeam} />
         </PersonContainer>
         <ExperienceContainer>
-          <ExperienceTitle />
+          <ExperienceTitle title={'COACHING'} />
           <SeasonsContainer>
-            <CurrentSeason props={this.props} />
-            <PastSeason props={this.props} />
+            <CurrentSeason coachData={this.props.coachData} currentTeam={this.props.currentTeam} />
+            <PastSeason coachData={this.props.coachData} />
           </SeasonsContainer>
         </ExperienceContainer>
       </Container>
@@ -48,7 +48,14 @@ class CoachProfile extends Component {
 }
 
 CoachProfile.propTypes = {
-  getCoachProfile: PropTypes.func.isRequired
+  getCoachProfile: PropTypes.func.isRequired,
+  coachData: PropTypes.object.isRequired,
+  currentTeam: PropTypes.object.isRequired
+};
+
+CoachProfile.defaultProps = {
+  coachData: {},
+  currentTeam: {}
 };
 
 const mapStateToProps = ({ coachProfileReducer }) => {

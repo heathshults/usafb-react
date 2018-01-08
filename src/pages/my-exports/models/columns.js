@@ -7,7 +7,7 @@ let columns = [];
 
 /**
  * This class is going to be what generates columns
- * for the players search page
+ * for my exports page
  */
 export default class UserColumns {
   constructor() {

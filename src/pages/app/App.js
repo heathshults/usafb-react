@@ -17,6 +17,7 @@ import PlayerProfile from 'pages/player-profile/PlayerProfile';
 import CoachProfile from 'pages/coach-profile/CoachProfile';
 import Users from 'pages/users/Users';
 import Profile from 'pages/profile/Profile';
+import MyExports from 'pages/my-exports/MyExports';
 
 import './app.css';
 
@@ -38,6 +39,7 @@ const app = () => (
           <Route exact path="/coaches/:id" component={authHOC(CoachProfile)} />
           <Route exact path="/users" component={authHOC(Users)} />
           <Route exact path="/me" component={authHOC(Profile)} />
+          <Route exact path="/my-exports" component={authHOC(MyExports)} />
         </Switch>
       </Fragment>
     </Router>

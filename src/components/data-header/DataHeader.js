@@ -9,7 +9,7 @@ const dataHeader = props => (
   <Container>
     <Header
       header={props.header}
-      numberOfUsers={props.numberOfUsers}
+      numberOfUsers={props.numberOfUsers === 0 ? '' : props.numberOfUsers.toString()}
     />
     <Message
       title={props.messageTitle}
@@ -21,7 +21,7 @@ const dataHeader = props => (
 
 dataHeader.propTypes = {
   header: PropTypes.string.isRequired,
-  numberOfUsers: PropTypes.number.isRequired,
+  numberOfUsers: PropTypes.number,
   messageTitle: PropTypes.string,
   messageBody: PropTypes.string,
   buttons: PropTypes.object
@@ -29,6 +29,7 @@ dataHeader.propTypes = {
 
 dataHeader.defaultProps = {
   messageTitle: '',
+  numberOfUsers: 0,
   messageBody: '',
   buttons: <div />
 };

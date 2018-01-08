@@ -8,7 +8,7 @@ const Guardians = props => (
       <span key={guardian._id}>
         <div className="card-red-header">
           <i id="editIcon" className="fa fa-edit float-right mt-1" ariaHidden="true" /> Parent/
-    <strong>Guardian</strong>
+          <strong>Guardian</strong>
         </div>
         <div className="card-red-body">
           <p>

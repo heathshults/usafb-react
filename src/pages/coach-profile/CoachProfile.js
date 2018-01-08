@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Container from './components/container/Container';
-import SeasonsContainer from './components/seasons-container/SeasonsContainer';
-import ExperienceContainer from './components/experience-container/ExperienceContainer';
-import CoachContainer from './components/coach-container/CoachContainer';
+import Container from 'components/profile/components/container/Container';
+import ExperienceContainer from 'components/profile/components/experience-container/ExperienceContainer';
+import CoachContainer from 'components/profile/components/person-container/PersonContainer';
+import SeasonsContainer from 'components/profile/components/seasons-container/SeasonsContainer';
 
+import CurrentSeason from 'components/profile/components/current-season/CurrentSeason';
+import ExperienceTitle from 'components/profile/components/experience-title/ExperienceTitle';
 import CoachInfo from './components/coach-info/CoachInfo';
 import Organization from './components/organization/Organization';
-import ExperienceTitle from './components/experience-title/ExperienceTitle';
 import CoachInformationTitle from './components/coach-information-title/CoachInformationTitle';
-import CurrentSeason from './components/current-season/CurrentSeason';
 import PastSeason from './components/past-season/PastSeason';
 
 import { GET_COACH_PROFILE } from './dux/actions';

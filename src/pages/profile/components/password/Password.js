@@ -17,7 +17,7 @@ const password = () => (
   </div>
 );
 
-password.PropTypes = {
+password.propTypes = {
 
 };
 

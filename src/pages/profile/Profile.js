@@ -8,6 +8,7 @@ import Avatar from './components/avatar/Avatar';
 import ContactInformationHeader from './components/contact-information-header/ContactInformationHeader';
 import InputField from './components/input-field/InputField';
 import Password from './components/password/Password';
+import Status from './components/status/Status';
 
 import './profile.css';
 
@@ -126,12 +127,7 @@ class Profile extends Component {
                 editing={this.state.editing}
                 onChange={this.changeOrganization}
               />
-              <InputField
-                label="Status"
-                value={this.state.status ? 'Active' : 'Disabled'}
-                editing={this.state.editing}
-                onChange={this.changeStatus}
-              />
+              <Status />
             </Content>
           </Block>
         </div>

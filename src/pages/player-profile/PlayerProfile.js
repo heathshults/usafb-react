@@ -10,11 +10,11 @@ import SeasonsContainer from 'components/profile/components/seasons-container/Se
 
 import CurrentSeason from 'components/profile/components/current-season/CurrentSeason';
 import ExperienceTitle from 'components/profile/components/experience-title/ExperienceTitle';
+import Organization from 'components/profile/components/organization/Organization';
+import InformationTitle from 'components/profile/components/information-title/InformationTitle';
 
 import PlayerInfo from './components/player-info/PlayerInfo';
-import Organization from './components/organization/Organization';
 import Guardians from './components/guardians/Guardians';
-import PlayerInformationTitle from './components/player-information-title/PlayerInformationTitle';
 import PastSeason from './components/past-season/PastSeason';
 
 import { GET_PLAYER_PROFILE } from './dux/actions';
@@ -33,7 +33,7 @@ class PlayerProfile extends Component {
     return (
       <Container>
         <PersonContainer>
-          <PlayerInformationTitle />
+          <InformationTitle title={'Player'} />
           <PlayerInfo props={this.props} />
           <Organization props={this.props} />
           <Guardians props={this.props} />

@@ -9,9 +9,10 @@ import SeasonsContainer from 'components/profile/components/seasons-container/Se
 
 import CurrentSeason from 'components/profile/components/current-season/CurrentSeason';
 import ExperienceTitle from 'components/profile/components/experience-title/ExperienceTitle';
+import Organization from 'components/profile/components/organization/Organization';
+import InformationTitle from 'components/profile/components/information-title/InformationTitle';
+
 import CoachInfo from './components/coach-info/CoachInfo';
-import Organization from './components/organization/Organization';
-import CoachInformationTitle from './components/coach-information-title/CoachInformationTitle';
 import PastSeason from './components/past-season/PastSeason';
 
 import { GET_COACH_PROFILE } from './dux/actions';
@@ -30,7 +31,7 @@ class CoachProfile extends Component {
     return (
       <Container>
         <PersonContainer>
-          <CoachInformationTitle />
+          <InformationTitle title={'Coach'} />
           <CoachInfo props={this.props} />
           <Organization props={this.props} />
         </PersonContainer>

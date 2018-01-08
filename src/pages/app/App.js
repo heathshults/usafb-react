@@ -30,6 +30,7 @@ const app = () => (
         <NavBar />
         <Switch>
           <Route exact path="/" component={authHOC(Dashboard)} />
+          <Route exact path="/dashboard" component={authHOC(Dashboard)} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/players" component={authHOC(Players)} />
           <Route exact path="/coaches" component={authHOC(Coaches)} />

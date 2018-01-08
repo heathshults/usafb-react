@@ -16,7 +16,7 @@ const header = props => (
 
 header.propTypes = {
   header: PropTypes.string.isRequired,
-  numberOfUsers: PropTypes.number.isRequired
+  numberOfUsers: PropTypes.string.isRequired
 };
 
 export default header;

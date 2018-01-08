@@ -1,0 +1,21 @@
+.profile__contact-information-header-edit {
+  padding: 6px 10px;
+  text-align: center;
+  background: #09254a;
+  border: 1px solid #0288d5;
+  color: #fff;
+  text-transform: uppercase;
+  &:focus {
+    outline: none !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile__contact-information-header {
+    flex-direction: column;
+  }
+
+  .profile__contact-information-header-edit {
+    margin-top: 20px;
+  }
+}

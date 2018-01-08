@@ -9,3 +9,13 @@
     outline: none !important;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .profile__contact-information-header {
+    flex-direction: column;
+  }
+
+  .profile__contact-information-header-edit {
+    margin-top: 20px;
+  }
+}

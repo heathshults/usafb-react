@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './contact-information-header.css';
 
 const contactInformationHeader = props => (
-  <div className="d-flex justify-content-between align-items-center">
+  <div className="d-flex justify-content-between align-items-center profile__contact-information-header">
     <h4 className="m-0">
       Contact Information
     </h4>

@@ -5,6 +5,8 @@ import DataHeader from 'components/data-header/DataHeader';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 
+import DeleteModal from './components/delete-modal/DeleteModal';
+
 import Columns from './models/columns';
 import dummyData from './models/dummy-data';
 
@@ -13,7 +15,10 @@ import './my-exports.css';
 class MyExports extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      deleteModalOpen: false,
+      fileToDelete: ''
+    };
 
     this.columns = new Columns();
   }
@@ -35,23 +40,30 @@ class MyExports extends Component {
   }
 
   openDeleteModal = (file) => {
-    console.dir(file); //eslint-disable-line
+    this.toggleDeleteModal(file.file_name);
   }
+
+  toggleDeleteModal = (fileName = '') =>
+    this.setState({
+      deleteModalOpen: !this.state.deleteModalOpen,
+      fileToDelete: fileName
+    });
 
   renderExportButton = row => (
     <a
-      className="pr-4"
+      className="my-exports__icon pr-4"
       onClick={() => this.export(row)}
       role="button"
       tabIndex={0}
     >
-      <i className="fa fa-upload text-lg" /> Export
+      <i className="fa fa-upload text-lg" />
+      <span>&nbsp;Export</span>
     </a>
   );
 
   renderDeleteButton = row => (
     <a
-      className="my-exports__trash"
+      className="my-exports__icon my-exports__trash"
       onClick={() => this.openDeleteModal(row)}
       role="button"
       tabIndex={0}
@@ -63,6 +75,11 @@ class MyExports extends Component {
   render() {
     return (
       <Container>
+        <DeleteModal
+          open={this.state.deleteModalOpen}
+          toggle={this.toggleDeleteModal}
+          fileName={this.state.fileToDelete}
+        />
         <DataHeader header="My Exports" />
         <DataTable
           columns={this.columns.getPlayersColumns()}

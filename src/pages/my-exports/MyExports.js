@@ -8,6 +8,8 @@ import Pagination from 'components/pagination/Pagination';
 import Columns from './models/columns';
 import dummyData from './models/dummy-data';
 
+import './my-exports.css';
+
 class MyExports extends Component {
   constructor() {
     super();
@@ -16,6 +18,48 @@ class MyExports extends Component {
     this.columns = new Columns();
   }
 
+  getCellFormatters = () => ({
+    Actions: this.getActionFormatter
+  })
+
+  getActionFormatter = (cell, row) => (
+    <div className="text-center">
+      {this.renderExportButton(row)}
+      {this.renderDeleteButton(row)}
+    </div>
+  )
+
+  // TODO hook up to API
+  export = (file) => {
+    console.dir(file); //eslint-disable-line
+  }
+
+  openDeleteModal = (file) => {
+    console.dir(file); //eslint-disable-line
+  }
+
+  renderExportButton = row => (
+    <a
+      className="pr-4"
+      onClick={() => this.export(row)}
+      role="button"
+      tabIndex={0}
+    >
+      <i className="fa fa-upload text-lg" /> Export
+    </a>
+  );
+
+  renderDeleteButton = row => (
+    <a
+      className="my-exports__trash"
+      onClick={() => this.openDeleteModal(row)}
+      role="button"
+      tabIndex={0}
+    >
+      <i className="fa fa-trash pr-2 text-lg" />
+    </a>
+  )
+
   render() {
     return (
       <Container>
@@ -23,6 +67,7 @@ class MyExports extends Component {
         <DataTable
           columns={this.columns.getPlayersColumns()}
           data={dummyData}
+          formatters={this.getCellFormatters()}
         />
         <Pagination
           totalItems={dummyData.length}

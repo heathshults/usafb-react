@@ -40,14 +40,16 @@ class MyExports extends Component {
   }
 
   openDeleteModal = (file) => {
-    this.toggleDeleteModal(file.file_name);
+    this.setState({
+      fileToDelete: file.file_name
+    }, this.toggleDeleteModal);
   }
 
-  toggleDeleteModal = (fileName = '') =>
+  toggleDeleteModal = () => {
     this.setState({
-      deleteModalOpen: !this.state.deleteModalOpen,
-      fileToDelete: fileName
+      deleteModalOpen: !this.state.deleteModalOpen
     });
+  }
 
   renderExportButton = row => (
     <a

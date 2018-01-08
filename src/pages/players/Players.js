@@ -40,9 +40,8 @@ class Players extends Component {
     'Last Name': this.linkToPlayerFormatter
   });
 
-  // TODO: Need to update pathname with the final play profile route
   linkToPlayerFormatter = (cell, row) => (
-    <Link to={{ pathname: '/player', state: row }}>{cell}</Link>
+    <Link to={{ pathname: `/players/${row.id}` }}>{cell}</Link>
   )
 
   displaySearchModal = () =>

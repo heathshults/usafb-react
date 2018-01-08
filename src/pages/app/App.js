@@ -15,7 +15,6 @@ import Coaches from 'pages/coaches/Coaches';
 import PlayerProfile from 'pages/player-profile/PlayerProfile';
 import CoachProfile from 'pages/coach-profile/CoachProfile';
 import Users from 'pages/users/Users';
-import Player from 'pages/player/Player';
 import authHOC from 'hoc/auth/Auth';
 
 import './app.css';
@@ -30,9 +29,9 @@ const app = () => (
         <NavBar />
         <Switch>
           <Route exact path="/" component={authHOC(Dashboard)} />
+          <Route exact path="/dashboard" component={authHOC(Dashboard)} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/players" component={authHOC(Players)} />
-          <Route exact path="/player" component={Player} />
           <Route exact path="/coaches" component={authHOC(Coaches)} />
           <Route exact path="/players/:id" component={authHOC(PlayerProfile)} />
           <Route exact path="/coaches/:id" component={authHOC(CoachProfile)} />

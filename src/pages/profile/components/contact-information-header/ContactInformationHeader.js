@@ -13,13 +13,14 @@ const contactInformationHeader = props => (
         className="fa fa-edit action-button-icon"
         aria-hidden="true"
       />&nbsp;
-      edit
+      {props.editing ? 'Save' : 'Edit'}
     </button>
   </div>
 );
 
 contactInformationHeader.propTypes = {
-  toggleEdit: PropTypes.func.isRequired
+  toggleEdit: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired
 };
 
 export default contactInformationHeader;

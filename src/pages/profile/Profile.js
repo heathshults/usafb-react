@@ -7,6 +7,7 @@ import Content from './components/content/Content';
 import Avatar from './components/avatar/Avatar';
 import ContactInformationHeader from './components/contact-information-header/ContactInformationHeader';
 import InputField from './components/input-field/InputField';
+import Password from './components/password/Password';
 
 import './profile.css';
 
@@ -112,12 +113,7 @@ class Profile extends Component {
                 editing={this.state.editing}
                 onChange={this.changeEmail}
               />
-              <InputField
-                label="Password"
-                value={this.state.password}
-                editing={this.state.editing}
-                onChange={this.changePassword}
-              />
+              <Password />
               <InputField
                 label="Role"
                 value={this.state.role}

@@ -38,6 +38,9 @@ class NavDropdown extends Component {
           <DropdownItem href="/users" className="nav-bar__dropdown-button-item">
             Manage Users
           </DropdownItem>
+          <DropdownItem href="/my-exports" className="nav-bar__dropdown-button-item">
+            My Exports
+          </DropdownItem>
           <DropdownItem href="/help" className="nav-bar__dropdown-button-item">
             Help / FAQ
           </DropdownItem>

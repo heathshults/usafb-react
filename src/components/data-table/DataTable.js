@@ -42,6 +42,7 @@ const dataTable = props => (
             dataFormat={props.formatters[column.label]}
             className="usafb__table-header"
             thStyle={headerStyle}
+            width={column.width}
           >
             {column.label}
           </TableHeaderColumn>

@@ -17,6 +17,8 @@ export default class Interceptor {
     this.config = {};
   }
 
+  // TODO add functionality of redirecting users to the login page
+  // if they do not have a refresh token and app is trying to reauthenticate
   registerInterceptor = () =>
     fetchIntercept.register({
       request: (url, config) => {

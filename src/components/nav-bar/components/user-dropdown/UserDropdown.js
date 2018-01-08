@@ -32,7 +32,7 @@ class NavDropdown extends Component {
           <User />
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem href="/profile" className="nav-bar__dropdown-button-item">
+          <DropdownItem href="/me" className="nav-bar__dropdown-button-item">
             My Profile
           </DropdownItem>
           <DropdownItem href="/users" className="nav-bar__dropdown-button-item">

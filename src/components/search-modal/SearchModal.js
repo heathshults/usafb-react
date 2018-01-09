@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, InputGroup } from 'reactstrap';
 
 import states from 'services/data/states';
-
 import './search-modal.css';
 
 class SearchModal extends Component {
@@ -18,17 +17,6 @@ class SearchModal extends Component {
       city: '',
       state: ''
     };
-  }
-
-  componentWillReceiveProps() {
-    this.setState({
-      usafb_id: '',
-      name_last: '',
-      name_first: '',
-      dob: '',
-      city: '',
-      state: ''
-    });
   }
 
   updateSearchFilters = (event) => {
@@ -48,8 +36,8 @@ class SearchModal extends Component {
     this.state.name_first || this.state.dob ||
     this.state.city || this.state.state;
 
-  goBack = () => {
-    window.history.back();
+  close = () => {
+    this.props.toggle(this.state, true);
   }
 
   render() {
@@ -123,9 +111,9 @@ class SearchModal extends Component {
         <ModalFooter>
           <Button
             color="secondary"
-            onClick={this.goBack}
+            onClick={this.close}
           >
-            Back
+            Close
           </Button>
           <Button
             color="primary"

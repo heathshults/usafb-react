@@ -10,7 +10,7 @@ const PastSeason = props => (
     <div className="card-red">
       <div className="card-red-body">
         {
-          props.playerData.registrations && props.playerData.registrations.map((team) => {
+          props.data.playerData.registrations && props.data.playerData.registrations.map((team) => {
             if (!team.current) {
               return (
                 <div className="card-red" key={team._id}>
@@ -53,14 +53,18 @@ const PastSeason = props => (
 );
 
 PastSeason.propTypes = {
-  playerData: PropTypes.shape({
-    registrations: PropTypes.array
+  data: PropTypes.shape({
+    playerData: PropTypes.shape({
+      registrations: PropTypes.array
+    })
   })
 };
 
 PastSeason.defaultProps = {
-  playerData: {
-    registrations: []
+  data: {
+    playerData: {
+      registrations: []
+    }
   }
 };
 

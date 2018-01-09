@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import backgroundImage from './background-image.png';
+import backgroundImage from 'images/bg/bg-sign-in-1.jpg';
 import './container.css';
 
 const container = props => (

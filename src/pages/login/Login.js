@@ -6,7 +6,6 @@ import $ from 'jquery';
 import { LOGIN } from './dux/actions';
 
 import Container from './components/container/Container';
-import Header from './components/header/Header';
 import Form from './components/form/Form';
 import FormImage from './components/logo/Logo';
 import ErrorMessage from './components/error/Error';
@@ -14,6 +13,7 @@ import InputGroup from './components/input-group/InputGroup';
 import Input from './components/input/Input';
 import RememberMe from './components/remember-me/RememberMe';
 import LoginButton from './components/login-button/LoginButton';
+import PlayerImage from './components/player-image/PlayerImage';
 
 export class Login extends Component {
   constructor() {
@@ -51,7 +51,6 @@ export class Login extends Component {
   render() {
     return (
       <Container>
-        <Header />
         <Form>
           <FormImage />
           <ErrorMessage
@@ -81,6 +80,7 @@ export class Login extends Component {
             />
           </InputGroup>
         </Form>
+        <PlayerImage />
       </Container>
     );
   }

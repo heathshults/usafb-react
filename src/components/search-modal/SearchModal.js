@@ -52,13 +52,6 @@ class SearchModal extends Component {
         <ModalBody>
           <InputGroup className="usafb-search-modal__input-group">
             <Input
-              id="usafb_id"
-              value={this.state.usafb_id}
-              type="text"
-              placeholder="USAFB ID"
-              onChange={this.updateSearchFilters}
-            />
-            <Input
               id="dob"
               value={this.state.dob}
               type="text"

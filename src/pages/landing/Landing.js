@@ -4,6 +4,8 @@ import Container from 'components/containers/blue-container/BlueContainer';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
 
+import './landing.css';
+
 class Landing extends Component {
   constructor() {
     super();
@@ -12,8 +14,11 @@ class Landing extends Component {
 
   render() {
     return (
-      <Container>
-        this is a landing page
+      <Container className="landing__container">
+        <Content>
+          <Header count={100000} header="players" />
+          <div />
+        </Content>
         <Content>
           <Header count={100000} header="players" />
           <div />

@@ -7,7 +7,6 @@ import { LOGIN } from './dux/actions';
 
 import Container from './components/container/Container';
 import Form from './components/form/Form';
-import FormImage from './components/logo/Logo';
 import ErrorMessage from './components/error/Error';
 import InputGroup from './components/input-group/InputGroup';
 import Input from './components/input/Input';
@@ -52,7 +51,6 @@ export class Login extends Component {
     return (
       <Container>
         <Form>
-          <FormImage />
           <ErrorMessage
             message={this.props.loginReducer.loginError}
           />

@@ -49,13 +49,19 @@ class Coaches extends Component {
       searchModalOpen: true
     });
 
-  modalDismissed = (data) => {
-    data.currentPage = 1; //eslint-disable-line
-    data.per_page = 10; //eslint-disable-line
-    this.props.searchCoaches(data);
-    this.setState({
-      searchModalOpen: false
-    });
+  modalDismissed = (data, cancelled = false) => {
+    if (!cancelled) {
+      data.currentPage = 1; //eslint-disable-line
+      data.per_page = 10; //eslint-disable-line
+      this.props.searchCoaches(data);
+      this.setState({
+        searchModalOpen: false
+      });
+    } else {
+      this.setState({
+        searchModalOpen: false
+      });
+    }
   }
 
   paginationOnChange = (currentPage, perPage) => {

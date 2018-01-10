@@ -1,0 +1,20 @@
+.landing__container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.landing__bar-chart-container {
+  .recharts-cartesian-grid-horizontal {
+    > line {
+      stroke: rgba(255, 255, 255, .2) !important;
+    }
+  }
+  .recharts-tooltip-cursor {
+    fill: rgba(0, 0, 0, .1) !important;
+  }
+  text {
+    fill: #fff !important;
+  }
+}

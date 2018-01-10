@@ -592,6 +592,15 @@ babel-loader@7.1.2:
     loader-utils "^1.0.2"
     mkdirp "^0.5.1"
 
+babel-loader@^6.2.4:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-6.4.1.tgz#0b34112d5b0748a8dcdbf51acf6f9bd42d50b8ca"
+  dependencies:
+    find-cache-dir "^0.1.1"
+    loader-utils "^0.2.16"
+    mkdirp "^0.5.1"
+    object-assign "^4.0.1"
+
 babel-messages@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-messages/-/babel-messages-6.23.0.tgz#f3cdf4703858035b2a2951c6ec5edf6c62f2630e"
@@ -6244,6 +6253,12 @@ react-s3@^1.2.3:
   resolved "https://registry.yarnpkg.com/react-s3/-/react-s3-1.2.3.tgz#122360f15e6b06716722d11722a6aa9db88f06c3"
   dependencies:
     crypto-js "^3.1.9-1"
+
+react-stepzilla@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/react-stepzilla/-/react-stepzilla-4.7.0.tgz#4a35f9e5382cbde4f71e8d6d5b599ec188009b99"
+  dependencies:
+    babel-loader "^6.2.4"
 
 react-test-renderer@^16.0.0-0, react-test-renderer@^16.2.0:
   version "16.2.0"

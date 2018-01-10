@@ -10,6 +10,28 @@
   border: 0;
 }
 
+.login__input-wrapper {
+  padding-right: 0;
+  padding-left: 35px;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.15);
+  border: solid 3px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  overflow-x: hidden;
+}
+
+.login__input-form {
+  margin-bottom: 0;
+  margin-left: 20px !important;
+  color: #ffffff !important;
+  font-size: 0.875rem;
+  font-stretch: condensed;
+  color: #fff;
+  letter-spacing: .8px;
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  border-radius: 10px;
+}
+
 .login-page__input-label-focusable:active, .login-page__input-label-focusable:focus {
   position: static;
   width: auto;

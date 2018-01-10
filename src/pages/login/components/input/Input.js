@@ -11,11 +11,11 @@ const input = props => (
       <label htmlFor={props.inputId} className="login-page__input-label sr-only">
         {props.placeholder}
       </label>
-      <div className="col input-wrapper">
+      <div className="col login__input-wrapper">
         <FontAwesome name={props.icon} className="fa-layer" />
         <input
           type={props.inputType}
-          className="form-control form-control-theme"
+          className="form-control form-control-theme login__input-form pt-2 pb-2"
           id={props.inputId}
           placeholder={props.placeholder}
           value={props.value}

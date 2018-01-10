@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ResponsiveContainer, CartesianGrid, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
+import { ResponsiveContainer, CartesianGrid, PieChart, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import Content from './components/content/Content';
@@ -35,7 +35,11 @@ class Landing extends Component {
         </Content>
         <Content>
           <Header count={100000} header="Coaches" />
-          <div />
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie data={barGraph} fill="#8884d8" dataKey="value" />
+            </PieChart>
+          </ResponsiveContainer>
         </Content>
       </Container>
     );

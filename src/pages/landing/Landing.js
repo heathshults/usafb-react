@@ -10,14 +10,8 @@ import colors from './models/colors';
 import './landing.css';
 
 class Landing extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   // got code from http://jsfiddle.net/x5em3hdp/
   renderCustomPieLabel = (data) => {
-    console.dir(data); //eslint-disable-line
     const RADIAN = Math.PI / 180;
     const radius = data.innerRadius + (data.outerRadius - data.innerRadius) * 0.5;
     const x = data.cx + radius * Math.cos(-data.midAngle * RADIAN);
@@ -70,7 +64,7 @@ class Landing extends Component {
                 data={barGraph}
                 fill="#8884d8"
                 dataKey="value"
-                label
+                label={this.renderCustomPieLabel}
                 labelLine={false}
               >
                 {

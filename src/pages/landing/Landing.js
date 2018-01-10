@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
+import { ResponsiveContainer, CartesianGrid, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import Content from './components/content/Content';
@@ -24,6 +24,7 @@ class Landing extends Component {
               <BarChart
                 data={barGraph}
               >
+                <CartesianGrid vertical={false} />
                 <XAxis dataKey="name" tickLine={false} axisLine={false} fill="#fff" />
                 <YAxis dataKey="value" tickLine={false} axisLine={false} />
                 <Tooltip />

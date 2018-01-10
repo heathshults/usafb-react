@@ -5,8 +5,13 @@
 }
 
 .landing__bar-chart-container {
-  .xAxis {
-    border-top: solid 1px white;
+  .recharts-cartesian-grid-horizontal {
+    > line {
+      stroke: rgba(255, 255, 255, .2) !important;
+    }
+  }
+  .recharts-tooltip-cursor {
+    fill: rgba(0, 0, 0, .1) !important;
   }
   text {
     fill: #fff !important;

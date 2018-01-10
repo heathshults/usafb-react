@@ -28,6 +28,10 @@ class Profile extends Component {
     };
   }
 
+  componentWillMount() {
+    console.dir(this.props); //eslint-disable-line
+  }
+
   toggleEdit = () =>
     this.setState({
       editing: !this.state.editing

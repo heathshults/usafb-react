@@ -1,4 +1,4 @@
-import Column from './column';
+import Column from 'components/data-table/models/column';
 
 /**
  * private variable columns

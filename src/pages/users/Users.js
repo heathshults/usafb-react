@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import Columns from 'components/data-table/models/user-columns';
 
 import states from 'services/data/states';
 
@@ -15,6 +14,7 @@ import Header from './components/header/Header';
 import HeaderMessage from './components/header-message/HeaderMessage';
 import CreateUserButton from './components/create-user-button/CreateUserButton';
 import UserModal from './components/user-modal/UserModal';
+import Columns from './models/columns';
 
 import {
   GET_USERS,
@@ -43,7 +43,11 @@ class Users extends Component {
   componentWillMount() {
     // using 1 and 10 as parameters because that is what
     // the pagination default is set to
-    this.updateUsers(1, 10);
+    this.getUsers(1, 10);
+  }
+
+  getUsers = (currentPage, perPage) => {
+    this.props.getUsers(currentPage, perPage);
   }
 
   getCellFormatters = () => ({
@@ -92,10 +96,6 @@ class Users extends Component {
         <i className="stat-icon fa fa-minus-circle" />
       </div>
     );
-  }
-
-  updateUsers = (currentPage, perPage) => {
-    this.props.getUsers(currentPage, perPage);
   }
 
   toggleUserModal = () => {
@@ -195,7 +195,7 @@ class Users extends Component {
         />
         <Pagination
           totalItems={this.props.totalUsers}
-          onChange={this.updateUsers}
+          onChange={this.getUsers}
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
         />

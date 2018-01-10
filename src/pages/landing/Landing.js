@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
-import { ResponsiveContainer, CartesianGrid, PieChart, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
+import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
 
 import { barGraph } from './models/dummyData';
+import colors from './models/colors';
 import './landing.css';
 
 class Landing extends Component {
   constructor() {
     super();
     this.state = {};
+  }
+
+  // got code from http://jsfiddle.net/x5em3hdp/
+  renderCustomPieLabel = (data) => {
+    const RADIAN = Math.PI / 180;
+    const radius = data.innerRadius + (data.outerRadius - data.innerRadius) * 0.5;
+    const x = data.cx + radius * Math.cos(-data.midAngle * RADIAN);
+    const y = data.cy + radius * Math.sin(-data.midAngle * RADIAN);
+
+    return (
+      <text x={x} y={y} fill="white" textAnchor={x > data.cx ? 'start' : 'end'} dominantBaseline="central">
+        {`${(data.percent * 100).toFixed(0)}%`}
+      </text>
+    );
   }
 
   render() {
@@ -48,8 +63,15 @@ class Landing extends Component {
                 data={barGraph}
                 fill="#8884d8"
                 dataKey="value"
-                label
-              />
+                label={this.renderCustomPieLabel}
+                labelLine={false}
+              >
+                {
+                  barGraph.map((entry, index) =>
+                    <Cell fill={colors[index]} />
+                  )
+                }
+              </Pie>
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>

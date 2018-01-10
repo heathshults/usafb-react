@@ -3,3 +3,12 @@
   align-items: flex-start;
   justify-content: center;
 }
+
+.landing__bar-chart-container {
+  .xAxis {
+    border-top: solid 1px white;
+  }
+  text {
+    fill: #fff !important;
+  }
+}

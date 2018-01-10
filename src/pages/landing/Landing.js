@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar } from 'recharts';
+import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import Content from './components/content/Content';
@@ -19,20 +19,21 @@ class Landing extends Component {
       <Container className="landing__container">
         <Content>
           <Header count={100000} header="players" />
-          <BarChart
-            data={barGraph}
-            height={300}
-            width={700}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis dataKey="value" />
-            <Tooltip />
-            <Bar dataKey="value" fill="#8884d8" />
-          </BarChart>
+          <div className="landing__bar-chart-container">
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart
+                data={barGraph}
+              >
+                <XAxis dataKey="name" tickLine={false} axisLine={false} fill="#fff" />
+                <YAxis dataKey="value" tickLine={false} axisLine={false} />
+                <Tooltip />
+                <Bar dataKey="value" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </Content>
         <Content>
-          <Header count={100000} header="players" />
+          <Header count={100000} header="Coaches" />
           <div />
         </Content>
       </Container>

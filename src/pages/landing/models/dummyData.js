@@ -1,11 +1,27 @@
 export const barGraph = [
   {
-    name: 'a',
-    value: 12
+    name: 'Modified Tackle',
+    value: 120
   },
   {
-    name: 'b',
-    value: 8
+    name: 'Youth Flag',
+    value: 80
+  },
+  {
+    name: 'Other',
+    value: 100
+  },
+  {
+    name: '11-Player Tackle',
+    value: 140
+  },
+  {
+    name: 'Adult Flag',
+    value: 90
+  },
+  {
+    name: '7-On-7',
+    value: 160
   }
 ];
 

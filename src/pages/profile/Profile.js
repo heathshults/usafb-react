@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
@@ -12,6 +13,7 @@ import Password from './components/password/Password';
 import Status from './components/status/Status';
 
 import './profile.css';
+import { GET_USER_INFORMATION } from './dux/actions';
 
 class Profile extends Component {
   constructor() {
@@ -31,7 +33,7 @@ class Profile extends Component {
 
   componentWillMount() {
     if (this.props.match.params.id) {
-      console.log('get user information yo'); //eslint-disable-line
+      this.props.getUserInformation(this.props.match.params.id);
     }
   }
 
@@ -144,7 +146,13 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  getUserInformation: PropTypes.func.isRequired
 };
 
-export default Profile;
+const mapStateToProps = ({ userInformation }) => userInformation;
+const mapDispatchToProps = dispatch => ({
+  getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

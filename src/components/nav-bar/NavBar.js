@@ -17,6 +17,9 @@ const navBar = (props) => {
 
   const goToPlayers = () => props.history.push('/players');
   const goToCoaches = () => props.history.push('/coaches');
+  const goToPlayersDashboard = () => props.history.push('/dashboard');
+  const goToCoachesDashboard = () => props.history.push('/dashboard');
+
   const logout = () => {
     window.localStorage.clear();
     window.location.href = '/login';
@@ -37,7 +40,10 @@ const navBar = (props) => {
           <NavDropdownItem label="Import Coaches" onClick={() => { }} />
           <NavDropdownItem label="Export To File" onClick={() => { }} />
         </NavDropdown>
-        <NavLink to="/dashboard" label="Dashboard" />
+        <NavDropdown label="Dashboard">
+          <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />
+          <NavDropdownItem label="Coaches" onClick={goToCoachesDashboard} />
+        </NavDropdown>
       </NavigationContainer>
       <UserDropdown logout={logout} />
     </Container>

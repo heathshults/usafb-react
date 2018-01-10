@@ -9,6 +9,7 @@ import Interceptor from 'services/api/interceptor';
 import authHOC from 'hoc/auth/Auth';
 
 import NavBar from 'components/nav-bar/NavBar';
+import Landing from 'pages/landing/Landing';
 import Login from 'pages/login/Login';
 import Players from 'pages/players/Players';
 import Dashboard from 'pages/dashboard/Dashboard';
@@ -30,7 +31,7 @@ const app = () => (
       <Fragment>
         <NavBar />
         <Switch>
-          <Route exact path="/" component={authHOC(Dashboard)} />
+          <Route exact path="/" component={authHOC(Landing)} />
           <Route exact path="/dashboard" component={authHOC(Dashboard)} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/players" component={authHOC(Players)} />

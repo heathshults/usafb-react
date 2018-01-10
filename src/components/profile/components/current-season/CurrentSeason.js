@@ -3,18 +3,25 @@ import PropTypes from 'prop-types';
 
 const CurrentSeason = props => (
   <span>
+    {/* eslint-disable */}
     <div className="red-theme-title-2-container">
       <span className="red-theme-title-2">CURRENT SEASON</span>
     </div>
     <div className="card-red">
       <div className="card-red-body">
         <h4 className="mb-4">{props.currentTeam.team_name}
-          <small className="ml-2">{props.currentTeam.organization_name}</small>
+          <small className="ml-2">({props.currentTeam.school_name})</small>
         </h4>
         <div className="tats-wrapper">
           <div className="row text-center mt-2">
             <div className="col-3 current-stats">
-              <div className="stat-title divider-br">{props.currentTeam.positions && props.currentTeam.positions.map(position => `${position}, `)}</div>
+              <div className="stat-title divider-br">
+                {props.currentTeam.positions && props.currentTeam.positions.map(position => (
+                  <div className="positions-list" key={`${props.currentTeam._id}+${position}`}>
+                    <p>{position}</p>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="col-3 current-stats">
               <div className="stat-title divider-br">{props.currentTeam.level_type}</div>

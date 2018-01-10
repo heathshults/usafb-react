@@ -6,23 +6,25 @@ const PastSeason = props => (
     <div className="red-theme-title-2-container">
       <span className="red-theme-title-2 ">PAST SEASONS</span>
     </div>
-    {
-      /* eslint-disable */
-    }
+    {/* eslint-disable */}
     <div className="card-red">
       <div className="card-red-body">
         {
           props.coachData.registrations && props.coachData.registrations.map((team) => {
             if (!team.current) {
               return (
-                <div className="stats-container">
-                  <h5 className="title-3">{team.team_name}
-                    <small className="ml-2">({team.organization_name})</small>
+                <div className="stats-container" key={team._id}>
+                  <h5 className="title-3 team-name-background">{team.team_name}
+                    <small className="ml-2">({team.school_name})</small>
                   </h5>
                   <div className="stats-wrapper">
                     <div className="row text-center mt-2">
                       <div className="col-3 current-stats">
-                        <div className="stat-title divider-br">{team.positions && team.positions.map(position => `${position}, `)}</div>
+                        <div className="stat-title divider-br">{team.positions && team.positions.map(position => (
+                          <div className="positions-list" key={`${team._id}+${position}`}>
+                            <p>{position}</p>
+                          </div>
+                        ))}</div>
                       </div>
                       <div className="col-3 current-stats">
                         <div className="stat-title divider-br">{team.level_type}</div>

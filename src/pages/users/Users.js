@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 import states from 'services/data/states';
 
@@ -58,8 +59,14 @@ class Users extends Component {
     Actions: this.actionsFormatter,
     'Create Date': this.createdDateFormatter,
     Role: this.roleFormatter,
-    Status: this.statusFormatter
+    Status: this.statusFormatter,
+    'First Name': this.linkToUserFormatter,
+    'Last Name': this.linkToUserFormatter
   });
+
+  linkToUserFormatter = (cell, row) => (
+    <Link to={{ pathname: `/users/${row._id}` }}>{cell}</Link> //eslint-disable-line
+  );
 
   actionsFormatter = (cell, row) => (
     <div className="text-center">

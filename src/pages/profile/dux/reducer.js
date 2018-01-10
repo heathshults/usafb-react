@@ -1,7 +1,13 @@
 import * as actions from './actions';
 
 const initialState = {
-  userInformation: {},
+  active: false,
+  address: {},
+  email: '',
+  name_first: '',
+  name_last: '',
+  phone: '',
+  role_name: '',
   gettingUserInformation: false,
   error: ''
 };
@@ -11,7 +17,7 @@ export default (state = initialState, action) => {
     case actions.GET_USER_INFORMATION:
       return { ...state, gettingUserInformation: true, error: '' };
     case actions.USER_INFORMATION_RECEIVED:
-      return { ...state, gettingUserInformation: false, userInformation: action.userInformation };
+      return { ...state, gettingUserInformation: false, ...action.userInformation };
     case actions.USER_INFORMATION_ERROR:
       return { ...state, gettingUserInformation: false, error: '' };
     default:

@@ -19,15 +19,7 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      editing: false,
-      firstName: 'Kent',
-      lastName: 'Kawahara',
-      phone: '808-389-7264',
-      email: 'kent.kawahara@verys.com',
-      password: '************',
-      role: 'Super User',
-      organization: 'Verys',
-      status: true
+      editing: false
     };
   }
 
@@ -97,19 +89,19 @@ class Profile extends Component {
                 />
                 <InputField
                   label="First Name"
-                  value={this.state.firstName}
+                  value={this.props.name_first}
                   editing={this.state.editing}
                   onChange={this.changeFirstName}
                 />
                 <InputField
                   label="Last Name"
-                  value={this.state.lastName}
+                  value={this.props.name_last}
                   editing={this.state.editing}
                   onChange={this.changeLastName}
                 />
                 <InputField
                   label="Phone"
-                  value={this.state.phone}
+                  value={this.props.phone}
                   editing={this.state.editing}
                   onChange={this.changePhone}
                 />
@@ -119,22 +111,16 @@ class Profile extends Component {
             <Content editing={this.state.editing} className="flex-column">
               <InputField
                 label="Email"
-                value={this.state.email}
+                value={this.props.email}
                 editing={this.state.editing}
                 onChange={this.changeEmail}
               />
               <Password />
               <InputField
                 label="Role"
-                value={this.state.role}
+                value={this.props.role_name}
                 editing={this.state.editing}
                 onChange={this.changeRole}
-              />
-              <InputField
-                label="Organization"
-                value={this.state.organization}
-                editing={this.state.editing}
-                onChange={this.changeOrganization}
               />
               <Status />
             </Content>
@@ -147,7 +133,12 @@ class Profile extends Component {
 
 Profile.propTypes = {
   match: PropTypes.object.isRequired,
-  getUserInformation: PropTypes.func.isRequired
+  getUserInformation: PropTypes.func.isRequired,
+  name_first: PropTypes.string.isRequired,
+  name_last: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  role_name: PropTypes.string.isRequired
 };
 
 const mapStateToProps = ({ userInformation }) => userInformation;

@@ -50,7 +50,13 @@ class Landing extends Component {
                   axisLine={false}
                 />
                 <Tooltip />
-                <Bar dataKey="value" fill="#8884d8" />
+                <Bar dataKey="value" fill="#8884d8">
+                  {
+                    barGraph.map((entry, index) =>
+                      <Cell fill={colors[index]} />
+                    )
+                  }
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>

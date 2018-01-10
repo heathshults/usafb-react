@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
 import Block from './components/block/Block';
@@ -29,7 +30,9 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    console.dir(this.props); //eslint-disable-line
+    if (this.props.match.params.id) {
+      console.log('get user information yo'); //eslint-disable-line
+    }
   }
 
   toggleEdit = () =>
@@ -139,5 +142,9 @@ class Profile extends Component {
     );
   }
 }
+
+Profile.propTypes = {
+  match: PropTypes.object.isRequired
+};
 
 export default Profile;

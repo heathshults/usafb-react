@@ -3,7 +3,7 @@ import Column from 'components/data-table/models/column';
 /**
  * private variable columns
  */
-const columns = [];
+let columns = [];
 
 /**
  * This class is going to be what generates columns
@@ -28,4 +28,8 @@ export default class UserColumns {
   }
 
   getUserColumns = () => columns;
+
+  clearColumns = () => {
+    columns = [];
+  }
 }

@@ -31,7 +31,6 @@ import './users.css';
 class Users extends Component {
   constructor() {
     super();
-    this.columns = new Columns();
     this.states = states;
     this.state = {
       userModalOpen: false,
@@ -44,6 +43,11 @@ class Users extends Component {
     // using 1 and 10 as parameters because that is what
     // the pagination default is set to
     this.getUsers(1, 10);
+    this.columns = new Columns();
+  }
+
+  componentWillUnmount() {
+    this.columns.clearColumns();
   }
 
   getUsers = (currentPage, perPage) => {

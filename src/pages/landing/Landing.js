@@ -17,6 +17,7 @@ class Landing extends Component {
 
   // got code from http://jsfiddle.net/x5em3hdp/
   renderCustomPieLabel = (data) => {
+    console.dir(data); //eslint-disable-line
     const RADIAN = Math.PI / 180;
     const radius = data.innerRadius + (data.outerRadius - data.innerRadius) * 0.5;
     const x = data.cx + radius * Math.cos(-data.midAngle * RADIAN);
@@ -69,12 +70,12 @@ class Landing extends Component {
                 data={barGraph}
                 fill="#8884d8"
                 dataKey="value"
-                label={this.renderCustomPieLabel}
+                label
                 labelLine={false}
               >
                 {
                   barGraph.map((entry, index) =>
-                    <Cell fill={colors[index]} />
+                    <Cell fill={colors[index]} stroke={colors[index]} />
                   )
                 }
               </Pie>

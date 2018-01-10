@@ -28,14 +28,14 @@ const navBar = (props) => {
       <NavigationContainer>
         <NavLink to="/" label="Home" />
         <NavDropdown label="players">
-          <NavDropdownItem label="The Players" onClick={goToPlayers} />
+          <NavDropdownItem label="Search Players" onClick={goToPlayers} />
           <NavDropdownItem label="Import Players" onClick={() => { }} />
-          <NavDropdownItem label="Export To File" onClick={() => { }} />
+          <NavDropdownItem label="Export Players" onClick={() => { }} />
         </NavDropdown>
         <NavDropdown label="coaches">
-          <NavDropdownItem label="The Coaches" onClick={goToCoaches} />
+          <NavDropdownItem label="Search Coaches" onClick={goToCoaches} />
           <NavDropdownItem label="Import Coaches" onClick={() => { }} />
-          <NavDropdownItem label="Export To File" onClick={() => { }} />
+          <NavDropdownItem label="Export Coaches" onClick={() => { }} />
         </NavDropdown>
         <NavLink to="/dashboard" label="Dashboard" />
       </NavigationContainer>

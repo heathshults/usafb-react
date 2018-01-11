@@ -19,7 +19,13 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      editing: false
+      editing: false,
+      email: '',
+      name_first: '',
+      name_last: '',
+      phone: '',
+      role_name: '',
+      active: false
     };
   }
 
@@ -27,6 +33,10 @@ class Profile extends Component {
     if (this.props.match.params.id) {
       this.props.getUserInformation(this.props.match.params.id);
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...nextProps });
   }
 
   toggleEdit = () =>
@@ -89,19 +99,19 @@ class Profile extends Component {
                 />
                 <InputField
                   label="First Name"
-                  value={this.props.name_first}
+                  value={this.state.name_first}
                   editing={this.state.editing}
                   onChange={this.changeFirstName}
                 />
                 <InputField
                   label="Last Name"
-                  value={this.props.name_last}
+                  value={this.state.name_last}
                   editing={this.state.editing}
                   onChange={this.changeLastName}
                 />
                 <InputField
                   label="Phone"
-                  value={this.props.phone}
+                  value={this.state.phone}
                   editing={this.state.editing}
                   onChange={this.changePhone}
                 />
@@ -111,18 +121,18 @@ class Profile extends Component {
             <Content editing={this.state.editing} className="flex-column">
               <InputField
                 label="Email"
-                value={this.props.email}
+                value={this.state.email}
                 editing={this.state.editing}
                 onChange={this.changeEmail}
               />
               <Password />
               <InputField
                 label="Role"
-                value={this.props.role_name}
+                value={this.state.role_name}
                 editing={this.state.editing}
                 onChange={this.changeRole}
               />
-              <Status active={this.props.active} />
+              <Status active={this.state.active} />
             </Content>
           </Block>
         </div>
@@ -133,13 +143,7 @@ class Profile extends Component {
 
 Profile.propTypes = {
   match: PropTypes.object.isRequired,
-  getUserInformation: PropTypes.func.isRequired,
-  name_first: PropTypes.string.isRequired,
-  name_last: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  role_name: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired
+  getUserInformation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ userInformation }) => userInformation;

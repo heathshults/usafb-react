@@ -1,3 +1,9 @@
 export const GET_USER_INFORMATION = 'profile get user information';
 export const USER_INFORMATION_RECEIVED = 'profile user information received';
 export const USER_INFORMATION_ERROR = 'profile user information error';
+// export const UPDATE_FIRST_NAME = 'profile update first name';
+// export const UPDATE_LAST_NAME = 'profile update last name';
+// export const UPDATE_PHONE = 'profile update phone';
+// export const UPDATE_EMAIL = 'profile update email';
+// export const UPDATE_ROLE = 'profile update role';
+// export const UPDATE_STATUS = 'profile update status';

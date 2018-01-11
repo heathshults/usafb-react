@@ -13,7 +13,7 @@ import SearchButton from 'components/search-button/SearchButton';
 import SearchModal from 'components/search-modal/SearchModal';
 
 import Columns from './models/columns';
-import { SEARCH_COACHES } from './dux/actions';
+import { SEARCH_COACHES, UPDATE_ROWS_PER_PAGE } from './dux/actions';
 
 class Coaches extends Component {
   constructor() {

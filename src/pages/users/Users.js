@@ -6,13 +6,14 @@ import { Link } from 'react-router-dom';
 
 import states from 'services/data/states';
 
-import MainContainer from 'components/containers/container/Container';
+import Container from 'components/containers/blue-container/BlueContainer';
 import DataTable from 'components/data-table/DataTable';
+import DataHeader from 'components/data-header/DataHeader';
 import Pagination from 'components/pagination/Pagination';
 
-import HeaderContainer from './components/header-container/HeaderContainer';
-import Header from './components/header/Header';
-import HeaderMessage from './components/header-message/HeaderMessage';
+// import HeaderContainer from './components/header-container/HeaderContainer';
+// import Header from './components/header/Header';
+// import HeaderMessage from './components/header-message/HeaderMessage';
 import CreateUserButton from './components/create-user-button/CreateUserButton';
 import UserModal from './components/user-modal/UserModal';
 import Columns from './models/columns';
@@ -54,6 +55,10 @@ class Users extends Component {
   getUsers = (currentPage, perPage) => {
     this.props.getUsers(currentPage, perPage);
   }
+
+  getCreateUserButton = () => (
+    <CreateUserButton creatingUser={this.props.creatingUser} toggle={this.toggleCreateUserModal} />
+  );
 
   getCellFormatters = () => ({
     Actions: this.actionsFormatter,
@@ -180,7 +185,7 @@ class Users extends Component {
 
   render() {
     return (
-      <MainContainer>
+      <Container>
         <UserModal
           header={this.state.userModalHeader}
           open={this.state.userModalOpen}
@@ -189,16 +194,10 @@ class Users extends Component {
           onClosed={this.modalDismissed}
           roles={this.props.roles}
         />
-        <HeaderContainer>
-          <Header />
-          <HeaderMessage
-            isOpen={this.props.headerMessageOpen}
-            color={this.props.headerStatus}
-            message={this.props.headerMessage}
-            toggle={this.props.dismissHeaderMessage}
-          />
-          <CreateUserButton creatingUser={this.props.creatingUser} toggle={this.toggleCreateUserModal} />
-        </HeaderContainer>
+        <DataHeader
+          header="Manage Users"
+          buttons={this.getCreateUserButton()}
+        />
         <DataTable
           columns={this.columns.getUserColumns()}
           data={this.props.users}
@@ -210,7 +209,7 @@ class Users extends Component {
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
         />
-      </MainContainer>
+      </Container>
     );
   }
 }
@@ -220,10 +219,6 @@ Users.propTypes = {
   totalUsers: PropTypes.number.isRequired,
   users: PropTypes.array.isRequired,
   createUser: PropTypes.func.isRequired,
-  dismissHeaderMessage: PropTypes.func.isRequired,
-  headerMessageOpen: PropTypes.bool.isRequired,
-  headerStatus: PropTypes.string.isRequired,
-  headerMessage: PropTypes.string.isRequired,
   creatingUser: PropTypes.bool.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,

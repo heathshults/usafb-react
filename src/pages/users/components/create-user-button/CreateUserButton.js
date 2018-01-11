@@ -18,7 +18,7 @@ const getButtonLabel = (creating) => {
 };
 
 const createUserButton = props => (
-  <div className="col-5">
+  <div className="col-4">
     <div className="d-flex h-100">
       <button
         className="btn btn-primary-02 ml-auto"

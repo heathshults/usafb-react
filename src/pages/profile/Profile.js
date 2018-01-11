@@ -13,7 +13,7 @@ import Password from './components/password/Password';
 import Status from './components/status/Status';
 
 import './profile.css';
-import { GET_USER_INFORMATION } from './dux/actions';
+import { GET_USER_INFORMATION, SAVE_USER_INFORMATION } from './dux/actions';
 
 class Profile extends Component {
   constructor() {
@@ -88,7 +88,20 @@ class Profile extends Component {
     this.setState({
       editing: false
     });
+
+    const data = this.transformDataForAPI();
+    this.props.saveUserInformation(data);
   }
+
+  transformDataForAPI = () => ({
+    id: this.state._id, //eslint-disable-line
+    name_first: this.state.name_first,
+    name_last: this.state.name_last,
+    phone: this.state.phone,
+    email: this.state.email,
+    role_name: this.state.role_name,
+    active: this.state.active
+  });
 
   cancelEdit = () => {
     this.setState({
@@ -158,12 +171,14 @@ class Profile extends Component {
 
 Profile.propTypes = {
   match: PropTypes.object.isRequired,
-  getUserInformation: PropTypes.func.isRequired
+  getUserInformation: PropTypes.func.isRequired,
+  saveUserInformation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ userInformation }) => userInformation;
 const mapDispatchToProps = dispatch => ({
-  getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id })
+  getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
+  saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

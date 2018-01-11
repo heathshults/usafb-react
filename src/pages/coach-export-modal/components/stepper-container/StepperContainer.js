@@ -16,8 +16,10 @@ const StepperContainer = () => {
     ];
 
   return (
-    <div className="step-progress">
-      <Stepper steps={steps} />
+    <div className="example">
+      <div className="step-progress">
+        <Stepper steps={steps} />
+      </div>
     </div>
   );
 };

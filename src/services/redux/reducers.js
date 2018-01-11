@@ -7,6 +7,7 @@ import playerProfileReducer from 'pages/player-profile/dux/reducer';
 import coachProfileReducer from 'pages/coach-profile/dux/reducer';
 import playerSearchReducer from 'pages/players/dux/reducer';
 import coachSearchReducer from 'pages/coaches/dux/reducer';
+import appReducer from 'pages/app/dux/reducer';
 
 export default combineReducers({
   routerReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   playerProfileReducer,
   coachProfileReducer,
   playerSearchReducer,
-  coachSearchReducer
+  coachSearchReducer,
+  appReducer
 });

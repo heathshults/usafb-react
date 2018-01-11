@@ -19,27 +19,22 @@ const PastSeason = props => (
                       <small className="ml-2">({team.school_name})</small>
                     </h4>
                     <div className="stats-wrapper past-season__stats-wrapper">
-                      <div className="row text-center align-items-center mt-2">
-                        <div className="col-3 current-stats past-season__stats">
-                          <div className="stat-title divider-br">{team.positions && team.positions.map(position =>
+                      <div className="d-flex justify-content-between">
+                        <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
+                          {team.positions && team.positions.map(position => (
                             <div className="positions-list" key={`${team._id}+${position}`}>
-                              <p>{position}</p>
+                              <p style={{ wordBreak: 'break-word' }}>{position}</p>
                             </div>
-                          )}</div>
+                          ))}
                         </div>
-                        <div className="col-3 current-stats past-season__stats">
-                          <div className="stat-title divider-br">
-                            <div className="badge-grade ar-1by1"> {props.playerData.grade}th
+                        <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
+                          <div className="badge-grade ar-1by1"> {props.playerData.grade}th
                               <br />
-                              <span className="font-50">GRADE</span>
-                            </div> {team.level}</div>
+                            <span className="font-50">GRADE</span>
+                          </div> {team.level}
                         </div>
-                        <div className="col-3 current-stats past-season__stats">
-                          <div className="stat-title divider-br">{team.organization_name}</div>
-                        </div>
-                        <div className="col-3 current-stats past-season__stats">
-                          <div className="stat-title ">{team.season} {team.season_year}</div>
-                        </div>
+                        <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{team.organization_name}</div>
+                        <div className="stat-title current-season__stats text-center p-4 mt-2 mb-2">{team.season} {team.season_year}</div>
                       </div>
                     </div>
                   </div>

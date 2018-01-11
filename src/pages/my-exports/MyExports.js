@@ -67,7 +67,7 @@ class MyExports extends Component {
       role="button"
       tabIndex={0}
     >
-      <i className="fa fa-upload text-lg" />
+      <i className="fa fa-download text-lg" />
     </a>
   );
 

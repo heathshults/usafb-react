@@ -10,21 +10,22 @@ const PastSeason = props => (
     <div className="card-red">
       <div className="card-red-body">
         {
-          props.data.playerData.registrations && props.data.playerData.registrations.map((team) => {
+          props.playerData.registrations && props.playerData.registrations.map((team) => {
             if (!team.current) {
               return (
                 <div className="card-red" key={team._id}>
-                  <div className="card-red-body">
-                    <h4 className="mb-4">{team.team_name}
+                  <div className="">
+                    <h4 className="mb-4 team-name-background">{team.team_name}
                       <small className="ml-2">({team.school_name})</small>
                     </h4>
                     <div className="tats-wrapper">
                       <div className="row text-center mt-2">
                         <div className="col-3 current-stats">
-                          <div className="stat-title divider-br">{team.positions && team.positions.map(position => `${position}, `)}</div>
-                        </div>
-                        <div className="col-3 current-stats">
-                          <div className="stat-title divider-br">{team.organization_name}</div>
+                          <div className="stat-title divider-br">{team.positions && team.positions.map(position =>
+                            <div className="positions-list" key={`${team._id}+${position}`}>
+                              <p>{position}</p>
+                            </div>
+                          )}</div>
                         </div>
                         <div className="col-3 current-stats">
                           <div className="stat-title divider-br">

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
@@ -40,7 +41,8 @@ class Coaches extends Component {
   getCellFormatters = () => ({
     'First Name': this.linkToCoachFormatter,
     'Last Name': this.linkToCoachFormatter,
-    ID: this.idFormatter
+    ID: this.idFormatter,
+    'Date of Birth': this.DOBFormatter
   });
 
   getPaddedDummyID = (id) => {
@@ -54,6 +56,13 @@ class Coaches extends Component {
 
     return dummyID.toString().padStart(8, '0');
   }
+
+  DOBFormatter = dob => (
+    <div>
+      {moment(dob).format('MMM Do YYYY')}
+    </div>
+  )
+
 
   linkToCoachFormatter = (cell, row) => (
     <Link to={{ pathname: `/coaches/${row.id}` }}>{cell}</Link>

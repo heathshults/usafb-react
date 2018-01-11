@@ -9,7 +9,7 @@ const Organization = props => (
     </div>
     <div className="card-red-body">
       <div className="theme-red-padded-line">
-        <div className="theme-red-badge">LEAGUE: {props.currentTeam.id_external}</div>
+        <div className="theme-red-badge">LEAGUE: {props.currentTeam.league_name}</div>
       </div>
 
       <p className="pl-3">

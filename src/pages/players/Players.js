@@ -19,7 +19,9 @@ class Players extends Component {
     super();
 
     this.state = {
-      searchModalOpen: true
+      searchModalOpen: true,
+      rowsPerPage: 10, // used to calculate dummy id. delete later,
+      currentPage: 1 // used to calculate dummy id. delete later,
     };
   }
 
@@ -37,12 +39,29 @@ class Players extends Component {
 
   getCellFormatters = () => ({
     'First Name': this.linkToPlayerFormatter,
-    'Last Name': this.linkToPlayerFormatter
+    'Last Name': this.linkToPlayerFormatter,
+    ID: this.idFormatter
   });
+
+  getPaddedDummyID = (id) => {
+    let dummyID = this.state.currentPage === 1 ? 1 : this.state.rowsPerPage * (this.state.currentPage - 1) + 1;
+
+    for (let i = 0; i < this.props.players.length; i++) { //eslint-disable-line
+      if (this.props.players[i].id === id) {
+        dummyID += i;
+      }
+    }
+
+    return dummyID.toString().padStart(8, '0');
+  }
 
   linkToPlayerFormatter = (cell, row) => (
     <Link to={{ pathname: `/players/${row.id}` }}>{cell}</Link>
   )
+
+  idFormatter = (cell, row) => (
+    <div> {this.getPaddedDummyID(row.id)} </div>
+  );
 
   displaySearchModal = () =>
     this.setState({
@@ -55,7 +74,9 @@ class Players extends Component {
       data.per_page = 10; //eslint-disable-line
       this.props.searchPlayers(data);
       this.setState({
-        searchModalOpen: false
+        searchModalOpen: false,
+        currentPage: data.currentPage, // used to calculate dummy id. delete later,
+        rowsPerPage: data.per_page // used to calculate dummy id. delete later,
       });
     } else {
       this.setState({
@@ -68,6 +89,12 @@ class Players extends Component {
     const data = this.props.searchValues;
     data.currentPage = currentPage;
     data.per_page = perPage;
+
+    this.setState({
+      currentPage: data.currentPage, // used to calculate dummy id. delete later,
+      rowsPerPage: data.per_page // used to calculate dummy id. delete later,
+    });
+
     this.props.searchPlayers(data);
   }
 

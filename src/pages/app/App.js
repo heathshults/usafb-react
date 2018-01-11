@@ -42,6 +42,7 @@ const app = () => (
           <Route exact path="/players/:id" component={authHOC(PlayerProfile)} />
           <Route exact path="/coaches/:id" component={authHOC(CoachProfile)} />
           <Route exact path="/users" component={authHOC(Users)} />
+          <Route exact path="/users/:id" component={authHOC(Profile)} />
           <Route exact path="/me" component={authHOC(Profile)} />
           <Route exact path="/my-exports" component={authHOC(MyExports)} />
         </Switch>

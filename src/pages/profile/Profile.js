@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
 import Block from './components/block/Block';
@@ -11,21 +13,32 @@ import Password from './components/password/Password';
 import Status from './components/status/Status';
 
 import './profile.css';
+import { GET_USER_INFORMATION, SAVE_USER_INFORMATION } from './dux/actions';
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
       editing: false,
-      firstName: 'Kent',
-      lastName: 'Kawahara',
-      phone: '808-389-7264',
-      email: 'kent.kawahara@verys.com',
-      password: '************',
-      role: 'Super User',
-      organization: 'Verys',
-      status: true
+      email: '',
+      name_first: '',
+      name_last: '',
+      phone: '',
+      role_name: '',
+      active: false
     };
+  }
+
+  componentWillMount() {
+    if (this.props.match.params.id) {
+      this.props.getUserInformation(this.props.match.params.id);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.saving) {
+      this.setState({ ...nextProps });
+    }
   }
 
   toggleEdit = () =>
@@ -35,12 +48,12 @@ class Profile extends Component {
 
   changeFirstName = event =>
     this.setState({
-      firstName: event.target.value
+      name_first: event.target.value
     });
 
   changeLastName = event =>
     this.setState({
-      lastName: event.target.value
+      name_last: event.target.value
     });
 
   changePhone = event =>
@@ -73,6 +86,32 @@ class Profile extends Component {
       status: event.target.value
     });
 
+  saveChanges = () => {
+    this.setState({
+      editing: false
+    });
+
+    const data = this.transformDataForAPI();
+    this.props.saveUserInformation(data);
+  }
+
+  transformDataForAPI = () => ({
+    id: this.state._id, //eslint-disable-line
+    name_first: this.state.name_first,
+    name_last: this.state.name_last,
+    phone: this.state.phone,
+    email: this.state.email,
+    role_name: this.state.role_name,
+    active: this.state.active
+  });
+
+  cancelEdit = () => {
+    this.setState({
+      editing: false,
+      ...this.props
+    });
+  }
+
   render() {
     return (
       <BlueContainer>
@@ -85,16 +124,19 @@ class Profile extends Component {
                 <ContactInformationHeader
                   editing={this.state.editing}
                   toggleEdit={this.toggleEdit}
+                  saveChanges={this.saveChanges}
+                  cancelEdit={this.cancelEdit}
+                  saving={this.props.saving}
                 />
                 <InputField
                   label="First Name"
-                  value={this.state.firstName}
+                  value={this.state.name_first}
                   editing={this.state.editing}
                   onChange={this.changeFirstName}
                 />
                 <InputField
                   label="Last Name"
-                  value={this.state.lastName}
+                  value={this.state.name_last}
                   editing={this.state.editing}
                   onChange={this.changeLastName}
                 />
@@ -117,17 +159,11 @@ class Profile extends Component {
               <Password />
               <InputField
                 label="Role"
-                value={this.state.role}
+                value={this.state.role_name}
                 editing={this.state.editing}
                 onChange={this.changeRole}
               />
-              <InputField
-                label="Organization"
-                value={this.state.organization}
-                editing={this.state.editing}
-                onChange={this.changeOrganization}
-              />
-              <Status />
+              <Status active={this.state.active} />
             </Content>
           </Block>
         </div>
@@ -136,4 +172,17 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+Profile.propTypes = {
+  match: PropTypes.object.isRequired,
+  getUserInformation: PropTypes.func.isRequired,
+  saveUserInformation: PropTypes.func.isRequired,
+  saving: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = ({ userInformation }) => userInformation;
+const mapDispatchToProps = dispatch => ({
+  getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
+  saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

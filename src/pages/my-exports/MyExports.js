@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
@@ -25,7 +26,8 @@ class MyExports extends Component {
   }
 
   getCellFormatters = () => ({
-    Actions: this.getActionFormatter
+    Actions: this.getActionFormatter,
+    Timestamp: this.timestampFormatter
   })
 
   getActionFormatter = (cell, row) => (
@@ -52,6 +54,12 @@ class MyExports extends Component {
     });
   }
 
+  timestampFormatter = time => (
+    <div>
+      {moment(time).format('MMM do YYYY')}
+    </div>
+  )
+
   renderExportButton = row => (
     <a
       className="my-exports__icon pr-4"
@@ -60,7 +68,6 @@ class MyExports extends Component {
       tabIndex={0}
     >
       <i className="fa fa-upload text-lg" />
-      <span>&nbsp;Export</span>
     </a>
   );
 

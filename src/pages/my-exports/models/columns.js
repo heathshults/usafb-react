@@ -16,8 +16,10 @@ export default class UserColumns {
 
   setCoachesColumns = () => {
     columns.push(
-      new Column('File', 'file_name', false, true, true, '120'),
-      new Column('Actions', 'actions', false, false, false, '20')
+      new Column('File', 'file_name', false, true, true, '200'),
+      new Column('Type', 'type', false, false, false, '50'),
+      new Column('Timestamp', 'time', false, false, false, '50'),
+      new Column('Actions', 'actions', false, false, false, '50')
     );
   }
 

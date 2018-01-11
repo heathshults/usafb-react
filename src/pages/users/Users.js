@@ -11,9 +11,6 @@ import DataTable from 'components/data-table/DataTable';
 import DataHeader from 'components/data-header/DataHeader';
 import Pagination from 'components/pagination/Pagination';
 
-// import HeaderContainer from './components/header-container/HeaderContainer';
-// import Header from './components/header/Header';
-// import HeaderMessage from './components/header-message/HeaderMessage';
 import CreateUserButton from './components/create-user-button/CreateUserButton';
 import UserModal from './components/user-modal/UserModal';
 import Columns from './models/columns';

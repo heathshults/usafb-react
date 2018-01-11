@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import states from 'services/data/states';
 
 import Container from 'components/containers/blue-container/BlueContainer';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import DataTable from 'components/data-table/DataTable';
 import DataHeader from 'components/data-header/DataHeader';
 import Pagination from 'components/pagination/Pagination';
@@ -191,6 +192,7 @@ class Users extends Component {
           onClosed={this.modalDismissed}
           roles={this.props.roles}
         />
+        <HeaderContentDivider />
         <DataHeader
           header="Manage Users"
           buttons={this.getCreateUserButton()}

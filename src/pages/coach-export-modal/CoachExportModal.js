@@ -6,7 +6,7 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import StepperContainer from './components/stepper-container/StepperContainer';
 
 const CoachExportModal = props => (
-  <Modal isOpen={props.appReducer.coach_export_modal_open} toggle={() => { }}>
+  <Modal isOpen={props.coach_export_modal_open} toggle={() => { }}>
     <ModalHeader>Coach Export</ModalHeader>
     <ModalBody>
       <StepperContainer />
@@ -15,15 +15,11 @@ const CoachExportModal = props => (
 );
 
 CoachExportModal.propTypes = {
-  appReducer: PropTypes.shape({
-    coach_export_modal_open: PropTypes.bool
-  })
+  coach_export_modal_open: PropTypes.bool
 };
 
 CoachExportModal.defaultProps = {
-  appReducer: {
-    coach_export_modal_open: false
-  }
+  coach_export_modal_open: false
 };
 
 const mapStateToProps = ({ appReducer }) => appReducer;

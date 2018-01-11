@@ -759,7 +759,7 @@
 }
 
 .red-theme .current-stats {
-  white-space: nowrap;
+  white-space: wrap;
   padding-top: 0 !important;
   padding-left: 2px;
   padding-right: 2px;
@@ -802,7 +802,7 @@
   line-height: 1;
   background: rgba(40, 167, 69, 0.5);
   padding: 8px;
-  white-space: nowrap;
+  white-space: wrap;
   width: 2.1875rem;
   height: 2.1875rem;
   max-width: 100%;

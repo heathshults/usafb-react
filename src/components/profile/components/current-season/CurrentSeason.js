@@ -20,7 +20,7 @@ const CurrentSeason = props => (
               <div className="stat-title divider-br">
                 {props.currentTeam.positions && props.currentTeam.positions.map(position => (
                   <div className="positions-list" key={`${props.currentTeam._id}+${position}`}>
-                    <p>{position}</p>
+                    <p style={{ wordBreak: 'break-word' }}>{position}</p>
                   </div>
                 ))}
               </div>

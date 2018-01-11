@@ -36,7 +36,9 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ ...nextProps });
+    if (!nextProps.saving) {
+      this.setState({ ...nextProps });
+    }
   }
 
   toggleEdit = () =>
@@ -124,6 +126,7 @@ class Profile extends Component {
                   toggleEdit={this.toggleEdit}
                   saveChanges={this.saveChanges}
                   cancelEdit={this.cancelEdit}
+                  saving={this.props.saving}
                 />
                 <InputField
                   label="First Name"
@@ -172,7 +175,8 @@ class Profile extends Component {
 Profile.propTypes = {
   match: PropTypes.object.isRequired,
   getUserInformation: PropTypes.func.isRequired,
-  saveUserInformation: PropTypes.func.isRequired
+  saveUserInformation: PropTypes.func.isRequired,
+  saving: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ userInformation }) => userInformation;

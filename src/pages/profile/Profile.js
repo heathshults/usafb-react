@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Block from './components/block/Block';
 import Header from './components/header/Header';
 import Content from './components/content/Content';
@@ -115,6 +116,7 @@ class Profile extends Component {
   render() {
     return (
       <BlueContainer>
+        <HeaderContentDivider />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>
             <Header />

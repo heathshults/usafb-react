@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import humanize from 'utils/transform';
 // import './PlayerInfo.css';
 
 const PlayerInfo = props => (
@@ -19,7 +20,7 @@ const PlayerInfo = props => (
           <strong>Player ID: {props.playerData.id_external}</strong>
         </div>
       </div>
-      <p className="playerInfo-sidebarText">Position: {props.currentTeam.positions && props.currentTeam.positions.map(position => `${position}, `)}</p>
+      <p className="playerInfo-sidebarText">Position: {props.currentTeam.positions && props.currentTeam.positions.map(position => `${humanize(position)}, `)}</p>
     </div>
   </div>
 );

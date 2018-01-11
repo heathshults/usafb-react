@@ -9,7 +9,7 @@ const contactInformationHeader = props => (
     </h4>
     <div>
       {props.editing &&
-        <button className="profile__contact-information-header-edit mr-2" onClick={props.toggleEdit}>
+        <button className="profile__contact-information-header-edit mr-2" onClick={props.cancelEdit}>
           Cancel
         </button>
       }
@@ -28,7 +28,8 @@ const contactInformationHeader = props => (
 contactInformationHeader.propTypes = {
   toggleEdit: PropTypes.func.isRequired,
   editing: PropTypes.bool.isRequired,
-  saveChanges: PropTypes.func.isRequired
+  saveChanges: PropTypes.func.isRequired,
+  cancelEdit: PropTypes.func.isRequired
 };
 
 export default contactInformationHeader;

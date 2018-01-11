@@ -46,12 +46,12 @@ class Profile extends Component {
 
   changeFirstName = event =>
     this.setState({
-      firstName: event.target.value
+      name_first: event.target.value
     });
 
   changeLastName = event =>
     this.setState({
-      lastName: event.target.value
+      name_last: event.target.value
     });
 
   changePhone = event =>
@@ -85,9 +85,15 @@ class Profile extends Component {
     });
 
   saveChanges = () => {
-    console.log("save changes"); //eslint-disable-line
     this.setState({
       editing: false
+    });
+  }
+
+  cancelEdit = () => {
+    this.setState({
+      editing: false,
+      ...this.props
     });
   }
 
@@ -104,6 +110,7 @@ class Profile extends Component {
                   editing={this.state.editing}
                   toggleEdit={this.toggleEdit}
                   saveChanges={this.saveChanges}
+                  cancelEdit={this.cancelEdit}
                 />
                 <InputField
                   label="First Name"

@@ -27,7 +27,7 @@ class MyExports extends Component {
 
   getCellFormatters = () => ({
     Actions: this.getActionFormatter,
-    Timestamp: this.timestampFormatter
+    Date: this.dateFormatter
   })
 
   getActionFormatter = (cell, row) => (
@@ -54,7 +54,7 @@ class MyExports extends Component {
     });
   }
 
-  timestampFormatter = time => (
+  dateFormatter = time => (
     <div>
       {moment(time).format('MMM do YYYY')}
     </div>

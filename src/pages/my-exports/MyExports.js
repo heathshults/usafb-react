@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 
@@ -77,6 +78,7 @@ class MyExports extends Component {
   render() {
     return (
       <Container>
+        <HeaderContentDivider />
         <DeleteModal
           open={this.state.deleteModalOpen}
           toggle={this.toggleDeleteModal}

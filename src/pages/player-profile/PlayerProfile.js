@@ -21,7 +21,7 @@ import { GET_PLAYER_PROFILE } from './dux/actions';
 
 class PlayerProfile extends Component {
   componentWillMount() {
-    const id = this.props.match.params.id; //eslint-disable-line
+    const id = this.props.match.params.id;
     this.getPlayerProfile({ id });
   }
 
@@ -53,7 +53,8 @@ class PlayerProfile extends Component {
 PlayerProfile.propTypes = {
   getPlayerProfile: PropTypes.func.isRequired,
   playerData: PropTypes.object,
-  currentTeam: PropTypes.object
+  currentTeam: PropTypes.object,
+  match: PropTypes.object.isRequired
 };
 
 PlayerProfile.defaultProps = {

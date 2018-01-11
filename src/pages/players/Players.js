@@ -80,11 +80,14 @@ class Players extends Component {
           toggle={this.modalDismissed}
           header="Search for Players"
         />
-        <DataHeader
-          header="Number of Players"
-          numberOfUsers={this.props.totalPlayers}
-          buttons={this.getSearchButton()}
-        />
+        {
+          !this.state.searchModalOpen &&
+          <DataHeader
+            header="Number of Players"
+            numberOfUsers={this.props.totalPlayers}
+            buttons={this.getSearchButton()}
+          />
+        }
         <DataTable
           columns={this.columns.getPlayersColumns()}
           data={this.props.players}

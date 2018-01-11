@@ -14,7 +14,7 @@ import Password from './components/password/Password';
 import Status from './components/status/Status';
 
 import './profile.css';
-import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION } from './dux/actions';
+import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION } from './dux/actions';
 
 class Profile extends Component {
   constructor() {
@@ -95,7 +95,12 @@ class Profile extends Component {
     });
 
     const data = this.transformDataForAPI();
-    this.props.saveUserInformation(data);
+
+    if (this.props.match.params.id) {
+      this.props.saveUserInformation(data);
+    } else {
+      this.props.saveMyInformation(data);
+    }
   }
 
   transformDataForAPI = () => ({
@@ -183,14 +188,16 @@ Profile.propTypes = {
   getUserInformation: PropTypes.func.isRequired,
   saveUserInformation: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
-  getMyInformation: PropTypes.func.isRequired
+  getMyInformation: PropTypes.func.isRequired,
+  saveMyInformation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ userInformation }) => userInformation;
 const mapDispatchToProps = dispatch => ({
   getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
   saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data }),
-  getMyInformation: () => dispatch({ type: GET_MY_INFORMATION })
+  getMyInformation: () => dispatch({ type: GET_MY_INFORMATION }),
+  saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

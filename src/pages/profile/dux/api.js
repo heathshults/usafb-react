@@ -21,3 +21,10 @@ export const getMyInfo = () =>
     method: 'GET',
     headers: headers.authorizedHeader()
   });
+
+export const saveMyInfo = data =>
+  fetch(`${process.env.REACT_APP_API_URL}/user`, {
+    method: 'PUT',
+    headers: headers.authorizedHeader(),
+    body: JSON.stringify(data)
+  });

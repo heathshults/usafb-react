@@ -1,13 +1,14 @@
 import { fork, all, take, call, put } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getUserInformation, { saveUser, getMyInfo } from './api'; //eslint-disable-line
+import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api'; //eslint-disable-line
 
 export default function* userInformationFlow() {
   yield all({
     getUserInformationFlow: fork(getUserInformationFlow),
     saveUserInformationFlow: fork(saveUserInformationFlow),
-    getMyUserInformationFlow: fork(getMyUserInformationFlow)
+    getMyUserInformationFlow: fork(getMyUserInformationFlow),
+    saveMyInformationFlow: fork(saveMyInformationFlow)
   });
 }
 
@@ -76,5 +77,29 @@ function* setUserData(response) {
     });
   } else {
     yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
+  }
+}
+
+function* saveMyInformationFlow() {
+  while (true) {
+    try {
+      const { data } = yield take(actions.SAVE_MY_INFORMATION);
+      const response = yield call(saveMyInfo, data);
+      const responseData = yield response.json();
+      if (response.ok) {
+        yield put({
+          type: actions.USER_INFORMATION_SAVED,
+          userInformation: responseData.data
+        });
+      } else {
+        yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
+      }
+    } catch (e) {
+      const errorMessage = `An error occurred when we tried to save this users information.
+      Please check your network connection and try again`;
+      yield put({
+        type: actions.USER_INFORMATION_ERROR, error: errorMessage
+      });
+    }
   }
 }

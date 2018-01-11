@@ -84,6 +84,13 @@ class Profile extends Component {
       status: event.target.value
     });
 
+  saveChanges = () => {
+    console.log("save changes"); //eslint-disable-line
+    this.setState({
+      editing: false
+    });
+  }
+
   render() {
     return (
       <BlueContainer>
@@ -96,6 +103,7 @@ class Profile extends Component {
                 <ContactInformationHeader
                   editing={this.state.editing}
                   toggleEdit={this.toggleEdit}
+                  saveChanges={this.saveChanges}
                 />
                 <InputField
                   label="First Name"

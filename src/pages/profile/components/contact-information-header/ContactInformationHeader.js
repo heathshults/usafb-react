@@ -7,20 +7,28 @@ const contactInformationHeader = props => (
     <h4 className="m-0">
       Contact Information
     </h4>
-    <button className="profile__contact-information-header-edit" onClick={props.toggleEdit}>
-      <i
-        id="editAvatarIcon"
-        className="fa fa-edit action-button-icon"
-        aria-hidden="true"
-      />&nbsp;
-      {props.editing ? 'Save' : 'Edit'}
-    </button>
+    <div>
+      {props.editing &&
+        <button className="profile__contact-information-header-edit mr-2" onClick={props.toggleEdit}>
+          Cancel
+        </button>
+      }
+      <button className="profile__contact-information-header-edit" onClick={props.editing ? props.saveChanges : props.toggleEdit}>
+        <i
+          id="editAvatarIcon"
+          className="fa fa-edit action-button-icon"
+          aria-hidden="true"
+        />&nbsp;
+        {props.editing ? 'Save' : 'Edit'}
+      </button>
+    </div>
   </div>
 );
 
 contactInformationHeader.propTypes = {
   toggleEdit: PropTypes.func.isRequired,
-  editing: PropTypes.bool.isRequired
+  editing: PropTypes.bool.isRequired,
+  saveChanges: PropTypes.func.isRequired
 };
 
 export default contactInformationHeader;

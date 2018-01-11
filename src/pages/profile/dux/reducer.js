@@ -9,7 +9,7 @@ const initialState = {
   phone: '',
   role_name: '',
   gettingUserInformation: false,
-  error: ''
+  error: '',
 };
 
 export default (state = initialState, action) => {

@@ -122,7 +122,7 @@ class Profile extends Component {
                 editing={this.state.editing}
                 onChange={this.changeRole}
               />
-              <Status />
+              <Status active={this.props.active} />
             </Content>
           </Block>
         </div>
@@ -138,7 +138,8 @@ Profile.propTypes = {
   name_last: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  role_name: PropTypes.string.isRequired
+  role_name: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ userInformation }) => userInformation;

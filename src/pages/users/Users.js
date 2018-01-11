@@ -60,11 +60,12 @@ class Users extends Component {
 
   getCellFormatters = () => ({
     Actions: this.actionsFormatter,
-    'Create Date': this.createdDateFormatter,
+    Created: this.createdDateFormatter,
     Role: this.roleFormatter,
     Status: this.statusFormatter,
     'First Name': this.linkToUserFormatter,
-    'Last Name': this.linkToUserFormatter
+    'Last Name': this.linkToUserFormatter,
+    'Date of Birth': this.DOBFormatter
   });
 
   linkToUserFormatter = (cell, row) => (
@@ -80,7 +81,7 @@ class Users extends Component {
 
   createdDateFormatter = cell => (
     <div>
-      {moment(cell).format('MMM do YYYY')}
+      {moment(cell).format('MMM Do YYYY')}
     </div>
   );
 

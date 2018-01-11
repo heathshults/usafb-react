@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Block from './components/block/Block';
 import Header from './components/header/Header';
 import Content from './components/content/Content';
@@ -13,7 +14,7 @@ import Password from './components/password/Password';
 import Status from './components/status/Status';
 
 import './profile.css';
-import { GET_USER_INFORMATION, SAVE_USER_INFORMATION } from './dux/actions';
+import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION } from './dux/actions';
 
 class Profile extends Component {
   constructor() {
@@ -32,6 +33,8 @@ class Profile extends Component {
   componentWillMount() {
     if (this.props.match.params.id) {
       this.props.getUserInformation(this.props.match.params.id);
+    } else {
+      this.props.getMyInformation();
     }
   }
 
@@ -92,7 +95,12 @@ class Profile extends Component {
     });
 
     const data = this.transformDataForAPI();
-    this.props.saveUserInformation(data);
+
+    if (this.props.match.params.id) {
+      this.props.saveUserInformation(data);
+    } else {
+      this.props.saveMyInformation(data);
+    }
   }
 
   transformDataForAPI = () => ({
@@ -115,6 +123,7 @@ class Profile extends Component {
   render() {
     return (
       <BlueContainer>
+        <HeaderContentDivider />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>
             <Header />
@@ -142,7 +151,7 @@ class Profile extends Component {
                 />
                 <InputField
                   label="Phone"
-                  value={this.state.phone}
+                  value={this.state.phone || 'NA'}
                   editing={this.state.editing}
                   onChange={this.changePhone}
                 />
@@ -163,7 +172,9 @@ class Profile extends Component {
                 editing={this.state.editing}
                 onChange={this.changeRole}
               />
-              <Status active={this.state.active} />
+              {this.props.match.params.id &&
+                <Status active={this.state.active} />
+              }
             </Content>
           </Block>
         </div>
@@ -176,13 +187,17 @@ Profile.propTypes = {
   match: PropTypes.object.isRequired,
   getUserInformation: PropTypes.func.isRequired,
   saveUserInformation: PropTypes.func.isRequired,
-  saving: PropTypes.bool.isRequired
+  saving: PropTypes.bool.isRequired,
+  getMyInformation: PropTypes.func.isRequired,
+  saveMyInformation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ userInformation }) => userInformation;
 const mapDispatchToProps = dispatch => ({
   getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
-  saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data })
+  saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data }),
+  getMyInformation: () => dispatch({ type: GET_MY_INFORMATION }),
+  saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

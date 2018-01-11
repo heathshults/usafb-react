@@ -34,7 +34,7 @@ class NavDropdown extends Component {
             {React.Children.map(this.props.children, child => child)}
           </DropdownMenu>
         </ButtonDropdown>
-        <div className="nav-bar__separator" />
+        {!this.props.hideSlash && <div className="nav-bar__separator" />}
       </div>
     );
   }
@@ -42,7 +42,12 @@ class NavDropdown extends Component {
 
 NavDropdown.propTypes = {
   label: PropTypes.string.isRequired,
-  children: PropTypes.array.isRequired
+  children: PropTypes.array.isRequired,
+  hideSlash: PropTypes.bool
+};
+
+NavDropdown.defaultProps = {
+  hideSlash: false
 };
 
 export default NavDropdown;

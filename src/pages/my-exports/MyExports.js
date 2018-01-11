@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 
@@ -24,7 +26,8 @@ class MyExports extends Component {
   }
 
   getCellFormatters = () => ({
-    Actions: this.getActionFormatter
+    Actions: this.getActionFormatter,
+    Date: this.dateFormatter
   })
 
   getActionFormatter = (cell, row) => (
@@ -51,6 +54,12 @@ class MyExports extends Component {
     });
   }
 
+  dateFormatter = time => (
+    <div>
+      {moment(time).format('MMM do YYYY')}
+    </div>
+  )
+
   renderExportButton = row => (
     <a
       className="my-exports__icon pr-4"
@@ -59,7 +68,6 @@ class MyExports extends Component {
       tabIndex={0}
     >
       <i className="fa fa-upload text-lg" />
-      <span>&nbsp;Export</span>
     </a>
   );
 
@@ -77,6 +85,7 @@ class MyExports extends Component {
   render() {
     return (
       <Container>
+        <HeaderContentDivider />
         <DeleteModal
           open={this.state.deleteModalOpen}
           toggle={this.toggleDeleteModal}

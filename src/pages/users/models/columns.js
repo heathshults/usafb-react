@@ -21,7 +21,7 @@ export default class UserColumns {
       new Column('First Name', 'name_first', true),
       new Column('Status', 'active', true),
       new Column('Role', 'role_id', true),
-      new Column('Create Date', 'created_at', true),
+      new Column('Created', 'created_at', true),
       new Column('Phone', 'phone', true),
       new Column('Actions', 'actions', true)
     );

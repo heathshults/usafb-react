@@ -41,9 +41,6 @@ class NavDropdown extends Component {
           <DropdownItem href="/my-exports" className="nav-bar__dropdown-button-item">
             My Exports
           </DropdownItem>
-          <DropdownItem href="/help" className="nav-bar__dropdown-button-item">
-            Help / FAQ
-          </DropdownItem>
           <DropdownItem divider />
           <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >
             Sign Out

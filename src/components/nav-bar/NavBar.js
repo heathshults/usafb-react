@@ -43,7 +43,7 @@ const navBar = (props) => {
           <NavDropdownItem label="Import Coaches" onClick={() => { }} />
           <NavDropdownItem label="Export To File" onClick={props.toggleCoachExportModalOn} />
         </NavDropdown>
-        <NavDropdown label="Dashboard">
+        <NavDropdown label="Dashboard" hideSlash>
           <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />
           <NavDropdownItem label="Coaches" onClick={goToCoachesDashboard} />
         </NavDropdown>

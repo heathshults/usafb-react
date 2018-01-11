@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import uuidv4 from 'uuid/v4';
 
 import Container from 'components/containers/blue-container/BlueContainer';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
 
@@ -27,58 +28,61 @@ class Landing extends Component {
 
   render() {
     return (
-      <Container className="landing__container">
-        <Content>
-          <Header count={100000} header="players" />
-          <div className="landing__bar-chart-container">
+      <Fragment>
+        <HeaderContentDivider />
+        <Container className="landing__container">
+          <Content>
+            <Header count={'13,182'} header="players" />
+            <div className="landing__bar-chart-container">
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={barGraph}>
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="name"
+                    tickLine={false}
+                    axisLine={false}
+                    fill="#fff"
+                  />
+                  <YAxis
+                    dataKey="value"
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#8884d8">
+                    {
+                      barGraph.map((entry, index) =>
+                        <Cell fill={colors[index]} key={uuidv4()} />
+                      )
+                    }
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Content>
+          <Content>
+            <Header count={'762'} header="Coaches" />
             <ResponsiveContainer width="100%" height={400}>
-              <BarChart data={barGraph}>
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="name"
-                  tickLine={false}
-                  axisLine={false}
-                  fill="#fff"
-                />
-                <YAxis
+              <PieChart>
+                <Pie
+                  data={barGraph}
+                  fill="#8884d8"
                   dataKey="value"
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <Tooltip />
-                <Bar dataKey="value" fill="#8884d8">
+                  label={this.renderCustomPieLabel}
+                  labelLine={false}
+                >
                   {
                     barGraph.map((entry, index) =>
-                      <Cell fill={colors[index]} key={uuidv4()} />
+                      <Cell fill={colors[index]} stroke={colors[index]} key={uuidv4()} />
                     )
                   }
-                </Bar>
-              </BarChart>
+                </Pie>
+                <Tooltip />
+              </PieChart>
             </ResponsiveContainer>
-          </div>
-        </Content>
-        <Content>
-          <Header count={100000} header="Coaches" />
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={barGraph}
-                fill="#8884d8"
-                dataKey="value"
-                label={this.renderCustomPieLabel}
-                labelLine={false}
-              >
-                {
-                  barGraph.map((entry, index) =>
-                    <Cell fill={colors[index]} stroke={colors[index]} key={uuidv4()} />
-                  )
-                }
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </Content>
-      </Container>
+          </Content>
+        </Container>
+      </Fragment>
     );
   }
 }

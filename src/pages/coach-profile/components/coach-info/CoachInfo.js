@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import humanize from 'utils/transform';
 
 const CoachInfo = props => (
   <div className="card-red player-info card-red-mspacing-top">
@@ -11,7 +12,7 @@ const CoachInfo = props => (
       <p>{props.coachData.gender} - {props.coachData.years_experience} years
         <div className="theme-red-padded-line">
           <div className="theme-red-badge">
-            <strong>Coach ID: {props.coachData.id_external}</strong>
+            <strong>Coach ID: {humanize(props.coachData.id_external)}</strong>
           </div>
         </div>
         Certifications: {props.currentTeam.certifications}</p>

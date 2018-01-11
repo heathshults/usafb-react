@@ -29,7 +29,7 @@ class Landing extends Component {
     return (
       <Container className="landing__container">
         <Content>
-          <Header count={100000} header="players" />
+          <Header count={'13,653'} header="players" />
           <div className="landing__bar-chart-container">
             <ResponsiveContainer width="100%" height={400}>
               <BarChart data={barGraph}>
@@ -58,7 +58,7 @@ class Landing extends Component {
           </div>
         </Content>
         <Content>
-          <Header count={100000} header="Coaches" />
+          <Header count={781} header="Coaches" />
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
               <Pie

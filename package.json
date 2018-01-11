@@ -58,6 +58,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
     "react-s3": "^1.2.3",
+    "react-stepzilla": "^4.7.0",
     "react-test-renderer": "^16.2.0",
     "reactstrap": "^5.0.0-alpha.4",
     "recharts": "^1.0.0-beta.9",

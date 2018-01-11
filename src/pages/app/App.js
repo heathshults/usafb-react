@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
-import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
 
+import { Provider } from 'react-redux';
 import store from 'services/redux/store';
+
 import Interceptor from 'services/api/interceptor';
 import authHOC from 'hoc/auth/Auth';
 
@@ -19,6 +20,8 @@ import CoachProfile from 'pages/coach-profile/CoachProfile';
 import Users from 'pages/users/Users';
 import Profile from 'pages/profile/Profile';
 import MyExports from 'pages/my-exports/MyExports';
+import PlayerExportModal from 'pages/player-export-modal/PlayerExportModal';
+import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
 
 import './app.css';
 
@@ -43,6 +46,8 @@ const app = () => (
           <Route exact path="/me" component={authHOC(Profile)} />
           <Route exact path="/my-exports" component={authHOC(MyExports)} />
         </Switch>
+        <PlayerExportModal />
+        <CoachExportModal />
       </Fragment>
     </Router>
   </Provider>

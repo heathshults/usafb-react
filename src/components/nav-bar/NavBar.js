@@ -1,6 +1,9 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
+
+import { OPEN_PLAYER_EXPORT_MODAL, OPEN_COACH_EXPORT_MODAL } from 'pages/app/dux/actions';
 
 import Container from './components/container/Container';
 import Logo from './components/logo/Logo';
@@ -31,14 +34,14 @@ const navBar = (props) => {
       <NavigationContainer>
         <NavLink to="/" label="Home" />
         <NavDropdown label="players">
-          <NavDropdownItem label="The Players" onClick={goToPlayers} />
+          <NavDropdownItem label="Search Players" onClick={goToPlayers} />
           <NavDropdownItem label="Import Players" onClick={() => { }} />
-          <NavDropdownItem label="Export To File" onClick={() => { }} />
+          <NavDropdownItem label="Export To File" onClick={props.togglePlayerExportModalOn} />
         </NavDropdown>
         <NavDropdown label="coaches">
-          <NavDropdownItem label="The Coaches" onClick={goToCoaches} />
+          <NavDropdownItem label="Search Coaches" onClick={goToCoaches} />
           <NavDropdownItem label="Import Coaches" onClick={() => { }} />
-          <NavDropdownItem label="Export To File" onClick={() => { }} />
+          <NavDropdownItem label="Export To File" onClick={props.toggleCoachExportModalOn} />
         </NavDropdown>
         <NavDropdown label="Dashboard">
           <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />
@@ -52,7 +55,15 @@ const navBar = (props) => {
 
 navBar.propTypes = {
   location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  togglePlayerExportModalOn: PropTypes.func.isRequired,
+  toggleCoachExportModalOn: PropTypes.func.isRequired
 };
 
-export default withRouter(navBar);
+const mapStateToProps = ({ appReducer }) => appReducer;
+const mapDispatchToProps = dispatch => ({
+  togglePlayerExportModalOn: () => dispatch({ type: OPEN_PLAYER_EXPORT_MODAL }),
+  toggleCoachExportModalOn: () => dispatch({ type: OPEN_COACH_EXPORT_MODAL })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(navBar));

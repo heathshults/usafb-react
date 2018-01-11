@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
+import uuidv4 from 'uuid/v4';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import Content from './components/content/Content';
@@ -48,7 +49,7 @@ class Landing extends Component {
                 <Bar dataKey="value" fill="#8884d8">
                   {
                     barGraph.map((entry, index) =>
-                      <Cell fill={colors[index]} />
+                      <Cell fill={colors[index]} key={uuidv4()} />
                     )
                   }
                 </Bar>
@@ -69,7 +70,7 @@ class Landing extends Component {
               >
                 {
                   barGraph.map((entry, index) =>
-                    <Cell fill={colors[index]} stroke={colors[index]} />
+                    <Cell fill={colors[index]} stroke={colors[index]} key={uuidv4()} />
                   )
                 }
               </Pie>

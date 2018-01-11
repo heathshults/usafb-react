@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import humanize from 'utils/transform';
 
 import './current-season.css';
 
@@ -19,13 +20,13 @@ const CurrentSeason = props => (
             <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
               {props.currentTeam.positions && props.currentTeam.positions.map(position => (
                 <div className="positions-list" key={`${props.currentTeam._id}+${position}`}>
-                  <p style={{ wordBreak: 'break-word' }}>{position}</p>
+                  <p style={{ wordBreak: 'break-word' }}>{humanize(position)}</p>
                 </div>
               ))}
             </div>
-            <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{props.currentTeam.level_type}</div>
-            <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{props.currentTeam.organization_name}</div>
-            <div className="stat-title current-season__stats text-center p-4 mt-2 mb-2 ">{props.currentTeam.season} {props.currentTeam.season_year}</div>
+            <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{humanize(props.currentTeam.level_type)}</div>
+            <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{humanize(props.currentTeam.organization_name)}</div>
+            <div className="stat-title current-season__stats text-center p-4 mt-2 mb-2 ">{humanize(props.currentTeam.season)} {props.currentTeam.season_year}</div>
           </div>
         </div>
       </div>

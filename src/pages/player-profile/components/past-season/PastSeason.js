@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import humanize from 'utils/transform';
 
 const PastSeason = props => (
   <span>
@@ -23,18 +24,18 @@ const PastSeason = props => (
                         <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
                           {team.positions && team.positions.map(position => (
                             <div className="positions-list" key={`${team._id}+${position}`}>
-                              <p style={{ wordBreak: 'break-word' }}>{position}</p>
+                              <p style={{ wordBreak: 'break-word' }}>{humanize(position)}</p>
                             </div>
                           ))}
                         </div>
                         <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
                           <div className="badge-grade ar-1by1"> {props.playerData.grade}th
                               <br />
-                            <span className="font-50">GRADE</span>
+                            <span className="font-50">Grade</span>
                           </div> {team.level}
                         </div>
-                        <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{team.organization_name}</div>
-                        <div className="stat-title current-season__stats text-center p-4 mt-2 mb-2">{team.season} {team.season_year}</div>
+                        <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{humanize(team.organization_name)}</div>
+                        <div className="stat-title current-season__stats text-center p-4 mt-2 mb-2">{humanize(team.season)} {team.season_year}</div>
                       </div>
                     </div>
                   </div>

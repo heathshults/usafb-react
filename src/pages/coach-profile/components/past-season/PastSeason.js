@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import humanize from 'utils/transform';
 import './pastSeason.css';
 
 const PastSeason = props => (
@@ -23,18 +24,18 @@ const PastSeason = props => (
                       <div className="col-3 current-stats past-season__stats">
                         <div className="stat-title divider-br">{team.positions && team.positions.map(position => (
                           <div className="positions-list" key={`${team._id}+${position}`}>
-                            <p>{position}</p>
+                            <p>{humanize(position)}</p>
                           </div>
                         ))}</div>
                       </div>
                       <div className="col-3 current-stats past-season__stats">
-                        <div className="stat-title divider-br">{team.level_type}</div>
+                        <div className="stat-title divider-br">{humanize(team.level_type)}</div>
                       </div>
                       <div className="col-3 current-stats past-season__stats">
-                        <div className="stat-title divider-br">{team.organization_name}</div>
+                        <div className="stat-title divider-br">{humanize(team.organization_name)}</div>
                       </div>
                       <div className="col-3 current-stats past-season__stats">
-                        <div className="stat-title">{team.season} {team.season_year}</div>
+                        <div className="stat-title">{humanize(team.season)} {team.season_year}</div>
                       </div>
                     </div>
                   </div>

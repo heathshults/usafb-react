@@ -9,7 +9,7 @@ import { isEmpty, trim, compose, isNil } from 'ramda';
 * @return {boolean} is empty
 */
 export const empty = (formMap, property) => (
-    isNil(formMap.get(property)) || compose(isEmpty, trim)(formMap.get(property))
+  isNil(formMap.get(property)) || compose(isEmpty, trim)(formMap.get(property))
 );
 
 export default empty;

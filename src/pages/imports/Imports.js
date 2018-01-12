@@ -13,7 +13,7 @@ import ImportsModal from './components/imports-modal/ImportsModal';
 import ImportButton from './components/import-button/ImportButton';
 import Columns from './models/columns';
 import testData from './models/test-data';
-import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED } from './dux/actions';
+import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED, CSV_ACCEPTING } from './dux/actions';
 
 class Imports extends Component {
   constructor() {
@@ -47,25 +47,38 @@ class Imports extends Component {
   }
 
   getImportButton = () => (
-    <ImportButton toggle={this.toggle} />
+    <ImportButton toggle={this.displayImportModal} />
   )
 
-  // TODO create callbacks for modal dismiss
-  // if canceled, then clear the files on state
-  // everytime it closes, dispatch csv status to accepting
-  toggle = () =>
+  cancelUpload = () =>
     this.setState({
-      open: !this.state.open
+      open: false
     });
+
+  displayImportModal = () => {
+    this.props.csvFileAccepting();
+    this.setState({
+      open: true
+    });
+  }
+
+  // TODO add upload API endpoint
+  uploadCsv = () => {
+    this.state({
+      open: false
+    });
+  }
 
   render() {
     return (
       <Container>
         <ImportsModal
           open={this.state.open}
-          toggle={this.toggle}
+          toggle={this.cancelUpload}
+          cancel={this.cancelUpload}
           onDrop={this.onDrop}
           status={this.props.dropzoneStatus}
+          upload={this.uploadCsv}
         />
         <HeaderContentDivider />
         <DataHeader header={`Imports for ${this.props.match.params.type}`} buttons={this.getImportButton()} />
@@ -89,14 +102,16 @@ Imports.propTypes = {
   dropzoneStatus: PropTypes.string.isRequired,
   checkCsvFile: PropTypes.func.isRequired,
   csvFileAccepted: PropTypes.func.isRequired,
-  csvFileRejected: PropTypes.func.isRequired
+  csvFileRejected: PropTypes.func.isRequired,
+  csvFileAccepting: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ importsReducer }) => importsReducer;
 const mapDispatchToProps = dispatch => ({
   checkCsvFile: () => dispatch({ type: CSV_CHECKING }),
   csvFileAccepted: () => dispatch({ type: CSV_ACCEPTED }),
-  csvFileRejected: () => dispatch({ type: CSV_REJECTED })
+  csvFileRejected: () => dispatch({ type: CSV_REJECTED }),
+  csvFileAccepting: () => dispatch({ type: CSV_ACCEPTING })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

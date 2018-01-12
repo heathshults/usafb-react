@@ -48,7 +48,7 @@ const getDropzoneText = (status) => {
 
 const importsModal = props => (
   <Modal isOpen={props.open}>
-    <ModalHeader toggle={props.toggle}>Modal title</ModalHeader>
+    <ModalHeader toggle={props.cancel}>Import CSV File</ModalHeader>
     <ModalBody className="imports-modal__body">
       <Dropzone
         onDrop={props.onDrop}
@@ -61,15 +61,16 @@ const importsModal = props => (
       </Dropzone>
     </ModalBody>
     <ModalFooter>
-      <Button color="primary" onClick={props.toggle}>Do Something</Button>{' '}
-      <Button color="secondary" onClick={props.toggle}>Cancel</Button>
+      <Button color="secondary" onClick={props.cancel}>Cancel</Button>&nbsp;
+      <Button color="primary" onClick={props.upload} disabled={props.status.toUpperCase() !== 'ACCEPTED'}>Upload</Button>
     </ModalFooter>
   </Modal>
 );
 
 importsModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired,
+  cancel: PropTypes.func.isRequired,
+  upload: PropTypes.func.isRequired,
   onDrop: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired
 };

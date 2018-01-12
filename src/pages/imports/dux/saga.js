@@ -1,16 +1,19 @@
-import { fork, all, take, call, put } from 'redux-saga/effects'; //eslint-disable-line
+import { fork, all, take, put } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 
 import * as actions from './actions';
 
 export default function* userInformationFlow() {
   yield all({
-    checkUploadedCsvFlow: fork(checkUploadedCsvFlow)
+    uploadCsvFlow: fork(uploadCsvFlow)
   });
 }
 
-function* checkUploadedCsvFlow() {
+function* uploadCsvFlow() {
   while (true) {
-    yield take(actions.CSV_CHECKING);
+    yield take(actions.UPLOAD_DATA);
+    yield delay(3000);
+    yield put({ type: actions.UPLOADED_DATA });
   }
 }
 

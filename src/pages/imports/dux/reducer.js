@@ -3,7 +3,7 @@ import * as actions from './actions';
 const initialState = {
   gettingImports: false,
   imports: [],
-  uploading: false,
+  importing: false,
   dropzoneStatus: 'accepting'
 };
 
@@ -13,6 +13,10 @@ export default (state = initialState, action) => {
       return { ...state, gettingImports: true };
     case actions.RECEIVED_IMPORTS:
       return { ...state, gettingImports: false, imports: action.imports };
+    case actions.UPLOAD_DATA:
+      return { ...state, importing: true };
+    case actions.UPLOADED_DATA:
+      return { ...state, importing: false };
     case actions.CSV_ACCEPTING:
       return { ...state, dropzoneStatus: 'accepting' };
     case actions.CSV_CHECKING:

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import Container from 'components/containers/blue-container/BlueContainer';
+import DataHeader from 'components/data-header/DataHeader';
+import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
+
 class Imports extends Component {
   constructor() {
     super();
@@ -9,9 +13,11 @@ class Imports extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
+        <HeaderContentDivider />
+        <DataHeader header="Imports" />
         Imports page
-      </div>
+      </Container>
     );
   }
 }

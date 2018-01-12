@@ -54,6 +54,17 @@ class Imports extends Component {
     <ImportButton toggle={this.displayImportModal} importing={this.props.importing} />
   )
 
+  getCellFormatters = () => ({
+    Actions: this.getActionFormatter
+  })
+
+  getActionFormatter = (cell, row) => (
+    <div className="text-center">
+      {this.renderExportButton(row)}
+      {this.renderDeleteButton(row)}
+    </div>
+  )
+
   cancelUpload = () =>
     this.setState({
       open: false
@@ -75,6 +86,26 @@ class Imports extends Component {
     this.props.uploadCsv(this.state.file);
   }
 
+  renderExportButton = () => (
+    <a
+      className="my-exports__icon pr-4"
+      role="button"
+      tabIndex={0}
+    >
+      <i className="fa fa-download text-lg" />
+    </a>
+  );
+
+  renderDeleteButton = () => (
+    <a
+      className="my-exports__icon my-exports__trash"
+      role="button"
+      tabIndex={0}
+    >
+      <i className="fa fa-trash pr-2 text-lg" />
+    </a>
+  )
+
   render() {
     return (
       <Container>
@@ -94,6 +125,7 @@ class Imports extends Component {
         <DataTable
           columns={this.columns.getColumns()}
           data={testData}
+          formatters={this.getCellFormatters()}
         />
         <Pagination
           totalItems={testData.length}

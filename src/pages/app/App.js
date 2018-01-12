@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Router } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
-
+import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from 'services/redux/store';
 
@@ -33,6 +33,7 @@ const app = () => (
   <Provider store={store}>
     <Router history={history}>
       <Fragment>
+        <ToastContainer />
         <NavBar />
         <Switch>
           <Route exact path="/" component={authHOC(Landing)} />

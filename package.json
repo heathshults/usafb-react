@@ -61,6 +61,7 @@
     "react-s3": "^1.2.3",
     "react-stepzilla": "^4.7.0",
     "react-test-renderer": "^16.2.0",
+    "react-toastify": "^3.2.2",
     "reactstrap": "^5.0.0-alpha.4",
     "recharts": "^1.0.0-beta.9",
     "redux": "^3.7.2",

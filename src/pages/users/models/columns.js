@@ -16,7 +16,7 @@ export default class UserColumns {
 
   setUserColumns = () => {
     columns.push(
-      new Column('ID', '_id', false, true, true),
+      new Column('Email', 'email', false, true, true),
       new Column('Last Name', 'name_last', true),
       new Column('First Name', 'name_first', true),
       new Column('Status', 'active', true),

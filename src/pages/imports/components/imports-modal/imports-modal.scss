@@ -3,3 +3,19 @@
   align-content: center;
   justify-content: center;
 }
+
+.imports-modal__dropzone-status {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imports-modal__dropzone {
+  height: 200px;
+}
+
+.imports-modal__dropzone-icon {
+  font-size: 30px;
+}

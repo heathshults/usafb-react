@@ -16,8 +16,19 @@ class Imports extends Component {
   constructor() {
     super();
 
+    // constants for the dropzone status
+    this.ACCEPTING = 'accepting';
+    this.REJECTED = 'rejected';
+    this.CHECKING = 'checking';
+    this.ACCEPTED = 'accepted';
+
     this.state = {
-      open: false
+      open: false,
+      // dropzoneStatus will determine what to display in the dropzone component in the import modal.
+      // 'accepting' will display a message like "click here or drop a file to upload"
+      // 'rejected' will display a message like "Only csv files"
+      // 'checking' will display a spinner, letting the user know the app is in the process of validating the csv
+      dropzoneStatus: this.ACCEPTING
     };
   }
 
@@ -30,8 +41,6 @@ class Imports extends Component {
   }
 
   onDrop = (files) => {
-    console.dir(files); //eslint-disable-line
-
     this.setState({
       files
     });
@@ -53,6 +62,7 @@ class Imports extends Component {
           open={this.state.open}
           toggle={this.toggle}
           onDrop={this.onDrop}
+          status={this.state.dropzoneStatus}
         />
         <HeaderContentDivider />
         <DataHeader header={`Imports for ${this.props.match.params.type}`} buttons={this.getImportButton()} />

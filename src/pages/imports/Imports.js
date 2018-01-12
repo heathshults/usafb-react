@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
@@ -16,19 +17,8 @@ class Imports extends Component {
   constructor() {
     super();
 
-    // constants for the dropzone status
-    this.ACCEPTING = 'accepting';
-    this.REJECTED = 'rejected';
-    this.CHECKING = 'checking';
-    this.ACCEPTED = 'accepted';
-
     this.state = {
-      open: false,
-      // dropzoneStatus will determine what to display in the dropzone component in the import modal.
-      // 'accepting' will display a message like "click here or drop a file to upload"
-      // 'rejected' will display a message like "Only csv files"
-      // 'checking' will display a spinner, letting the user know the app is in the process of validating the csv
-      dropzoneStatus: this.ACCEPTING
+      open: false
     };
   }
 
@@ -62,7 +52,7 @@ class Imports extends Component {
           open={this.state.open}
           toggle={this.toggle}
           onDrop={this.onDrop}
-          status={this.state.dropzoneStatus}
+          status={this.props.dropzoneStatus}
         />
         <HeaderContentDivider />
         <DataHeader header={`Imports for ${this.props.match.params.type}`} buttons={this.getImportButton()} />
@@ -82,7 +72,10 @@ class Imports extends Component {
 }
 
 Imports.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  dropzoneStatus: PropTypes.string.isRequired
 };
 
-export default Imports;
+const mapStateToProps = ({ importsReducer }) => importsReducer;
+
+export default connect(mapStateToProps)(Imports);

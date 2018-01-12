@@ -40,6 +40,9 @@ class Imports extends Component {
     <ImportButton toggle={this.toggle} />
   )
 
+  // TODO create callbacks for modal dismiss
+  // if canceled, then clear the files on state
+  // everytime it closes, dispatch csv status to accepting
   toggle = () =>
     this.setState({
       open: !this.state.open

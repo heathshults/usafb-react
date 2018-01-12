@@ -1,60 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Alert } from 'reactstrap';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 
+import DropzoneStatus from '../dropzone-status/DropzoneStatus';
 import './imports-modal.css';
 
 const getDropzoneText = (status) => {
   if (status.toUpperCase() === 'ACCEPTING') {
     return (
-      <Alert color="light" className="imports-modal__dropzone-status border border-primary">
-        <div>
-          <i className="fa fa-upload imports-modal__dropzone-icon" aria-hidden="true" />
-        </div>
-        <br />
-        <p className="text-center">
-          Drop your CSV file here, or click to select files to upload
-        </p>
-      </Alert>
+      <DropzoneStatus
+        color="light"
+        className="border border-primary"
+        icon="upload"
+        message="Drop your CSV file here, or click to select files to upload"
+      />
     );
   } else if (status.toUpperCase() === 'REJECTED') {
     return (
-      <Alert color="danger" className="imports-modal__dropzone-status text-white">
-        <div>
-          <i className="fa fa-exclamation-triangle imports-modal__dropzone-icon" aria-hidden="true" />
-        </div>
-        <br />
-        <p className="text-center">
-          This file is too big! Please upload a csv file that is less than 2600 rows
-        </p>
-      </Alert>
+      <DropzoneStatus
+        color="danger"
+        className="text-white"
+        icon="exclamation-triangle"
+        message="This file is too big! Please upload a csv file that is less than 2600 rows"
+      />
     );
   } else if (status.toUpperCase() === 'ACCEPTED') {
     return (
-      <Alert color="success" className="imports-modal__dropzone-status text-white">
-        <div>
-          <i className="fa fa-thumbs-up imports-modal__dropzone-icon" aria-hidden="true" />
-        </div>
-        <br />
-        <p className="text-center">
-          Ready to import! Please click the import button below to start
-        </p>
-      </Alert>
+      <DropzoneStatus
+        color="success"
+        className="text-white"
+        icon="thumbs-up"
+        message="Ready to import! Please click the import button below to start"
+      />
     );
   }
 
   return (
-    <Alert color="light" className="imports-modal__dropzone-status w-100">
-      <div>
-        <i className="fa fa-spinner fa-spin imports-modal__dropzone-icon" aria-hidden="true" />
-      </div>
-      <br />
-      <p className="text-center">
-        Give us a moment....
-      </p>
-    </Alert>
+    <DropzoneStatus
+      color="light"
+      className="w-100"
+      icon="spinner fa-spin"
+      message="Give us a moment...."
+    />
   );
 };
 

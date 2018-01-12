@@ -29,6 +29,14 @@ class Imports extends Component {
     this.columns.clearColumns();
   }
 
+  onDrop = (files) => {
+    console.dir(files); //eslint-disable-line
+
+    this.setState({
+      files
+    });
+  }
+
   getImportButton = () => (
     <ImportButton toggle={this.toggle} />
   )
@@ -44,6 +52,7 @@ class Imports extends Component {
         <ImportsModal
           open={this.state.open}
           toggle={this.toggle}
+          onDrop={this.onDrop}
         />
         <HeaderContentDivider />
         <DataHeader header={`Imports for ${this.props.match.params.type}`} buttons={this.getImportButton()} />

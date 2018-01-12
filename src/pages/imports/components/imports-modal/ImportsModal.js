@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Dropzone from 'react-dropzone';
 
 const importsModal = props => (
   <Modal isOpen={props.open} toggle={props.toggle} >
     <ModalHeader toggle={props.toggle}>Modal title</ModalHeader>
     <ModalBody>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <Dropzone
+        onDrop={props.onDrop}
+      />
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={props.toggle}>Do Something</Button>{' '}
@@ -18,7 +21,8 @@ const importsModal = props => (
 
 importsModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired
+  toggle: PropTypes.func.isRequired,
+  onDrop: PropTypes.func.isRequired
 };
 
 export default importsModal;

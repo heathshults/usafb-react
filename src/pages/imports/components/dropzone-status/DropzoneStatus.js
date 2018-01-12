@@ -5,7 +5,7 @@ import { Alert } from 'reactstrap';
 import './dropzone-status.css';
 
 const dropzoneStatus = props => (
-  <Alert color={props.color} className={`${props.className}dropzone-status`}>
+  <Alert color={props.color} className={`${props.className} dropzone-status`}>
     <div>
       <i className={`dropzone-status__icon fa fa-${props.icon}`} aria-hidden="true" />
     </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Papa from 'papaparse';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
@@ -12,6 +13,7 @@ import ImportsModal from './components/imports-modal/ImportsModal';
 import ImportButton from './components/import-button/ImportButton';
 import Columns from './models/columns';
 import testData from './models/test-data';
+import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED } from './dux/actions';
 
 class Imports extends Component {
   constructor() {
@@ -31,8 +33,16 @@ class Imports extends Component {
   }
 
   onDrop = (files) => {
-    this.setState({
-      files
+    this.props.checkCsvFile();
+
+    Papa.parse(files[0], {
+      complete: (result) => {
+        if (result.data.length > 2600) {
+          this.props.csvFileRejected();
+        } else {
+          this.props.csvFileAccepted();
+        }
+      }
     });
   }
 
@@ -76,9 +86,17 @@ class Imports extends Component {
 
 Imports.propTypes = {
   match: PropTypes.object.isRequired,
-  dropzoneStatus: PropTypes.string.isRequired
+  dropzoneStatus: PropTypes.string.isRequired,
+  checkCsvFile: PropTypes.func.isRequired,
+  csvFileAccepted: PropTypes.func.isRequired,
+  csvFileRejected: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ importsReducer }) => importsReducer;
+const mapDispatchToProps = dispatch => ({
+  checkCsvFile: () => dispatch({ type: CSV_CHECKING }),
+  csvFileAccepted: () => dispatch({ type: CSV_ACCEPTED }),
+  csvFileRejected: () => dispatch({ type: CSV_REJECTED })
+});
 
-export default connect(mapStateToProps)(Imports);
+export default connect(mapStateToProps, mapDispatchToProps)(Imports);

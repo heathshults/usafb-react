@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Router } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
-
+import { ToastContainer } from 'react-toastify';
 import { Provider } from 'react-redux';
 import store from 'services/redux/store';
 
@@ -22,6 +22,7 @@ import Profile from 'pages/profile/Profile';
 import MyExports from 'pages/my-exports/MyExports';
 import PlayerExportModal from 'pages/player-export-modal/PlayerExportModal';
 import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
+import ImportsPage from 'pages/imports/Imports';
 
 import './app.css';
 
@@ -32,6 +33,7 @@ const app = () => (
   <Provider store={store}>
     <Router history={history}>
       <Fragment>
+        <ToastContainer />
         <NavBar />
         <Switch>
           <Route exact path="/" component={authHOC(Landing)} />
@@ -45,6 +47,7 @@ const app = () => (
           <Route exact path="/users/:id" component={authHOC(Profile)} />
           <Route exact path="/me" component={authHOC(Profile)} />
           <Route exact path="/my-exports" component={authHOC(MyExports)} />
+          <Route exact path="/imports/:type" component={authHOC(ImportsPage)} />
         </Switch>
         <PlayerExportModal />
         <CoachExportModal />

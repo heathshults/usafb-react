@@ -6,6 +6,7 @@ import playerSearchReducer from 'pages/players/dux/saga';
 import coachSearchReducer from 'pages/coaches/dux/saga';
 import users from 'pages/users/dux/saga';
 import user from 'pages/profile/dux/saga';
+import imports from 'pages/imports/dux/saga';
 
 export default function* rootSaga() {
   yield all({
@@ -15,6 +16,7 @@ export default function* rootSaga() {
     playerSearchReducer: call(playerSearchReducer),
     coachSearchReducer: call(coachSearchReducer),
     users: call(users),
-    user: call(user)
+    user: call(user),
+    imports: call(imports)
   });
 }

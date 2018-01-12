@@ -28,7 +28,7 @@ class Imports extends Component {
       // 'accepting' will display a message like "click here or drop a file to upload"
       // 'rejected' will display a message like "Only csv files"
       // 'checking' will display a spinner, letting the user know the app is in the process of validating the csv
-      dropzoneStatus: this.ACCEPTING
+      dropzoneStatus: this.ACCEPTED
     };
   }
 

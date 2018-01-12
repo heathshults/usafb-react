@@ -22,6 +22,7 @@ const navBar = (props) => {
   const goToCoaches = () => props.history.push('/coaches');
   const goToPlayersDashboard = () => props.history.push('/dashboard');
   const goToCoachesDashboard = () => props.history.push('/dashboard');
+  const goToImports = type => props.history.push(`/imports/${type}`);
 
   const logout = () => {
     window.localStorage.clear();
@@ -34,14 +35,14 @@ const navBar = (props) => {
       <NavigationContainer>
         <NavLink to="/" label="Home" />
         <NavDropdown label="players">
-          <NavDropdownItem label="Search Players" onClick={goToPlayers} />
-          <NavDropdownItem label="Import Players" onClick={() => { }} />
-          <NavDropdownItem label="Export To File" onClick={props.togglePlayerExportModalOn} />
+          <NavDropdownItem label="Search" onClick={goToPlayers} />
+          <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
+          <NavDropdownItem label="Export" onClick={props.togglePlayerExportModalOn} />
         </NavDropdown>
         <NavDropdown label="coaches">
-          <NavDropdownItem label="Search Coaches" onClick={goToCoaches} />
-          <NavDropdownItem label="Import Coaches" onClick={() => { }} />
-          <NavDropdownItem label="Export To File" onClick={props.toggleCoachExportModalOn} />
+          <NavDropdownItem label="Search" onClick={goToCoaches} />
+          <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
+          <NavDropdownItem label="Export" onClick={props.toggleCoachExportModalOn} />
         </NavDropdown>
         <NavDropdown label="Dashboard" hideSlash>
           <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />

@@ -22,6 +22,7 @@ import Profile from 'pages/profile/Profile';
 import MyExports from 'pages/my-exports/MyExports';
 import PlayerExportModal from 'pages/player-export-modal/PlayerExportModal';
 import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
+import ImportsPage from 'pages/imports/Imports';
 
 import './app.css';
 
@@ -45,6 +46,7 @@ const app = () => (
           <Route exact path="/users/:id" component={authHOC(Profile)} />
           <Route exact path="/me" component={authHOC(Profile)} />
           <Route exact path="/my-exports" component={authHOC(MyExports)} />
+          <Route exact path="/imports/:type" component={authHOC(ImportsPage)} />
         </Switch>
         <PlayerExportModal />
         <CoachExportModal />

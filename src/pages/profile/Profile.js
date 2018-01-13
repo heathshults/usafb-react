@@ -107,7 +107,7 @@ class Profile extends Component {
     id: this.state._id, //eslint-disable-line
     name_first: this.state.name_first,
     name_last: this.state.name_last,
-    phone: this.state.phone,
+    phone: this.state.phone || '',
     email: this.state.email,
     role_name: this.state.role_name,
     active: this.state.active
@@ -151,7 +151,7 @@ class Profile extends Component {
                 />
                 <InputField
                   label="Phone"
-                  value={this.state.phone || 'NA'}
+                  value={this.state.phone || ''}
                   editing={this.state.editing}
                   onChange={this.changePhone}
                 />

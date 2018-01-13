@@ -1,16 +1,36 @@
 import React from 'react';
-import DragAndDrop from '../drag-and-drop/DragAndDrop';
-// import PropTypes from 'prop-types';
+import VirtualizedSelect from 'react-virtualized-select';
+import PropTypes from 'prop-types';
 
-const Fields = () => (
+import 'react-select/dist/react-select.css';
+import 'react-virtualized/styles.css';
+import 'react-virtualized-select/styles.css';
+import './fields.css';
+
+const Fields = props => (
   <div className="fields">
-    <h1>Fields</h1>
-    <DragAndDrop />
+    <p>Selected Fields</p>
+    <VirtualizedSelect
+      autofocus
+      clearable={true}
+      labelKey="label"
+      multi={true}
+      onChange={props.updateSelectedItem}
+      options={props.listValues}
+      searchable={true}
+      simpleValue
+      value={props.selectedItem}
+      valueKey="value"
+    />
   </div>
 );
 
+/* eslint-disable */
 Fields.propTypes = {
-
+  listValues: PropTypes.array.isRequired,
+  // selectedValues: PropTypes.array.isRequired,
+  updateSelectedItem: PropTypes.func.isRequired,
+  selectedItem: PropTypes.any
 };
 
 export default Fields;

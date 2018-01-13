@@ -32,7 +32,7 @@ class Landing extends Component {
         <HeaderContentDivider />
         <Container className="landing__container">
           <Content>
-            <Header count={'13,182'} header="players" />
+            <Header count={13572} header="players" />
             <div className="landing__bar-chart-container">
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={barGraph}>
@@ -61,7 +61,7 @@ class Landing extends Component {
             </div>
           </Content>
           <Content>
-            <Header count={'762'} header="Coaches" />
+            <Header count={762} header="Coaches" />
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
                 <Pie

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import uuidv4 from 'uuid/v4';
@@ -14,6 +15,14 @@ import colors from './models/colors';
 import './landing.css';
 
 class Landing extends Component {
+  componentWillMount() {
+    this.props.getStats();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.dir(nextProps); //eslint-disable-line
+  }
+
   // got code from http://jsfiddle.net/x5em3hdp/
   renderCustomPieLabel = (data) => {
     const RADIAN = Math.PI / 180;
@@ -100,6 +109,10 @@ class Landing extends Component {
     );
   }
 }
+
+Landing.propTypes = {
+  getStats: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ({ landingReducer }) => landingReducer;
 const mapDispatchToProps = dispatch => ({

@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actions.GETTING_STATS:
+    case actions.GET_STATS:
       return { ...state, gettingStats: true };
     case actions.RECEIVED_STATS:
       return { ...state, gettingStats: false };

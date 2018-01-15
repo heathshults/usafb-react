@@ -9,6 +9,7 @@ import Content from './components/content/Content';
 import Header from './components/header/Header';
 
 import { barGraph } from './models/dummyData';
+import { GET_STATS } from './dux/actions';
 import colors from './models/colors';
 import './landing.css';
 
@@ -101,5 +102,8 @@ class Landing extends Component {
 }
 
 const mapStateToProps = ({ landingReducer }) => landingReducer;
+const mapDispatchToProps = dispatch => ({
+  getStats: () => dispatch({ type: GET_STATS })
+});
 
-export default connect(mapStateToProps)(Landing);
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

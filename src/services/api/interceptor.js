@@ -1,4 +1,5 @@
 import fetchIntercept from 'fetch-intercept';
+import { toast } from 'react-toastify';
 import * as headers from 'services/api/headers';
 
 /**
@@ -17,8 +18,6 @@ export default class Interceptor {
     this.config = {};
   }
 
-  // TODO add functionality of redirecting users to the login page
-  // if they do not have a refresh token and app is trying to reauthenticate
   registerInterceptor = () =>
     fetchIntercept.register({
       request: (url, config) => {
@@ -37,13 +36,23 @@ export default class Interceptor {
       },
       requestError: error => Promise.reject(error),
       response: (response) => {
-        if (response.statusText.toUpperCase() === 'UNAUTHORIZED' && response.status === 401 && !!window.localStorage.getItem('access_token')) {
+        // if the user token is invalid and they have a refresh token, get a new access token
+        if (response.statusText.toUpperCase() === 'UNAUTHORIZED' && response.status === 401 && !!window.localStorage.getItem('access_token') && !!window.localStorage.getItem('refresh_token')) {
           return this.refreshToken()
             .then(resp => resp.json())
             .then(data => this.storeTokens(data))
             .then(() => this.retryApiCall())
             .then(updatedResponse => updatedResponse);
         }
+
+        if (response.statusText.toUpperCase() !== 'UNAUTHORIZED' && response.status !== 401 && !response.ok) {
+          response.json()
+            .then(err => toast.error(err.errors[0].error, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+              autoClose: false
+            }));
+        }
+
         return response;
       },
       responseError: error => Promise.reject(error)

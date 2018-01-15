@@ -9,7 +9,7 @@ import StepperContainer from './components/stepper-container/StepperContainer';
 
 
 const PlayerExportModal = props => (
-  <Modal isOpen={props.player_export_modal_open} toggle={() => { }}>
+  <Modal isOpen={props.player_export_modal_open}>
     <ModalHeader>Player Export</ModalHeader>
     <ModalBody>
       <StepperContainer />

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { CLOSE_EXPORT_MODAL } from 'pages/app/dux/actions';
 
-import StepperContainer from './components/stepper-container/StepperContainer';
+import StepperContainer from 'components/export/components/stepper-container/StepperContainer';
 
-// TODO: figure out mapping keys in filters, remove inline lstyles, hide back button on last slide, change value of second next button to 'export', change style of stepper
+// TODO: hide back button on last slide, change value of second next button to 'export'
 
 class CoachExportModal extends Component {
   constructor() {
@@ -32,7 +32,8 @@ class CoachExportModal extends Component {
       activeFilterValue: '',
       savedFilters: [],
       filterValueEmptyError: false,
-      validationError: false
+      validationError: false,
+      dateOfBirthDirection: '&gt;'
     };
   }
 
@@ -58,6 +59,12 @@ class CoachExportModal extends Component {
     });
   }
 
+  updateDateOfBirthDirection = (event) => {
+    this.setState({
+      dateOfBirthDirection: event.target.value
+    });
+  }
+
   saveFilter = () => {
     if (!this.state.activeFilterValue) {
       this.setState({
@@ -69,6 +76,15 @@ class CoachExportModal extends Component {
       label: this.state.activeFilter,
       value: this.state.activeFilterValue
     };
+    if (newFilter.label === 'Date of Birth') {
+      let carotDirection;
+      if (this.state.dateOfBirthDirection === '&gt;') {
+        carotDirection = '>';
+      } else {
+        carotDirection = '<';
+      }
+      newFilter.value = `${carotDirection} ${newFilter.value}`;
+    }
     const newFilters = this.state.savedFilters.slice(0);
     newFilters.push(newFilter);
     this.setState({
@@ -105,6 +121,19 @@ class CoachExportModal extends Component {
     // complete once Noel is done
   }
 
+  closeExport = () => {
+    this.setState({
+      selectedValues: [],
+      selectedItem: undefined,
+      activeFilter: '',
+      activeFilterValue: '',
+      savedFilters: [],
+      filterValueEmptyError: false,
+      validationError: false
+    });
+    this.props.toggleExportModalOff();
+  }
+
   render() {
     return (
       <Modal isOpen={this.props.coach_export_modal_open} toggle={this.props.toggleExportModalOff}>
@@ -122,9 +151,11 @@ class CoachExportModal extends Component {
             saveFilter={this.saveFilter}
             filterValueEmptyError={this.state.filterValueEmptyError}
             deleteSavedFilter={this.deleteSavedFilter}
-            toggleExportModalOff={this.props.toggleExportModalOff}
+            toggleExportModalOff={this.closeExport}
             validationError={this.state.validationError}
             triggerValidationError={this.triggerValidationError}
+            dateOfBirthDirection={this.state.dateOfBirthDirection}
+            updateDateOfBirthDirection={this.updateDateOfBirthDirection}
           />
         </ModalBody>
       </Modal>

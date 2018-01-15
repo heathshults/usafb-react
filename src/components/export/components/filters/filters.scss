@@ -14,9 +14,32 @@
     outline: none;
     overflow: hidden;
     position: relative;
-    margin-right: 20px;
+    margin-right: 0px !important;
+    &-small {
+      width: 38px !important;
+      margin: 0;
+      margin-left: -22px;
+    }
+    &-medium {
+      width: 80px !important;
+      margin: 0;
+    }
     &-value {
       width: 170px;
+    }
+    &-date {
+      &-input {
+        width: 100% !important;
+        background: transparent !important;
+      }
+      &-container {
+        width: 170px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        margin-left: 10px;
+        overflow-x: visible;
+        height: 40px;
+      }
     }
   }
   &-addFilterButton {

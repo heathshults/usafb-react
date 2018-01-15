@@ -5,7 +5,7 @@ const DobFilter = () => (
   <div className="form-group">
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <label>Value</label>
-      <select className="form-control filtersContainer-select" id="sel1">
+      <select className="form-control filtersContainer-select">
         <option>Some options</option>
       </select>
     </div>

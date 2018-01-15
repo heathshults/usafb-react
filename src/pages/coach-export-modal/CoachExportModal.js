@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { CLOSE_EXPORT_MODAL } from 'pages/app/dux/actions';
 
 import StepperContainer from './components/stepper-container/StepperContainer';
 
@@ -22,11 +23,13 @@ class CoachExportModal extends Component {
         { label: 'School State', value: 'School State' },
         { label: 'Date of Birth', value: 'Date of Birth' },
       ],
+      showModal: false,
       selectedValues: [],
       selectedItem: undefined,
       activeFilter: '',
       activeFilterValue: '',
-      savedFilters: []
+      savedFilters: [],
+      filterValueEmptyError: false
     };
   }
 
@@ -47,12 +50,18 @@ class CoachExportModal extends Component {
 
   updateActiveFilterValue = (event) => {
     this.setState({
-      activeFilterValue: event.target.value
+      activeFilterValue: event.target.value,
+      filterValueEmptyError: false
     });
-    console.log('this.sta', this.state.savedFilters); // eslint-disable-line
   }
 
   saveFilter = () => {
+    if (!this.state.activeFilterValue) {
+      this.setState({
+        filterValueEmptyError: true
+      });
+      return;
+    }
     const newFilter = {
       label: this.state.activeFilter,
       value: this.state.activeFilterValue
@@ -60,18 +69,35 @@ class CoachExportModal extends Component {
     const newFilters = this.state.savedFilters.slice(0);
     newFilters.push(newFilter);
     this.setState({
-      savedFilters: newFilters
+      savedFilters: newFilters,
+      filterValueEmptyError: false
+    });
+  }
+
+  deleteSavedFilter = (event) => {
+    const splitItems = event.target.id.split(',');
+    const listOfFilters = this.state.savedFilters;
+    for (let i = 0; i < listOfFilters.length; i += 1) {
+      // console.log('event.target.value', splitItems); // eslint-disable-line
+      // console.log('checking labels', listOfFilters[i].label, splitItems[0]); // eslint-disable-line
+      // console.log('checking values', listOfFilters[i].value, splitItems[1]); // eslint-disable-line
+      if (listOfFilters[i].label === splitItems[0] && listOfFilters[i].value === splitItems[1]) {
+        listOfFilters.splice(i, 1);
+      }
+    }
+    this.setState({
+      savedFilters: listOfFilters
     });
   }
 
   submitExport = () => {
-    // do something here
+    // complete once Noel is done
   }
 
   render() {
     return (
-      <Modal isOpen={this.props.coach_export_modal_open} toggle={() => { }}>
-        <ModalHeader>Coach Export</ModalHeader>
+      <Modal isOpen={this.props.coach_export_modal_open} toggle={this.props.toggleExportModalOff}>
+        <ModalHeader toggle={this.props.toggleExportModalOff}>Coach Export</ModalHeader>
         <ModalBody>
           <StepperContainer
             updateSelectedItem={this.updateSelectedItem}
@@ -83,6 +109,9 @@ class CoachExportModal extends Component {
             updateActiveFilterValue={this.updateActiveFilterValue}
             updateActiveFilter={this.updateActiveFilter}
             saveFilter={this.saveFilter}
+            filterValueEmptyError={this.state.filterValueEmptyError}
+            deleteSavedFilter={this.deleteSavedFilter}
+            toggleExportModalOff={this.props.toggleExportModalOff}
           />
         </ModalBody>
       </Modal>
@@ -91,7 +120,8 @@ class CoachExportModal extends Component {
 }
 
 CoachExportModal.propTypes = {
-  coach_export_modal_open: PropTypes.bool
+  coach_export_modal_open: PropTypes.bool,
+  toggleExportModalOff: PropTypes.func.isRequired
 };
 
 CoachExportModal.defaultProps = {
@@ -100,7 +130,8 @@ CoachExportModal.defaultProps = {
 
 const mapStateToProps = ({ appReducer }) => appReducer;
 const mapDispatchToProps = dispatch => ({
-  toggleCoachExportModalOn: () => dispatch({ type: OPEN_COACH_EXPORT_MODAL })
+  toggleCoachExportModalOn: () => dispatch({ type: OPEN_COACH_EXPORT_MODAL }),
+  toggleExportModalOff: () => dispatch({ type: CLOSE_EXPORT_MODAL })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoachExportModal);

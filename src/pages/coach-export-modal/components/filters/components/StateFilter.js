@@ -6,7 +6,7 @@ const StateFilter = props => (
   <div className="form-group">
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <label>Value</label>
-      <select className="form-control filtersContainer-select filtersContainer-select-value " id="sel1" onChange={props.updateActiveFilterValue}>
+      <select className="form-control filtersContainer-select filtersContainer-select-value " onChange={props.updateActiveFilterValue}>
         {
           states.map(state =>
             <option key={`StateFilter${state.label}`}>{state.label}</option>

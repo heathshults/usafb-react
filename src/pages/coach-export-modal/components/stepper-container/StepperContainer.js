@@ -11,7 +11,7 @@ const StepperContainer = (props) => {
   const steps =
     [
       { name: 'Fields', component: <Fields listValues={props.listValues} selectedItem={props.selectedItem} selectedValues={props.selectedValues} updateSelectedItem={props.updateSelectedItem} /> },
-      { name: 'Filters', component: <Filters selectedValues={props.selectedValues} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
+      { name: 'Filters', component: <Filters selectedValues={props.selectedValues} deleteSavedFilter={props.deleteSavedFilter} filterValueEmptyError={props.filterValueEmptyError} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
       { name: 'Success', component: <Success /> }
     ];
 
@@ -34,7 +34,9 @@ StepperContainer.propTypes = {
   activeFilter: PropTypes.string,
   updateActiveFilterValue: PropTypes.func.isRequired,
   updateActiveFilter: PropTypes.func.isRequired,
-  saveFilter: PropTypes.func.isRequired
+  saveFilter: PropTypes.func.isRequired,
+  filterValueEmptyError: PropTypes.bool.isRequired,
+  deleteSavedFilter: PropTypes.func.isRequired
 };
 
 StepperContainer.defaultProps = {

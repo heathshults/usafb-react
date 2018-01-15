@@ -26,9 +26,24 @@
   }
   &-divider {
     border-bottom: 1px solid #b3b3b3;
+    margin-bottom: 20px;
     width: 100%;
   }
   &-filtersContainer {
     padding: 5px;
+  }
+  &-savedRow {
+    padding: 10px;
+    &-label {
+      font-style: bold;
+    }
+    &-value {
+      margin-left: 100px;
+    }
+    &-delete {
+      margin-left: auto;
+      margin-right: 40px;
+      cursor: pointer;
+    }
   }
 }

@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FirstNameFilter = props => (
+const OrganizationNameFilter = props => (
   <div className="form-group">
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <label>Value</label>
-      <input type="text" className="form-control" onChange={props.updateActiveFilterValue} placeholder="First Name" />
+      <input type="text" className="form-control" onChange={props.updateActiveFilterValue} placeholder="Organization Name" />
     </div>
   </div>
 );
 
-FirstNameFilter.propTypes = {
+OrganizationNameFilter.propTypes = {
   updateActiveFilterValue: PropTypes.func.isRequired
 };
 
-export default FirstNameFilter;
+export default OrganizationNameFilter;

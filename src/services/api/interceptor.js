@@ -1,4 +1,5 @@
 import fetchIntercept from 'fetch-intercept';
+import { toast } from 'react-toastify';
 import * as headers from 'services/api/headers';
 
 /**
@@ -44,9 +45,12 @@ export default class Interceptor {
             .then(updatedResponse => updatedResponse);
         }
 
-        if (response.statusText.toUpperCase() === 'UNAUTHORIZED' && response.status === 401 && (!window.localStorage.getItem('access_token') || !window.localStorage.getItem('refresh_token'))) {
-          window.location.href = '/login';
-          return response;
+        if (response.statusText.toUpperCase() !== 'UNAUTHORIZED' && response.status !== 401 && !response.ok) {
+          response.json()
+            .then(err => toast.error(err.errors[0].error, {
+              position: toast.POSITION.BOTTOM_RIGHT,
+              autoClose: false
+            }));
         }
 
         return response;

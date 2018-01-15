@@ -23,6 +23,45 @@ yarn test
 For this project, we are using eslint that will automatically display errors on your text-editor/IDE. If you are
 having trouble installing eslint, follow the instructions [here](https://www.npmjs.com/package/eslint)
 
+We also use the package 'beautify'VSCode extension. Press 'CMD' + ',' to open up your styling configurations, click 'workspace settings', then paste the config below: 
+
+```
+{
+	"window.zoomLevel": 0,
+	"editor.colorDecorators": true,
+	"editor.fontSize": 12,
+	"editor.autoIndent": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": true,
+	"editor.tabSize": 2,
+	"editor.detectIndentation": false,
+	"files.associations": {
+		"*.vue": "html",
+		"*.js": "javascriptreact"
+	},
+	"eslint.enable": true,
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact"
+	],
+	"html.format.wrapAttributes": "force",
+	"editor.minimap.enabled": false,
+	"workbench.editor.openPositioning": "last",
+	"emmet.syntaxProfiles": {
+		"javascript": "jsx"
+	},
+	"editor.matchBrackets": false,
+	"subtleBrackets.styles": {
+		"global": {
+			"borderColor": "lightblue",
+			"borderWidth": "3px",
+			"borderStyle": "none none solid none",
+			"color": "lightblue",
+		}
+	}
+}
+```
+
 # Architecture
 
 ## build

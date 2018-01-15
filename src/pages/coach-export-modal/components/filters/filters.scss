@@ -1,0 +1,51 @@
+.filtersContainer {
+  &-select {
+    background-color: #fff;
+    border-color: #d9d9d9 #ccc #b3b3b3;
+    border-radius: 4px !important;
+    border: 1px solid #ccc !important;
+    color: #333;
+    cursor: default;
+    display: table;
+    border-spacing: 0;
+    border-collapse: separate;
+    height: 36px;
+    width: 100%;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    margin-right: 20px;
+    &-value {
+      width: 170px;
+    }
+  }
+  &-addFilterButton {
+    height: 40px;
+    margin-top: 32px !important;
+    margin-left: auto !important;
+  }
+  &-divider {
+    border-bottom: 1px solid #b3b3b3;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  &-filtersContainer {
+    padding: 5px;
+  }
+  &-savedRow {
+    padding: 10px;
+    &-label {
+      font-style: bold;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    &-value {
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    &-delete {
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+  }
+}

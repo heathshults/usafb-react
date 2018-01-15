@@ -9,7 +9,7 @@ import StepperContainer from './components/stepper-container/StepperContainer';
 
 
 const PlayerExportModal = props => (
-  <Modal isOpen={props.appReducer.player_export_modal_open} toggle={() => { }}>
+  <Modal isOpen={props.player_export_modal_open}>
     <ModalHeader>Player Export</ModalHeader>
     <ModalBody>
       <StepperContainer />
@@ -18,15 +18,11 @@ const PlayerExportModal = props => (
 );
 
 PlayerExportModal.propTypes = {
-  appReducer: PropTypes.shape({
-    player_export_modal_open: PropTypes.bool
-  })
+  player_export_modal_open: PropTypes.bool
 };
 
 PlayerExportModal.defaultProps = {
-  appReducer: {
-    player_export_modal_open: false
-  }
+  player_export_modal_open: false
 };
 
 const mapStateToProps = ({ appReducer }) => appReducer;

@@ -73,6 +73,8 @@ function* createUserFlow() {
       yield toast.success('User has been successfully created!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
+    } else {
+      yield put({ type: actions.CREATE_USER_ERROR });
     }
   }
 }

@@ -11,14 +11,14 @@ const StepperContainer = (props) => {
   const steps =
     [
       { name: 'Fields', component: <Fields listValues={props.listValues} validationError={props.validationError} selectedItem={props.selectedItem} selectedValues={props.selectedValues} triggerValidationError={props.triggerValidationError} updateSelectedItem={props.updateSelectedItem} /> },
-      { name: 'Filters', component: <Filters validationError={props.validationError} triggerValidationError={props.triggerValidationError} selectedValues={props.selectedValues} deleteSavedFilter={props.deleteSavedFilter} filterValueEmptyError={props.filterValueEmptyError} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
+      { name: 'Filters', component: <Filters validationError={props.validationError} dateOfBirthDirection={props.dateOfBirthDirection} updateDateOfBirthDirection={props.updateDateOfBirthDirection} triggerValidationError={props.triggerValidationError} selectedValues={props.selectedValues} deleteSavedFilter={props.deleteSavedFilter} filterValueEmptyError={props.filterValueEmptyError} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
       { name: 'Success', component: <Success /> }
     ];
 
   return (
     <div className="example">
       <div className="step-progress">
-        <Stepper steps={steps} />
+        <Stepper steps={steps} prevBtnOnLastStep={false} />
       </div>
     </div>
   );
@@ -37,7 +37,9 @@ StepperContainer.propTypes = {
   filterValueEmptyError: PropTypes.bool.isRequired,
   deleteSavedFilter: PropTypes.func.isRequired,
   validationError: PropTypes.bool.isRequired,
-  triggerValidationError: PropTypes.func.isRequired
+  triggerValidationError: PropTypes.func.isRequired,
+  dateOfBirthDirection: PropTypes.string.isRequired,
+  updateDateOfBirthDirection: PropTypes.func.isRequired
 };
 
 StepperContainer.defaultProps = {

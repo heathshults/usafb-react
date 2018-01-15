@@ -11,7 +11,7 @@ const StepperContainer = (props) => {
   const steps =
     [
       { name: 'Fields', component: <Fields listValues={props.listValues} selectedItem={props.selectedItem} selectedValues={props.selectedValues} updateSelectedItem={props.updateSelectedItem} /> },
-      { name: 'Filters', component: <Filters /> },
+      { name: 'Filters', component: <Filters selectedValues={props.selectedValues} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
       { name: 'Success', component: <Success /> }
     ];
 
@@ -27,10 +27,19 @@ const StepperContainer = (props) => {
 /* eslint-disable */
 StepperContainer.propTypes = {
   listValues: PropTypes.array.isRequired,
-  selectedValues: PropTypes.array.isRequired,
+  selectedValues: PropTypes.array,
   updateSelectedItem: PropTypes.func.isRequired,
-  selectedItem: PropTypes.any
+  selectedItem: PropTypes.any,
+  savedFilters: PropTypes.array,
+  activeFilter: PropTypes.string,
+  updateActiveFilterValue: PropTypes.func.isRequired,
+  updateActiveFilter: PropTypes.func.isRequired,
+  saveFilter: PropTypes.func.isRequired
 };
+
+StepperContainer.defaultProps = {
+  selectedValues: []
+}
 
 export default StepperContainer;
 

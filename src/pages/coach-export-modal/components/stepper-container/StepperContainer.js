@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Stepper from 'react-stepzilla';
-import './stepperContainer.css';
+import 'styles/stepper/stepper.css';
 
 import Fields from '../fields/Fields';
 import Filters from '../filters/Filters';

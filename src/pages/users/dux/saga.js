@@ -1,4 +1,5 @@
 import { fork, all, take, call, put, select } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import * as actions from './actions';
 import getUsers, { createUser, editUser, getRoles, activateUser, deactivateUser } from './api';
@@ -118,6 +119,9 @@ function* activateUserFlow() {
       const updatedUsers = yield updateUser(users, user);
       yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
       yield put({ type: actions.USER_STATUS_UPDATED });
+      yield toast.info(`${user.name_first} ${user.name_last} has been activated!`, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
     }
   }
 }
@@ -132,6 +136,9 @@ function* deactivateUserFlow() {
       const updatedUsers = yield updateUser(users, user);
       yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
       yield put({ type: actions.USER_STATUS_UPDATED });
+      yield toast.warn(`${user.name_first} ${user.name_last} has been deactivated!`, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
     }
   }
 }

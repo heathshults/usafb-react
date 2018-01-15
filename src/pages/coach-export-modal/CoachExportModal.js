@@ -6,6 +6,8 @@ import { CLOSE_EXPORT_MODAL } from 'pages/app/dux/actions';
 
 import StepperContainer from './components/stepper-container/StepperContainer';
 
+// TODO: figure out mapping keys in filters, remove inline lstyles, hide back button on last slide, change value of second next button to 'export', change style of stepper
+
 class CoachExportModal extends Component {
   constructor() {
     super();
@@ -29,7 +31,8 @@ class CoachExportModal extends Component {
       activeFilter: '',
       activeFilterValue: '',
       savedFilters: [],
-      filterValueEmptyError: false
+      filterValueEmptyError: false,
+      validationError: false
     };
   }
 
@@ -78,9 +81,6 @@ class CoachExportModal extends Component {
     const splitItems = event.target.id.split(',');
     const listOfFilters = this.state.savedFilters;
     for (let i = 0; i < listOfFilters.length; i += 1) {
-      // console.log('event.target.value', splitItems); // eslint-disable-line
-      // console.log('checking labels', listOfFilters[i].label, splitItems[0]); // eslint-disable-line
-      // console.log('checking values', listOfFilters[i].value, splitItems[1]); // eslint-disable-line
       if (listOfFilters[i].label === splitItems[0] && listOfFilters[i].value === splitItems[1]) {
         listOfFilters.splice(i, 1);
       }
@@ -88,6 +88,17 @@ class CoachExportModal extends Component {
     this.setState({
       savedFilters: listOfFilters
     });
+  }
+
+  triggerValidationError = () => {
+    this.setState({
+      validationError: true
+    });
+    setTimeout(() => {
+      this.setState({
+        validationError: false
+      });
+    }, 3000);
   }
 
   submitExport = () => {
@@ -112,6 +123,8 @@ class CoachExportModal extends Component {
             filterValueEmptyError={this.state.filterValueEmptyError}
             deleteSavedFilter={this.deleteSavedFilter}
             toggleExportModalOff={this.props.toggleExportModalOff}
+            validationError={this.state.validationError}
+            triggerValidationError={this.triggerValidationError}
           />
         </ModalBody>
       </Modal>

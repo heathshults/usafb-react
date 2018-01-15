@@ -10,8 +10,8 @@ import Success from '../success/Success';
 const StepperContainer = (props) => {
   const steps =
     [
-      { name: 'Fields', component: <Fields listValues={props.listValues} selectedItem={props.selectedItem} selectedValues={props.selectedValues} updateSelectedItem={props.updateSelectedItem} /> },
-      { name: 'Filters', component: <Filters selectedValues={props.selectedValues} deleteSavedFilter={props.deleteSavedFilter} filterValueEmptyError={props.filterValueEmptyError} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
+      { name: 'Fields', component: <Fields listValues={props.listValues} validationError={props.validationError} selectedItem={props.selectedItem} selectedValues={props.selectedValues} triggerValidationError={props.triggerValidationError} updateSelectedItem={props.updateSelectedItem} /> },
+      { name: 'Filters', component: <Filters validationError={props.validationError} triggerValidationError={props.triggerValidationError} selectedValues={props.selectedValues} deleteSavedFilter={props.deleteSavedFilter} filterValueEmptyError={props.filterValueEmptyError} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
       { name: 'Success', component: <Success /> }
     ];
 
@@ -24,7 +24,6 @@ const StepperContainer = (props) => {
   );
 };
 
-/* eslint-disable */
 StepperContainer.propTypes = {
   listValues: PropTypes.array.isRequired,
   selectedValues: PropTypes.array,
@@ -36,12 +35,17 @@ StepperContainer.propTypes = {
   updateActiveFilter: PropTypes.func.isRequired,
   saveFilter: PropTypes.func.isRequired,
   filterValueEmptyError: PropTypes.bool.isRequired,
-  deleteSavedFilter: PropTypes.func.isRequired
+  deleteSavedFilter: PropTypes.func.isRequired,
+  validationError: PropTypes.bool.isRequired,
+  triggerValidationError: PropTypes.func.isRequired
 };
 
 StepperContainer.defaultProps = {
-  selectedValues: []
-}
+  selectedValues: [],
+  savedFilters: [],
+  activeFilter: '',
+  selectedItem: ''
+};
 
 export default StepperContainer;
 

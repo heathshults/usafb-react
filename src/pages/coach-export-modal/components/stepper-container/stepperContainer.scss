@@ -34,16 +34,20 @@ ol.progtrckr li span {
 
 ol.progtrckr li.progtrckr-todo {
   color: silver;
+  width: 155px;
   border-bottom: 4px solid silver;
 }
 
 ol.progtrckr li.progtrckr-doing {
   color: black;
+  width: 155px;
+  margin-top: 3px;
   border-bottom: 4px solid #0B2649;
 }
 
 ol.progtrckr li.progtrckr-done {
   color: black;
+  width: 155px;
   border-bottom: 4px solid #5cb85c;
 }
 
@@ -62,7 +66,7 @@ ol.progtrckr li.progtrckr-todo:before {
   content: "\039F";
   color: silver;
   background-color: white;
-  width: 0em;
+  width: 10px;
   line-height: 1.4em;
 }
 

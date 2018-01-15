@@ -30,7 +30,7 @@ class Filters extends Component {
       <div className="filtersContainer">
         <div className="row">
           <div className="form-group col-4">
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="column">
               <label>Filters</label>
               <select className="form-control filtersContainer-select" onChange={this.props.updateActiveFilter}>
                 <option>Choose...</option>

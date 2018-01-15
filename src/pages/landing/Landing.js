@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import uuidv4 from 'uuid/v4';
 
@@ -7,11 +9,15 @@ import HeaderContentDivider from 'components/header-content-divider/HeaderConten
 import Content from './components/content/Content';
 import Header from './components/header/Header';
 
-import { barGraph } from './models/dummyData';
+import { GET_STATS } from './dux/actions';
 import colors from './models/colors';
 import './landing.css';
 
 class Landing extends Component {
+  componentWillMount() {
+    this.props.getStats();
+  }
+
   // got code from http://jsfiddle.net/x5em3hdp/
   renderCustomPieLabel = (data) => {
     const RADIAN = Math.PI / 180;
@@ -32,26 +38,25 @@ class Landing extends Component {
         <HeaderContentDivider />
         <Container className="landing__container">
           <Content>
-            <Header count={13572} header="players" />
+            <Header count={this.props.num_players} header="players" />
             <div className="landing__bar-chart-container">
               <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={barGraph}>
+                <BarChart data={this.props.players}>
                   <CartesianGrid vertical={false} />
                   <XAxis
                     dataKey="name"
                     tickLine={false}
                     axisLine={false}
-                    fill="#fff"
                   />
                   <YAxis
-                    dataKey="value"
+                    dataKey="num"
                     tickLine={false}
                     axisLine={false}
                   />
                   <Tooltip />
-                  <Bar dataKey="value" fill="#8884d8">
+                  <Bar dataKey="num">
                     {
-                      barGraph.map((entry, index) =>
+                      this.props.players.map((entry, index) =>
                         <Cell fill={colors[index]} key={uuidv4()} />
                       )
                     }
@@ -61,18 +66,18 @@ class Landing extends Component {
             </div>
           </Content>
           <Content>
-            <Header count={762} header="Coaches" />
+            <Header count={this.props.num_coaches} header="Coaches" />
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
                 <Pie
-                  data={barGraph}
+                  data={this.props.coaches}
                   fill="#8884d8"
-                  dataKey="value"
+                  dataKey="num"
                   label={this.renderCustomPieLabel}
                   labelLine={false}
                 >
                   {
-                    barGraph.map((entry, index) =>
+                    this.props.coaches.map((entry, index) =>
                       <Cell fill={colors[index]} stroke={colors[index]} key={uuidv4()} />
                     )
                   }
@@ -87,4 +92,17 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+Landing.propTypes = {
+  getStats: PropTypes.func.isRequired,
+  num_coaches: PropTypes.number.isRequired,
+  num_players: PropTypes.number.isRequired,
+  players: PropTypes.array.isRequired,
+  coaches: PropTypes.array.isRequired
+};
+
+const mapStateToProps = ({ landingReducer }) => landingReducer;
+const mapDispatchToProps = dispatch => ({
+  getStats: () => dispatch({ type: GET_STATS })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

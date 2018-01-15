@@ -237,6 +237,7 @@ class UserModal extends Component {
                   label="Email"
                   value={this.state.email}
                   onChange={this.updateEmail}
+                  disabled={this.props.header.toUpperCase() === 'EDIT USER'}
                 />
               </div>
             </div>

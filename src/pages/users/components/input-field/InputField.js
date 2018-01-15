@@ -20,6 +20,7 @@ const inputField = props => (
       placeholder={props.label}
       value={props.value}
       onChange={props.onChange}
+      disabled={props.disabled}
     />
   </div>
 );
@@ -28,7 +29,12 @@ inputField.propTypes = {
   label: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool
+};
+
+inputField.defaultProps = {
+  disabled: false
 };
 
 export default inputField;

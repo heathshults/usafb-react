@@ -67,12 +67,12 @@ function* createUserFlow() {
     const { data } = yield take(actions.CREATE_USER);
     const userData = yield extractUserData(data);
     const response = yield call(createUser, userData);
-    const responseData = yield response.json();
     if (response.ok) {
       yield put({ type: actions.USER_CREATED });
       yield call(getUpdatedUsers);
-    } else {
-      yield put({ type: actions.CREATE_USER_ERROR, createUserError: responseData.errors[0] });
+      yield toast.success('User has been successfully created!', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
     }
   }
 }

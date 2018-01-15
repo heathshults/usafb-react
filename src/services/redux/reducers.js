@@ -10,6 +10,7 @@ import coachSearchReducer from 'pages/coaches/dux/reducer';
 import appReducer from 'pages/app/dux/reducer';
 import userInformation from 'pages/profile/dux/reducer';
 import importsReducer from 'pages/imports/dux/reducer';
+import landingReducer from 'pages/landing/dux/reducer';
 
 export default combineReducers({
   routerReducer,
@@ -21,5 +22,6 @@ export default combineReducers({
   coachSearchReducer,
   appReducer,
   userInformation,
-  importsReducer
+  importsReducer,
+  landingReducer
 });

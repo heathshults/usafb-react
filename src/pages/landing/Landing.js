@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import uuidv4 from 'uuid/v4';
 
@@ -99,4 +100,6 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapStateToProps = ({ landingReducer }) => landingReducer;
+
+export default connect(mapStateToProps)(Landing);

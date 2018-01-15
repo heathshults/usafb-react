@@ -26,6 +26,19 @@ class Landing extends Component {
     );
   }
 
+  renderCustomBarLabel = (data) => {
+    if (data) {
+      console.dir(data); //eslint-disable-line
+      console.log(data.content()); //eslint-disable-line
+    }
+
+    return (
+      <div>
+        Data
+      </div>
+    );
+  }
+
   render() {
     return (
       <Fragment>
@@ -41,7 +54,6 @@ class Landing extends Component {
                     dataKey="name"
                     tickLine={false}
                     axisLine={false}
-                    fill="#fff"
                   />
                   <YAxis
                     dataKey="value"

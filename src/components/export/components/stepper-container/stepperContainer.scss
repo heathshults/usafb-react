@@ -36,6 +36,9 @@ ol.progtrckr li.progtrckr-todo {
   color: silver;
   width: 155px;
   border-bottom: 4px solid silver;
+  @media (max-width: 650px) {
+    width: 100px;
+  }
 }
 
 ol.progtrckr li.progtrckr-doing {
@@ -43,12 +46,18 @@ ol.progtrckr li.progtrckr-doing {
   width: 155px;
   margin-top: 3px;
   border-bottom: 4px solid #0B2649;
+  @media (max-width: 650px) {
+    width: 100px;
+  }
 }
 
 ol.progtrckr li.progtrckr-done {
   color: black;
   width: 155px;
   border-bottom: 4px solid #5cb85c;
+  @media (max-width: 650px) {
+    width: 100px;
+  }
 }
 
 ol.progtrckr li:after {

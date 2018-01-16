@@ -162,7 +162,7 @@ class Profile extends Component {
               <InputField
                 label="Email"
                 value={this.state.email}
-                editing={this.state.editing}
+                editing={false}
                 onChange={this.changeEmail}
               />
               <Password />

@@ -33,14 +33,12 @@ export default (state = initialState, action) => {
         ...state,
         creatingUser: false,
         userCreated: true,
-        headerStatus: 'success'
       };
     case actions.CREATE_USER_ERROR:
       return {
         ...state,
         creatingUser: false,
         userCreated: false,
-        headerStatus: 'danger'
       };
     case actions.DISMISS_HEADER_MESSAGE:
       return { ...state, headerMessageOpen: false };

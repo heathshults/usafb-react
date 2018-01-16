@@ -77,7 +77,7 @@ class Profile extends Component {
 
   changeRole = event =>
     this.setState({
-      role: event.target.value
+      role_name: event.target.value
     });
 
   changeOrganization = event =>

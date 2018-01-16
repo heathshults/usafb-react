@@ -20,8 +20,10 @@ export default (state = initialState, action) => {
     case actions.USER_INFORMATION_RECEIVED:
       return { ...state, gettingUserInformation: false, ...action.userInformation };
     case actions.USER_INFORMATION_ERROR:
-      return { ...state, gettingUserInformation: false, error: action.error };
+      return { ...state, gettingUserInformation: false, saving: false, error: action.error };
     case actions.SAVE_USER_INFORMATION:
+      return { ...state, saving: true, error: '' };
+    case actions.SAVE_MY_INFORMATION:
       return { ...state, saving: true, error: '' };
     case actions.USER_INFORMATION_SAVED:
       return { ...state, saving: false, ...action.userInformation };

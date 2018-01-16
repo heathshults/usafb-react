@@ -167,12 +167,6 @@ class Profile extends Component {
                 onChange={this.changeEmail}
               />
               <Password />
-              <InputField
-                label="Role"
-                value={this.state.role_name}
-                editing={this.state.editing}
-                onChange={this.changeRole}
-              />
               <SelectField
                 label="Role"
                 options={this.props.roles}

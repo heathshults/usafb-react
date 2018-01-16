@@ -1,4 +1,5 @@
 import { all, call } from 'redux-saga/effects';
+import app from 'pages/app/dux/saga';
 import login from 'pages/login/dux/saga';
 import playerProfile from 'pages/player-profile/dux/saga';
 import coachProfile from 'pages/coach-profile/dux/saga';
@@ -11,6 +12,7 @@ import landing from 'pages/landing/dux/saga';
 
 export default function* rootSaga() {
   yield all({
+    app: call(app),
     login: call(login),
     playerProfile: call(playerProfile),
     coachProfile: call(coachProfile),

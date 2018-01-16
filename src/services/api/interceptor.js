@@ -45,9 +45,10 @@ export default class Interceptor {
             .then(updatedResponse => updatedResponse);
         }
 
+        // automatically display a toast error message for every failed API call
         if (response.statusText.toUpperCase() !== 'UNAUTHORIZED' && response.status !== 401 && !response.ok) {
           response.json()
-            .then(err => toast.error(err.errors[0].error, {
+            .then(err => toast.error(this.getErrorMessage(err), {
               position: toast.POSITION.BOTTOM_RIGHT,
               autoClose: false
             }));
@@ -94,4 +95,12 @@ export default class Interceptor {
 
     return data;
   }
+
+  getErrorMessage = (err) => {
+    if (err.data.errors) {
+      return err.data.errors[0].error;
+    }
+
+    return err.data.error.message;
+  };
 }

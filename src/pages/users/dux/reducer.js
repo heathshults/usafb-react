@@ -24,8 +24,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         gettingUsers: false,
-        headerMessage: action.gettingUsersError,
-        headerMessageOpen: true,
         headerStatus: 'danger'
       };
     case actions.CREATE_USER:
@@ -35,8 +33,6 @@ export default (state = initialState, action) => {
         ...state,
         creatingUser: false,
         userCreated: true,
-        headerMessage: 'New user has been added!',
-        headerMessageOpen: true,
         headerStatus: 'success'
       };
     case actions.CREATE_USER_ERROR:
@@ -44,8 +40,6 @@ export default (state = initialState, action) => {
         ...state,
         creatingUser: false,
         userCreated: false,
-        headerMessage: action.createUserError,
-        headerMessageOpen: true,
         headerStatus: 'danger'
       };
     case actions.DISMISS_HEADER_MESSAGE:

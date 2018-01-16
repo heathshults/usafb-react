@@ -1,6 +1,8 @@
 export const OPEN_PLAYER_EXPORT_MODAL = 'open player export modal';
 export const OPEN_COACH_EXPORT_MODAL = 'open coach export modal';
 export const CLOSE_EXPORT_MODAL = 'close export modal';
+export const GET_ROLES = 'usafb get roles';
+export const RECEIVED_ROLES = 'usafb received roles';
 
 export function togglePlayerExportModalOn() {
   return {

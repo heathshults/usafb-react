@@ -1,14 +1,19 @@
-import { fork, all, take, call, put } from 'redux-saga/effects';
+import { all, take, call, put } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
+import { activateUser, deactivateUser } from 'pages/users/dux/api';
+import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
-import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api'; //eslint-disable-line
+import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api';
 
 export default function* userInformationFlow() {
   yield all({
-    getUserInformationFlow: fork(getUserInformationFlow),
-    saveUserInformationFlow: fork(saveUserInformationFlow),
-    getMyUserInformationFlow: fork(getMyUserInformationFlow),
-    saveMyInformationFlow: fork(saveMyInformationFlow)
+    getUserInformationFlow: call(getUserInformationFlow),
+    saveUserInformationFlow: call(saveUserInformationFlow),
+    getMyUserInformationFlow: call(getMyUserInformationFlow),
+    saveMyInformationFlow: call(saveMyInformationFlow),
+    activateUserFlow: call(activateUserFlow),
+    disableUserFlow: call(disableUserFlow)
   });
 }
 
@@ -21,9 +26,7 @@ function* getUserInformationFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to get this user information.
       Please check your network connection and try again`;
-      yield put({
-        type: actions.USER_INFORMATION_ERROR, error: errorMessage
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -39,15 +42,15 @@ function* saveUserInformationFlow() {
           type: actions.USER_INFORMATION_SAVED,
           userInformation: responseData.data
         });
-      } else {
-        yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
+        yield toast.success('User saved!', {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: false
+        });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
-      yield put({
-        type: actions.USER_INFORMATION_ERROR, error: errorMessage
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -61,9 +64,7 @@ function* getMyUserInformationFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save your user information.
       Please check your network connection and try again`;
-      yield put({
-        type: actions.USER_INFORMATION_ERROR, error: errorMessage
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -75,8 +76,6 @@ function* setUserData(response) {
       type: actions.USER_INFORMATION_RECEIVED,
       userInformation: responseData.data
     });
-  } else {
-    yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
   }
 }
 
@@ -91,15 +90,50 @@ function* saveMyInformationFlow() {
           type: actions.USER_INFORMATION_SAVED,
           userInformation: responseData.data
         });
-      } else {
-        yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
+        yield toast.success('User saved!', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
-      yield put({
-        type: actions.USER_INFORMATION_ERROR, error: errorMessage
+      displayErrorToast(errorMessage);
+    }
+  }
+}
+
+function* activateUserFlow() {
+  while (true) {
+    try {
+      const { id } = yield take(actions.ACTIVATE_USER);
+      const response = yield call(activateUser, id);
+      const responseData = yield response.json();
+      yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
+      yield toast.success('User activated!', {
+        position: toast.POSITION.BOTTOM_RIGHT
       });
+    } catch (e) {
+      const errorMessage = `An error occurred when we tried to enable this user.
+      Please check your network connection and try again`;
+      displayErrorToast(errorMessage);
+    }
+  }
+}
+
+function* disableUserFlow() {
+  while (true) {
+    try {
+      const { id } = yield take(actions.DISABLE_USER);
+      const response = yield call(deactivateUser, id);
+      const responseData = yield response.json();
+      yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
+      yield toast.success('User disabled!', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    } catch (e) {
+      const errorMessage = `An error occurred when we tried to enable this user.
+      Please check your network connection and try again`;
+      displayErrorToast(errorMessage);
     }
   }
 }

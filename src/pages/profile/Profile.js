@@ -12,13 +12,25 @@ import ContactInformationHeader from './components/contact-information-header/Co
 import InputField from './components/input-field/InputField';
 import Password from './components/password/Password';
 import Status from './components/status/Status';
+import SelectField from './components/select-field/SelectField';
 
 import './profile.css';
-import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION } from './dux/actions';
+import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION, ACTIVATE_USER, DISABLE_USER } from './dux/actions';
 
 class Profile extends Component {
   constructor() {
     super();
+    this.statusOptions = [
+      {
+        value: false,
+        name: 'DISABLED'
+      },
+      {
+        value: true,
+        name: 'ACTIVE'
+      }
+    ];
+
     this.state = {
       editing: false,
       email: '',
@@ -76,7 +88,7 @@ class Profile extends Component {
 
   changeRole = event =>
     this.setState({
-      role: event.target.value
+      role_name: event.target.value
     });
 
   changeOrganization = event =>
@@ -84,10 +96,13 @@ class Profile extends Component {
       organization: event.target.value
     });
 
-  changeStatus = event =>
-    this.setState({
-      status: event.target.value
-    });
+  changeStatus = () => {
+    if (this.state.active) {
+      this.props.disableUser(this.props.match.params.id);
+    } else {
+      this.props.activateUser(this.props.match.params.id);
+    }
+  }
 
   saveChanges = () => {
     this.setState({
@@ -109,8 +124,7 @@ class Profile extends Component {
     name_last: this.state.name_last,
     phone: this.state.phone || '',
     email: this.state.email,
-    role_name: this.state.role_name,
-    active: this.state.active
+    role_name: this.state.role_name
   });
 
   cancelEdit = () => {
@@ -162,18 +176,23 @@ class Profile extends Component {
               <InputField
                 label="Email"
                 value={this.state.email}
-                editing={this.state.editing}
+                editing={false}
                 onChange={this.changeEmail}
               />
               <Password />
-              <InputField
+              <SelectField
                 label="Role"
+                options={this.props.roles}
                 value={this.state.role_name}
                 editing={this.state.editing}
                 onChange={this.changeRole}
               />
               {this.props.match.params.id &&
-                <Status active={this.state.active} />
+                <Status
+                  active={this.props.active}
+                  onChange={this.changeStatus}
+                  disabled={this.props.togglingUserStatus}
+                />
               }
             </Content>
           </Block>
@@ -189,15 +208,26 @@ Profile.propTypes = {
   saveUserInformation: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   getMyInformation: PropTypes.func.isRequired,
-  saveMyInformation: PropTypes.func.isRequired
+  saveMyInformation: PropTypes.func.isRequired,
+  roles: PropTypes.array.isRequired,
+  activateUser: PropTypes.func.isRequired,
+  disableUser: PropTypes.func.isRequired,
+  togglingUserStatus: PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = ({ userInformation }) => userInformation;
+const mapStateToProps = state => ({
+  ...state.userInformation,
+  ...state.appReducer
+});
+
 const mapDispatchToProps = dispatch => ({
   getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
   saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data }),
   getMyInformation: () => dispatch({ type: GET_MY_INFORMATION }),
-  saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data })
+  saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data }),
+  activateUser: id => dispatch({ type: ACTIVATE_USER, id }),
+  disableUser: id => dispatch({ type: DISABLE_USER, id })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

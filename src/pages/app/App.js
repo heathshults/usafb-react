@@ -25,9 +25,12 @@ import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
 import ImportsPage from 'pages/imports/Imports';
 
 import './app.css';
+import { GET_ROLES } from './dux/actions';
 
 const history = createHistory();
 const interceptor = new Interceptor(); //eslint-disable-line
+
+store.dispatch({ type: GET_ROLES });
 
 const app = () => (
   <Provider store={store}>

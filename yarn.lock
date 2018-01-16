@@ -6435,12 +6435,11 @@ react-toastify@^3.2.2:
     prop-types "^15.6.0"
     react-transition-group "^2.2.1"
 
-react-toggle-button@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-toggle-button/-/react-toggle-button-2.2.0.tgz#a1b92143aa0df414642fcb141f0879f545bc5a89"
+react-toggle@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-toggle/-/react-toggle-4.0.2.tgz#77f487860efb87fafd197672a2db8c885be1440f"
   dependencies:
-    prop-types "^15.6.0"
-    react-motion "^0.5.2"
+    classnames "^2.2.5"
 
 react-transition-group@^2.2.0, react-transition-group@^2.2.1:
   version "2.2.1"

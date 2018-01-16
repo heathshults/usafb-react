@@ -1,17 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ToggleButton from 'react-toggle-button';
-
+// import ToggleButton from 'react-toggle-button';
+import Toggle from 'react-toggle';
+import 'react-toggle/style.css';
+import './status.css';
 
 const status = props => (
   <div className="d-flex align-items-center mt-1 mb-1">
     <p className="m-0 profile__input-label">
-      Status {props.active}
+      Status
     </p>
-    <div className="profile__input-field">
-      <ToggleButton
-        value={props.active}
-        onToggle={props.onChange}
+    <div className="profile__status profile__input-field">
+      <span>
+        {props.active ? 'ACTIVE' : 'DISABLED'}
+      </span>
+      <Toggle
+        defaultChecked={props.active}
+        onChange={props.onChange}
       />
     </div>
   </div>

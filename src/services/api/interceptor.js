@@ -45,6 +45,7 @@ export default class Interceptor {
             .then(updatedResponse => updatedResponse);
         }
 
+        // automatically display a toast error message for every failed API call
         if (response.statusText.toUpperCase() !== 'UNAUTHORIZED' && response.status !== 401 && !response.ok) {
           response.json()
             .then(err => toast.error(err.errors[0].error, {

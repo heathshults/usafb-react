@@ -94,19 +94,31 @@ function* editUserFlow() {
     const response = yield call(editUser, data);
     if (response.ok) {
       yield put({ type: actions.USER_EDITED });
+
+      // We need to find the user and replace all values with updated fields.
+      // Cannot simply get data from API because pagination will reset
       const { users, totalUsers } = yield select(userManagementSelector);
       const updatedUser = yield extractUserData(data);
       const updatedUsers = yield updateUser(users, updatedUser);
+
       yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
-    } else {
-      const responseData = yield response.json();
-      yield put({ type: actions.EDIT_USER_ERROR, editUserError: responseData.errors[0] });
+      yield toast.success(`${data.name_first} ${data.name_last} updated successfully!`, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
     }
+    // else {
+    //   const responseData = yield response.json();
+    //   yield toast.error(responseData.error.errors[0], {
+    //     position: toast.POSITION.BOTTOM_RIGHT
+    //   });
+    // }
   }
 }
 
 function updateUser(users, updatedUser) {
   let userToUpdate = users.find(user => user._id === updatedUser._id); //eslint-disable-line
+  // we need to carry over the status because it is not being returned from the sagas
+  updatedUser.active = userToUpdate.active; //eslint-disable-line
   users[users.findIndex(user => user._id === userToUpdate._id)] = updatedUser; //eslint-disable-line
   return users;
 }

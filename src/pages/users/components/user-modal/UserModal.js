@@ -200,6 +200,13 @@ class UserModal extends Component {
     }
   }
 
+  canSaveOrEdit = () =>
+    this.state.name_first === '' || this.state.name_last === '' ||
+    this.state.email === '' || this.state.role_id === '' ||
+    this.state.phone === '' || this.state.address1 === '' ||
+    this.state.city === '' || this.setState.state === '' ||
+    this.state.zip === '';
+
   render() {
     return (
       <Modal
@@ -261,7 +268,7 @@ class UserModal extends Component {
                 />
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12 users__input-container">
                 <InputField
                   icon="building"
@@ -270,7 +277,7 @@ class UserModal extends Component {
                   onChange={this.updateOrganization}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-md-12 users__input-container">
                 <InputField
@@ -322,8 +329,14 @@ class UserModal extends Component {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => this.dismissModal(this.CANCELED)}>Close</Button>{' '}
-          <Button color="primary" onClick={() => this.dismissModal(this.SAVED)}>Save</Button>
+          <Button color="secondary" onClick={() => this.dismissModal(this.CANCELED)}>Close</Button>&nbsp;
+          <Button
+            color="primary"
+            onClick={() => this.dismissModal(this.SAVED)}
+            disabled={this.canSaveOrEdit()}
+          >
+            Save
+          </Button>
         </ModalFooter>
       </Modal>
     );

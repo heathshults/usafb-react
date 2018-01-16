@@ -96,10 +96,11 @@ class Profile extends Component {
       organization: event.target.value
     });
 
-  changeStatus = () =>
+  changeStatus = () => {
     this.setState({
       active: !this.state.active
     });
+  }
 
   saveChanges = () => {
     this.setState({
@@ -121,8 +122,7 @@ class Profile extends Component {
     name_last: this.state.name_last,
     phone: this.state.phone || '',
     email: this.state.email,
-    role_name: this.state.role_name,
-    active: this.state.active
+    role_name: this.state.role_name
   });
 
   cancelEdit = () => {

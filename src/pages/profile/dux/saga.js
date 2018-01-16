@@ -1,4 +1,5 @@
 import { fork, all, take, call, put } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import * as actions from './actions';
 import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api';
@@ -38,6 +39,9 @@ function* saveUserInformationFlow() {
         yield put({
           type: actions.USER_INFORMATION_SAVED,
           userInformation: responseData.data
+        });
+        yield toast.success('User saved!', {
+          position: toast.POSITION.BOTTOM_RIGHT
         });
       } else {
         yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
@@ -90,6 +94,9 @@ function* saveMyInformationFlow() {
         yield put({
           type: actions.USER_INFORMATION_SAVED,
           userInformation: responseData.data
+        });
+        yield toast.success('User saved!', {
+          position: toast.POSITION.BOTTOM_RIGHT
         });
       } else {
         yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });

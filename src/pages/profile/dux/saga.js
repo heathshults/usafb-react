@@ -1,15 +1,18 @@
-import { fork, all, take, call, put } from 'redux-saga/effects';
+import { all, take, call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
+import { activateUser, deactivateUser } from 'pages/users/dux/api';
 import * as actions from './actions';
 import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api';
 
 export default function* userInformationFlow() {
   yield all({
-    getUserInformationFlow: fork(getUserInformationFlow),
-    saveUserInformationFlow: fork(saveUserInformationFlow),
-    getMyUserInformationFlow: fork(getMyUserInformationFlow),
-    saveMyInformationFlow: fork(saveMyInformationFlow)
+    getUserInformationFlow: call(getUserInformationFlow),
+    saveUserInformationFlow: call(saveUserInformationFlow),
+    getMyUserInformationFlow: call(getMyUserInformationFlow),
+    saveMyInformationFlow: call(saveMyInformationFlow),
+    activateUserFlow: call(activateUserFlow),
+    disableUserFlow: call(disableUserFlow)
   });
 }
 
@@ -43,8 +46,6 @@ function* saveUserInformationFlow() {
         yield toast.success('User saved!', {
           position: toast.POSITION.BOTTOM_RIGHT
         });
-      } else {
-        yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
@@ -79,8 +80,6 @@ function* setUserData(response) {
       type: actions.USER_INFORMATION_RECEIVED,
       userInformation: responseData.data
     });
-  } else {
-    yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
   }
 }
 
@@ -98,8 +97,6 @@ function* saveMyInformationFlow() {
         yield toast.success('User saved!', {
           position: toast.POSITION.BOTTOM_RIGHT
         });
-      } else {
-        yield put({ type: actions.USER_INFORMATION_ERROR, error: response.errors[0].error });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
@@ -108,5 +105,29 @@ function* saveMyInformationFlow() {
         type: actions.USER_INFORMATION_ERROR, error: errorMessage
       });
     }
+  }
+}
+
+function* activateUserFlow() {
+  while (true) {
+    const { id } = yield take(actions.ACTIVATE_USER);
+    const response = yield call(activateUser, id);
+    const responseData = yield response.json();
+    yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
+    yield toast.success('User activated!', {
+      position: toast.POSITION.BOTTOM_RIGHT
+    });
+  }
+}
+
+function* disableUserFlow() {
+  while (true) {
+    const { id } = yield take(actions.DISABLE_USER);
+    const response = yield call(deactivateUser, id);
+    const responseData = yield response.json();
+    yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
+    yield toast.success('User disabled!', {
+      position: toast.POSITION.BOTTOM_RIGHT
+    });
   }
 }

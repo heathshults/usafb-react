@@ -10,7 +10,8 @@ const initialState = {
   role_name: '',
   gettingUserInformation: false,
   error: '',
-  saving: false
+  saving: false,
+  togglingUserStatus: false
 };
 
 export default (state = initialState, action) => {
@@ -27,6 +28,10 @@ export default (state = initialState, action) => {
       return { ...state, saving: true, error: '' };
     case actions.USER_INFORMATION_SAVED:
       return { ...state, saving: false, ...action.userInformation };
+    case actions.ACTIVATE_USER || actions.DISABLE_USER:
+      return { ...state, togglingUserStatus: true };
+    case actions.USER_STATUS_UPDATED:
+      return { ...state, togglingUserStatus: false, active: action.active };
     default:
       return state;
   }

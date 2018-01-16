@@ -17,6 +17,7 @@ const status = props => (
       <Toggle
         defaultChecked={props.active}
         onChange={props.onChange}
+        disabled={props.disabled}
       />
     </div>
   </div>
@@ -24,7 +25,8 @@ const status = props => (
 
 status.propTypes = {
   active: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired
 };
 
 export default status;

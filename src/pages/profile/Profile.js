@@ -15,7 +15,7 @@ import Status from './components/status/Status';
 import SelectField from './components/select-field/SelectField';
 
 import './profile.css';
-import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION } from './dux/actions';
+import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION, ACTIVATE_USER, DISABLE_USER } from './dux/actions';
 
 class Profile extends Component {
   constructor() {
@@ -97,9 +97,11 @@ class Profile extends Component {
     });
 
   changeStatus = () => {
-    this.setState({
-      active: !this.state.active
-    });
+    if (this.state.active) {
+      this.props.disableUser(this.props.match.params.id);
+    } else {
+      this.props.activateUser(this.props.match.params.id);
+    }
   }
 
   saveChanges = () => {
@@ -187,8 +189,9 @@ class Profile extends Component {
               />
               {this.props.match.params.id &&
                 <Status
-                  active={this.state.active}
+                  active={this.props.active}
                   onChange={this.changeStatus}
+                  disabled={this.props.togglingUserStatus}
                 />
               }
             </Content>
@@ -206,7 +209,11 @@ Profile.propTypes = {
   saving: PropTypes.bool.isRequired,
   getMyInformation: PropTypes.func.isRequired,
   saveMyInformation: PropTypes.func.isRequired,
-  roles: PropTypes.array.isRequired
+  roles: PropTypes.array.isRequired,
+  activateUser: PropTypes.func.isRequired,
+  disableUser: PropTypes.func.isRequired,
+  togglingUserStatus: PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -218,7 +225,9 @@ const mapDispatchToProps = dispatch => ({
   getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
   saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data }),
   getMyInformation: () => dispatch({ type: GET_MY_INFORMATION }),
-  saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data })
+  saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data }),
+  activateUser: id => dispatch({ type: ACTIVATE_USER, id }),
+  disableUser: id => dispatch({ type: DISABLE_USER, id })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

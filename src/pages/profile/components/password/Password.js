@@ -11,7 +11,7 @@ const password = () => (
         **********
       </p>
       <a>
-        Reset Password
+        Change Password
       </a>
     </div>
   </div>

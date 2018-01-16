@@ -20,6 +20,17 @@ import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_M
 class Profile extends Component {
   constructor() {
     super();
+    this.statusOptions = [
+      {
+        value: false,
+        name: 'DISABLED'
+      },
+      {
+        value: true,
+        name: 'ACTIVE'
+      }
+    ];
+
     this.state = {
       editing: false,
       email: '',
@@ -85,9 +96,9 @@ class Profile extends Component {
       organization: event.target.value
     });
 
-  changeStatus = event =>
+  changeStatus = () =>
     this.setState({
-      status: event.target.value
+      active: !this.state.active
     });
 
   saveChanges = () => {
@@ -175,7 +186,10 @@ class Profile extends Component {
                 onChange={this.changeRole}
               />
               {this.props.match.params.id &&
-                <Status active={this.state.active} />
+                <Status
+                  active={this.state.active}
+                  onChange={this.changeStatus}
+                />
               }
             </Content>
           </Block>

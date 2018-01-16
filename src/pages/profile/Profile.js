@@ -179,7 +179,9 @@ class Profile extends Component {
                 editing={false}
                 onChange={this.changeEmail}
               />
-              <Password />
+              {!this.props.match.params.id &&
+                <Password />
+              }
               <SelectField
                 label="Role"
                 options={this.props.roles}

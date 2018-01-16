@@ -192,7 +192,11 @@ Profile.propTypes = {
   saveMyInformation: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ userInformation }) => userInformation;
+const mapStateToProps = (state) => {
+  const profileProps = state.userInformation;
+  profileProps.roles = state.appReducer.roles;
+  return profileProps;
+};
 const mapDispatchToProps = dispatch => ({
   getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
   saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data }),

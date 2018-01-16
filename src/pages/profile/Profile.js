@@ -201,12 +201,11 @@ Profile.propTypes = {
   roles: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => {
-  const profileProps = state.userInformation;
-  profileProps.roles = state.appReducer.roles;
-  console.dir(profileProps); //eslint-disable-line
-  return profileProps;
-};
+const mapStateToProps = state => ({
+  ...state.userInformation,
+  ...state.appReducer
+});
+
 const mapDispatchToProps = dispatch => ({
   getUserInformation: id => dispatch({ type: GET_USER_INFORMATION, id }),
   saveUserInformation: data => dispatch({ type: SAVE_USER_INFORMATION, data }),

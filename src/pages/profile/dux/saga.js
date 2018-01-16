@@ -2,6 +2,7 @@ import { all, take, call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import { activateUser, deactivateUser } from 'pages/users/dux/api';
+import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
 import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api';
 
@@ -25,10 +26,7 @@ function* getUserInformationFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to get this user information.
       Please check your network connection and try again`;
-      yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: false
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -52,10 +50,7 @@ function* saveUserInformationFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
-      yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: false
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -69,10 +64,7 @@ function* getMyUserInformationFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save your user information.
       Please check your network connection and try again`;
-      yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: false
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -105,10 +97,7 @@ function* saveMyInformationFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
-      yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: false
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -126,10 +115,7 @@ function* activateUserFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;
-      yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: false
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }
@@ -147,10 +133,7 @@ function* disableUserFlow() {
     } catch (e) {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;
-      yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: false
-      });
+      displayErrorToast(errorMessage);
     }
   }
 }

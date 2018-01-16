@@ -29,9 +29,9 @@ class Filters extends Component {
     return (
       <div className="filtersContainer">
         <div className="row">
-          <div className="form-group col-4">
+          <div className="form-group col-3">
             <div className="column">
-              <label>Filters</label>
+              <label><strong>Filters</strong></label>
               <select className="form-control filtersContainer-select" onChange={this.props.updateActiveFilter}>
                 <option>Choose...</option>
                 {
@@ -68,7 +68,7 @@ class Filters extends Component {
           }
           {
             this.props.activeFilter === 'Date of Birth' &&
-            <DobFilter updateActiveFilterValue={this.props.updateActiveFilterValue} />
+            <DobFilter updateActiveFilterValue={this.props.updateActiveFilterValue} updateDateOfBirthDirection={this.props.updateDateOfBirthDirection} />
           }
           {
             this.props.activeFilter === 'School Name' &&
@@ -82,7 +82,7 @@ class Filters extends Component {
             this.props.activeFilter === 'School State' &&
             <SchoolStateFilter updateActiveFilterValue={this.props.updateActiveFilterValue} savedFilters={this.props.savedFilters} />
           }
-          <button type="button" className="bss-btn btn-primary-02 filtersContainer-addFilterButton col-3" onClick={this.props.saveFilter}>Add</button>
+          <button type="button" className="bss-btn btn-primary-02 filtersContainer-addFilterButton" onClick={this.props.saveFilter}>Add</button>
         </div>
         {
           this.props.filterValueEmptyError &&
@@ -119,7 +119,8 @@ Filters.propTypes = {
   filterValueEmptyError: PropTypes.bool.isRequired,
   deleteSavedFilter: PropTypes.func.isRequired,
   triggerValidationError: PropTypes.func.isRequired,
-  validationError: PropTypes.bool.isRequired
+  validationError: PropTypes.bool.isRequired,
+  updateDateOfBirthDirection: PropTypes.func.isRequired
 };
 
 Filters.defaultProps = {

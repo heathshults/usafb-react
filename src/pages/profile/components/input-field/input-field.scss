@@ -1,9 +1,13 @@
 .profile__input-label {
   flex-basis: 30%;
-  padding: 10px 0 !important;  
+  padding: 10px 0 !important;
+  @media (max-width: 575px) {
+    flex-basis: 70%;
+  }
 }
 
-.profile__input-field, .profile__input-field-editing {
+.profile__input-field,
+.profile__input-field-editing {
   flex-basis: 70% !important;
   padding: 10px 0 10px 10px !important;
 }

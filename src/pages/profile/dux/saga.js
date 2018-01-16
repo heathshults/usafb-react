@@ -1,7 +1,7 @@
 import { fork, all, take, call, put } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api'; //eslint-disable-line
+import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api';
 
 export default function* userInformationFlow() {
   yield all({

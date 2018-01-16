@@ -12,6 +12,7 @@ import ContactInformationHeader from './components/contact-information-header/Co
 import InputField from './components/input-field/InputField';
 import Password from './components/password/Password';
 import Status from './components/status/Status';
+import SelectField from './components/select-field/SelectField';
 
 import './profile.css';
 import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION } from './dux/actions';
@@ -172,6 +173,13 @@ class Profile extends Component {
                 editing={this.state.editing}
                 onChange={this.changeRole}
               />
+              <SelectField
+                label="Role"
+                options={this.props.roles}
+                value={this.state.role_name}
+                editing={this.state.editing}
+                onChange={this.changeRole}
+              />
               {this.props.match.params.id &&
                 <Status active={this.state.active} />
               }
@@ -189,12 +197,14 @@ Profile.propTypes = {
   saveUserInformation: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   getMyInformation: PropTypes.func.isRequired,
-  saveMyInformation: PropTypes.func.isRequired
+  saveMyInformation: PropTypes.func.isRequired,
+  roles: PropTypes.array.isRequired
 };
 
 const mapStateToProps = (state) => {
   const profileProps = state.userInformation;
   profileProps.roles = state.appReducer.roles;
+  console.dir(profileProps); //eslint-disable-line
   return profileProps;
 };
 const mapDispatchToProps = dispatch => ({

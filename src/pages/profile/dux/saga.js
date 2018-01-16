@@ -26,7 +26,8 @@ function* getUserInformationFlow() {
       const errorMessage = `An error occurred when we tried to get this user information.
       Please check your network connection and try again`;
       yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
       });
     }
   }
@@ -44,14 +45,16 @@ function* saveUserInformationFlow() {
           userInformation: responseData.data
         });
         yield toast.success('User saved!', {
-          position: toast.POSITION.BOTTOM_RIGHT
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: false
         });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
       yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
       });
     }
   }
@@ -67,7 +70,8 @@ function* getMyUserInformationFlow() {
       const errorMessage = `An error occurred when we tried to save your user information.
       Please check your network connection and try again`;
       yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
       });
     }
   }
@@ -102,7 +106,8 @@ function* saveMyInformationFlow() {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
       yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
       });
     }
   }
@@ -122,7 +127,8 @@ function* activateUserFlow() {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;
       yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
       });
     }
   }
@@ -142,7 +148,8 @@ function* disableUserFlow() {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;
       yield toast.error(errorMessage, {
-        position: toast.POSITION.BOTTOM_RIGHT
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
       });
     }
   }

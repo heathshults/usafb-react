@@ -82,6 +82,8 @@ function* createUserFlow() {
         yield toast.success('User has been successfully created!', {
           position: toast.POSITION.BOTTOM_RIGHT
         });
+      } else {
+        yield put({ type: actions.CREATE_USER_ERROR });
       }
     } catch (e) {
       const errorMessage = `An error occurred while we were trying to create a new user! 

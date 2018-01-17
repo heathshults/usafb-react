@@ -13,7 +13,7 @@ import ImportsModal from './components/imports-modal/ImportsModal';
 import ImportButton from './components/import-button/ImportButton';
 import Columns from './models/columns';
 import testData from './models/test-data';
-import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED, CSV_ACCEPTING, UPLOAD_DATA } from './dux/actions';
+import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED, CSV_ACCEPTING, UPLOAD_DATA, GET_IMPORTS } from './dux/actions';
 
 class Imports extends Component {
   constructor() {
@@ -27,6 +27,7 @@ class Imports extends Component {
 
   componentWillMount() {
     this.columns = new Columns();
+    this.props.getImports(this.props.match.params.type);
   }
 
   componentWillUnmount() {
@@ -146,7 +147,8 @@ Imports.propTypes = {
   csvFileRejected: PropTypes.func.isRequired,
   csvFileAccepting: PropTypes.func.isRequired,
   uploadCsv: PropTypes.func.isRequired,
-  importing: PropTypes.bool.isRequired
+  importing: PropTypes.bool.isRequired,
+  getImports: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ importsReducer }) => importsReducer;
@@ -155,7 +157,8 @@ const mapDispatchToProps = dispatch => ({
   csvFileAccepted: () => dispatch({ type: CSV_ACCEPTED }),
   csvFileRejected: () => dispatch({ type: CSV_REJECTED }),
   csvFileAccepting: () => dispatch({ type: CSV_ACCEPTING }),
-  uploadCsv: file => dispatch({ type: UPLOAD_DATA, file })
+  uploadCsv: file => dispatch({ type: UPLOAD_DATA, file }),
+  getImports: userType => dispatch({ type: GET_IMPORTS, userType })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

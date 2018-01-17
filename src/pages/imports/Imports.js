@@ -12,7 +12,15 @@ import Pagination from 'components/pagination/Pagination';
 import ImportsModal from './components/imports-modal/ImportsModal';
 import ImportButton from './components/import-button/ImportButton';
 import Columns from './models/columns';
-import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED, CSV_ACCEPTING, UPLOAD_DATA, GET_IMPORTS } from './dux/actions';
+import {
+  CSV_CHECKING,
+  CSV_ACCEPTED,
+  CSV_REJECTED,
+  CSV_ACCEPTING,
+  UPLOAD_DATA,
+  GET_IMPORTS,
+  UPDATE_ROWS_PER_PAGE
+} from './dux/actions';
 
 class Imports extends Component {
   constructor() {
@@ -26,7 +34,11 @@ class Imports extends Component {
 
   componentWillMount() {
     this.columns = new Columns();
-    this.props.getImports(this.props.match.params.type);
+    const data = {
+      page: 1,
+      per_page: this.props.rowsPerPage
+    };
+    this.getImports(data);
   }
 
   componentWillUnmount() {
@@ -49,6 +61,8 @@ class Imports extends Component {
       }
     });
   }
+
+  getImports = data => this.props.getImports(this.props.match.params.type, data);
 
   getImportButton = () => (
     <ImportButton toggle={this.displayImportModal} importing={this.props.importing} />
@@ -86,25 +100,14 @@ class Imports extends Component {
     this.props.uploadCsv(this.state.file);
   }
 
-  renderExportButton = () => (
-    <a
-      className="my-exports__icon pr-4"
-      role="button"
-      tabIndex={0}
-    >
-      <i className="fa fa-download text-lg" />
-    </a>
-  );
+  paginationOnChange = (currentPage, perPage) => {
+    const data = {
+      page: currentPage,
+      per_page: perPage
+    };
 
-  renderDeleteButton = () => (
-    <a
-      className="my-exports__icon my-exports__trash"
-      role="button"
-      tabIndex={0}
-    >
-      <i className="fa fa-trash pr-2 text-lg" />
-    </a>
-  )
+    this.getImports(data);
+  }
 
   render() {
     return (
@@ -128,10 +131,10 @@ class Imports extends Component {
           formatters={this.getCellFormatters()}
         />
         <Pagination
-          totalItems={this.props.imports.length}
-          rowsPerPage={10}
-          updateRowsPerPage={() => { }}
-          onChange={() => { }}
+          totalItems={this.props.totalImports}
+          rowsPerPage={this.props.rowsPerPage}
+          updateRowsPerPage={this.props.updateRowsPerPage}
+          onChange={this.paginationOnChange}
         />
       </Container>
     );
@@ -148,7 +151,10 @@ Imports.propTypes = {
   uploadCsv: PropTypes.func.isRequired,
   importing: PropTypes.bool.isRequired,
   getImports: PropTypes.func.isRequired,
-  imports: PropTypes.array.isRequired
+  imports: PropTypes.array.isRequired,
+  totalImports: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ importsReducer }) => importsReducer;
@@ -158,7 +164,8 @@ const mapDispatchToProps = dispatch => ({
   csvFileRejected: () => dispatch({ type: CSV_REJECTED }),
   csvFileAccepting: () => dispatch({ type: CSV_ACCEPTING }),
   uploadCsv: file => dispatch({ type: UPLOAD_DATA, file }),
-  getImports: userType => dispatch({ type: GET_IMPORTS, userType })
+  getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

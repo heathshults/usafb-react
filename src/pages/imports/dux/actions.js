@@ -6,3 +6,4 @@ export const CSV_CHECKING = 'imports checking csv';
 export const CSV_ACCEPTED = 'imports csv accepted';
 export const CSV_REJECTED = 'imports csv rejected';
 export const CSV_ACCEPTING = 'imports csv accepting';
+export const UPDATE_ROWS_PER_PAGE = 'imports update rows per page';

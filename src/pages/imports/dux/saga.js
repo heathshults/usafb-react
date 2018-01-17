@@ -27,10 +27,10 @@ function* uploadCsvFlow() {
 function* getImportsFlow() {
   while (true) {
     try {
-      const { userType } = yield take(actions.GET_IMPORTS);
-      const response = yield call(getImports, userType);
+      const { userType, data } = yield take(actions.GET_IMPORTS);
+      const response = yield call(getImports, userType, data);
       const responseData = yield response.json();
-      yield put({ type: actions.RECEIVED_IMPORTS, imports: responseData.data });
+      yield put({ type: actions.RECEIVED_IMPORTS, imports: responseData.data, total: responseData.meta.pagination.total });
     } catch (e) {
       const errorMessage = `An error occurred while we were trying to get a list of imports! 
       Please check your network and try again`;

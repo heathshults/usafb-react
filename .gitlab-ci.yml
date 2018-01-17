@@ -1,0 +1,66 @@
+image: node:8
+
+stages:
+  - setup
+  - app_build
+  - build
+  - deploy
+
+variables:
+  APP_NAME: npdb-usafb-ui
+  app_container_name: npdb-usafb-ui
+
+staging_setup:
+  stage: setup
+  only:
+    - develop
+    - staging_deploy
+  script:
+    - yarn install
+    - REACT_APP_API_URL=$REACT_APP_API_URL yarn build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - node_modules/
+      - dist/
+
+build:
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay
+    DOCKER_HOST: tcp://localhost:2375
+  services:
+    - docker:dind
+  before_script:
+    - docker info
+  stage: build
+  only:
+    - develop
+    - master
+    - staging_deploy
+  allow_failure: false
+  script:
+    - docker login registry.gitlab.com -u npdbtest -p $gitlab_personal_token
+    - docker build -t registry.gitlab.com/bluestarsports/npdb-usafb-app:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID --build-arg GIT_DEPLOYED_SHA="" --build-arg USAFB_API_URL="npdb-usafb-api-usafootballconnect-internal.staging.svc.cluster.local" .
+    - docker push registry.gitlab.com/bluestarsports/npdb-usafb-app:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
+
+staging_deploy:
+  stage: deploy
+  image: ubuntu:latest
+  only:
+    - develop
+    - staging_deploy
+  allow_failure: false
+  environment:
+    name: staging
+  variables:
+    image_tag: $CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
+  before_script:
+    - apt-get update
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
+  script:
+    - . deploy/scripts/setup_kube_config.sh
+    - kubectl cluster-info
+    - . deploy/scripts/deploy_app.sh

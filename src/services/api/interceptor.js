@@ -16,6 +16,7 @@ export default class Interceptor {
     // these values will allow us to retry any unauthorized calls that occurred because of expired tokens
     this.url = '';
     this.config = {};
+    this.formData = {};
   }
 
   registerInterceptor = () =>

@@ -1,9 +1,10 @@
-import { fork, all, take, put, call } from 'redux-saga/effects';
+import { fork, all, take, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
 import getImports, { importFile } from './api';
+import importSelector from './selectors';
 
 export default function* userInformationFlow() {
   yield all({
@@ -21,7 +22,13 @@ function* uploadCsvFlow() {
       yield toast.success('We just started importing your csv file! Please check back later on the status of this import.', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
-      yield getImportsCall();
+      const state = yield select(importSelector);
+
+      const data = {
+        page: 1,
+        per_page: state.rowsPerPage
+      };
+      yield getImportsCall(userType, data);
     } else {
       yield put({ type: actions.UPLOAD_DATA_ERROR });
     }
@@ -30,13 +37,13 @@ function* uploadCsvFlow() {
 
 function* getImportsFlow() {
   while (true) {
-    yield getImportsCall();
+    const { userType, data } = yield take(actions.GET_IMPORTS);
+    yield getImportsCall(userType, data);
   }
 }
 
-function* getImportsCall() {
+function* getImportsCall(userType, data) {
   try {
-    const { userType, data } = yield take(actions.GET_IMPORTS);
     const response = yield call(getImports, userType, data);
     const responseData = yield response.json();
     yield put({ type: actions.RECEIVED_IMPORTS, imports: responseData.data, total: responseData.meta.pagination.total });

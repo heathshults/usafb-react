@@ -16,11 +16,12 @@ export default class Interceptor {
     // these values will allow us to retry any unauthorized calls that occurred because of expired tokens
     this.url = '';
     this.config = {};
-    this.formData = {};
   }
 
   registerInterceptor = () =>
     fetchIntercept.register({
+      // here we will store each url and config for every call except the "refresh" call
+      // the next step is to retry the failed API call
       request: (url, config) => {
         if (config.body && !(config.body instanceof FormData)) {
           const body = JSON.parse(config.body);

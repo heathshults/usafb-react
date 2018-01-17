@@ -15,7 +15,7 @@ const status = props => (
         {props.active ? 'ACTIVE' : 'DISABLED'}
       </span>
       <Toggle
-        defaultChecked={props.active}
+        checked={props.active}
         onChange={props.onChange}
         disabled={props.disabled}
       />

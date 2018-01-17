@@ -125,7 +125,7 @@ class Imports extends Component {
         />
         <DataTable
           columns={this.columns.getColumns()}
-          data={testData}
+          data={this.props.imports}
           formatters={this.getCellFormatters()}
         />
         <Pagination
@@ -148,7 +148,8 @@ Imports.propTypes = {
   csvFileAccepting: PropTypes.func.isRequired,
   uploadCsv: PropTypes.func.isRequired,
   importing: PropTypes.bool.isRequired,
-  getImports: PropTypes.func.isRequired
+  getImports: PropTypes.func.isRequired,
+  imports: PropTypes.array.isRequired
 };
 
 const mapStateToProps = ({ importsReducer }) => importsReducer;

@@ -30,7 +30,7 @@ function* getImportsFlow() {
       const { userType } = yield take(actions.GET_IMPORTS);
       const response = yield call(getImports, userType);
       const responseData = yield response.json();
-      yield console.dir(responseData); //eslint-disable-line
+      yield put({ type: actions.RECEIVED_IMPORTS, imports: responseData.data });
     } catch (e) {
       const errorMessage = `An error occurred while we were trying to get a list of imports! 
       Please check your network and try again`;

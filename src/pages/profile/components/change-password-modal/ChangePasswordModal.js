@@ -4,6 +4,19 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormT
 
 import './change-password-modal.css';
 
+const getChangePasswordLabel = (changing) => {
+  if (changing) {
+    return (
+      <span>
+        <i className="fa fa-spinner fa-spin" />&nbsp;
+          saving...
+      </span>
+    );
+  }
+
+  return 'Change Password';
+};
+
 const changePassword = props => (
   <Modal isOpen={props.open} >
     <ModalHeader toggle={props.cancel}>Change your password</ModalHeader>
@@ -48,9 +61,9 @@ const changePassword = props => (
       <Button
         color="primary"
         onClick={props.changePassword}
-        disabled={(!props.currentPassword || !props.newPassword || !props.confirmNewPassword) || (props.confirmNewPassword !== props.newPassword)}
+        disabled={(!props.currentPassword || !props.newPassword || !props.confirmNewPassword) || (props.confirmNewPassword !== props.newPassword) || props.changingPassword}
       >
-        Change Password
+        {getChangePasswordLabel(props.changingPassword)}
       </Button>
     </ModalFooter>
   </Modal>
@@ -66,6 +79,7 @@ changePassword.propTypes = {
   updateNewPassword: PropTypes.func.isRequired,
   updateConfirmNewPassword: PropTypes.func.isRequired,
   changePassword: PropTypes.func.isRequired,
+  changingPassword: PropTypes.bool.isRequired
 };
 
 export default changePassword;

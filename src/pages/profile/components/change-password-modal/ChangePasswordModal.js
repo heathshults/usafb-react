@@ -30,14 +30,25 @@ const changePassword = props => (
           onChange={props.updateNewPassword}
         />
       </div>
+      <div className="d-flex flex-column mr-2 ml-2 mt-2">
+        <Label for="confirmNewPassword">Confirm New Password</Label>
+        <Input
+          type="password"
+          name="password"
+          id="confirmNewPassword"
+          className="change-password__input-field w-100"
+          value={props.confirmNewPassword}
+          onChange={props.updateConfirmNewPassword}
+        />
+      </div>
       <FormText className="mt-2 text-center">Passwords must include a capital letter, a special letter and a number</FormText>
     </ModalBody>
     <ModalFooter>
       <Button color="secondary" onClick={props.cancel}>Cancel</Button>&nbsp;
       <Button
         color="primary"
-        onClick={props.cancel}
-        disabled={(!props.currentPassword || !props.newPassword) || (props.currentPassword === props.newPassword)}
+        onClick={props.changePassword}
+        disabled={(!props.currentPassword || !props.newPassword || !props.confirmNewPassword) || (props.confirmNewPassword !== props.newPassword)}
       >
         Change Password
       </Button>
@@ -50,8 +61,11 @@ changePassword.propTypes = {
   cancel: PropTypes.func.isRequired,
   currentPassword: PropTypes.string.isRequired,
   newPassword: PropTypes.string.isRequired,
+  confirmNewPassword: PropTypes.string.isRequired,
   updateCurrentPassword: PropTypes.func.isRequired,
-  updateNewPassword: PropTypes.func.isRequired
+  updateNewPassword: PropTypes.func.isRequired,
+  updateConfirmNewPassword: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
 };
 
 export default changePassword;

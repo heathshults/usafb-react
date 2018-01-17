@@ -16,21 +16,19 @@ import SelectField from './components/select-field/SelectField';
 import ChangePasswordModal from './components/change-password-modal/ChangePasswordModal';
 
 import './profile.css';
-import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION, ACTIVATE_USER, DISABLE_USER } from './dux/actions';
+import {
+  GET_USER_INFORMATION,
+  SAVE_USER_INFORMATION,
+  GET_MY_INFORMATION,
+  SAVE_MY_INFORMATION,
+  ACTIVATE_USER,
+  DISABLE_USER,
+  CHANGE_PASSWORD
+} from './dux/actions';
 
 class Profile extends Component {
   constructor() {
     super();
-    this.statusOptions = [
-      {
-        value: false,
-        name: 'DISABLED'
-      },
-      {
-        value: true,
-        name: 'ACTIVE'
-      }
-    ];
 
     this.state = {
       editing: false,
@@ -42,7 +40,8 @@ class Profile extends Component {
       active: false,
       displayChangePasswordModal: false,
       currentPassword: '',
-      newPassword: ''
+      newPassword: '',
+      confirmNewPassword: ''
     };
   }
 
@@ -148,7 +147,8 @@ class Profile extends Component {
     this.setState({
       displayChangePasswordModal: false,
       currentPassword: '',
-      newPassword: ''
+      newPassword: '',
+      confirmNewPassword: ''
     });
   }
 
@@ -164,6 +164,21 @@ class Profile extends Component {
     });
   }
 
+  updateConfirmNewPassword = (event) => {
+    this.setState({
+      confirmNewPassword: event.target.value
+    });
+  }
+
+  changePassword = () => {
+    const data = {
+      password_current: this.state.currentPassword,
+      password_new: this.state.newPassword
+    };
+
+    this.props.changePassword(data);
+  }
+
   render() {
     return (
       <BlueContainer>
@@ -175,6 +190,10 @@ class Profile extends Component {
           newPassword={this.state.newPassword}
           updateCurrentPassword={this.updateCurrentPassword}
           updateNewPassword={this.updateNewPassword}
+          confirmNewPassword={this.state.confirmNewPassword}
+          updateConfirmNewPassword={this.updateConfirmNewPassword}
+          changingPassword={this.props.changingPassword}
+          changePassword={this.changePassword}
         />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>
@@ -253,7 +272,9 @@ Profile.propTypes = {
   activateUser: PropTypes.func.isRequired,
   disableUser: PropTypes.func.isRequired,
   togglingUserStatus: PropTypes.bool.isRequired,
-  active: PropTypes.bool.isRequired
+  active: PropTypes.bool.isRequired,
+  changingPassword: PropTypes.bool.isRequired,
+  changePassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -267,7 +288,8 @@ const mapDispatchToProps = dispatch => ({
   getMyInformation: () => dispatch({ type: GET_MY_INFORMATION }),
   saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data }),
   activateUser: id => dispatch({ type: ACTIVATE_USER, id }),
-  disableUser: id => dispatch({ type: DISABLE_USER, id })
+  disableUser: id => dispatch({ type: DISABLE_USER, id }),
+  changePassword: data => dispatch({ type: CHANGE_PASSWORD, data })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

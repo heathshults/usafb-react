@@ -13,7 +13,8 @@ export default function* userInformationFlow() {
     getMyUserInformationFlow: call(getMyUserInformationFlow),
     saveMyInformationFlow: call(saveMyInformationFlow),
     activateUserFlow: call(activateUserFlow),
-    disableUserFlow: call(disableUserFlow)
+    disableUserFlow: call(disableUserFlow),
+    changePasswordFlow: call(changePasswordFlow)
   });
 }
 
@@ -136,6 +137,19 @@ function* disableUserFlow() {
       yield toast.success('User disabled!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
+    } catch (e) {
+      const errorMessage = `An error occurred when we tried to enable this user.
+      Please check your network connection and try again`;
+      displayErrorToast(errorMessage);
+    }
+  }
+}
+
+function* changePasswordFlow() {
+  while (true) {
+    try {
+      const { data } = yield take(actions.CHANGE_PASSWORD);
+      console.dir(data); //eslint-disable-line
     } catch (e) {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;

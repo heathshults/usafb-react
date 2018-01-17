@@ -12,7 +12,6 @@ import Pagination from 'components/pagination/Pagination';
 import ImportsModal from './components/imports-modal/ImportsModal';
 import ImportButton from './components/import-button/ImportButton';
 import Columns from './models/columns';
-import testData from './models/test-data';
 import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED, CSV_ACCEPTING, UPLOAD_DATA, GET_IMPORTS } from './dux/actions';
 
 class Imports extends Component {
@@ -129,7 +128,7 @@ class Imports extends Component {
           formatters={this.getCellFormatters()}
         />
         <Pagination
-          totalItems={testData.length}
+          totalItems={this.props.imports.length}
           rowsPerPage={10}
           updateRowsPerPage={() => { }}
           onChange={() => { }}

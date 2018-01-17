@@ -21,7 +21,7 @@ export default class Interceptor {
   registerInterceptor = () =>
     fetchIntercept.register({
       request: (url, config) => {
-        if (config.body) {
+        if (config.body && !(config.body instanceof FormData)) {
           const body = JSON.parse(config.body);
           if (!body.refresh_token) {
             this.url = url;

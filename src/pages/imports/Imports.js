@@ -155,7 +155,7 @@ class Imports extends Component {
       open: false
     });
 
-    this.props.uploadCsv(this.state.file);
+    this.props.uploadCsv(this.props.match.params.type, this.state.file);
   }
 
   paginationOnChange = (currentPage, perPage) => {
@@ -223,7 +223,7 @@ const mapDispatchToProps = dispatch => ({
   csvFileAccepted: () => dispatch({ type: CSV_ACCEPTED }),
   csvFileRejected: () => dispatch({ type: CSV_REJECTED }),
   csvFileAccepting: () => dispatch({ type: CSV_ACCEPTING }),
-  uploadCsv: file => dispatch({ type: UPLOAD_DATA, file }),
+  uploadCsv: (userType, file) => dispatch({ type: UPLOAD_DATA, userType, file }),
   getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });

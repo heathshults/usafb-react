@@ -19,6 +19,8 @@ export default (state = initialState, action) => {
       return { ...state, importing: true };
     case actions.UPLOADED_DATA:
       return { ...state, importing: false };
+    case actions.UPLOAD_DATA_ERROR:
+      return { ...state, importing: false };
     case actions.CSV_ACCEPTING:
       return { ...state, dropzoneStatus: 'accepting' };
     case actions.CSV_CHECKING:

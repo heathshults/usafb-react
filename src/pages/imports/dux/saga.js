@@ -1,10 +1,9 @@
 import { fork, all, take, put, call } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
 import { toast } from 'react-toastify';
 
 import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
-import getImports from './api';
+import getImports, { importFile } from './api';
 
 export default function* userInformationFlow() {
   yield all({
@@ -15,12 +14,17 @@ export default function* userInformationFlow() {
 
 function* uploadCsvFlow() {
   while (true) {
-    yield take(actions.UPLOAD_DATA);
-    yield delay(5000);
-    yield put({ type: actions.UPLOADED_DATA });
-    yield toast.info('We just started importing your csv file! Please check back later on the status of this import.', {
-      position: toast.POSITION.BOTTOM_RIGHT
-    });
+    const { userType, file } = yield take(actions.UPLOAD_DATA);
+    const response = yield call(importFile, userType, file);
+    const responseData = yield response.json();
+    if (response.ok) {
+      yield console.dir(responseData); //eslint-disable-line
+      yield toast.success('We just started importing your csv file! Please check back later on the status of this import.', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    } else {
+      yield put({ type: actions.UPLOAD_DATA_ERROR });
+    }
   }
 }
 

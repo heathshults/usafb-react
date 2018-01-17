@@ -80,14 +80,62 @@ class Imports extends Component {
   )
 
   getCellFormatters = () => ({
-    Date: this.getDateFormatter
+    Date: this.getDateFormatter,
+    'File Name': this.getFileNameFormatter,
+    '# Records': this.getRecordsFormatter,
+    '# Imported': this.getImportedFormatter,
+    '# Errors': this.getErrorFormatter
   })
 
   getDateFormatter = cell => (
     <div>
-      {moment(cell).format('MMM Do YYYY h:mm a')}
+      {moment(cell).format('MMM Do YYYY')}
     </div>
   )
+
+  getFileNameFormatter = (cell, row) => (
+    <a href={row.file_path_remote} target="_blank">
+      {cell}
+    </a>
+  )
+
+  getRecordsFormatter = cell => (
+    <div>
+      {cell === 0 ? '-' : cell}
+    </div>
+  );
+
+  getImportedFormatter = (cell, row) => {
+    if (cell === 0) {
+      return (
+        <div>
+          -
+        </div>
+      );
+    }
+
+    return (
+      <a href={row.file_path_result} target="_blank">
+        {cell}
+      </a>
+    );
+  }
+
+  getErrorFormatter = (cell, row) => {
+    if (cell === 0) {
+      return (
+        <div>
+          -
+        </div>
+      );
+    }
+
+    return (
+      <a href={row.file_path_error} target="_blank">
+        {cell}
+      </a>
+    );
+  }
 
   cancelUpload = () =>
     this.setState({

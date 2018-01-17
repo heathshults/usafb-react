@@ -40,7 +40,9 @@ class Profile extends Component {
       phone: '',
       role_name: '',
       active: false,
-      displayChangePasswordModal: false
+      displayChangePasswordModal: false,
+      currentPassword: '',
+      newPassword: ''
     };
   }
 
@@ -150,6 +152,18 @@ class Profile extends Component {
     });
   }
 
+  updateCurrentPassword = (event) => {
+    this.setState({
+      currentPassword: event.target.value
+    });
+  }
+
+  updateNewPassword = (event) => {
+    this.setState({
+      newPassword: event.target.value
+    });
+  }
+
   render() {
     return (
       <BlueContainer>
@@ -157,6 +171,10 @@ class Profile extends Component {
         <ChangePasswordModal
           open={this.state.displayChangePasswordModal}
           cancel={this.cancelChangePasswordModal}
+          currentPassword={this.state.currentPassword}
+          newPassword={this.state.newPassword}
+          updateCurrentPassword={this.updateCurrentPassword}
+          updateNewPassword={this.updateNewPassword}
         />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>

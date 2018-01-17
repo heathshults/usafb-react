@@ -11,7 +11,9 @@ const initialState = {
   gettingUserInformation: false,
   error: '',
   saving: false,
-  togglingUserStatus: false
+  togglingUserStatus: false,
+  changingPassword: false,
+  changingPasswordError: ''
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +34,12 @@ export default (state = initialState, action) => {
       return { ...state, togglingUserStatus: true };
     case actions.USER_STATUS_UPDATED:
       return { ...state, togglingUserStatus: false, active: action.active };
+    case actions.CHANGE_PASSWORD:
+      return { ...state, changingPassword: true, changingPasswordError: '' };
+    case actions.PASSWORD_CHANGED:
+      return { ...state, changingPassword: false };
+    case actions.CHANGE_PASSWORD_ERROR:
+      return { ...state, changingPassword: false, changingPasswordError: action.error };
     default:
       return state;
   }

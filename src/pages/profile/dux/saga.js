@@ -46,6 +46,8 @@ function* saveUserInformationFlow() {
           position: toast.POSITION.BOTTOM_RIGHT,
           autoClose: false
         });
+      } else {
+        yield put({ type: actions.USER_INFORMATION_ERROR });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
@@ -65,6 +67,7 @@ function* getMyUserInformationFlow() {
       const errorMessage = `An error occurred when we tried to save your user information.
       Please check your network connection and try again`;
       displayErrorToast(errorMessage);
+      yield put({ type: actions.USER_INFORMATION_ERROR });
     }
   }
 }
@@ -93,11 +96,14 @@ function* saveMyInformationFlow() {
         yield toast.success('User saved!', {
           position: toast.POSITION.BOTTOM_RIGHT
         });
+      } else {
+        yield put({ type: actions.USER_INFORMATION_ERROR });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
       displayErrorToast(errorMessage);
+      yield put({ type: actions.USER_INFORMATION_ERROR });
     }
   }
 }

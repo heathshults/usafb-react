@@ -30,7 +30,9 @@ import { GET_ROLES } from './dux/actions';
 const history = createHistory();
 const interceptor = new Interceptor(); //eslint-disable-line
 
-store.dispatch({ type: GET_ROLES });
+if (history.location.pathname !== '/login') {
+  store.dispatch({ type: GET_ROLES });
+}
 
 const app = () => (
   <Provider store={store}>

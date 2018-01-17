@@ -13,12 +13,11 @@ export default function* loginFlow() {
 export function* loginSaga(data) {
   try {
     const response = yield call(login, data);
+    const responseData = yield response.json();
     if (response.ok) {
-      const tokenData = yield response.json();
-      yield call(loginSuccess, tokenData);
+      yield call(loginSuccess, responseData);
     } else {
-      const errorData = yield response.json();
-      yield put({ type: actions.LOGIN_ERROR, payload: errorData.errors[0].error });
+      yield put({ type: actions.LOGIN_ERROR, payload: responseData.data.error.message });
     }
   } catch (error) {
     const errorMessage = `An error occurred when we tried to log you in.

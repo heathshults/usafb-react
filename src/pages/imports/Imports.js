@@ -129,6 +129,7 @@ class Imports extends Component {
           columns={this.columns.getColumns()}
           data={this.props.imports}
           formatters={this.getCellFormatters()}
+          loading={this.props.gettingImports}
         />
         <Pagination
           totalItems={this.props.totalImports}
@@ -154,7 +155,8 @@ Imports.propTypes = {
   imports: PropTypes.array.isRequired,
   totalImports: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  updateRowsPerPage: PropTypes.func.isRequired
+  updateRowsPerPage: PropTypes.func.isRequired,
+  gettingImports: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ importsReducer }) => importsReducer;

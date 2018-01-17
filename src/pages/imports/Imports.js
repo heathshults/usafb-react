@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Papa from 'papaparse';
+import moment from 'moment';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
@@ -79,13 +80,12 @@ class Imports extends Component {
   )
 
   getCellFormatters = () => ({
-    Actions: this.getActionFormatter
+    Date: this.getDateFormatter
   })
 
-  getActionFormatter = (cell, row) => (
-    <div className="text-center">
-      {this.renderExportButton(row)}
-      {this.renderDeleteButton(row)}
+  getDateFormatter = cell => (
+    <div>
+      {moment(cell).format('MMM Do YYYY h:mm a')}
     </div>
   )
 

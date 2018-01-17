@@ -17,7 +17,7 @@ spec:
       containers:
       - name: npdb-usafb-ui
         image:
-          registry.gitlab.com/bluestarsports/npdb-usafb-ui:$image_tag
+          registry.gitlab.com/bluestarsports/npdb-usafb-app:$image_tag
         imagePullPolicy: Always
         envFrom:
           - secretRef:

@@ -41,7 +41,7 @@ build:
   allow_failure: false
   script:
     - docker login registry.gitlab.com -u npdbtest -p $gitlab_personal_token
-    - docker build -t registry.gitlab.com/bluestarsports/npdb-usafb-app:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID --build-arg GIT_DEPLOYED_SHA="" --build-arg USAFB_API_URL="npdb-usafb-api-usafootballconnect-internal.staging.svc.cluster.local" .
+    - docker build -t registry.gitlab.com/bluestarsports/npdb-usafb-app:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID --build-arg GIT_DEPLOYED_SHA="$CI_COMMIT_SHA" --build-arg USAFB_API_URL="npdb-usafb-api-usafootballconnect-internal.staging.svc.cluster.local" .
     - docker push registry.gitlab.com/bluestarsports/npdb-usafb-app:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
 
 staging_deploy:

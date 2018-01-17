@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { activateUser, deactivateUser } from 'pages/users/dux/api';
 import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
-import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api';
+import getUserInformation, { saveUser, getMyInfo, saveMyInfo, changePassword } from './api';
 
 export default function* userInformationFlow() {
   yield all({
@@ -149,7 +149,15 @@ function* changePasswordFlow() {
   while (true) {
     try {
       const { data } = yield take(actions.CHANGE_PASSWORD);
-      console.dir(data); //eslint-disable-line
+      const response = yield call(changePassword, data);
+      // const responseData = yield response.json();
+      if (response.ok) {
+        yield toast.success('Password changed successfully!', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        });
+      } else {
+        yield put({ type: actions.CHANGE_PASSWORD_ERROR });
+      }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;

@@ -11,6 +11,7 @@ export const ACTIVATE_USER = 'profile activate user';
 export const DISABLE_USER = 'profile disable user';
 export const USER_STATUS_UPDATED = 'profile user status updated';
 
+export const TOGGLE_CHANGE_PASSWORD_MODAL = 'profile toggle change password modal';
 export const CHANGE_PASSWORD = 'profile change password';
 export const PASSWORD_CHANGED = 'profile password changed';
 export const CHANGE_PASSWORD_ERROR = 'profile change password error';

@@ -23,7 +23,8 @@ import {
   SAVE_MY_INFORMATION,
   ACTIVATE_USER,
   DISABLE_USER,
-  CHANGE_PASSWORD
+  CHANGE_PASSWORD,
+  TOGGLE_CHANGE_PASSWORD_MODAL
 } from './dux/actions';
 
 class Profile extends Component {
@@ -137,13 +138,8 @@ class Profile extends Component {
     });
   }
 
-  openChangePasswordModal = () => {
-    this.setState({
-      displayChangePasswordModal: true
-    });
-  }
-
   cancelChangePasswordModal = () => {
+    this.props.toggleChangePasswordModal();
     this.setState({
       displayChangePasswordModal: false,
       currentPassword: '',
@@ -184,7 +180,7 @@ class Profile extends Component {
       <BlueContainer>
         <HeaderContentDivider />
         <ChangePasswordModal
-          open={this.state.displayChangePasswordModal}
+          open={this.props.changePasswordModalOpen}
           cancel={this.cancelChangePasswordModal}
           currentPassword={this.state.currentPassword}
           newPassword={this.state.newPassword}
@@ -237,7 +233,7 @@ class Profile extends Component {
                 onChange={this.changeEmail}
               />
               {!this.props.match.params.id &&
-                <Password openChangePasswordModal={this.openChangePasswordModal} />
+                <Password openChangePasswordModal={this.props.toggleChangePasswordModal} />
               }
               <SelectField
                 label="Role"
@@ -274,7 +270,9 @@ Profile.propTypes = {
   togglingUserStatus: PropTypes.bool.isRequired,
   active: PropTypes.bool.isRequired,
   changingPassword: PropTypes.bool.isRequired,
-  changePassword: PropTypes.func.isRequired
+  changePassword: PropTypes.func.isRequired,
+  changePasswordModalOpen: PropTypes.bool.isRequired,
+  toggleChangePasswordModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -289,7 +287,8 @@ const mapDispatchToProps = dispatch => ({
   saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data }),
   activateUser: id => dispatch({ type: ACTIVATE_USER, id }),
   disableUser: id => dispatch({ type: DISABLE_USER, id }),
-  changePassword: data => dispatch({ type: CHANGE_PASSWORD, data })
+  changePassword: data => dispatch({ type: CHANGE_PASSWORD, data }),
+  toggleChangePasswordModal: () => dispatch({ type: TOGGLE_CHANGE_PASSWORD_MODAL })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

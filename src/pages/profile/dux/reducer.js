@@ -13,7 +13,8 @@ const initialState = {
   saving: false,
   togglingUserStatus: false,
   changingPassword: false,
-  changingPasswordError: ''
+  changingPasswordError: '',
+  changePasswordModalOpen: false
 };
 
 export default (state = initialState, action) => {
@@ -40,6 +41,8 @@ export default (state = initialState, action) => {
       return { ...state, changingPassword: false };
     case actions.CHANGE_PASSWORD_ERROR:
       return { ...state, changingPassword: false, changingPasswordError: action.error };
+    case actions.TOGGLE_CHANGE_PASSWORD_MODAL:
+      return { ...state, changePasswordModalOpen: !state.changePasswordModalOpen };
     default:
       return state;
   }

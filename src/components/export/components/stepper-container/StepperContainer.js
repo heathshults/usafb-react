@@ -12,7 +12,7 @@ const StepperContainer = (props) => {
     [
       { name: 'Fields', component: <Fields listValues={props.listValues} validationError={props.validationError} selectedItem={props.selectedItem} selectedValues={props.selectedValues} triggerValidationError={props.triggerValidationError} updateSelectedItem={props.updateSelectedItem} /> },
       { name: 'Filters', component: <Filters validationError={props.validationError} dateOfBirthDirection={props.dateOfBirthDirection} updateDateOfBirthDirection={props.updateDateOfBirthDirection} triggerValidationError={props.triggerValidationError} selectedValues={props.selectedValues} deleteSavedFilter={props.deleteSavedFilter} filterValueEmptyError={props.filterValueEmptyError} savedFilters={props.savedFilters} activeFilter={props.activeFilter} updateActiveFilter={props.updateActiveFilter} updateActiveFilterValue={props.updateActiveFilterValue} saveFilter={props.saveFilter} /> },
-      { name: 'Success', component: <Success /> }
+      { name: 'Success', component: <Success toggleExportModalOff={props.toggleExportModalOff} /> }
     ];
 
   return (
@@ -39,7 +39,8 @@ StepperContainer.propTypes = {
   validationError: PropTypes.bool.isRequired,
   triggerValidationError: PropTypes.func.isRequired,
   dateOfBirthDirection: PropTypes.string.isRequired,
-  updateDateOfBirthDirection: PropTypes.func.isRequired
+  updateDateOfBirthDirection: PropTypes.func.isRequired,
+  toggleExportModalOff: PropTypes.func.isRequired
 };
 
 StepperContainer.defaultProps = {

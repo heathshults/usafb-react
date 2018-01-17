@@ -136,7 +136,7 @@ class CoachExportModal extends Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.coach_export_modal_open} toggle={this.props.toggleExportModalOff}>
+      <Modal isOpen={this.props.coach_export_modal_open} toggle={this.props.toggleExportModalOff} size="lg">
         <ModalHeader toggle={this.props.toggleExportModalOff}>Coach Export</ModalHeader>
         <ModalBody>
           <StepperContainer

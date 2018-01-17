@@ -18,7 +18,6 @@
     &-small {
       width: 38px !important;
       margin: 0;
-      margin-left: -22px;
     }
     &-medium {
       width: 80px !important;
@@ -68,7 +67,9 @@
     }
     &-delete {
       cursor: pointer;
+      display: flex;
       margin-bottom: 0;
+      justify-content: center;
     }
   }
 }

@@ -136,7 +136,7 @@ class PlayerExportModal extends Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.player_export_modal_open} toggle={this.props.toggleExportModalOff} size={'80%'}>
+      <Modal isOpen={this.props.player_export_modal_open} toggle={this.props.toggleExportModalOff} size="lg">
         <ModalHeader toggle={this.props.toggleExportModalOff}>Player Export</ModalHeader>
         <ModalBody>
           <StepperContainer

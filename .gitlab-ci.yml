@@ -22,7 +22,7 @@ staging_setup:
     expire_in: 1 week
     paths:
       - node_modules/
-      - dist/
+      - build/
 
 build:
   image: docker:latest

@@ -78,7 +78,7 @@ class Players extends Component {
 
   modalDismissed = (data, cancelled = false) => {
     if (!cancelled) {
-      data.current_page = 1; //eslint-disable-line
+      data.page = 1; //eslint-disable-line
       data.per_page = 10; //eslint-disable-line
       this.props.searchPlayers(data);
       this.setState({
@@ -93,7 +93,7 @@ class Players extends Component {
 
   paginationOnChange = (currentPage, perPage) => {
     const data = this.props.searchValues;
-    data.current_page = currentPage;
+    data.page = currentPage;
     data.per_page = perPage;
 
     this.props.searchPlayers(data);

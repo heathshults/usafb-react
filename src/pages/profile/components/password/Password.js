@@ -1,7 +1,9 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const password = () => (
+import './password.css';
+
+const password = props => (
   <div className="d-flex align-items-center mt-1 mb-1">
     <p className="m-0 profile__input-label">
       Password
@@ -10,7 +12,12 @@ const password = () => (
       <p className="m-0">
         **********
       </p>
-      <a>
+      <a
+        role="button"
+        className="profile__change-password-btn"
+        onClick={props.openChangePasswordModal}
+        tabIndex={0}
+      >
         Change Password
       </a>
     </div>
@@ -18,7 +25,7 @@ const password = () => (
 );
 
 password.propTypes = {
-
+  openChangePasswordModal: PropTypes.func.isRequired
 };
 
 export default password;

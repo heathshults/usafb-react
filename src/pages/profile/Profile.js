@@ -13,6 +13,7 @@ import InputField from './components/input-field/InputField';
 import Password from './components/password/Password';
 import Status from './components/status/Status';
 import SelectField from './components/select-field/SelectField';
+import ChangePasswordModal from './components/change-password-modal/ChangePasswordModal';
 
 import './profile.css';
 import { GET_USER_INFORMATION, SAVE_USER_INFORMATION, GET_MY_INFORMATION, SAVE_MY_INFORMATION, ACTIVATE_USER, DISABLE_USER } from './dux/actions';
@@ -38,7 +39,8 @@ class Profile extends Component {
       name_last: '',
       phone: '',
       role_name: '',
-      active: false
+      active: false,
+      displayChangePasswordModal: false
     };
   }
 
@@ -134,10 +136,28 @@ class Profile extends Component {
     });
   }
 
+  openChangePasswordModal = () => {
+    this.setState({
+      displayChangePasswordModal: true
+    });
+  }
+
+  cancelChangePasswordModal = () => {
+    this.setState({
+      displayChangePasswordModal: false,
+      currentPassword: '',
+      newPassword: ''
+    });
+  }
+
   render() {
     return (
       <BlueContainer>
         <HeaderContentDivider />
+        <ChangePasswordModal
+          open={this.state.displayChangePasswordModal}
+          cancel={this.cancelChangePasswordModal}
+        />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>
             <Header />
@@ -180,7 +200,7 @@ class Profile extends Component {
                 onChange={this.changeEmail}
               />
               {!this.props.match.params.id &&
-                <Password />
+                <Password openChangePasswordModal={this.openChangePasswordModal} />
               }
               <SelectField
                 label="Role"

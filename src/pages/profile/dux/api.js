@@ -28,3 +28,10 @@ export const saveMyInfo = data =>
     headers: headers.authorizedHeader(),
     body: JSON.stringify(data)
   });
+
+export const changePassword = data =>
+  fetch(`${process.env.REACT_APP_API_URL}/user/password`, {
+    method: 'PUT',
+    headers: headers.jsonHeader(),
+    body: JSON.stringify(data)
+  });

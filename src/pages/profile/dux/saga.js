@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { activateUser, deactivateUser } from 'pages/users/dux/api';
 import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
-import getUserInformation, { saveUser, getMyInfo, saveMyInfo } from './api';
+import getUserInformation, { saveUser, getMyInfo, saveMyInfo, changePassword } from './api';
 
 export default function* userInformationFlow() {
   yield all({
@@ -13,7 +13,8 @@ export default function* userInformationFlow() {
     getMyUserInformationFlow: call(getMyUserInformationFlow),
     saveMyInformationFlow: call(saveMyInformationFlow),
     activateUserFlow: call(activateUserFlow),
-    disableUserFlow: call(disableUserFlow)
+    disableUserFlow: call(disableUserFlow),
+    changePasswordFlow: call(changePasswordFlow)
   });
 }
 
@@ -46,6 +47,8 @@ function* saveUserInformationFlow() {
           position: toast.POSITION.BOTTOM_RIGHT,
           autoClose: false
         });
+      } else {
+        yield put({ type: actions.USER_INFORMATION_ERROR });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
@@ -65,6 +68,7 @@ function* getMyUserInformationFlow() {
       const errorMessage = `An error occurred when we tried to save your user information.
       Please check your network connection and try again`;
       displayErrorToast(errorMessage);
+      yield put({ type: actions.USER_INFORMATION_ERROR });
     }
   }
 }
@@ -93,11 +97,14 @@ function* saveMyInformationFlow() {
         yield toast.success('User saved!', {
           position: toast.POSITION.BOTTOM_RIGHT
         });
+      } else {
+        yield put({ type: actions.USER_INFORMATION_ERROR });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to save this users information.
       Please check your network connection and try again`;
       displayErrorToast(errorMessage);
+      yield put({ type: actions.USER_INFORMATION_ERROR });
     }
   }
 }
@@ -130,6 +137,27 @@ function* disableUserFlow() {
       yield toast.success('User disabled!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
+    } catch (e) {
+      const errorMessage = `An error occurred when we tried to enable this user.
+      Please check your network connection and try again`;
+      displayErrorToast(errorMessage);
+    }
+  }
+}
+
+function* changePasswordFlow() {
+  while (true) {
+    try {
+      const { data } = yield take(actions.CHANGE_PASSWORD);
+      const response = yield call(changePassword, data);
+      // const responseData = yield response.json();
+      if (response.ok) {
+        yield toast.success('Password changed successfully!', {
+          position: toast.POSITION.BOTTOM_RIGHT
+        });
+      } else {
+        yield put({ type: actions.CHANGE_PASSWORD_ERROR });
+      }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;

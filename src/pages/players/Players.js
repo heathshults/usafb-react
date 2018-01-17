@@ -78,13 +78,11 @@ class Players extends Component {
 
   modalDismissed = (data, cancelled = false) => {
     if (!cancelled) {
-      data.currentPage = 1; //eslint-disable-line
+      data.current_page = 1; //eslint-disable-line
       data.per_page = 10; //eslint-disable-line
       this.props.searchPlayers(data);
       this.setState({
-        searchModalOpen: false,
-        currentPage: data.currentPage, // used to calculate dummy id. delete later,
-        rowsPerPage: data.per_page // used to calculate dummy id. delete later,
+        searchModalOpen: false
       });
     } else {
       this.setState({
@@ -95,13 +93,8 @@ class Players extends Component {
 
   paginationOnChange = (currentPage, perPage) => {
     const data = this.props.searchValues;
-    data.currentPage = currentPage;
+    data.current_page = currentPage;
     data.per_page = perPage;
-
-    this.setState({
-      currentPage: data.currentPage, // used to calculate dummy id. delete later,
-      rowsPerPage: data.per_page // used to calculate dummy id. delete later,
-    });
 
     this.props.searchPlayers(data);
   }

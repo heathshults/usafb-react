@@ -53,12 +53,25 @@ class ChangePasswordModal extends Component {
     return (!this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
   };
 
+  // Current Password functionality
   updateCurrentPassword = (event) => {
     this.setState({
       currentPassword: event.target.value
     });
   }
 
+  currentPasswordTouched = () => {
+    if (this.state.currentPassword === '') {
+      this.setState({
+        currentPasswordError: 'This field is required!'
+      });
+    }
+    this.setState({
+      currentPasswordTouched: true
+    });
+  }
+
+  // New Password functionality
   updateNewPassword = (event) => {
     this.setState({
       newPassword: event.target.value
@@ -72,23 +85,6 @@ class ChangePasswordModal extends Component {
         newPasswordError: error
       });
     }
-  }
-
-  updateConfirmPassword = (event) => {
-    this.setState({
-      confirmPassword: event.target.value
-    });
-  }
-
-  currentPasswordTouched = () => {
-    if (this.state.currentPassword === '') {
-      this.setState({
-        currentPasswordError: 'This field is required!'
-      });
-    }
-    this.setState({
-      currentPasswordTouched: true
-    });
   }
 
   newPasswordTouched = () => {
@@ -105,12 +101,31 @@ class ChangePasswordModal extends Component {
     });
   }
 
+  // Confirm Password functionality
+  updateConfirmPassword = (event) => {
+    this.setState({
+      confirmPassword: event.target.value
+    }, this.validateConfirmPassword);
+  }
+
+  validateConfirmPassword = () => {
+    if (this.state.confirmPasswordTouched) {
+      const error = passwordValidator(this.state.confirmPassword) ? '' : 'Invalid password!';
+      this.setState({
+        confirmPasswordError: error
+      });
+    }
+  }
+
   confirmPasswordTouched = () => {
     if (this.state.confirmPassword === '') {
       this.setState({
         confirmPasswordError: 'This field is required!'
       });
+    } else {
+      this.validateConfirmPassword();
     }
+
     this.setState({
       confirmPasswordTouched: true
     });

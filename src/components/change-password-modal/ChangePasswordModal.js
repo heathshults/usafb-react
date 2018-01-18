@@ -12,7 +12,7 @@ import {
   FormFeedback,
   FormGroup
 } from 'reactstrap';
-
+import passwordValidator from 'services/validations/validation';
 import './change-password-modal.css';
 
 class ChangePasswordModal extends Component {
@@ -62,7 +62,16 @@ class ChangePasswordModal extends Component {
   updateNewPassword = (event) => {
     this.setState({
       newPassword: event.target.value
-    });
+    }, this.validateNewPassword);
+  }
+
+  validateNewPassword = () => {
+    if (this.state.newPasswordTouched) {
+      const error = passwordValidator(this.state.newPassword) ? '' : 'Invalid password!';
+      this.setState({
+        newPasswordError: error
+      });
+    }
   }
 
   updateConfirmPassword = (event) => {
@@ -83,18 +92,21 @@ class ChangePasswordModal extends Component {
   }
 
   newPasswordTouched = () => {
-    if (this.state.currentPassword === '') {
+    if (this.state.newPassword === '') {
       this.setState({
         newPasswordError: 'This field is required!'
       });
+    } else {
+      this.validateNewPassword();
     }
+
     this.setState({
       newPasswordTouched: true
     });
   }
 
   confirmPasswordTouched = () => {
-    if (this.state.currentPassword === '') {
+    if (this.state.confirmPassword === '') {
       this.setState({
         confirmPasswordError: 'This field is required!'
       });

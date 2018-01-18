@@ -20,8 +20,10 @@ export default class Interceptor {
 
   registerInterceptor = () =>
     fetchIntercept.register({
+      // here we will store each url and config for every call except the "refresh" call
+      // the next step is to retry the failed API call
       request: (url, config) => {
-        if (config.body) {
+        if (config.body && !(config.body instanceof FormData)) {
           const body = JSON.parse(config.body);
           if (!body.refresh_token) {
             this.url = url;

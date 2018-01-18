@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Papa from 'papaparse';
+import moment from 'moment';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import DataHeader from 'components/data-header/DataHeader';
@@ -9,11 +10,19 @@ import HeaderContentDivider from 'components/header-content-divider/HeaderConten
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 
+import selector from './dux/selectors';
 import ImportsModal from './components/imports-modal/ImportsModal';
 import ImportButton from './components/import-button/ImportButton';
 import Columns from './models/columns';
-import testData from './models/test-data';
-import { CSV_CHECKING, CSV_ACCEPTED, CSV_REJECTED, CSV_ACCEPTING, UPLOAD_DATA } from './dux/actions';
+import {
+  CSV_CHECKING,
+  CSV_ACCEPTED,
+  CSV_REJECTED,
+  CSV_ACCEPTING,
+  UPLOAD_DATA,
+  GET_IMPORTS,
+  UPDATE_ROWS_PER_PAGE
+} from './dux/actions';
 
 class Imports extends Component {
   constructor() {
@@ -27,6 +36,21 @@ class Imports extends Component {
 
   componentWillMount() {
     this.columns = new Columns();
+    const data = {
+      page: 1,
+      per_page: this.props.rowsPerPage
+    };
+    this.getImports(this.props.match.params.type, data);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.type !== nextProps.match.params.type) {
+      const data = {
+        page: 1,
+        per_page: this.props.rowsPerPage
+      };
+      this.getImports(nextProps.match.params.type, data);
+    }
   }
 
   componentWillUnmount() {
@@ -50,20 +74,69 @@ class Imports extends Component {
     });
   }
 
+  getImports = (type, data) => this.props.getImports(type, data);
+
   getImportButton = () => (
     <ImportButton toggle={this.displayImportModal} importing={this.props.importing} />
   )
 
   getCellFormatters = () => ({
-    Actions: this.getActionFormatter
+    Date: this.getDateFormatter,
+    'File Name': this.getFileNameFormatter,
+    '# Records': this.getRecordsFormatter,
+    '# Imported': this.getImportedFormatter,
+    '# Errors': this.getErrorFormatter
   })
 
-  getActionFormatter = (cell, row) => (
-    <div className="text-center">
-      {this.renderExportButton(row)}
-      {this.renderDeleteButton(row)}
+  getDateFormatter = cell => (
+    <div>
+      {moment(cell).format('MMM Do YYYY')}
     </div>
   )
+
+  getFileNameFormatter = (cell, row) => (
+    <a href={row.file_path_remote} target="_blank">
+      {cell}
+    </a>
+  )
+
+  getRecordsFormatter = cell => (
+    <div>
+      {cell === 0 ? '-' : cell}
+    </div>
+  );
+
+  getImportedFormatter = (cell, row) => {
+    if (cell === 0) {
+      return (
+        <div>
+          -
+        </div>
+      );
+    }
+
+    return (
+      <a href={row.file_path_result} target="_blank">
+        {cell}
+      </a>
+    );
+  }
+
+  getErrorFormatter = (cell, row) => {
+    if (cell === 0) {
+      return (
+        <div>
+          -
+        </div>
+      );
+    }
+
+    return (
+      <a href={row.file_path_error} target="_blank">
+        {cell}
+      </a>
+    );
+  }
 
   cancelUpload = () =>
     this.setState({
@@ -83,28 +156,17 @@ class Imports extends Component {
       open: false
     });
 
-    this.props.uploadCsv(this.state.file);
+    this.props.uploadCsv(this.props.match.params.type, this.state.file);
   }
 
-  renderExportButton = () => (
-    <a
-      className="my-exports__icon pr-4"
-      role="button"
-      tabIndex={0}
-    >
-      <i className="fa fa-download text-lg" />
-    </a>
-  );
+  paginationOnChange = (currentPage, perPage) => {
+    const data = {
+      page: currentPage,
+      per_page: perPage
+    };
 
-  renderDeleteButton = () => (
-    <a
-      className="my-exports__icon my-exports__trash"
-      role="button"
-      tabIndex={0}
-    >
-      <i className="fa fa-trash pr-2 text-lg" />
-    </a>
-  )
+    this.getImports(this.props.match.params.type, data);
+  }
 
   render() {
     return (
@@ -124,14 +186,15 @@ class Imports extends Component {
         />
         <DataTable
           columns={this.columns.getColumns()}
-          data={testData}
+          data={this.props.imports}
           formatters={this.getCellFormatters()}
+          loading={this.props.gettingImports}
         />
         <Pagination
-          totalItems={testData.length}
-          rowsPerPage={10}
-          updateRowsPerPage={() => { }}
-          onChange={() => { }}
+          totalItems={this.props.totalImports}
+          rowsPerPage={this.props.rowsPerPage}
+          updateRowsPerPage={this.props.updateRowsPerPage}
+          onChange={this.paginationOnChange}
         />
       </Container>
     );
@@ -146,16 +209,24 @@ Imports.propTypes = {
   csvFileRejected: PropTypes.func.isRequired,
   csvFileAccepting: PropTypes.func.isRequired,
   uploadCsv: PropTypes.func.isRequired,
-  importing: PropTypes.bool.isRequired
+  importing: PropTypes.bool.isRequired,
+  getImports: PropTypes.func.isRequired,
+  imports: PropTypes.array.isRequired,
+  totalImports: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  updateRowsPerPage: PropTypes.func.isRequired,
+  gettingImports: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = ({ importsReducer }) => importsReducer;
+const mapStateToProps = selector;
 const mapDispatchToProps = dispatch => ({
   checkCsvFile: () => dispatch({ type: CSV_CHECKING }),
   csvFileAccepted: () => dispatch({ type: CSV_ACCEPTED }),
   csvFileRejected: () => dispatch({ type: CSV_REJECTED }),
   csvFileAccepting: () => dispatch({ type: CSV_ACCEPTING }),
-  uploadCsv: file => dispatch({ type: UPLOAD_DATA, file })
+  uploadCsv: (userType, file) => dispatch({ type: UPLOAD_DATA, userType, file }),
+  getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

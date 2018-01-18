@@ -57,7 +57,16 @@ class ChangePasswordModal extends Component {
   updateCurrentPassword = (event) => {
     this.setState({
       currentPassword: event.target.value
-    });
+    }, this.validateCurrentPassword);
+  }
+
+  validateCurrentPassword = () => {
+    if (this.state.currentPasswordTouched) {
+      const error = passwordValidator(this.state.currentPassword) ? '' : 'Invalid password!';
+      this.setState({
+        currentPasswordError: error
+      });
+    }
   }
 
   currentPasswordTouched = () => {
@@ -65,6 +74,8 @@ class ChangePasswordModal extends Component {
       this.setState({
         currentPasswordError: 'This field is required!'
       });
+    } else {
+      this.validateCurrentPassword();
     }
     this.setState({
       currentPasswordTouched: true

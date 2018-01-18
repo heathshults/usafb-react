@@ -11,20 +11,15 @@ export const isPermissionAllowed = (permissions, toBeAccessed) => {
   if (permissions && toBeAccessed) {
     if (Array.isArray(toBeAccessed)) {
       for (let j = 0; j < toBeAccessed.length; j += 1) {
-        for (let i = 0; i < permissions.length; i += 1) {
-          if (permissions[i] === toBeAccessed[j]) {
-            return true;
-          }
+        const foundPermission = permissions.find(permission => permission === toBeAccessed[j]);
+        if (foundPermission) {
+          return foundPermission;
         }
       }
       return false;
     }
-    for (let i = 0; i < permissions.length; i += 1) {
-      if (permissions[i] === toBeAccessed) {
-        return true;
-      }
-    }
-    return false;
+    const foundPermission = permissions.find(permission => permission === toBeAccessed);
+    return foundPermission;
   }
   return false;
 };

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import { LOGIN } from './dux/actions';
+import ChangePasswordModal from 'components/change-password-modal/ChangePasswordModal';
+
+import { LOGIN, SET_NEW_PASSWORD } from './dux/actions';
 
 import Container from './components/container/Container';
 import Form from './components/form/Form';
@@ -20,13 +22,19 @@ export class Login extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      newPassword: '',
+      confirmPassword: ''
     };
   }
 
   componentDidMount() {
     $('#fadeInH1').fadeIn(500);
     setTimeout(this.nextline, 100);
+  }
+
+  setNewPassword = () => {
+    this.props.setNewPassword(this.state.newPassword);
   }
 
   nextline = () => {
@@ -41,6 +49,14 @@ export class Login extends Component {
     password: event.target.value
   });
 
+  updateNewPassword = event => this.setState({
+    newPassword: event.target.value
+  });
+
+  updateConfirmPassword = event => this.setState({
+    confirmPassword: event.target.value
+  });
+
   login = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -50,6 +66,16 @@ export class Login extends Component {
   render() {
     return (
       <Container>
+        <ChangePasswordModal
+          open={this.props.loginReducer.changePasswordModalOpen}
+          currentPasswordRequired={false}
+          newPassword={this.state.newPassword}
+          confirmNewPassword={this.state.confirmPassword}
+          updateNewPassword={this.updateNewPassword}
+          updateConfirmNewPassword={this.updateConfirmPassword}
+          setPassword={this.setNewPassword}
+          changingPassword={this.props.loginReducer.settingPassword}
+        />
         <Form>
           <ErrorMessage
             message={this.props.loginReducer.loginError}
@@ -86,13 +112,15 @@ export class Login extends Component {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  loginReducer: PropTypes.object.isRequired
+  loginReducer: PropTypes.object.isRequired,
+  setNewPassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
 const mapDispatchToProps = dispatch => (
   {
-    login: (email, password) => dispatch({ type: LOGIN, data: { email, password } })
+    login: (email, password) => dispatch({ type: LOGIN, data: { email, password } }),
+    setNewPassword: password => dispatch({ type: SET_NEW_PASSWORD, password })
   }
 );
 

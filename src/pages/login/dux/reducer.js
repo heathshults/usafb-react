@@ -2,7 +2,9 @@ import * as actions from './actions.js';
 
 const initialState = {
   loggingIn: false,
-  loginError: ''
+  loginError: '',
+  changePasswordModalOpen: false,
+  settingPassword: false
 };
 
 export default (state = initialState, action) => {
@@ -13,6 +15,12 @@ export default (state = initialState, action) => {
       return { ...state, loggingIn: false };
     case actions.LOGIN_ERROR:
       return { ...state, loggingIn: false, loginError: action.payload };
+    case actions.TOGGLE_CHANGE_PASSWORD_MODAL:
+      return { ...state, changePasswordModalOpen: !state.changePasswordModalOpen };
+    case actions.SET_NEW_PASSWORD:
+      return { ...state, settingPassword: true };
+    case actions.PASSWORD_SET:
+      return { ...state, settingPassword: false, changePasswordModalOpen: false };
     default:
       return initialState;
   }

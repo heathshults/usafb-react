@@ -1,7 +1,7 @@
 import { take, call, put } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import login from './api';
+import login, { setNewPassword } from './api';
 
 export default function* loginFlow() {
   while (true) {
@@ -15,7 +15,23 @@ export function* loginSaga(data) {
     const response = yield call(login, data);
     const responseData = yield response.json();
     if (response.ok) {
-      yield call(loginSuccess, responseData);
+      if (responseData.challenge) {
+        yield put({ type: actions.TOGGLE_CHANGE_PASSWORD_MODAL });
+        const { password } = yield take(actions.SET_NEW_PASSWORD);
+        const npData = {
+          email: data.email,
+          password,
+          session: responseData.session
+        };
+        const npResponse = yield call(setNewPassword, npData);
+        const npResponseData = yield npResponse.json();
+        if (npResponse.ok) {
+          yield put({ type: actions.PASSWORD_SET });
+          yield loginSuccess(npResponseData.data);
+        }
+      } else {
+        yield call(loginSuccess, responseData);
+      }
     } else {
       yield put({ type: actions.LOGIN_ERROR, payload: responseData.data.error.message });
     }

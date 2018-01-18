@@ -35,20 +35,20 @@ class NavDropdown extends Component {
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem className="nav-bar__dropdown-button-item">
-            <Link to="/me" style={{ color: 'white', textDecoration: 'none' }}>
+            <Link to="/me" className="link">
               My Profile
             </Link>
           </DropdownItem>
           <Auth role_permissions={this.props.role_permissions} permissionRequested={'manage_users'}>
             <DropdownItem className="nav-bar__dropdown-button-item">
-              <Link to="/users" style={{ color: 'white', textDecoration: 'none' }}>
+              <Link to="/users" className="link">
                 Manage Users
               </Link>
             </DropdownItem>
           </Auth>
           <Auth role_permissions={this.props.role_permissions} permissionRequested={['export_coaches', 'export_palyers']}>
             <DropdownItem className="nav-bar__dropdown-button-item">
-              <Link to="/my-exports" style={{ color: 'white', textDecoration: 'none' }}>
+              <Link to="/my-exports" className="link">
                 My Exports
               </Link>
             </DropdownItem>

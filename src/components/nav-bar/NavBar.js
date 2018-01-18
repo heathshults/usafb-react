@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import Auth from 'hoc/auth/Auth';
 
 import { OPEN_PLAYER_EXPORT_MODAL, OPEN_COACH_EXPORT_MODAL } from 'pages/app/dux/actions';
 
@@ -34,22 +35,40 @@ const navBar = (props) => {
       <Logo />
       <NavigationContainer>
         <NavLink to="/" label="Home" />
-        <NavDropdown label="players">
-          <NavDropdownItem label="Search" onClick={goToPlayers} />
-          <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
-          <NavDropdownItem label="Export" onClick={props.togglePlayerExportModalOn} />
-        </NavDropdown>
-        <NavDropdown label="coaches">
-          <NavDropdownItem label="Search" onClick={goToCoaches} />
-          <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
-          <NavDropdownItem label="Export" onClick={props.toggleCoachExportModalOn} />
-        </NavDropdown>
-        <NavDropdown label="Dashboard" hideSlash>
-          <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />
-          <NavDropdownItem label="Coaches" onClick={goToCoachesDashboard} />
-        </NavDropdown>
+        <Auth role_permissions={props.role_permissions} permissionRequested={['export_players', 'view_players', 'import_players']}>
+          <NavDropdown label="players">
+            <Auth role_permissions={props.role_permissions} permissionRequested={'view_players'}>
+              <NavDropdownItem label="Search" onClick={goToPlayers} />
+            </Auth>
+            <Auth role_permissions={props.role_permissions} permissionRequested={'import_players'}>
+              <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
+            </Auth>
+            <Auth role_permissions={props.role_permissions} permissionRequested={'export_players'}>
+              <NavDropdownItem label="Export" onClick={props.togglePlayerExportModalOn} />
+            </Auth>
+          </NavDropdown>
+        </Auth>
+        <Auth role_permissions={props.role_permissions} permissionRequested={['export_coaches', 'view_coaches', 'import_coaches']}>
+          <NavDropdown label="coaches">
+            <Auth role_permissions={props.role_permissions} permissionRequested={'view_coaches'}>
+              <NavDropdownItem label="Search" onClick={goToCoaches} />
+            </Auth>
+            <Auth role_permissions={props.role_permissions} permissionRequested={'import_coaches'}>
+              <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
+            </Auth>
+            <Auth role_permissions={props.role_permissions} permissionRequested={'export_coaches'}>
+              <NavDropdownItem label="Export" onClick={props.toggleCoachExportModalOn} />
+            </Auth>
+          </NavDropdown>
+        </Auth>
+        <Auth role_permissions={props.role_permissions} permissionRequested={'view_dashboard'}>
+          <NavDropdown label="Dashboard" hideSlash>
+            <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />
+            <NavDropdownItem label="Coaches" onClick={goToCoachesDashboard} />
+          </NavDropdown>
+        </Auth>
       </NavigationContainer>
-      <UserDropdown logout={logout} roleName={props.role_name} />
+      <UserDropdown logout={logout} role_permissions={props.role_permissions} />
     </Container>
   );
 };
@@ -59,7 +78,11 @@ navBar.propTypes = {
   history: PropTypes.object.isRequired,
   togglePlayerExportModalOn: PropTypes.func.isRequired,
   toggleCoachExportModalOn: PropTypes.func.isRequired,
-  role_name: PropTypes.string.isRequired
+  role_permissions: PropTypes.array
+};
+
+navBar.defaultProps = {
+  role_permissions: []
 };
 
 const mapStateToProps = state => ({

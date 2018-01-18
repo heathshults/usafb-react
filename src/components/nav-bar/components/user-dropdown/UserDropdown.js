@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import Auth from 'hoc/auth/Auth';
 
 import User from '../user/User';
 import './user-dropdown.css';
@@ -34,23 +35,24 @@ class NavDropdown extends Component {
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem className="nav-bar__dropdown-button-item">
-            <Link to="/me">
+            <Link to="/me" style={{ color: 'white', textDecoration: 'none' }}>
               My Profile
             </Link>
           </DropdownItem>
-          {
-            this.props.roleName === 'Administrator' &&
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={'manage_users'}>
             <DropdownItem className="nav-bar__dropdown-button-item">
-              <Link to="/users">
+              <Link to="/users" style={{ color: 'white', textDecoration: 'none' }}>
                 Manage Users
               </Link>
             </DropdownItem>
-          }
-          <DropdownItem className="nav-bar__dropdown-button-item">
-            <Link to="/my-exports">
-              My Exports
-            </Link>
-          </DropdownItem>
+          </Auth>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={['export_coaches', 'export_palyers']}>
+            <DropdownItem className="nav-bar__dropdown-button-item">
+              <Link to="/my-exports" style={{ color: 'white', textDecoration: 'none' }}>
+                My Exports
+              </Link>
+            </DropdownItem>
+          </Auth>
           <DropdownItem divider />
           <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >
             Sign Out
@@ -63,7 +65,7 @@ class NavDropdown extends Component {
 
 NavDropdown.propTypes = {
   logout: PropTypes.func.isRequired,
-  roleName: PropTypes.string.isRequired
+  role_permissions: PropTypes.array.isRequired
 };
 
 export default NavDropdown;

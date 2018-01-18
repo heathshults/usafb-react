@@ -128,7 +128,8 @@ class Profile extends Component {
     name_last: this.state.name_last,
     phone: this.state.phone || '',
     email: this.state.email,
-    role_name: this.state.role_name
+    role_name: this.state.role_name,
+    address: this.state.address
   });
 
   cancelEdit = () => {

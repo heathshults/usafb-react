@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import store from 'services/redux/store';
 
 import Interceptor from 'services/api/interceptor';
-import authHOC from 'hoc/auth/Auth';
+import PrivateRoute from 'hoc/private-route/PrivateRoute';
 
 import NavBar from 'components/nav-bar/NavBar';
 import Landing from 'pages/landing/Landing';
@@ -41,18 +41,18 @@ const app = () => (
         <ToastContainer />
         <NavBar />
         <Switch>
-          <Route exact path="/" component={authHOC(Landing)} />
-          <Route exact path="/dashboard" component={authHOC(Dashboard)} />
+          <PrivateRoute exact path="/" component={Landing} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/players" component={authHOC(Players)} />
-          <Route exact path="/coaches" component={authHOC(Coaches)} />
-          <Route exact path="/players/:id" component={authHOC(PlayerProfile)} />
-          <Route exact path="/coaches/:id" component={authHOC(CoachProfile)} />
-          <Route exact path="/users" component={authHOC(Users)} />
-          <Route exact path="/users/:id" component={authHOC(Profile)} />
-          <Route exact path="/me" component={authHOC(Profile)} />
-          <Route exact path="/my-exports" component={authHOC(MyExports)} />
-          <Route exact path="/imports/:type" component={authHOC(ImportsPage)} />
+          <PrivateRoute exact path="/players" component={Players} />
+          <PrivateRoute exact path="/coaches" component={Coaches} />
+          <PrivateRoute exact path="/players/:id" component={PlayerProfile} />
+          <PrivateRoute exact path="/coaches/:id" component={CoachProfile} />
+          <PrivateRoute exact path="/users" component={Users} />
+          <PrivateRoute exact path="/users/:id" component={Profile} />
+          <PrivateRoute exact path="/me" component={Profile} />
+          <PrivateRoute exact path="/my-exports" component={MyExports} />
+          <PrivateRoute exact path="/imports/:type" component={ImportsPage} />
         </Switch>
         <PlayerExportModal />
         <CoachExportModal />

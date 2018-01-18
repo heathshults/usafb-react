@@ -1,16 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import permissionCheck from 'utils/permission';
 
-const authenticated = WrappedComponent =>
-  class extends Component {
-    componentWillMount() {
-      if (!window.localStorage.getItem('access_token')) {
-        window.location.href = '/login';
-      }
+const Auth = props => (
+  <span>
+    {
+      permissionCheck(props.role_permissions, props.permissionRequested) &&
+      React.Children.map(props.children, child => child)
     }
+  </span>
+);
 
-    render() {
-      return <WrappedComponent {...this.props} />;
-    }
-  };
+Auth.propTypes = {
+  role_permissions: PropTypes.array.isRequired,
+  permissionRequested: PropTypes.any.isRequired,
+  children: PropTypes.any.isRequired
+};
 
-export default authenticated;
+export default Auth;

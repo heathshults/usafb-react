@@ -49,6 +49,7 @@ class Imports extends Component {
         page: 1,
         per_page: this.props.rowsPerPage
       };
+
       this.getImports(nextProps.match.params.type, data);
     }
   }
@@ -74,7 +75,9 @@ class Imports extends Component {
     });
   }
 
-  getImports = (type, data) => this.props.getImports(type, data);
+  getImports = (type, data) => {
+    this.props.getImports(type, data);
+  }
 
   getImportButton = () => (
     <ImportButton toggle={this.displayImportModal} importing={this.props.importing} />
@@ -164,7 +167,6 @@ class Imports extends Component {
       page: currentPage,
       per_page: perPage
     };
-
     this.getImports(this.props.match.params.type, data);
   }
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import Auth from 'hoc/auth/Auth';
 
 import User from '../user/User';
 import './user-dropdown.css';
@@ -32,15 +34,25 @@ class NavDropdown extends Component {
           <User />
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem href="/me" className="nav-bar__dropdown-button-item">
-            My Profile
+          <DropdownItem className="nav-bar__dropdown-button-item">
+            <Link to="/me" className="link">
+              My Profile
+            </Link>
           </DropdownItem>
-          <DropdownItem href="/users" className="nav-bar__dropdown-button-item">
-            Manage Users
-          </DropdownItem>
-          <DropdownItem href="/my-exports" className="nav-bar__dropdown-button-item">
-            My Exports
-          </DropdownItem>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={'manage_users'}>
+            <DropdownItem className="nav-bar__dropdown-button-item">
+              <Link to="/users" className="link">
+                Manage Users
+              </Link>
+            </DropdownItem>
+          </Auth>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={['export_coaches', 'export_palyers']}>
+            <DropdownItem className="nav-bar__dropdown-button-item">
+              <Link to="/my-exports" className="link">
+                My Exports
+              </Link>
+            </DropdownItem>
+          </Auth>
           <DropdownItem divider />
           <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >
             Sign Out
@@ -52,7 +64,8 @@ class NavDropdown extends Component {
 }
 
 NavDropdown.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  role_permissions: PropTypes.array.isRequired
 };
 
 export default NavDropdown;

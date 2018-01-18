@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormText } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Label,
+  Input,
+  FormText,
+  FormFeedback,
+  FormGroup
+} from 'reactstrap';
 
 import './change-password-modal.css';
 
@@ -11,7 +22,13 @@ class ChangePasswordModal extends Component {
     this.state = {
       currentPassword: '',
       newPassword: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      currentPasswordTouched: false,
+      newPasswordTouched: false,
+      confirmPasswordTouched: false,
+      currentPasswordError: '',
+      newPasswordError: '',
+      confirmPasswordError: ''
     };
   }
 
@@ -30,10 +47,10 @@ class ChangePasswordModal extends Component {
 
   getButtonDisabledStatus = () => {
     if (this.props.currentPasswordRequired) {
-      return (!this.props.currentPassword || !this.props.newPassword || !this.props.confirmNewPassword) || (this.props.confirmNewPassword !== this.props.newPassword) || this.props.changingPassword;
+      return (!this.state.currentPassword || !this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
     }
 
-    return (!this.props.newPassword || !this.props.confirmNewPassword) || (this.props.confirmNewPassword !== this.props.newPassword) || this.props.changingPassword;
+    return (!this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
   };
 
   updateCurrentPassword = (event) => {
@@ -54,46 +71,94 @@ class ChangePasswordModal extends Component {
     });
   }
 
+  currentPasswordTouched = () => {
+    if (this.state.currentPassword === '') {
+      this.setState({
+        currentPasswordError: 'This field is required!'
+      });
+    }
+    this.setState({
+      currentPasswordTouched: true
+    });
+  }
+
+  newPasswordTouched = () => {
+    if (this.state.currentPassword === '') {
+      this.setState({
+        newPasswordError: 'This field is required!'
+      });
+    }
+    this.setState({
+      newPasswordTouched: true
+    });
+  }
+
+  confirmPasswordTouched = () => {
+    if (this.state.currentPassword === '') {
+      this.setState({
+        confirmPasswordError: 'This field is required!'
+      });
+    }
+    this.setState({
+      confirmPasswordTouched: true
+    });
+  }
+
   render() {
     return (
       <Modal isOpen={this.props.open} >
         <ModalHeader>Change your password</ModalHeader>
         <ModalBody>
           {this.props.currentPasswordRequired &&
-            <div className="d-flex flex-column mr-2 ml-2">
+            <FormGroup>
               <Label for="currentPassword">Current Password</Label>
               <Input
                 type="password"
                 name="password"
                 id="currentPassword"
-                className="change-password__input-field w-100"
+                className={`${this.state.currentPasswordError ? 'change-password__input-field-error' : 'change-password__input-field'} w-100`}
                 value={this.state.currentPassword}
                 onChange={this.updateCurrentPassword}
+                onBlur={this.currentPasswordTouched}
+                valid={this.state.currentPasswordError === ''}
               />
-            </div>
+              <FormFeedback>
+                {this.state.currentPasswordError}
+              </FormFeedback>
+            </FormGroup>
           }
-          <div className="d-flex flex-column mr-2 ml-2 mt-2">
+          <FormGroup>
             <Label for="newPassword">New Password</Label>
             <Input
               type="password"
               name="password"
               id="newPassword"
-              className="change-password__input-field w-100"
+              className={`${this.state.newPasswordError ? 'change-password__input-field-error' : 'change-password__input-field'} w-100`}
               value={this.state.newPassword}
               onChange={this.updateNewPassword}
+              onBlur={this.newPasswordTouched}
+              valid={this.state.newPasswordError === ''}
             />
-          </div>
-          <div className="d-flex flex-column mr-2 ml-2 mt-2">
+            <FormFeedback>
+              {this.state.newPasswordError}
+            </FormFeedback>
+          </FormGroup>
+          <FormGroup>
             <Label for="confirmNewPassword">Confirm New Password</Label>
             <Input
               type="password"
               name="password"
               id="confirmNewPassword"
-              className="change-password__input-field w-100"
+              className={`${this.state.confirmPasswordError ? 'change-password__input-field-error' : 'change-password__input-field'} w-100`}
               value={this.state.confirmPassword}
               onChange={this.updateConfirmPassword}
+              onBlur={this.confirmPasswordTouched}
+              valid={this.state.confirmPasswordError === ''}
             />
-          </div>
+            <FormFeedback>
+              {this.state.confirmPasswordError}
+            </FormFeedback>
+          </FormGroup>
           <FormText className="mt-2 text-center">Passwords must include a capital letter, a special letter and a number</FormText>
         </ModalBody>
         <ModalFooter>
@@ -116,9 +181,6 @@ class ChangePasswordModal extends Component {
 ChangePasswordModal.propTypes = {
   open: PropTypes.bool.isRequired,
   cancel: PropTypes.func,
-  currentPassword: PropTypes.string,
-  newPassword: PropTypes.string.isRequired,
-  confirmNewPassword: PropTypes.string.isRequired,
   setPassword: PropTypes.func.isRequired,
   changingPassword: PropTypes.bool.isRequired,
   currentPasswordRequired: PropTypes.bool,

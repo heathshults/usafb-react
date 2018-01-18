@@ -69,10 +69,6 @@ export class Login extends Component {
         <ChangePasswordModal
           open={this.props.loginReducer.changePasswordModalOpen}
           currentPasswordRequired={false}
-          newPassword={this.state.newPassword}
-          confirmNewPassword={this.state.confirmPassword}
-          updateNewPassword={this.updateNewPassword}
-          updateConfirmNewPassword={this.updateConfirmPassword}
           setPassword={this.setNewPassword}
           changingPassword={this.props.loginReducer.settingPassword}
         />

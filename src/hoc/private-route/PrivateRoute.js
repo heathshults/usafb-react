@@ -36,6 +36,7 @@ class PrivateRoute extends Component {
 
   componentToRender = (props) => {
     const ChildComponent = this.props.component;
+    console.log('props', props); // eslint-disable-line
     if (this.authenticated) {
       return <ChildComponent {...props} />;
     }
@@ -51,7 +52,7 @@ class PrivateRoute extends Component {
     /* eslint-disable */
     return (
       <Route
-        {...this.props.rest}
+        {...this.props}
         render={this.componentToRender}
       />
     );

@@ -36,12 +36,12 @@ const navBar = (props) => {
         <NavLink to="/" label="Home" />
         <NavDropdown label="players">
           <NavDropdownItem label="Search" onClick={goToPlayers} />
-          <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
+          <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
           <NavDropdownItem label="Export" onClick={props.togglePlayerExportModalOn} />
         </NavDropdown>
         <NavDropdown label="coaches">
           <NavDropdownItem label="Search" onClick={goToCoaches} />
-          <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
+          <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
           <NavDropdownItem label="Export" onClick={props.toggleCoachExportModalOn} />
         </NavDropdown>
         <NavDropdown label="Dashboard" hideSlash>

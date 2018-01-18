@@ -16,7 +16,7 @@ const getNoDataText = loading => (loading ? <Loading /> : 'No data available');
 const tableRowStyle = (row, rowIndex) => (rowIndex % 2 === 0 ? 'data-table__striped-row' : '');
 
 const getTableHeight = (display, loading, data) => {
-  if (!display || loading || data.length === 0) {
+  if (!display || loading || (data.length === 0 || data.length < 10)) {
     return '';
   }
   return '500';

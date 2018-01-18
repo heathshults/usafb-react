@@ -3,6 +3,8 @@ import * as actions from './actions';
 const initialState = {
   gettingImports: false,
   imports: [],
+  totalImports: 0,
+  rowsPerPage: 10,
   importing: false,
   dropzoneStatus: 'accepting'
 };
@@ -12,10 +14,12 @@ export default (state = initialState, action) => {
     case actions.GET_IMPORTS:
       return { ...state, gettingImports: true };
     case actions.RECEIVED_IMPORTS:
-      return { ...state, gettingImports: false, imports: action.imports };
+      return { ...state, gettingImports: false, imports: action.imports, totalImports: action.total };
     case actions.UPLOAD_DATA:
       return { ...state, importing: true };
     case actions.UPLOADED_DATA:
+      return { ...state, importing: false };
+    case actions.UPLOAD_DATA_ERROR:
       return { ...state, importing: false };
     case actions.CSV_ACCEPTING:
       return { ...state, dropzoneStatus: 'accepting' };
@@ -25,6 +29,8 @@ export default (state = initialState, action) => {
       return { ...state, dropzoneStatus: 'rejected' };
     case actions.CSV_ACCEPTED:
       return { ...state, dropzoneStatus: 'accepted' };
+    case actions.UPDATE_ROWS_PER_PAGE:
+      return { ...state, rowsPerPage: action.rowsPerPage };
     default:
       return state;
   }

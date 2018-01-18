@@ -10,6 +10,7 @@ import HeaderContentDivider from 'components/header-content-divider/HeaderConten
 import DataTable from 'components/data-table/DataTable';
 import Pagination from 'components/pagination/Pagination';
 
+import selector from './dux/selectors';
 import ImportsModal from './components/imports-modal/ImportsModal';
 import ImportButton from './components/import-button/ImportButton';
 import Columns from './models/columns';
@@ -217,7 +218,7 @@ Imports.propTypes = {
   gettingImports: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = ({ importsReducer }) => importsReducer;
+const mapStateToProps = selector;
 const mapDispatchToProps = dispatch => ({
   checkCsvFile: () => dispatch({ type: CSV_CHECKING }),
   csvFileAccepted: () => dispatch({ type: CSV_ACCEPTED }),

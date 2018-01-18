@@ -8,10 +8,6 @@ import {
   GET_MY_INFORMATION
 } from 'pages/profile/dux/actions';
 
-// Role(5a4e9d6f10807c001c67e152) Superuser: test
-// Role(5a4e9d6f10807c001c67e153) Administrator: export_players, import_players, import_coaches, export_coaches, manage_users, view_dashboard, view_players, view_coaches
-// Role(5a4e9d6f10807c001c67e154) Stakeholder: export_players, import_players, import_coaches, export_coaches, view_dashboard, view_players, view_coaches
-
 class PrivateRoute extends Component {
   static get defaultProps() {
     return {
@@ -23,7 +19,8 @@ class PrivateRoute extends Component {
   static get propTypes() {
     return {
       component: PropTypes.func.isRequired,
-      user: PropTypes.number
+      user: PropTypes.number,
+      getMyInformation: PropTypes.func.isRequired
     };
   }
 
@@ -31,7 +28,7 @@ class PrivateRoute extends Component {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
       this.authenticated = jwtDecode(accessToken);
-      this.props.getMyInformation(); // eslint-disable-line
+      this.props.getMyInformation();
     } else {
       this.authenticated = false;
     }

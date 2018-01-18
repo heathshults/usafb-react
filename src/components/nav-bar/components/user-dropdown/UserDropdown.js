@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 import User from '../user/User';
 import './user-dropdown.css';
@@ -32,17 +33,23 @@ class NavDropdown extends Component {
           <User />
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem href="/me" className="nav-bar__dropdown-button-item">
-            My Profile
+          <DropdownItem className="nav-bar__dropdown-button-item">
+            <Link to="/me">
+              My Profile
+            </Link>
           </DropdownItem>
           {
             this.props.roleName === 'Administrator' &&
-            <DropdownItem href="/users" className="nav-bar__dropdown-button-item">
-              Manage Users
+            <DropdownItem className="nav-bar__dropdown-button-item">
+              <Link to="/users">
+                Manage Users
+              </Link>
             </DropdownItem>
           }
-          <DropdownItem href="/my-exports" className="nav-bar__dropdown-button-item">
-            My Exports
+          <DropdownItem className="nav-bar__dropdown-button-item">
+            <Link to="/my-exports">
+              My Exports
+            </Link>
           </DropdownItem>
           <DropdownItem divider />
           <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >

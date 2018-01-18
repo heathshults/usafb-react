@@ -3,8 +3,9 @@ import * as actions from './actions.js';
 const initialState = {
   loggingIn: false,
   loginError: '',
-  changePasswordModalOpen: true,
-  settingPassword: false
+  changePasswordModalOpen: false,
+  settingPassword: false,
+  passwordError: ''
 };
 
 export default (state = initialState, action) => {
@@ -18,9 +19,11 @@ export default (state = initialState, action) => {
     case actions.TOGGLE_CHANGE_PASSWORD_MODAL:
       return { ...state, changePasswordModalOpen: !state.changePasswordModalOpen };
     case actions.SET_NEW_PASSWORD:
-      return { ...state, settingPassword: true };
+      return { ...state, settingPassword: true, passwordError: '' };
     case actions.PASSWORD_SET:
       return { ...state, settingPassword: false, changePasswordModalOpen: false };
+    case actions.PASSWORD_SET_ERROR:
+      return { ...state, settingPassword: false, passwordError: action.error };
     default:
       return initialState;
   }

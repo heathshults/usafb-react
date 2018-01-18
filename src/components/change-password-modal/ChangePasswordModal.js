@@ -10,7 +10,8 @@ import {
   Input,
   FormText,
   FormFeedback,
-  FormGroup
+  FormGroup,
+  Alert
 } from 'reactstrap';
 import passwordValidator from 'services/validations/validation';
 import './change-password-modal.css';
@@ -147,6 +148,11 @@ class ChangePasswordModal extends Component {
       <Modal isOpen={this.props.open} >
         <ModalHeader>Change your password</ModalHeader>
         <ModalBody>
+          {this.props.passwordError !== '' &&
+            <Alert color="danger text-white text-center">
+              {this.props.passwordError}
+            </Alert>
+          }
           {this.props.currentPasswordRequired &&
             <FormGroup>
               <Label for="currentPassword">Current Password</Label>
@@ -222,7 +228,8 @@ ChangePasswordModal.propTypes = {
   setPassword: PropTypes.func.isRequired,
   changingPassword: PropTypes.bool.isRequired,
   currentPasswordRequired: PropTypes.bool,
-  hideCancelButton: PropTypes.bool
+  hideCancelButton: PropTypes.bool,
+  passwordError: PropTypes.string.isRequired
 };
 
 ChangePasswordModal.defaultProps = {

@@ -28,6 +28,8 @@ export function* loginSaga(data) {
         if (npResponse.ok) {
           yield put({ type: actions.PASSWORD_SET });
           yield loginSuccess(npResponseData.data);
+        } else {
+          yield put({ type: actions.PASSWORD_SET_ERROR, error: npResponseData.data.error.errors[0].error });
         }
       } else {
         yield call(loginSuccess, responseData);

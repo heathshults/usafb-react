@@ -71,6 +71,7 @@ export class Login extends Component {
           currentPasswordRequired={false}
           setPassword={this.setNewPassword}
           changingPassword={this.props.loginReducer.settingPassword}
+          passwordError={this.props.loginReducer.passwordError}
         />
         <Form>
           <ErrorMessage

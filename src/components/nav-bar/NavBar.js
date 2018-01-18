@@ -49,7 +49,7 @@ const navBar = (props) => {
           <NavDropdownItem label="Coaches" onClick={goToCoachesDashboard} />
         </NavDropdown>
       </NavigationContainer>
-      <UserDropdown logout={logout} />
+      <UserDropdown logout={logout} roleName={props.role_name} />
     </Container>
   );
 };
@@ -58,10 +58,14 @@ navBar.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   togglePlayerExportModalOn: PropTypes.func.isRequired,
-  toggleCoachExportModalOn: PropTypes.func.isRequired
+  toggleCoachExportModalOn: PropTypes.func.isRequired,
+  role_name: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({ appReducer }) => appReducer;
+const mapStateToProps = state => ({
+  ...state.userInformation,
+  ...state.appReducer
+});
 const mapDispatchToProps = dispatch => ({
   togglePlayerExportModalOn: () => dispatch({ type: OPEN_PLAYER_EXPORT_MODAL }),
   toggleCoachExportModalOn: () => dispatch({ type: OPEN_COACH_EXPORT_MODAL })

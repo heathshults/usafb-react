@@ -35,9 +35,12 @@ class NavDropdown extends Component {
           <DropdownItem href="/me" className="nav-bar__dropdown-button-item">
             My Profile
           </DropdownItem>
-          <DropdownItem href="/users" className="nav-bar__dropdown-button-item">
-            Manage Users
-          </DropdownItem>
+          {
+            this.props.roleName === 'Administrator' &&
+            <DropdownItem href="/users" className="nav-bar__dropdown-button-item">
+              Manage Users
+            </DropdownItem>
+          }
           <DropdownItem href="/my-exports" className="nav-bar__dropdown-button-item">
             My Exports
           </DropdownItem>
@@ -52,7 +55,8 @@ class NavDropdown extends Component {
 }
 
 NavDropdown.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  roleName: PropTypes.string.isRequired
 };
 
 export default NavDropdown;

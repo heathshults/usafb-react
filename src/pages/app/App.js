@@ -24,6 +24,8 @@ import PlayerExportModal from 'pages/player-export-modal/PlayerExportModal';
 import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
 import ImportsPage from 'pages/imports/Imports';
 
+import PrivateRoute from 'hoc/private-route/PrivateRoute';
+
 import './app.css';
 import { GET_ROLES } from './dux/actions';
 
@@ -41,18 +43,18 @@ const app = () => (
         <ToastContainer />
         <NavBar />
         <Switch>
-          <Route exact path="/" component={authHOC(Landing)} />
-          <Route exact path="/dashboard" component={authHOC(Dashboard)} />
+          <PrivateRoute exact path="/" component={authHOC(Landing)} />
+          <PrivateRoute exact path="/dashboard" component={authHOC(Dashboard)} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/players" component={authHOC(Players)} />
-          <Route exact path="/coaches" component={authHOC(Coaches)} />
-          <Route exact path="/players/:id" component={authHOC(PlayerProfile)} />
-          <Route exact path="/coaches/:id" component={authHOC(CoachProfile)} />
-          <Route exact path="/users" component={authHOC(Users)} />
-          <Route exact path="/users/:id" component={authHOC(Profile)} />
-          <Route exact path="/me" component={authHOC(Profile)} />
-          <Route exact path="/my-exports" component={authHOC(MyExports)} />
-          <Route exact path="/imports/:type" component={authHOC(ImportsPage)} />
+          <PrivateRoute exact path="/players" component={authHOC(Players)} />
+          <PrivateRoute exact path="/coaches" component={authHOC(Coaches)} />
+          <PrivateRoute exact path="/players/:id" component={authHOC(PlayerProfile)} />
+          <PrivateRoute exact path="/coaches/:id" component={authHOC(CoachProfile)} />
+          <PrivateRoute exact path="/users" component={authHOC(Users)} />
+          <PrivateRoute exact path="/users/:id" component={authHOC(Profile)} />
+          <PrivateRoute exact path="/me" component={authHOC(Profile)} />
+          <PrivateRoute exact path="/my-exports" component={authHOC(MyExports)} />
+          <PrivateRoute exact path="/imports/:type" component={authHOC(ImportsPage)} />
         </Switch>
         <PlayerExportModal />
         <CoachExportModal />

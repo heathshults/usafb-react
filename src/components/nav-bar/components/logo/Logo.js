@@ -1,5 +1,5 @@
 import React from 'react';
-import logoImage from 'images/logo/usafb-logo.png';
+import logoImage from 'images/logo/logo-horizontal.png';
 
 import './logo.css';
 

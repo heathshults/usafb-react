@@ -5,6 +5,16 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input, FormT
 import './change-password-modal.css';
 
 class ChangePasswordModal extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    };
+  }
+
   getChangePasswordLabel = () => {
     if (this.props.changingPassword) {
       return (
@@ -26,10 +36,28 @@ class ChangePasswordModal extends Component {
     return (!this.props.newPassword || !this.props.confirmNewPassword) || (this.props.confirmNewPassword !== this.props.newPassword) || this.props.changingPassword;
   };
 
+  updateCurrentPassword = (event) => {
+    this.setState({
+      currentPassword: event.target.value
+    });
+  }
+
+  updateNewPassword = (event) => {
+    this.setState({
+      newPassword: event.target.value
+    });
+  }
+
+  updateConfirmPassword = (event) => {
+    this.setState({
+      confirmPassword: event.target.value
+    });
+  }
+
   render() {
     return (
       <Modal isOpen={this.props.open} >
-        <ModalHeader toggle={this.props.cancel}>Change your password</ModalHeader>
+        <ModalHeader>Change your password</ModalHeader>
         <ModalBody>
           {this.props.currentPasswordRequired &&
             <div className="d-flex flex-column mr-2 ml-2">
@@ -39,8 +67,8 @@ class ChangePasswordModal extends Component {
                 name="password"
                 id="currentPassword"
                 className="change-password__input-field w-100"
-                value={this.props.currentPassword}
-                onChange={this.props.updateCurrentPassword}
+                value={this.state.currentPassword}
+                onChange={this.updateCurrentPassword}
               />
             </div>
           }
@@ -51,8 +79,8 @@ class ChangePasswordModal extends Component {
               name="password"
               id="newPassword"
               className="change-password__input-field w-100"
-              value={this.props.newPassword}
-              onChange={this.props.updateNewPassword}
+              value={this.state.newPassword}
+              onChange={this.updateNewPassword}
             />
           </div>
           <div className="d-flex flex-column mr-2 ml-2 mt-2">
@@ -62,8 +90,8 @@ class ChangePasswordModal extends Component {
               name="password"
               id="confirmNewPassword"
               className="change-password__input-field w-100"
-              value={this.props.confirmNewPassword}
-              onChange={this.props.updateConfirmNewPassword}
+              value={this.state.confirmPassword}
+              onChange={this.updateConfirmPassword}
             />
           </div>
           <FormText className="mt-2 text-center">Passwords must include a capital letter, a special letter and a number</FormText>
@@ -91,9 +119,6 @@ ChangePasswordModal.propTypes = {
   currentPassword: PropTypes.string,
   newPassword: PropTypes.string.isRequired,
   confirmNewPassword: PropTypes.string.isRequired,
-  updateCurrentPassword: PropTypes.func,
-  updateNewPassword: PropTypes.func.isRequired,
-  updateConfirmNewPassword: PropTypes.func.isRequired,
   setPassword: PropTypes.func.isRequired,
   changingPassword: PropTypes.bool.isRequired,
   currentPasswordRequired: PropTypes.bool,

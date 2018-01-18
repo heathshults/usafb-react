@@ -3,7 +3,7 @@ import * as actions from './actions.js';
 const initialState = {
   loggingIn: false,
   loginError: '',
-  changePasswordModalOpen: false,
+  changePasswordModalOpen: true,
   settingPassword: false
 };
 

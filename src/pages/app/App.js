@@ -34,6 +34,7 @@ if (history.location.pathname !== '/login') {
   store.dispatch({ type: GET_ROLES });
 }
 
+// temp comment
 const app = () => (
   <Provider store={store}>
     <Router history={history}>

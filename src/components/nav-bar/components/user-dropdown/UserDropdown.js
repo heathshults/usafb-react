@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Auth from 'hoc/auth/Auth';
+import { manage_users, export_players, export_coaches } from 'utils/constants';
 
 import User from '../user/User';
 import './user-dropdown.css';
@@ -39,14 +40,14 @@ class NavDropdown extends Component {
               My Profile
             </DropdownItem>
           </Link>
-          <Auth role_permissions={this.props.role_permissions} permissionRequested={'manage_users'}>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={manage_users}>
             <Link to="/users" className="link">
               <DropdownItem className="nav-bar__dropdown-button-item">
                 Manage Users
               </DropdownItem>
             </Link>
           </Auth>
-          <Auth role_permissions={this.props.role_permissions} permissionRequested={['export_coaches', 'export_palyers']}>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={[export_coaches, export_players]}>
             <Link to="/my-exports" className="link">
               <DropdownItem className="nav-bar__dropdown-button-item">
                 My exports

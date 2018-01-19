@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import Auth from 'hoc/auth/Auth';
 
 import { OPEN_PLAYER_EXPORT_MODAL, OPEN_COACH_EXPORT_MODAL } from 'pages/app/dux/actions';
+import { export_players, export_coaches, import_players, import_coaches, view_players, view_coaches, view_dashboard } from 'utils/constants';
 
 import Container from './components/container/Container';
 import Logo from './components/logo/Logo';
@@ -35,33 +36,33 @@ const navBar = (props) => {
       <Logo />
       <NavigationContainer>
         <NavLink to="/" label="Home" />
-        <Auth role_permissions={props.role_permissions} permissionRequested={['export_players', 'view_players', 'import_players']}>
+        <Auth role_permissions={props.role_permissions} permissionRequested={[export_players, view_players, import_players]}>
           <NavDropdown label="players">
-            <Auth role_permissions={props.role_permissions} permissionRequested={'view_players'}>
+            <Auth role_permissions={props.role_permissions} permissionRequested={view_players}>
               <NavDropdownItem label="Search" onClick={goToPlayers} />
             </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={'import_players'}>
+            <Auth role_permissions={props.role_permissions} permissionRequested={import_players}>
               <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
             </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={'export_players'}>
+            <Auth role_permissions={props.role_permissions} permissionRequested={export_players}>
               <NavDropdownItem label="Export" onClick={props.togglePlayerExportModalOn} />
             </Auth>
           </NavDropdown>
         </Auth>
-        <Auth role_permissions={props.role_permissions} permissionRequested={['export_coaches', 'view_coaches', 'import_coaches']}>
+        <Auth role_permissions={props.role_permissions} permissionRequested={[export_coaches, view_coaches, import_coaches]}>
           <NavDropdown label="coaches">
-            <Auth role_permissions={props.role_permissions} permissionRequested={'view_coaches'}>
+            <Auth role_permissions={props.role_permissions} permissionRequested={view_coaches}>
               <NavDropdownItem label="Search" onClick={goToCoaches} />
             </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={'import_coaches'}>
+            <Auth role_permissions={props.role_permissions} permissionRequested={import_coaches}>
               <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
             </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={'export_coaches'}>
+            <Auth role_permissions={props.role_permissions} permissionRequested={export_coaches}>
               <NavDropdownItem label="Export" onClick={props.toggleCoachExportModalOn} />
             </Auth>
           </NavDropdown>
         </Auth>
-        <Auth role_permissions={props.role_permissions} permissionRequested={'view_dashboard'}>
+        <Auth role_permissions={props.role_permissions} permissionRequested={view_dashboard}>
           <NavDropdown label="Dashboard" hideSlash>
             <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />
             <NavDropdownItem label="Coaches" onClick={goToCoachesDashboard} />

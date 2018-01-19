@@ -41,7 +41,7 @@ class navBar extends Component {
                       <NavDropdownItem label="Search" onClick={this.goToPlayers} />
                     </Auth>
                     <Auth role_permissions={this.props.role_permissions} permissionRequested={IMPORT_PLAYERS}>
-                      <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
+                      <NavDropdownItem label="Import" onClick={() => this.goToImports('players')} />
                     </Auth>
                     <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_PLAYERS}>
                       <NavDropdownItem label="Export" onClick={this.props.togglePlayerExportModalOn} />
@@ -54,7 +54,7 @@ class navBar extends Component {
                       <NavDropdownItem label="Search" onClick={this.goToCoaches} />
                     </Auth>
                     <Auth role_permissions={this.props.role_permissions} permissionRequested={IMPORT_COACHES}>
-                      <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
+                      <NavDropdownItem label="Import" onClick={() => this.goToImports('coaches')} />
                     </Auth>
                     <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_COACHES}>
                       <NavDropdownItem label="Export" onClick={this.props.toggleCoachExportModalOn} />

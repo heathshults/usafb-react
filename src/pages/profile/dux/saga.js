@@ -150,18 +150,19 @@ function* changePasswordFlow() {
     try {
       const { data } = yield take(actions.CHANGE_PASSWORD);
       const response = yield call(changePassword, data);
-      // const responseData = yield response.json();
+      const responseData = yield response.json();
       if (response.ok) {
         yield toast.success('Password changed successfully!', {
           position: toast.POSITION.BOTTOM_RIGHT
         });
       } else {
-        yield put({ type: actions.CHANGE_PASSWORD_ERROR });
+        yield put({ type: actions.CHANGE_PASSWORD_ERROR, error: responseData.data.errors[0].error });
       }
     } catch (e) {
       const errorMessage = `An error occurred when we tried to enable this user.
       Please check your network connection and try again`;
-      displayErrorToast(errorMessage);
+      yield put({ type: actions.CHANGE_PASSWORD_ERROR, error: errorMessage });
+      yield displayErrorToast(errorMessage);
     }
   }
 }

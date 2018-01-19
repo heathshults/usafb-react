@@ -48,16 +48,30 @@ class ChangePasswordModal extends Component {
 
   getButtonDisabledStatus = () => {
     if (this.props.currentPasswordRequired) {
-      return (!this.state.currentPassword || !this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
+      return (!this.state.currentPassword || !this.state.newPassword || !this.state.confirmPassword) ||
+        (this.state.confirmPassword !== this.state.newPassword) ||
+        (this.state.currentPasswordError !== '' && this.state.newPasswordError !== '' && this.state.newPasswordError !== '') ||
+        this.props.changingPassword;
     }
 
-    return (!this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
+    return (!this.state.newPassword || !this.state.confirmPassword) ||
+      (this.state.confirmPassword !== this.state.newPassword) ||
+      (this.state.newPasswordError !== '' && this.state.newPasswordError !== '') ||
+      this.props.changingPassword;
   };
 
   // Whatever component that uses this modal must have a callback set that will
   // take in the current and new password fields
   setPassword = () => {
-    this.props.setPassword(this.state.newPassword);
+    if (this.props.currentPasswordRequired) {
+      const data = {
+        password_current: this.state.currentPassword,
+        password_new: this.state.newPassword
+      };
+      this.props.setPassword(data);
+    } else {
+      this.props.setPassword(this.state.newPassword);
+    }
   }
 
   // Current Password functionality
@@ -219,7 +233,7 @@ class ChangePasswordModal extends Component {
           <FormText className="mt-2 text-center">Passwords must include a capital letter, a special letter and a number</FormText>
         </ModalBody>
         <ModalFooter>
-          {this.props.hideCancelButton &&
+          {!this.props.hideCancelButton &&
             <Button color="secondary mr-2" onClick={this.props.cancel}>Cancel</Button>
           }
           <Button

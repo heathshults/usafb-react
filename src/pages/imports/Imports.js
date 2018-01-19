@@ -50,7 +50,7 @@ class Imports extends Component {
         per_page: this.props.rowsPerPage
       };
 
-      this.getImports(this.props.location.pathname.slice(9), data);
+      this.getImports(nextProps.location.pathname.slice(9), data);
     }
   }
 

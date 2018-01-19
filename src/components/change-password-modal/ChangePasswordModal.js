@@ -57,7 +57,15 @@ class ChangePasswordModal extends Component {
   // Whatever component that uses this modal must have a callback set that will
   // take in the current and new password fields
   setPassword = () => {
-    this.props.setPassword(this.state.newPassword);
+    if (this.props.currentPasswordRequired) {
+      const data = {
+        password_current: this.state.currentPassword,
+        password_new: this.state.newPassword
+      };
+      this.props.setPassword(data);
+    } else {
+      this.props.setPassword(this.state.newPassword);
+    }
   }
 
   // Current Password functionality
@@ -219,7 +227,7 @@ class ChangePasswordModal extends Component {
           <FormText className="mt-2 text-center">Passwords must include a capital letter, a special letter and a number</FormText>
         </ModalBody>
         <ModalFooter>
-          {this.props.hideCancelButton &&
+          {!this.props.hideCancelButton &&
             <Button color="secondary mr-2" onClick={this.props.cancel}>Cancel</Button>
           }
           <Button

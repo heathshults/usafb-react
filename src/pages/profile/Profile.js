@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import BlueContainer from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
+import ChangePasswordModal from 'components/change-password-modal/ChangePasswordModal';
+
 import Block from './components/block/Block';
 import Header from './components/header/Header';
 import Content from './components/content/Content';
@@ -13,7 +15,6 @@ import InputField from './components/input-field/InputField';
 import Password from './components/password/Password';
 import Status from './components/status/Status';
 import SelectField from './components/select-field/SelectField';
-import ChangePasswordModal from './components/change-password-modal/ChangePasswordModal';
 
 import './profile.css';
 import {
@@ -40,9 +41,6 @@ class Profile extends Component {
       role_name: '',
       active: false,
       displayChangePasswordModal: false,
-      currentPassword: '',
-      newPassword: '',
-      confirmNewPassword: ''
     };
   }
 
@@ -58,6 +56,10 @@ class Profile extends Component {
     if (!nextProps.saving) {
       this.setState({ ...nextProps });
     }
+  }
+
+  setPassword = (data) => {
+    this.props.setPassword(data);
   }
 
   toggleEdit = () =>
@@ -83,11 +85,6 @@ class Profile extends Component {
   changeEmail = event =>
     this.setState({
       email: event.target.value
-    });
-
-  changePassword = event =>
-    this.setState({
-      password: event.target.value
     });
 
   changeRole = event =>
@@ -143,37 +140,7 @@ class Profile extends Component {
     this.props.toggleChangePasswordModal();
     this.setState({
       displayChangePasswordModal: false,
-      currentPassword: '',
-      newPassword: '',
-      confirmNewPassword: ''
     });
-  }
-
-  updateCurrentPassword = (event) => {
-    this.setState({
-      currentPassword: event.target.value
-    });
-  }
-
-  updateNewPassword = (event) => {
-    this.setState({
-      newPassword: event.target.value
-    });
-  }
-
-  updateConfirmNewPassword = (event) => {
-    this.setState({
-      confirmNewPassword: event.target.value
-    });
-  }
-
-  changePassword = () => {
-    const data = {
-      password_current: this.state.currentPassword,
-      password_new: this.state.newPassword
-    };
-
-    this.props.changePassword(data);
   }
 
   render() {
@@ -182,15 +149,10 @@ class Profile extends Component {
         <HeaderContentDivider />
         <ChangePasswordModal
           open={this.props.changePasswordModalOpen}
+          setPassword={this.setPassword}
           cancel={this.cancelChangePasswordModal}
-          currentPassword={this.state.currentPassword}
-          newPassword={this.state.newPassword}
-          updateCurrentPassword={this.updateCurrentPassword}
-          updateNewPassword={this.updateNewPassword}
-          confirmNewPassword={this.state.confirmNewPassword}
-          updateConfirmNewPassword={this.updateConfirmNewPassword}
           changingPassword={this.props.changingPassword}
-          changePassword={this.changePassword}
+          passwordError={this.props.changingPasswordError}
         />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>
@@ -271,9 +233,10 @@ Profile.propTypes = {
   togglingUserStatus: PropTypes.bool.isRequired,
   active: PropTypes.bool.isRequired,
   changingPassword: PropTypes.bool.isRequired,
-  changePassword: PropTypes.func.isRequired,
+  setPassword: PropTypes.func.isRequired,
   changePasswordModalOpen: PropTypes.bool.isRequired,
-  toggleChangePasswordModal: PropTypes.func.isRequired
+  toggleChangePasswordModal: PropTypes.func.isRequired,
+  changingPasswordError: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -288,7 +251,7 @@ const mapDispatchToProps = dispatch => ({
   saveMyInformation: data => dispatch({ type: SAVE_MY_INFORMATION, data }),
   activateUser: id => dispatch({ type: ACTIVATE_USER, id }),
   disableUser: id => dispatch({ type: DISABLE_USER, id }),
-  changePassword: data => dispatch({ type: CHANGE_PASSWORD, data }),
+  setPassword: data => dispatch({ type: CHANGE_PASSWORD, data }),
   toggleChangePasswordModal: () => dispatch({ type: TOGGLE_CHANGE_PASSWORD_MODAL })
 });
 

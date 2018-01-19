@@ -1,8 +1,8 @@
-export const export_players = 'export_players';
-export const export_coaches = 'export_coaches';
-export const manage_users = 'manage_users';
-export const import_players = 'import_players';
-export const import_coaches = 'import_coaches';
-export const view_players = 'view_players';
-export const view_coaches = 'view_coaches';
-export const view_dashboard = 'view_dashboard';
+export const EXPORT_PLAYERS = 'export_players';
+export const EXPORT_COACHES = 'export_coaches';
+export const MANAGE_USERS = 'manage_users';
+export const IMPORT_PLAYERS = 'import_players';
+export const IMPORT_COACHES = 'import_coaches';
+export const VIEW_PLAYERS = 'view_players';
+export const VIEW_COACHES = 'view_coaches';
+export const VIEW_DASHBOARD = 'view_dashboard';

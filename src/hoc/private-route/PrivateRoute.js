@@ -34,25 +34,24 @@ class PrivateRoute extends Component {
     }
   }
 
-  componentToRender = (props) => {
-    const ChildComponent = this.props.component;
-    if (this.authenticated) {
-      return <ChildComponent {...props} />;
-    }
-    return (<Redirect
-      to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}
-    />);
-  }
-
   render() {
     /* eslint-disable */
+    const ChildComponent = this.props.component;
     return (
       <Route
-        {...this.props}
-        render={this.componentToRender}
+        {...this.props.rest}
+        render={props => (
+          this.authenticated ? (
+            <ChildComponent {...props} />
+          ) : (
+              <Redirect // eslint-disable-line
+                to={{
+                  pathname: '/login',
+                  state: { from: props.location } // eslint-disable-line react/prop-types
+                }}
+              />
+            )
+        )}
       />
     );
   }

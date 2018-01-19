@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Auth from 'hoc/auth/Auth';
+import { MANAGE_USERS, EXPORT_PLAYERS, EXPORT_COACHES } from 'services/permissions/permissions';
 
 import User from '../user/User';
 import './user-dropdown.css';
@@ -34,24 +35,24 @@ class NavDropdown extends Component {
           <User />
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem className="nav-bar__dropdown-button-item">
-            <Link to="/me" className="link">
+          <Link to="/me" className="link">
+            <DropdownItem className="nav-bar__dropdown-button-item">
               My Profile
-            </Link>
-          </DropdownItem>
-          <Auth role_permissions={this.props.role_permissions} permissionRequested={'manage_users'}>
-            <DropdownItem className="nav-bar__dropdown-button-item">
-              <Link to="/users" className="link">
+            </DropdownItem>
+          </Link>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={MANAGE_USERS}>
+            <Link to="/users" className="link">
+              <DropdownItem className="nav-bar__dropdown-button-item">
                 Manage Users
-              </Link>
-            </DropdownItem>
+              </DropdownItem>
+            </Link>
           </Auth>
-          <Auth role_permissions={this.props.role_permissions} permissionRequested={['export_coaches', 'export_palyers']}>
-            <DropdownItem className="nav-bar__dropdown-button-item">
-              <Link to="/my-exports" className="link">
-                My Exports
-              </Link>
-            </DropdownItem>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={[EXPORT_COACHES, EXPORT_PLAYERS]}>
+            <Link to="/my-exports" className="link">
+              <DropdownItem className="nav-bar__dropdown-button-item">
+                My exports
+              </DropdownItem>
+            </Link>
           </Auth>
           <DropdownItem divider />
           <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >

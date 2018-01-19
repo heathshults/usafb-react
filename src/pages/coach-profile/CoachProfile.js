@@ -19,7 +19,7 @@ import { GET_COACH_PROFILE } from './dux/actions';
 
 class CoachProfile extends Component {
   componentWillMount() {
-    const id = this.props.match.params.id; //eslint-disable-line 
+    const id = this.props.location.pathname.slice(9);
     this.getCoachProfile({ id });
   }
 
@@ -48,6 +48,7 @@ class CoachProfile extends Component {
 }
 
 CoachProfile.propTypes = {
+  location: PropTypes.object.isRequired,
   getCoachProfile: PropTypes.func.isRequired,
   coachData: PropTypes.object.isRequired,
   currentTeam: PropTypes.object.isRequired

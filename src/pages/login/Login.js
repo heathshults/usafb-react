@@ -22,9 +22,7 @@ export class Login extends Component {
 
     this.state = {
       email: '',
-      password: '',
-      newPassword: '',
-      confirmPassword: ''
+      password: ''
     };
   }
 
@@ -33,8 +31,11 @@ export class Login extends Component {
     setTimeout(this.nextline, 100);
   }
 
-  setNewPassword = () => {
-    this.props.setNewPassword(this.state.newPassword);
+  // This function is going to get the password that the user
+  // sets in the 'Change Your Password' modal after they click the
+  // 'Change Password' button
+  setNewPassword = (password) => {
+    this.props.setNewPassword(password);
   }
 
   nextline = () => {
@@ -47,14 +48,6 @@ export class Login extends Component {
 
   updatePassword = event => this.setState({
     password: event.target.value
-  });
-
-  updateNewPassword = event => this.setState({
-    newPassword: event.target.value
-  });
-
-  updateConfirmPassword = event => this.setState({
-    confirmPassword: event.target.value
   });
 
   login = (e) => {

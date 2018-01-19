@@ -38,6 +38,7 @@ export function* loginSaga(data) {
       yield put({ type: actions.LOGIN_ERROR, payload: responseData.data.error.message });
     }
   } catch (error) {
+    yield console.dir(error) //eslint-disable-line
     const errorMessage = `An error occurred when we tried to log you in.
     Please check your network connection and try again`;
     yield put({ type: actions.LOGIN_ERROR, payload: errorMessage });

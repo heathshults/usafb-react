@@ -54,6 +54,12 @@ class ChangePasswordModal extends Component {
     return (!this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
   };
 
+  // Whatever component that uses this modal must have a callback set that will
+  // take in the current and new password fields
+  setPassword = () => {
+    this.props.setPassword(this.state.newPassword);
+  }
+
   // Current Password functionality
   updateCurrentPassword = (event) => {
     this.setState({
@@ -211,7 +217,7 @@ class ChangePasswordModal extends Component {
           }
           <Button
             color="primary"
-            onClick={this.props.setPassword}
+            onClick={this.setPassword}
             disabled={this.getButtonDisabledStatus()}
           >
             {this.getChangePasswordLabel()}
@@ -235,7 +241,6 @@ ChangePasswordModal.propTypes = {
 ChangePasswordModal.defaultProps = {
   currentPassword: '',
   currentPasswordRequired: true,
-  updateCurrentPassword: () => { },
   cancel: () => { },
   hideCancelButton: false
 };

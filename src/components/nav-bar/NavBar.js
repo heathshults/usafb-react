@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import Auth from 'hoc/auth/Auth';
 
 import { OPEN_PLAYER_EXPORT_MODAL, OPEN_COACH_EXPORT_MODAL } from 'pages/app/dux/actions';
-import { export_players, export_coaches, import_players, import_coaches, view_players, view_coaches, view_dashboard } from 'utils/constants';
+import { export_players, export_coaches, import_players, import_coaches, view_players, view_coaches, view_dashboard } from 'services/permissions/permissions';
 
 import Container from './components/container/Container';
 import Logo from './components/logo/Logo';

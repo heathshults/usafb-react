@@ -1,4 +1,3 @@
-
 /**
 * Permission checking based on user permissions and feature to be seen
 *
@@ -7,7 +6,7 @@
 *
 * @return {boolean}
 */
-export const isPermissionAllowed = (permissions, toBeAccessed) => {
+export const hasPermissions = (permissions, toBeAccessed) => {
   if (permissions && toBeAccessed) {
     if (Array.isArray(toBeAccessed)) {
       for (let j = 0; j < toBeAccessed.length; j += 1) {
@@ -24,4 +23,4 @@ export const isPermissionAllowed = (permissions, toBeAccessed) => {
   return false;
 };
 
-export default isPermissionAllowed;
+export default hasPermissions;

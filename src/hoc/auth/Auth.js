@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import permissionCheck from 'utils/permission';
+import hasPermissions from 'services/permissions/hasPermissions';
 
 const Auth = props => (
   <span>
     {
-      permissionCheck(props.role_permissions, props.permissionRequested) &&
+      hasPermissions(props.role_permissions, props.permissionRequested) &&
       React.Children.map(props.children, child => child)
     }
   </span>

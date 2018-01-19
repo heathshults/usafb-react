@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Auth from 'hoc/auth/Auth';
-import { manage_users, export_players, export_coaches } from 'utils/constants';
+import { manage_users, export_players, export_coaches } from 'services/permissions/permissions';
 
 import User from '../user/User';
 import './user-dropdown.css';

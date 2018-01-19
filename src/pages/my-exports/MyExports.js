@@ -21,8 +21,14 @@ class MyExports extends Component {
       deleteModalOpen: false,
       fileToDelete: ''
     };
+  }
 
+  componentWillMount() {
     this.columns = new Columns();
+  }
+
+  componentWillUnmount() {
+    this.columns.clearColumns();
   }
 
   getCellFormatters = () => ({

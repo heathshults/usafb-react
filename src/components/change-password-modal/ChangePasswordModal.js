@@ -48,10 +48,16 @@ class ChangePasswordModal extends Component {
 
   getButtonDisabledStatus = () => {
     if (this.props.currentPasswordRequired) {
-      return (!this.state.currentPassword || !this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
+      return (!this.state.currentPassword || !this.state.newPassword || !this.state.confirmPassword) ||
+        (this.state.confirmPassword !== this.state.newPassword) ||
+        (this.state.currentPasswordError !== '' && this.state.newPasswordError !== '' && this.state.newPasswordError !== '') ||
+        this.props.changingPassword;
     }
 
-    return (!this.state.newPassword || !this.state.confirmPassword) || (this.state.confirmPassword !== this.state.newPassword) || this.props.changingPassword;
+    return (!this.state.newPassword || !this.state.confirmPassword) ||
+      (this.state.confirmPassword !== this.state.newPassword) ||
+      (this.state.newPasswordError !== '' && this.state.newPasswordError !== '') ||
+      this.props.changingPassword;
   };
 
   // Whatever component that uses this modal must have a callback set that will

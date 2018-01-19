@@ -9,3 +9,10 @@ export default data =>
       password: data.password
     })
   });
+
+export const setNewPassword = data =>
+  fetch(`${process.env.REACT_APP_API_URL}/auth/activate-user`, {
+    method: 'POST',
+    headers: headers.jsonHeader(),
+    body: JSON.stringify(data)
+  });

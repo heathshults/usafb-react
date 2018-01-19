@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import { LOGIN } from './dux/actions';
+import ChangePasswordModal from 'components/change-password-modal/ChangePasswordModal';
+
+import { LOGIN, SET_NEW_PASSWORD } from './dux/actions';
 
 import Container from './components/container/Container';
 import Form from './components/form/Form';
@@ -29,6 +31,13 @@ export class Login extends Component {
     setTimeout(this.nextline, 100);
   }
 
+  // This function is going to get the password that the user
+  // sets in the 'Change Your Password' modal after they click the
+  // 'Change Password' button
+  setNewPassword = (password) => {
+    this.props.setNewPassword(password);
+  }
+
   nextline = () => {
     $('#si-form').fadeIn(500);
   }
@@ -50,6 +59,13 @@ export class Login extends Component {
   render() {
     return (
       <Container>
+        <ChangePasswordModal
+          open={this.props.loginReducer.changePasswordModalOpen}
+          currentPasswordRequired={false}
+          setPassword={this.setNewPassword}
+          changingPassword={this.props.loginReducer.settingPassword}
+          passwordError={this.props.loginReducer.passwordError}
+        />
         <Form>
           <ErrorMessage
             message={this.props.loginReducer.loginError}
@@ -86,13 +102,15 @@ export class Login extends Component {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  loginReducer: PropTypes.object.isRequired
+  loginReducer: PropTypes.object.isRequired,
+  setNewPassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
 const mapDispatchToProps = dispatch => (
   {
-    login: (email, password) => dispatch({ type: LOGIN, data: { email, password } })
+    login: (email, password) => dispatch({ type: LOGIN, data: { email, password } }),
+    setNewPassword: password => dispatch({ type: SET_NEW_PASSWORD, password })
   }
 );
 

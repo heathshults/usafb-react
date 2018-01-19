@@ -18,7 +18,7 @@ const StepperContainer = (props) => {
   return (
     <div className="example">
       <div className="step-progress">
-        <Stepper steps={steps} prevBtnOnLastStep={false} />
+        <Stepper steps={steps} prevBtnOnLastStep={false} showSteps={false} />
       </div>
     </div>
   );

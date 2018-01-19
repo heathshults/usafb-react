@@ -16,12 +16,6 @@ import NavLink from './components/nav-link/NavLink';
 import UserDropdown from './components/user-dropdown/UserDropdown';
 
 class navBar extends Component {
-  componentWillMount() {
-    console.log('props', this.props.location.pathname); // eslint-disable-line
-  }
-  componentWillReceiveProps() {
-    console.log('props', this.props.location.pathname); // eslint-disable-line
-  }
   goToPlayers = () => this.props.history.push('/players');
   goToCoaches = () => this.props.history.push('/coaches');
   goToPlayersDashboard = () => this.props.history.push('/dashboard');
@@ -35,7 +29,7 @@ class navBar extends Component {
     return (
       <span>
         {
-          this.props.location.pathname === '/login' ?
+          this.props.location.pathname === '/login' || !localStorage.getItem('access_token') ?
             <span /> :
             <Container>
               <Logo />

@@ -92,6 +92,7 @@ export class Login extends Component {
             <RememberMe />
             <LoginButton
               onClick={this.login}
+              loggingIn={this.props.loginReducer.loggingIn}
             />
           </InputGroup>
         </Form>

@@ -34,24 +34,24 @@ class NavDropdown extends Component {
           <User />
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem className="nav-bar__dropdown-button-item">
-            <Link to="/me" className="link">
-              My Profile
-            </Link>
-          </DropdownItem>
-          <Auth role_permissions={this.props.role_permissions} permissionRequested={'manage_users'}>
+          <Link to="/me" className="link">
             <DropdownItem className="nav-bar__dropdown-button-item">
-              <Link to="/users" className="link">
-                Manage Users
-              </Link>
+              My Profile
             </DropdownItem>
+          </Link>
+          <Auth role_permissions={this.props.role_permissions} permissionRequested={'manage_users'}>
+            <Link to="/users" className="link">
+              <DropdownItem className="nav-bar__dropdown-button-item">
+                Manage Users
+              </DropdownItem>
+            </Link>
           </Auth>
           <Auth role_permissions={this.props.role_permissions} permissionRequested={['export_coaches', 'export_palyers']}>
-            <DropdownItem className="nav-bar__dropdown-button-item">
-              <Link to="/my-exports" className="link">
-                My Exports
-              </Link>
-            </DropdownItem>
+            <Link to="/my-exports" className="link">
+              <DropdownItem className="nav-bar__dropdown-button-item">
+                My exports
+              </DropdownItem>
+            </Link>
           </Auth>
           <DropdownItem divider />
           <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >

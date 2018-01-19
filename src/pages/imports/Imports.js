@@ -40,17 +40,17 @@ class Imports extends Component {
       page: 1,
       per_page: this.props.rowsPerPage
     };
-    this.getImports(this.props.match.params.type, data);
+    this.getImports(this.props.location.pathname.slice(9), data);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.type !== nextProps.match.params.type) {
+    if (this.props.location.pathname.slice(9) !== nextProps.location.pathname.slice(9)) {
       const data = {
         page: 1,
         per_page: this.props.rowsPerPage
       };
 
-      this.getImports(nextProps.match.params.type, data);
+      this.getImports(this.props.location.pathname.slice(9), data);
     }
   }
 
@@ -75,9 +75,7 @@ class Imports extends Component {
     });
   }
 
-  getImports = (type, data) => {
-    this.props.getImports(type, data);
-  }
+  getImports = (type, data) => this.props.getImports(type, data);
 
   getImportButton = () => (
     <ImportButton toggle={this.displayImportModal} importing={this.props.importing} />
@@ -159,7 +157,7 @@ class Imports extends Component {
       open: false
     });
 
-    this.props.uploadCsv(this.props.match.params.type, this.state.file);
+    this.props.uploadCsv(this.props.location.pathname.slice(9), this.state.file);
   }
 
   paginationOnChange = (currentPage, perPage) => {
@@ -167,7 +165,7 @@ class Imports extends Component {
       page: currentPage,
       per_page: perPage
     };
-    this.getImports(this.props.match.params.type, data);
+    this.getImports(this.props.location.pathname.slice(9), data);
   }
 
   render() {
@@ -183,7 +181,7 @@ class Imports extends Component {
         />
         <HeaderContentDivider />
         <DataHeader
-          header={`Imports for ${this.props.match.params.type}`}
+          header={`Imports for ${this.props.location.pathname.slice(9)}`}
           buttons={this.getImportButton()}
         />
         <DataTable
@@ -204,7 +202,7 @@ class Imports extends Component {
 }
 
 Imports.propTypes = {
-  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   dropzoneStatus: PropTypes.string.isRequired,
   checkCsvFile: PropTypes.func.isRequired,
   csvFileAccepted: PropTypes.func.isRequired,

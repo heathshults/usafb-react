@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
@@ -15,64 +15,72 @@ import NavDropdownItem from './components/nav-dropdown-item/NavDropdownItem';
 import NavLink from './components/nav-link/NavLink';
 import UserDropdown from './components/user-dropdown/UserDropdown';
 
-const navBar = (props) => {
-  if (props.location.pathname === '/login') {
-    return <div />;
+class navBar extends Component {
+  componentWillMount() {
+    console.log('props', this.props.location.pathname); // eslint-disable-line
   }
-
-  const goToPlayers = () => props.history.push('/players');
-  const goToCoaches = () => props.history.push('/coaches');
-  const goToPlayersDashboard = () => props.history.push('/dashboard');
-  const goToCoachesDashboard = () => props.history.push('/dashboard');
-  const goToImports = type => props.history.push(`/imports/${type}`);
-
-  const logout = () => {
+  componentWillReceiveProps() {
+    console.log('props', this.props.location.pathname); // eslint-disable-line
+  }
+  goToPlayers = () => this.props.history.push('/players');
+  goToCoaches = () => this.props.history.push('/coaches');
+  goToPlayersDashboard = () => this.props.history.push('/dashboard');
+  goToCoachesDashboard = () => this.props.history.push('/dashboard');
+  goToImports = type => this.props.history.push(`/imports/${type}`);
+  logout = () => {
     window.localStorage.clear();
     window.location.href = '/login';
   };
-
-  return (
-    <Container>
-      <Logo />
-      <NavigationContainer>
-        <NavLink to="/" label="Home" />
-        <Auth role_permissions={props.role_permissions} permissionRequested={[EXPORT_PLAYERS, VIEW_PLAYERS, IMPORT_PLAYERS]}>
-          <NavDropdown label="players">
-            <Auth role_permissions={props.role_permissions} permissionRequested={VIEW_PLAYERS}>
-              <NavDropdownItem label="Search" onClick={goToPlayers} />
-            </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={IMPORT_PLAYERS}>
-              <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
-            </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={EXPORT_PLAYERS}>
-              <NavDropdownItem label="Export" onClick={props.togglePlayerExportModalOn} />
-            </Auth>
-          </NavDropdown>
-        </Auth>
-        <Auth role_permissions={props.role_permissions} permissionRequested={[EXPORT_COACHES, VIEW_COACHES, IMPORT_COACHES]}>
-          <NavDropdown label="coaches">
-            <Auth role_permissions={props.role_permissions} permissionRequested={VIEW_COACHES}>
-              <NavDropdownItem label="Search" onClick={goToCoaches} />
-            </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={IMPORT_COACHES}>
-              <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
-            </Auth>
-            <Auth role_permissions={props.role_permissions} permissionRequested={EXPORT_COACHES}>
-              <NavDropdownItem label="Export" onClick={props.toggleCoachExportModalOn} />
-            </Auth>
-          </NavDropdown>
-        </Auth>
-        <Auth role_permissions={props.role_permissions} permissionRequested={VIEW_DASHBOARD}>
-          <NavDropdown label="Dashboard" hideSlash>
-            <NavDropdownItem label="Players" onClick={goToPlayersDashboard} />
-            <NavDropdownItem label="Coaches" onClick={goToCoachesDashboard} />
-          </NavDropdown>
-        </Auth>
-      </NavigationContainer>
-      <UserDropdown logout={logout} role_permissions={props.role_permissions} />
-    </Container>
-  );
-};
+  render() {
+    return (
+      <span>
+        {
+          this.props.location.pathname === '/login' ?
+            <span /> :
+            <Container>
+              <Logo />
+              <NavigationContainer>
+                <NavLink to="/" label="Home" />
+                <Auth role_permissions={this.props.role_permissions} permissionRequested={[EXPORT_PLAYERS, VIEW_PLAYERS, IMPORT_PLAYERS]}>
+                  <NavDropdown label="players">
+                    <Auth role_permissions={this.props.role_permissions} permissionRequested={VIEW_PLAYERS}>
+                      <NavDropdownItem label="Search" onClick={this.goToPlayers} />
+                    </Auth>
+                    <Auth role_permissions={this.props.role_permissions} permissionRequested={IMPORT_PLAYERS}>
+                      <NavDropdownItem label="Import" onClick={() => goToImports('players')} />
+                    </Auth>
+                    <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_PLAYERS}>
+                      <NavDropdownItem label="Export" onClick={this.props.togglePlayerExportModalOn} />
+                    </Auth>
+                  </NavDropdown>
+                </Auth>
+                <Auth role_permissions={this.props.role_permissions} permissionRequested={[EXPORT_COACHES, VIEW_COACHES, IMPORT_COACHES]}>
+                  <NavDropdown label="coaches">
+                    <Auth role_permissions={this.props.role_permissions} permissionRequested={VIEW_COACHES}>
+                      <NavDropdownItem label="Search" onClick={this.goToCoaches} />
+                    </Auth>
+                    <Auth role_permissions={this.props.role_permissions} permissionRequested={IMPORT_COACHES}>
+                      <NavDropdownItem label="Import" onClick={() => goToImports('coaches')} />
+                    </Auth>
+                    <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_COACHES}>
+                      <NavDropdownItem label="Export" onClick={this.props.toggleCoachExportModalOn} />
+                    </Auth>
+                  </NavDropdown>
+                </Auth>
+                <Auth role_permissions={this.props.role_permissions} permissionRequested={VIEW_DASHBOARD}>
+                  <NavDropdown label="Dashboard" hideSlash>
+                    <NavDropdownItem label="Players" onClick={this.goToPlayersDashboard} />
+                    <NavDropdownItem label="Coaches" onClick={this.goToCoachesDashboard} />
+                  </NavDropdown>
+                </Auth>
+              </NavigationContainer>
+              <UserDropdown logout={this.logout} role_permissions={this.props.role_permissions} />
+            </Container>
+        }
+      </span>
+    );
+  }
+}
 
 navBar.propTypes = {
   location: PropTypes.object.isRequired,

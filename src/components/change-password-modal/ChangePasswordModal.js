@@ -230,7 +230,7 @@ class ChangePasswordModal extends Component {
               {this.state.confirmPasswordError}
             </FormFeedback>
           </FormGroup>
-          <FormText className="mt-2 text-center">Passwords must include a capital letter, a special letter and a number</FormText>
+          <FormText className="mt-2 text-center">Passwords must include a capital letter, a special character(@#$%*!) and a number</FormText>
         </ModalBody>
         <ModalFooter>
           {!this.props.hideCancelButton &&

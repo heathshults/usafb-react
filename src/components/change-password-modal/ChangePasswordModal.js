@@ -77,6 +77,12 @@ class ChangePasswordModal extends Component {
   }
 
   currentPasswordTouched = () => {
+    this.setState({
+      currentPasswordTouched: true
+    }, this.currentPasswordOnBlurValidation);
+  }
+
+  currentPasswordOnBlurValidation = () => {
     if (this.state.currentPassword === '') {
       this.setState({
         currentPasswordError: 'This field is required!'
@@ -84,9 +90,6 @@ class ChangePasswordModal extends Component {
     } else {
       this.validateCurrentPassword();
     }
-    this.setState({
-      currentPasswordTouched: true
-    });
   }
 
   // New Password functionality
@@ -106,6 +109,12 @@ class ChangePasswordModal extends Component {
   }
 
   newPasswordTouched = () => {
+    this.setState({
+      newPasswordTouched: true
+    }, this.newPasswordOnBlurValidation);
+  }
+
+  newPasswordOnBlurValidation = () => {
     if (this.state.newPassword === '') {
       this.setState({
         newPasswordError: 'This field is required!'
@@ -113,10 +122,6 @@ class ChangePasswordModal extends Component {
     } else {
       this.validateNewPassword();
     }
-
-    this.setState({
-      newPasswordTouched: true
-    });
   }
 
   // Confirm Password functionality
@@ -136,6 +141,12 @@ class ChangePasswordModal extends Component {
   }
 
   confirmPasswordTouched = () => {
+    this.setState({
+      confirmPasswordTouched: true
+    }, this.confirmPasswordOnBlurValidation);
+  }
+
+  confirmPasswordOnBlurValidation = () => {
     if (this.state.confirmPassword === '') {
       this.setState({
         confirmPasswordError: 'This field is required!'
@@ -143,10 +154,6 @@ class ChangePasswordModal extends Component {
     } else {
       this.validateConfirmPassword();
     }
-
-    this.setState({
-      confirmPasswordTouched: true
-    });
   }
 
   render() {

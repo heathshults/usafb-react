@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
     case actions.LOGGED_IN:
       return { ...state, loggingIn: false };
     case actions.LOGIN_ERROR:
-      return { ...state, loggingIn: false, loginError: action.payload };
+      return { ...state, loggingIn: false, loginError: action.payload, displayForgotPasswordModal: false };
     case actions.TOGGLE_CHANGE_PASSWORD_MODAL:
       return { ...state, changePasswordModalOpen: !state.changePasswordModalOpen };
     case actions.SET_NEW_PASSWORD:

@@ -45,8 +45,8 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    if (this.props.match.params.id) {
-      this.props.getUserInformation(this.props.match.params.id);
+    if (this.props.location.pathname.slice(7)) {
+      this.props.getUserInformation(this.props.location.pathname.slice(7));
     } else {
       this.props.getMyInformation();
     }
@@ -99,9 +99,9 @@ class Profile extends Component {
 
   changeStatus = () => {
     if (this.state.active) {
-      this.props.disableUser(this.props.match.params.id);
+      this.props.disableUser(this.props.location.pathname.slice(7));
     } else {
-      this.props.activateUser(this.props.match.params.id);
+      this.props.activateUser(this.props.location.pathname.slice(7));
     }
   }
 
@@ -112,7 +112,7 @@ class Profile extends Component {
 
     const data = this.transformDataForAPI();
 
-    if (this.props.match.params.id) {
+    if (this.props.location.pathname.slice(7)) {
       this.props.saveUserInformation(data);
     } else {
       this.props.saveMyInformation(data);
@@ -195,7 +195,7 @@ class Profile extends Component {
                 editing={false}
                 onChange={this.changeEmail}
               />
-              {!this.props.match.params.id &&
+              {!this.props.location.pathname.slice(7) &&
                 <Password openChangePasswordModal={this.props.toggleChangePasswordModal} />
               }
               <SelectField
@@ -205,7 +205,7 @@ class Profile extends Component {
                 editing={this.state.editing}
                 onChange={this.changeRole}
               />
-              {this.props.match.params.id &&
+              {this.props.location.pathname.slice(7) &&
                 <Status
                   active={this.props.active}
                   onChange={this.changeStatus}
@@ -221,7 +221,7 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   getUserInformation: PropTypes.func.isRequired,
   saveUserInformation: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,

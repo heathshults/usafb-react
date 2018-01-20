@@ -5,7 +5,8 @@ const initialState = {
   loginError: '',
   changePasswordModalOpen: false,
   settingPassword: false,
-  passwordError: ''
+  passwordError: '',
+  displayForgotPasswordModal: false
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +25,8 @@ export default (state = initialState, action) => {
       return { ...state, settingPassword: false, changePasswordModalOpen: false };
     case actions.PASSWORD_SET_ERROR:
       return { ...state, settingPassword: false, passwordError: action.error };
+    case actions.TOGGLE_FORGOT_PASSWORD_MODAL:
+      return { ...state, displayForgotPasswordModal: !state.displayForgotPasswordModal };
     default:
       return initialState;
   }

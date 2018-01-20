@@ -1,12 +1,14 @@
-import { take, call, put, all } from 'redux-saga/effects';
+import { take, call, put, all, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
+import selector from './selectors';
 import * as actions from './actions';
 import login, { setNewPassword, sendVerificationCode, confirmVerification } from './api';
 
 export default function* loginSagas() {
   yield all({
     loginFlow: call(loginFlow),
+    setNewPasswordFlow: call(setNewPasswordFlow),
     sendVerificationCodeFlow: call(sendVerificationCodeFlow),
     verifyConfirmationFlow: call(verifyConfirmationFlow)
   });
@@ -25,21 +27,8 @@ export function* loginSaga(data) {
     const responseData = yield response.json();
     if (response.ok) {
       if (responseData.challenge) {
+        yield put({ type: actions.SET_NEW_PASSWORD_FIELDS, email: data.email, session: responseData.session });
         yield put({ type: actions.TOGGLE_CHANGE_PASSWORD_MODAL });
-        const { password } = yield take(actions.SET_NEW_PASSWORD);
-        const npData = {
-          email: data.email,
-          password,
-          session: responseData.session
-        };
-        const npResponse = yield call(setNewPassword, npData);
-        const npResponseData = yield npResponse.json();
-        if (npResponse.ok) {
-          yield put({ type: actions.PASSWORD_SET });
-          yield loginSuccess(npResponseData.data);
-        } else {
-          yield put({ type: actions.PASSWORD_SET_ERROR, error: npResponseData.data.error.errors[0].error });
-        }
       } else {
         yield call(loginSuccess, responseData);
       }
@@ -50,6 +39,30 @@ export function* loginSaga(data) {
     const errorMessage = `An error occurred when we tried to log you in.
     Please check your network connection and try again`;
     yield put({ type: actions.LOGIN_ERROR, payload: errorMessage });
+  }
+}
+
+function* setNewPasswordFlow() {
+  while (true) {
+    try {
+      const { password } = yield take(actions.SET_NEW_PASSWORD);
+      const state = yield select(selector);
+      const data = {
+        password,
+        email: state.loginReducer.email,
+        session: state.loginReducer.session
+      };
+      const response = yield call(setNewPassword, data);
+      const responseData = yield response.json();
+      if (response.ok) {
+        yield put({ type: actions.PASSWORD_SET });
+        yield loginSuccess(responseData.data);
+      } else {
+        yield put({ type: actions.PASSWORD_SET_ERROR, error: responseData.data.error.errors[0].error });
+      }
+    } catch (e) {
+      yield put({ type: actions.PASSWORD_SET_ERROR, error: e.toString() });
+    }
   }
 }
 

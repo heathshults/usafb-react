@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import ChangePasswordModal from 'components/change-password-modal/ChangePasswordModal';
 
+import selector from './dux/selectors';
 import { LOGIN, SET_NEW_PASSWORD, TOGGLE_FORGOT_PASSWORD_MODAL, SEND_VERIFICATION_CODE, CONFIRM_VERIFICATION } from './dux/actions';
 
 import Container from './components/container/Container';
@@ -144,7 +145,7 @@ Login.propTypes = {
   verifyConfirmation: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
+const mapStateToProps = selector;
 const mapDispatchToProps = dispatch => (
   {
     login: (email, password) => dispatch({ type: LOGIN, data: { email, password } }),

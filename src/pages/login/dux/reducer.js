@@ -3,6 +3,8 @@ import * as actions from './actions.js';
 const initialState = {
   loggingIn: false,
   loginError: '',
+  email: '',
+  session: '',
   changePasswordModalOpen: false,
   settingPassword: false,
   passwordError: '',
@@ -27,6 +29,8 @@ export default (state = initialState, action) => {
       return { ...state, changePasswordModalOpen: !state.changePasswordModalOpen };
     case actions.SET_NEW_PASSWORD:
       return { ...state, settingPassword: true, passwordError: '' };
+    case actions.SET_NEW_PASSWORD_FIELDS:
+      return { ...state, email: action.email, session: action.session };
     case actions.PASSWORD_SET:
       return { ...state, settingPassword: false, changePasswordModalOpen: false };
     case actions.PASSWORD_SET_ERROR:

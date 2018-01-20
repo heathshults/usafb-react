@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import ChangePasswordModal from 'components/change-password-modal/ChangePasswordModal';
 
-import { LOGIN, SET_NEW_PASSWORD, TOGGLE_FORGOT_PASSWORD_MODAL, SEND_VERIFICATION_CODE } from './dux/actions';
+import { LOGIN, SET_NEW_PASSWORD, TOGGLE_FORGOT_PASSWORD_MODAL, SEND_VERIFICATION_CODE, CONFIRM_VERIFICATION } from './dux/actions';
 
 import Container from './components/container/Container';
 import Form from './components/form/Form';
@@ -94,10 +94,9 @@ export class Login extends Component {
           sendingVerificationCode={this.props.loginReducer.sendingVerificationCode}
           verificationCodeError={this.props.loginReducer.verificationCodeError}
           verificationCodeSent={this.props.loginReducer.verificationCodeSent}
-          verifyConfirmation={this.props.verifyConfirmation}
           confirmingVerification={this.props.loginReducer.confirmingVerification}
-          verificationConfirmed={this.props.loginReducer.verificationConfirmed}
           confirmationError={this.props.loginReducer.confirmationError}
+          verifyConfirmation={this.verifyConfirmation}
         />
         <Form>
           <ErrorMessage

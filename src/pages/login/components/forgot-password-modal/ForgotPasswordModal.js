@@ -41,7 +41,7 @@ class ForgotPasswordModal extends Component {
 
     return (
       <div>
-        Send Your New Password
+        Set Your New Password
       </div>
     );
   }
@@ -69,7 +69,7 @@ class ForgotPasswordModal extends Component {
   }
 
   confirmVerification = () => {
-    console.dir(this.state); //eslint-disable-line
+    this.props.verifyConfirmation(this.state);
   }
 
   renderModalBody = () => {
@@ -143,9 +143,9 @@ class ForgotPasswordModal extends Component {
       >
         <ModalHeader>Forgot your password?</ModalHeader>
         <ModalBody>
-          {this.props.verificationCodeError &&
+          {(this.props.verificationCodeError || this.props.confirmationError) &&
             <Alert color="danger text-center text-white">
-              {this.props.verificationCodeError}
+              {this.props.verificationCodeError || this.props.confirmationError}
             </Alert>
           }
           {this.renderModalBody()}
@@ -165,7 +165,9 @@ ForgotPasswordModal.propTypes = {
   sendingVerificationCode: PropTypes.bool.isRequired,
   verificationCodeError: PropTypes.string.isRequired,
   verificationCodeSent: PropTypes.bool.isRequired,
-  confirmingVerification: PropTypes.bool.isRequired
+  confirmingVerification: PropTypes.bool.isRequired,
+  confirmationError: PropTypes.string.isRequired,
+  verifyConfirmation: PropTypes.func.isRequired
 };
 
 export default ForgotPasswordModal;

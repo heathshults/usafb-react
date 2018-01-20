@@ -1,4 +1,5 @@
 import { take, call, put, all } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import * as actions from './actions';
 import login, { setNewPassword, sendVerificationCode, confirmVerification } from './api';
@@ -46,7 +47,6 @@ export function* loginSaga(data) {
       yield put({ type: actions.LOGIN_ERROR, payload: responseData.data.error.message });
     }
   } catch (error) {
-    yield console.dir(error) //eslint-disable-line
     const errorMessage = `An error occurred when we tried to log you in.
     Please check your network connection and try again`;
     yield put({ type: actions.LOGIN_ERROR, payload: errorMessage });
@@ -85,6 +85,10 @@ function* verifyConfirmationFlow() {
     const responseData = yield response.json();
     if (response.ok) {
       yield put({ type: actions.VERIFICATION_CONFIRMED });
+      yield toast.success('Your password has been set! Please login again', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: false
+      });
     } else {
       yield put({ type: actions.VERIFICATION_CONFIRMATION_ERROR, error: responseData.data.error.message });
     }

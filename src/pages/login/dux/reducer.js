@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
     case actions.CONFIRM_VERIFICATION:
       return { ...state, confirmingVerification: true, confirmationError: '' };
     case actions.VERIFICATION_CONFIRMED:
-      return { ...state, confirmingVerification: false, verificationConfirmed: true };
+      return { ...state, confirmingVerification: false, verificationConfirmed: true, displayForgotPasswordModal: false };
     case actions.VERIFICATION_CONFIRMATION_ERROR:
       return { ...state, confirmingVerification: false, confirmationError: action.error };
     default:

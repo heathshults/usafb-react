@@ -72,6 +72,10 @@ export class Login extends Component {
     this.props.sendVerficationCode(data);
   }
 
+  verifyConfirmation = (data) => {
+    this.props.verifyConfirmation(data);
+  }
+
   render() {
     return (
       <Container>
@@ -89,6 +93,11 @@ export class Login extends Component {
           sendVerficationCode={this.sendVerficationCode}
           sendingVerificationCode={this.props.loginReducer.sendingVerificationCode}
           verificationCodeError={this.props.loginReducer.verificationCodeError}
+          verificationCodeSent={this.props.loginReducer.verificationCodeSent}
+          verifyConfirmation={this.props.verifyConfirmation}
+          confirmingVerification={this.props.loginReducer.confirmingVerification}
+          verificationConfirmed={this.props.loginReducer.verificationConfirmed}
+          confirmationError={this.props.loginReducer.confirmationError}
         />
         <Form>
           <ErrorMessage
@@ -132,7 +141,8 @@ Login.propTypes = {
   loginReducer: PropTypes.object.isRequired,
   setNewPassword: PropTypes.func.isRequired,
   toggleDisplayForgotPasswordModal: PropTypes.func.isRequired,
-  sendVerficationCode: PropTypes.func.isRequired
+  sendVerficationCode: PropTypes.func.isRequired,
+  verifyConfirmation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
@@ -141,7 +151,8 @@ const mapDispatchToProps = dispatch => (
     login: (email, password) => dispatch({ type: LOGIN, data: { email, password } }),
     setNewPassword: password => dispatch({ type: SET_NEW_PASSWORD, password }),
     toggleDisplayForgotPasswordModal: () => dispatch({ type: TOGGLE_FORGOT_PASSWORD_MODAL }),
-    sendVerficationCode: data => dispatch({ type: SEND_VERIFICATION_CODE, data })
+    sendVerficationCode: data => dispatch({ type: SEND_VERIFICATION_CODE, data }),
+    verifyConfirmation: data => dispatch({ type: CONFIRM_VERIFICATION, data })
   }
 );
 

@@ -24,3 +24,10 @@ export const sendVerificationCode = data =>
     headers: headers.jsonHeader(),
     body: JSON.stringify(data)
   });
+
+export const confirmVerification = data =>
+  fetch(`${process.env.REACT_APP_API_URL}/auth/forgot-password-confirm`, {
+    method: 'POST',
+    headers: headers.jsonHeader(),
+    body: JSON.stringify(data)
+  });

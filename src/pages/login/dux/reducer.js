@@ -9,7 +9,10 @@ const initialState = {
   displayForgotPasswordModal: false,
   sendingVerificationCode: false,
   verificationCodeSent: false,
-  verificationCodeError: ''
+  verificationCodeError: '',
+  confirmingVerification: false,
+  verificationConfirmed: false,
+  confirmationError: ''
 };
 
 export default (state = initialState, action) => {
@@ -33,9 +36,15 @@ export default (state = initialState, action) => {
     case actions.SEND_VERIFICATION_CODE:
       return { ...state, sendingVerificationCode: true, verificationCodeError: '' };
     case actions.RECEIVED_VERIFICATION_CODE:
-      return { ...state, sendingVerificationCode: false, RECEIVED_VERIFICATION_CODE: true };
+      return { ...state, sendingVerificationCode: false, verificationCodeSent: true };
     case actions.VERIFICATION_CODE_ERROR:
       return { ...state, sendingVerificationCode: false, verificationCodeError: action.error };
+    case actions.CONFIRM_VERIFICATION:
+      return { ...state, confirmingVerification: true, confirmationError: '' };
+    case actions.VERIFICATION_CONFIRMED:
+      return { ...state, confirmingVerification: false, verificationConfirmed: true };
+    case actions.VERIFICATION_CONFIRMATION_ERROR:
+      return { ...state, confirmingVerification: false, confirmationError: action.error };
     default:
       return initialState;
   }

@@ -1,12 +1,13 @@
 import { take, call, put, all } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import login, { setNewPassword, sendVerificationCode } from './api';
+import login, { setNewPassword, sendVerificationCode, confirmVerification } from './api';
 
 export default function* loginSagas() {
   yield all({
     loginFlow: call(loginFlow),
-    sendVerificationCodeFlow: call(sendVerificationCodeFlow)
+    sendVerificationCodeFlow: call(sendVerificationCodeFlow),
+    verifyConfirmationFlow: call(verifyConfirmationFlow)
   });
 }
 
@@ -73,6 +74,19 @@ function* sendVerificationCodeFlow() {
       yield put({ type: actions.RECEIVED_VERIFICATION_CODE });
     } else {
       yield put({ type: actions.VERIFICATION_CODE_ERROR, error: responseData.data.error.message });
+    }
+  }
+}
+
+function* verifyConfirmationFlow() {
+  while (true) {
+    const { data } = yield take(actions.CONFIRM_VERIFICATION);
+    const response = yield call(confirmVerification, data);
+    const responseData = yield response.json();
+    if (response.ok) {
+      yield put({ type: actions.VERIFICATION_CONFIRMED });
+    } else {
+      yield put({ type: actions.VERIFICATION_CONFIRMATION_ERROR, error: responseData.data.error.message });
     }
   }
 }

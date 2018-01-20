@@ -11,3 +11,6 @@ export const TOGGLE_FORGOT_PASSWORD_MODAL = 'login toggle forgot password modal'
 export const SEND_VERIFICATION_CODE = 'login send verification code';
 export const RECEIVED_VERIFICATION_CODE = 'login received verification code';
 export const VERIFICATION_CODE_ERROR = 'login verification code error';
+export const CONFIRM_VERIFICATION = 'login confirm verification';
+export const VERIFICATION_CONFIRMED = 'login verification confirmed';
+export const VERIFICATION_CONFIRMATION_ERROR = 'login verification confirmation error';

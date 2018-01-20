@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Alert } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Alert, FormText } from 'reactstrap';
 
 import './forgot-password-modal.css';
 
@@ -9,7 +9,8 @@ class ForgotPasswordModal extends Component {
     super();
     this.state = {
       email: '',
-      verificationSent: false
+      password: '',
+      code: ''
     };
   }
 
@@ -29,9 +30,37 @@ class ForgotPasswordModal extends Component {
     );
   }
 
+  getSetPasswordButtonLabel = () => {
+    if (this.props.confirmingVerification) {
+      return (
+        <div>
+          <i className="fa fa-spinner fa-spin" /> Setting...
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        Send Your New Password
+      </div>
+    );
+  }
+
   updateEmail = (event) => {
     this.setState({
       email: event.target.value
+    });
+  }
+
+  updatePassword = (event) => {
+    this.setState({
+      password: event.target.value
+    });
+  }
+
+  updateVerificationCode = (event) => {
+    this.setState({
+      code: event.target.value
     });
   }
 
@@ -39,8 +68,12 @@ class ForgotPasswordModal extends Component {
     this.props.sendVerficationCode(this.state.email);
   }
 
+  confirmVerification = () => {
+    console.dir(this.state); //eslint-disable-line
+  }
+
   renderModalBody = () => {
-    if (!this.state.verificationSent) {
+    if (!this.props.verificationCodeSent) {
       return (
         <div className="text-center forgot-password__form">
           Please enter your email and click the button below to send receive a verification code
@@ -62,9 +95,43 @@ class ForgotPasswordModal extends Component {
         </div>
       );
     }
+
+    if (this.props.verificationCodeSent) {
+      return (
+        <div className="text-center forgot-password__form">
+          <Alert color="info text-white text-center">
+            Your verification code has been sent! Please check your email for your code, fill out the information below and set your new password.
+          </Alert>
+          <Input
+            type="email"
+            name="forgot-password-email"
+            placeholder="Enter your verification code"
+            className="forgot-password-input w-100 mt-2 mb-2"
+            value={this.state.code}
+            onChange={this.updateVerificationCode}
+          />
+          <Input
+            type="password"
+            name="forgot-password-email"
+            placeholder="Enter your password"
+            className="forgot-password-input w-100 mt-2 mb-2"
+            value={this.state.password}
+            onChange={this.updatePassword}
+          />
+          <FormText className="mt-2 text-center">Passwords must include a capital letter, a special character(@#$%*!) and a number</FormText>
+          <Button
+            color="primary mt-2"
+            disabled={this.state.code === '' || this.state.password === '' || this.props.confirmingVerification}
+            onClick={this.confirmVerification}
+          >
+            {this.getSetPasswordButtonLabel()}
+          </Button>
+        </div>
+      );
+    }
     return (
       <div>
-        Modal body
+        Sent
       </div>
     );
   }
@@ -96,7 +163,9 @@ ForgotPasswordModal.propTypes = {
   toggle: PropTypes.func.isRequired,
   sendVerficationCode: PropTypes.func.isRequired,
   sendingVerificationCode: PropTypes.bool.isRequired,
-  verificationCodeError: PropTypes.string.isRequired
+  verificationCodeError: PropTypes.string.isRequired,
+  verificationCodeSent: PropTypes.bool.isRequired,
+  confirmingVerification: PropTypes.bool.isRequired
 };
 
 export default ForgotPasswordModal;

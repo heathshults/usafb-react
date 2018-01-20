@@ -6,7 +6,11 @@ import login, { setNewPassword } from './api';
 export default function* loginFlow() {
   while (true) {
     const loginInfo = yield take(actions.LOGIN);
-    yield call(loginSaga, loginInfo.data);
+    if (!loginInfo.data.email || !loginInfo.data.password) {
+      yield put({ type: actions.LOGIN_ERROR, payload: 'Please enter your email and password' });
+    } else {
+      yield call(loginSaga, loginInfo.data);
+    }
   }
 }
 

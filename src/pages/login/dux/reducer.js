@@ -6,7 +6,10 @@ const initialState = {
   changePasswordModalOpen: false,
   settingPassword: false,
   passwordError: '',
-  displayForgotPasswordModal: false
+  displayForgotPasswordModal: false,
+  sendingVerificationCode: false,
+  verificationCodeSent: false,
+  verificationCodeError: ''
 };
 
 export default (state = initialState, action) => {
@@ -27,6 +30,12 @@ export default (state = initialState, action) => {
       return { ...state, settingPassword: false, passwordError: action.error };
     case actions.TOGGLE_FORGOT_PASSWORD_MODAL:
       return { ...state, displayForgotPasswordModal: !state.displayForgotPasswordModal };
+    case actions.SEND_VERIFICATION_CODE:
+      return { ...state, sendingVerificationCode: true, verificationCodeError: '' };
+    case actions.RECEIVED_VERIFICATION_CODE:
+      return { ...state, sendingVerificationCode: false, RECEIVED_VERIFICATION_CODE: true };
+    case actions.VERIFICATION_CODE_ERROR:
+      return { ...state, sendingVerificationCode: false, verificationCodeError: action.error };
     default:
       return initialState;
   }

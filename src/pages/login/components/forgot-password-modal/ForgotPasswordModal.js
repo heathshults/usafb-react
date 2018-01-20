@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Alert } from 'reactstrap';
 
 import './forgot-password-modal.css';
 
@@ -13,10 +13,30 @@ class ForgotPasswordModal extends Component {
     };
   }
 
+  getVerificationCodeButtonLabel = () => {
+    if (this.props.sendingVerificationCode) {
+      return (
+        <div>
+          <i className="fa fa-spinner fa-spin" /> Sending...
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        Send Verification Code
+      </div>
+    );
+  }
+
   updateEmail = (event) => {
     this.setState({
       email: event.target.value
     });
+  }
+
+  sendVerficationCode = () => {
+    this.props.sendVerficationCode(this.state.email);
   }
 
   renderModalBody = () => {
@@ -34,9 +54,10 @@ class ForgotPasswordModal extends Component {
           />
           <Button
             color="primary mt-2"
-            disabled={this.state.email === ''}
+            disabled={this.state.email === '' || this.props.sendingVerificationCode}
+            onClick={this.sendVerficationCode}
           >
-            Send Verification Code
+            {this.getVerificationCodeButtonLabel()}
           </Button>
         </div>
       );
@@ -55,6 +76,11 @@ class ForgotPasswordModal extends Component {
       >
         <ModalHeader>Forgot your password?</ModalHeader>
         <ModalBody>
+          {this.props.verificationCodeError &&
+            <Alert color="danger text-center text-white">
+              {this.props.verificationCodeError}
+            </Alert>
+          }
           {this.renderModalBody()}
         </ModalBody>
         <ModalFooter>
@@ -67,7 +93,10 @@ class ForgotPasswordModal extends Component {
 
 ForgotPasswordModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  toggle: PropTypes.func.isRequired
+  toggle: PropTypes.func.isRequired,
+  sendVerficationCode: PropTypes.func.isRequired,
+  sendingVerificationCode: PropTypes.bool.isRequired,
+  verificationCodeError: PropTypes.string.isRequired
 };
 
 export default ForgotPasswordModal;

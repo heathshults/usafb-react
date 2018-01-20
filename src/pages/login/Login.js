@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import ChangePasswordModal from 'components/change-password-modal/ChangePasswordModal';
 
-import { LOGIN, SET_NEW_PASSWORD, TOGGLE_FORGOT_PASSWORD_MODAL } from './dux/actions';
+import { LOGIN, SET_NEW_PASSWORD, TOGGLE_FORGOT_PASSWORD_MODAL, SEND_VERIFICATION_CODE } from './dux/actions';
 
 import Container from './components/container/Container';
 import Form from './components/form/Form';
@@ -64,6 +64,14 @@ export class Login extends Component {
     });
   }
 
+  sendVerficationCode = (email) => {
+    const data = {
+      email
+    };
+
+    this.props.sendVerficationCode(data);
+  }
+
   render() {
     return (
       <Container>
@@ -78,6 +86,9 @@ export class Login extends Component {
         <ForgotPasswordModal
           open={this.props.loginReducer.displayForgotPasswordModal}
           toggle={this.props.toggleDisplayForgotPasswordModal}
+          sendVerficationCode={this.sendVerficationCode}
+          sendingVerificationCode={this.props.loginReducer.sendingVerificationCode}
+          verificationCodeError={this.props.loginReducer.verificationCodeError}
         />
         <Form>
           <ErrorMessage
@@ -120,7 +131,8 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   loginReducer: PropTypes.object.isRequired,
   setNewPassword: PropTypes.func.isRequired,
-  toggleDisplayForgotPasswordModal: PropTypes.func.isRequired
+  toggleDisplayForgotPasswordModal: PropTypes.func.isRequired,
+  sendVerficationCode: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
@@ -128,7 +140,8 @@ const mapDispatchToProps = dispatch => (
   {
     login: (email, password) => dispatch({ type: LOGIN, data: { email, password } }),
     setNewPassword: password => dispatch({ type: SET_NEW_PASSWORD, password }),
-    toggleDisplayForgotPasswordModal: () => dispatch({ type: TOGGLE_FORGOT_PASSWORD_MODAL })
+    toggleDisplayForgotPasswordModal: () => dispatch({ type: TOGGLE_FORGOT_PASSWORD_MODAL }),
+    sendVerficationCode: data => dispatch({ type: SEND_VERIFICATION_CODE, data })
   }
 );
 

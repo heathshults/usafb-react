@@ -1,9 +1,16 @@
-import { take, call, put } from 'redux-saga/effects';
+import { take, call, put, all } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import login, { setNewPassword } from './api';
+import login, { setNewPassword, sendVerificationCode } from './api';
 
-export default function* loginFlow() {
+export default function* loginSagas() {
+  yield all({
+    loginFlow: call(loginFlow),
+    sendVerificationCodeFlow: call(sendVerificationCodeFlow)
+  });
+}
+
+function* loginFlow() {
   while (true) {
     const loginInfo = yield take(actions.LOGIN);
     yield call(loginSaga, loginInfo.data);
@@ -55,4 +62,17 @@ function* loginSuccess(tokenData) {
 
 function goToDashboard() {
   window.location.replace('/');
+}
+
+function* sendVerificationCodeFlow() {
+  while (true) {
+    const { data } = yield take(actions.SEND_VERIFICATION_CODE);
+    const response = yield call(sendVerificationCode, data);
+    const responseData = yield response.json();
+    if (response.ok) {
+      yield put({ type: actions.RECEIVED_VERIFICATION_CODE });
+    } else {
+      yield put({ type: actions.VERIFICATION_CODE_ERROR, error: responseData.data.error.message });
+    }
+  }
 }

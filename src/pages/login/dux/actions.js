@@ -8,3 +8,6 @@ export const PASSWORD_SET = 'login new password set';
 export const PASSWORD_SET_ERROR = 'login set password error';
 
 export const TOGGLE_FORGOT_PASSWORD_MODAL = 'login toggle forgot password modal';
+export const SEND_VERIFICATION_CODE = 'login send verification code';
+export const RECEIVED_VERIFICATION_CODE = 'login received verification code';
+export const VERIFICATION_CODE_ERROR = 'login verification code error';

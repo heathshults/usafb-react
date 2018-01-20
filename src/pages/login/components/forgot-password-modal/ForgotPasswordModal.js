@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Alert, FormText } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Alert, FormText, FormGroup, FormFeedback } from 'reactstrap';
+import passwordValidator from 'services/validations/validation';
 
 import './forgot-password-modal.css';
 
@@ -9,8 +10,12 @@ class ForgotPasswordModal extends Component {
     super();
     this.state = {
       email: '',
+      code: '',
+      codeTouched: false,
+      invalidCodeError: '',
       password: '',
-      code: ''
+      passwordTouched: '',
+      invalidPasswordError: ''
     };
   }
 
@@ -55,13 +60,50 @@ class ForgotPasswordModal extends Component {
   updatePassword = (event) => {
     this.setState({
       password: event.target.value
-    });
+    }, this.validatePassword);
+  }
+
+  validatePassword = () => {
+    if (this.state.passwordTouched) {
+      const error = passwordValidator(this.state.password) ? '' : 'Invalid password!';
+      this.setState({
+        invalidPasswordError: error
+      });
+    }
+  }
+
+  passwordOnBlur = () => {
+    this.setState({
+      passwordTouched: true
+    }, this.passwordOnBlurValidation);
+  }
+
+  passwordOnBlurValidation = () => {
+    if (this.state.password === '') {
+      this.setState({
+        invalidPasswordError: 'This field is required!'
+      });
+    } else {
+      this.validatePassword();
+    }
   }
 
   updateVerificationCode = (event) => {
     this.setState({
       code: event.target.value
     });
+  }
+
+  codeOnBlur = () => {
+    if (this.state.code === '') {
+      this.setState({
+        invalidCodeError: 'This field is required!'
+      });
+    } else {
+      this.setState({
+        invalidCodeError: ''
+      });
+    }
   }
 
   sendVerficationCode = () => {
@@ -98,30 +140,45 @@ class ForgotPasswordModal extends Component {
 
     if (this.props.verificationCodeSent) {
       return (
-        <div className="text-center forgot-password__form">
+        <div className="forgot-password__form">
           <Alert color="info text-white text-center">
             Your verification code has been sent! Please check your email for your code, fill out the information below and set your new password.
           </Alert>
-          <Input
-            type="email"
-            name="forgot-password-email"
-            placeholder="Enter your verification code"
-            className="forgot-password-input w-100 mt-2 mb-2"
-            value={this.state.code}
-            onChange={this.updateVerificationCode}
-          />
-          <Input
-            type="password"
-            name="forgot-password-email"
-            placeholder="Enter your password"
-            className="forgot-password-input w-100 mt-2 mb-2"
-            value={this.state.password}
-            onChange={this.updatePassword}
-          />
+          <FormGroup>
+            <Input
+              type="text"
+              name="forgot-email-code"
+              placeholder="Enter your verification code"
+              className={`${this.state.invalidCodeError ? 'change-password__input-field-error' : 'forgot-password-input'} w-100 mt-2 mb-2"`}
+              value={this.state.code}
+              onChange={this.updateVerificationCode}
+              onBlur={this.codeOnBlur}
+              valid={this.state.invalidCodeError === ''}
+            />
+            <FormFeedback>
+              {this.state.invalidCodeError}
+            </FormFeedback>
+          </FormGroup>
+          <FormGroup>
+            <Input
+              type="password"
+              name="forgot-password-password"
+              placeholder="Enter your password"
+              className={`${this.state.invalidPasswordError ? 'change-password__input-field-error' : 'forgot-password-input'} w-100 mt-2 mb-2"`}
+              value={this.state.password}
+              onChange={this.updatePassword}
+              onBlur={this.passwordOnBlur}
+              valid={this.state.invalidPasswordError === ''}
+            />
+            <FormFeedback>
+              {this.state.invalidPasswordError}
+            </FormFeedback>
+          </FormGroup>
+
           <FormText className="mt-2 text-center">Passwords must include a capital letter, a special character(@#$%*!) and a number</FormText>
           <Button
             color="primary mt-2"
-            disabled={this.state.code === '' || this.state.password === '' || this.props.confirmingVerification}
+            disabled={this.state.code === '' || this.state.password === '' || this.props.confirmingVerification || this.state.invalidCodeError !== '' || this.state.invalidPasswordError !== ''}
             onClick={this.confirmVerification}
           >
             {this.getSetPasswordButtonLabel()}

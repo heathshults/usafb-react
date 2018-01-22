@@ -99,8 +99,8 @@ export default class Interceptor {
   }
 
   getErrorMessage = (err) => {
-    if (err.data.errors) {
-      return err.data.errors[0].error;
+    if (err.data.error.errors) {
+      return err.data.error.errors[0].error;
     }
 
     return err.data.error.message;

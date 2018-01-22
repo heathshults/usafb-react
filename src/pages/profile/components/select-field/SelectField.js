@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import { Label, Input } from 'reactstrap';
 import uuidv4 from 'uuid/v4';
 
+const mapValueToLabel = (value, options) => {
+  if (options.length > 0) {
+    const mappedValue = options.find(option => option.value === value);
+    return mappedValue ? mappedValue.label : '';
+  }
+
+  return '';
+};
+
 const renderValue = (editing, label, value, onChange, options) => {
   if (editing) {
     return (
@@ -16,10 +25,10 @@ const renderValue = (editing, label, value, onChange, options) => {
       >
         {options.map(option => (
           <option
-            value={option.name}
+            value={option.value}
             key={uuidv4()}
           >
-            {option.name}
+            {option.label}
           </option>
         ))}
       </Input>
@@ -28,7 +37,7 @@ const renderValue = (editing, label, value, onChange, options) => {
 
   return (
     <p className="m-0 profile__input-field">
-      {value}
+      {mapValueToLabel(value, options)}
     </p>
   );
 };

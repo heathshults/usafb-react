@@ -25,16 +25,16 @@ import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
 import ImportsPage from 'pages/imports/Imports';
 
 import './app.css';
-import { GET_ROLES } from './dux/actions';
+import { INITIALIZE_APP } from './dux/actions';
 
 const history = createHistory();
 const interceptor = new Interceptor(); //eslint-disable-line
 
 if (history.location.pathname !== '/login') {
-  store.dispatch({ type: GET_ROLES });
+  store.dispatch({ type: INITIALIZE_APP });
 }
 
-// temp comment #2
+// random comment so pipeline will build
 const app = () => (
   <Provider store={store}>
     <Router history={history}>

@@ -5,6 +5,7 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { CLOSE_EXPORT_MODAL } from 'pages/app/dux/actions';
 
 import StepperContainer from 'components/export/components/stepper-container/StepperContainer';
+import { EXPORT_PLAYERS_INFO } from './dux/actions';
 
 // TODO: hide back button on last slide, change value of second next button to 'export'
 

@@ -39,6 +39,7 @@ class Profile extends Component {
       name_last: '',
       phone: '',
       role_name: '',
+      role_id: '',
       active: false,
       displayChangePasswordModal: false,
     };
@@ -89,7 +90,7 @@ class Profile extends Component {
 
   changeRole = event =>
     this.setState({
-      role_name: event.target.value
+      role_id: event.target.value
     });
 
   changeOrganization = event =>
@@ -125,7 +126,7 @@ class Profile extends Component {
     name_last: this.state.name_last,
     phone: this.state.phone || '',
     email: this.state.email,
-    role_name: this.state.role_name,
+    role_id: this.state.role_id,
     address: this.state.address
   });
 
@@ -141,6 +142,15 @@ class Profile extends Component {
     this.setState({
       displayChangePasswordModal: false,
     });
+  }
+
+  transformRolesForDropdown = () => {
+    const roles = this.props.roles.map(role => ({
+      label: role.name,
+      value: role._id //eslint-disable-line
+    }));
+
+    return roles;
   }
 
   render() {
@@ -201,8 +211,8 @@ class Profile extends Component {
               {this.props.location.pathname.slice(7) &&
                 <SelectField
                   label="Role"
-                  options={this.props.roles}
-                  value={this.state.role_name}
+                  options={this.transformRolesForDropdown()}
+                  value={this.state.role_id}
                   editing={this.state.editing}
                   onChange={this.changeRole}
                 />

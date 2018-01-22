@@ -68,7 +68,11 @@ class navBar extends Component {
                   </NavDropdown>
                 </Auth>
               </NavigationContainer>
-              <UserDropdown logout={this.logout} role_permissions={this.props.role_permissions} />
+              <UserDropdown
+                name={`${this.props.name_first} ${this.props.name_last}`}
+                logout={this.logout}
+                role_permissions={this.props.role_permissions}
+              />
             </Container>
         }
       </span>
@@ -81,7 +85,9 @@ navBar.propTypes = {
   history: PropTypes.object.isRequired,
   togglePlayerExportModalOn: PropTypes.func.isRequired,
   toggleCoachExportModalOn: PropTypes.func.isRequired,
-  role_permissions: PropTypes.array
+  role_permissions: PropTypes.array,
+  name_last: PropTypes.string.isRequired,
+  name_first: PropTypes.string.isRequired
 };
 
 navBar.defaultProps = {

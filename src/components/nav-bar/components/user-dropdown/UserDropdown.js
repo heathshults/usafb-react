@@ -32,7 +32,7 @@ class NavDropdown extends Component {
           caret
           className="nav-bar__dropdown-button"
         >
-          <User />
+          <User name={this.props.name} />
         </DropdownToggle>
         <DropdownMenu>
           <Link to="/me" className="link">
@@ -66,7 +66,8 @@ class NavDropdown extends Component {
 
 NavDropdown.propTypes = {
   logout: PropTypes.func.isRequired,
-  role_permissions: PropTypes.array.isRequired
+  role_permissions: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default NavDropdown;

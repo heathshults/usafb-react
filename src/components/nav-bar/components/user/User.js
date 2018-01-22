@@ -1,12 +1,12 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import testImg from 'images/sample/profile.jpg';
+import defaultImg from 'images/user/default.png';
 import './user.css';
 
 const user = () => (
   <div>
     <img
-      src={testImg}
+      src={defaultImg}
       alt="User Profile"
       className="nav-bar__user-avatar"
     />

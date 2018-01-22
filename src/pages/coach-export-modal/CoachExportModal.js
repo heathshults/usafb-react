@@ -156,6 +156,7 @@ class CoachExportModal extends Component {
             triggerValidationError={this.triggerValidationError}
             dateOfBirthDirection={this.state.dateOfBirthDirection}
             updateDateOfBirthDirection={this.updateDateOfBirthDirection}
+            callExportFunction={this.exportCoachesInfo}
           />
         </ModalBody>
       </Modal>

@@ -156,6 +156,7 @@ class PlayerExportModal extends Component {
             triggerValidationError={this.triggerValidationError}
             dateOfBirthDirection={this.state.dateOfBirthDirection}
             updateDateOfBirthDirection={this.updateDateOfBirthDirection}
+            callExportFunction={this.exportPlayersInfo}
           />
         </ModalBody>
       </Modal>

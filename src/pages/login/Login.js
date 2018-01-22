@@ -6,7 +6,7 @@ import $ from 'jquery';
 import ChangePasswordModal from 'components/change-password-modal/ChangePasswordModal';
 
 import selector from './dux/selectors';
-import { LOGIN, SET_NEW_PASSWORD, TOGGLE_FORGOT_PASSWORD_MODAL, SEND_VERIFICATION_CODE, CONFIRM_VERIFICATION } from './dux/actions';
+import { LOGIN, SET_NEW_PASSWORD, TOGGLE_FORGOT_PASSWORD_MODAL, SEND_VERIFICATION_CODE, CONFIRM_VERIFICATION, TOGGLE_CHANGE_PASSWORD_MODAL } from './dux/actions';
 
 import Container from './components/container/Container';
 import Form from './components/form/Form';
@@ -86,7 +86,7 @@ export class Login extends Component {
           setPassword={this.setNewPassword}
           changingPassword={this.props.loginReducer.settingPassword}
           passwordError={this.props.loginReducer.passwordError}
-          hideCancelButton
+          cancel={this.props.toggleChangePasswordModal}
         />
         <ForgotPasswordModal
           open={this.props.loginReducer.displayForgotPasswordModal}
@@ -142,7 +142,8 @@ Login.propTypes = {
   setNewPassword: PropTypes.func.isRequired,
   toggleDisplayForgotPasswordModal: PropTypes.func.isRequired,
   sendVerficationCode: PropTypes.func.isRequired,
-  verifyConfirmation: PropTypes.func.isRequired
+  verifyConfirmation: PropTypes.func.isRequired,
+  toggleChangePasswordModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = selector;
@@ -152,7 +153,8 @@ const mapDispatchToProps = dispatch => (
     setNewPassword: password => dispatch({ type: SET_NEW_PASSWORD, password }),
     toggleDisplayForgotPasswordModal: () => dispatch({ type: TOGGLE_FORGOT_PASSWORD_MODAL }),
     sendVerficationCode: data => dispatch({ type: SEND_VERIFICATION_CODE, data }),
-    verifyConfirmation: data => dispatch({ type: CONFIRM_VERIFICATION, data })
+    verifyConfirmation: data => dispatch({ type: CONFIRM_VERIFICATION, data }),
+    toggleChangePasswordModal: () => dispatch({ type: TOGGLE_CHANGE_PASSWORD_MODAL })
   }
 );
 

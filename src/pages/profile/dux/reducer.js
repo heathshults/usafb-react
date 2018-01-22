@@ -31,6 +31,8 @@ export default (state = initialState, action) => {
       return { ...state, saving: true, error: '' };
     case actions.USER_INFORMATION_SAVED:
       return { ...state, saving: false, ...action.userInformation };
+    case actions.SAVE_INFO_ERROR:
+      return { ...state, saving: false };
     case actions.ACTIVATE_USER || actions.DISABLE_USER:
       return { ...state, togglingUserStatus: true };
     case actions.USER_STATUS_UPDATED:

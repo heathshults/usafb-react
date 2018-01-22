@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
     case actions.SET_NEW_PASSWORD:
       return { ...state, settingPassword: true, passwordError: '' };
     case actions.SET_NEW_PASSWORD_FIELDS:
-      return { ...state, email: action.email, session: action.session };
+      return { ...state, email: action.email, session: action.session, loggingIn: false };
     case actions.PASSWORD_SET:
       return { ...state, settingPassword: false, changePasswordModalOpen: false };
     case actions.PASSWORD_SET_ERROR:

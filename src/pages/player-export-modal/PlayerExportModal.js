@@ -175,7 +175,8 @@ PlayerExportModal.defaultProps = {
 const mapStateToProps = ({ appReducer }) => appReducer;
 const mapDispatchToProps = dispatch => ({
   togglePlayerExportModalOn: () => dispatch({ type: OPEN_PLAYER_EXPORT_MODAL }),
-  toggleExportModalOff: () => dispatch({ type: CLOSE_EXPORT_MODAL })
+  toggleExportModalOff: () => dispatch({ type: CLOSE_EXPORT_MODAL }),
+  exportPlayersInfo: () => dispatch({ type: EXPORT_PLAYERS_INFO })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerExportModal);

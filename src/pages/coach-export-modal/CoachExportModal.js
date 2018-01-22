@@ -175,7 +175,8 @@ CoachExportModal.defaultProps = {
 const mapStateToProps = ({ appReducer }) => appReducer;
 const mapDispatchToProps = dispatch => ({
   toggleCoachExportModalOn: () => dispatch({ type: OPEN_COACH_EXPORT_MODAL }),
-  toggleExportModalOff: () => dispatch({ type: CLOSE_EXPORT_MODAL })
+  toggleExportModalOff: () => dispatch({ type: CLOSE_EXPORT_MODAL }),
+  exportCoachesInfo: () => dispatch({ type: EXPORT_COACHES_INFO })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoachExportModal);

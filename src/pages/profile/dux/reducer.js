@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
     case actions.CHANGE_PASSWORD:
       return { ...state, changingPassword: true, changingPasswordError: '' };
     case actions.PASSWORD_CHANGED:
-      return { ...state, changingPassword: false };
+      return { ...state, changingPassword: false, changePasswordModalOpen: false };
     case actions.CHANGE_PASSWORD_ERROR:
       return { ...state, changingPassword: false, changingPasswordError: action.error };
     case actions.TOGGLE_CHANGE_PASSWORD_MODAL:

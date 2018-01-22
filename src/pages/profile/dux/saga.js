@@ -114,6 +114,7 @@ function* changePasswordFlow() {
     const { data } = yield take(actions.CHANGE_PASSWORD);
     const response = yield call(changePassword, data);
     if (response.ok) {
+      yield put({ type: actions.PASSWORD_CHANGED });
       yield toast.success('Password changed successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });

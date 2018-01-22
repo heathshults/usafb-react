@@ -120,15 +120,24 @@ class Profile extends Component {
     }
   }
 
-  transformDataForAPI = () => ({
-    id: this.state._id, //eslint-disable-line
-    name_first: this.state.name_first,
-    name_last: this.state.name_last,
-    phone: this.state.phone || '',
-    email: this.state.email,
-    role_id: this.state.role_id,
-    address: this.state.address
-  });
+  transformDataForAPI = () => {
+    const data = {
+      id: this.state._id, //eslint-disable-line
+      name_first: this.state.name_first,
+      name_last: this.state.name_last,
+      phone: this.state.phone,
+      email: this.state.email,
+      role_id: this.state.role_id,
+      address: this.state.address
+    };
+
+    if (!this.props.location.pathname.slice(7)) {
+      delete data.id;
+    }
+
+    return data;
+  }
+
 
   cancelEdit = () => {
     this.setState({

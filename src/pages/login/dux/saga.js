@@ -33,7 +33,8 @@ export function* loginSaga(data) {
         yield call(loginSuccess, responseData);
       }
     } else {
-      yield put({ type: actions.LOGIN_ERROR, payload: responseData.data.error.message });
+      const errorMessage = yield getErrorMessage(responseData);
+      yield put({ type: actions.LOGIN_ERROR, payload: errorMessage });
     }
   } catch (error) {
     const errorMessage = `An error occurred when we tried to log you in.
@@ -58,7 +59,8 @@ function* setNewPasswordFlow() {
         yield put({ type: actions.PASSWORD_SET });
         yield loginSuccess(responseData.data);
       } else {
-        yield put({ type: actions.PASSWORD_SET_ERROR, error: responseData.data.error.errors[0].error });
+        const errorMessage = yield getErrorMessage(responseData);
+        yield put({ type: actions.PASSWORD_SET_ERROR, error: errorMessage });
       }
     } catch (e) {
       yield put({ type: actions.PASSWORD_SET_ERROR, error: e.toString() });
@@ -86,7 +88,8 @@ function* sendVerificationCodeFlow() {
     if (response.ok) {
       yield put({ type: actions.RECEIVED_VERIFICATION_CODE });
     } else {
-      yield put({ type: actions.VERIFICATION_CODE_ERROR, error: responseData.data.error.message });
+      const errorMessage = yield getErrorMessage(responseData);
+      yield put({ type: actions.VERIFICATION_CODE_ERROR, error: errorMessage });
     }
   }
 }
@@ -103,7 +106,16 @@ function* verifyConfirmationFlow() {
         autoClose: false
       });
     } else {
-      yield put({ type: actions.VERIFICATION_CONFIRMATION_ERROR, error: responseData.data.error.message });
+      const errorMessage = yield getErrorMessage(responseData);
+      yield put({ type: actions.VERIFICATION_CONFIRMATION_ERROR, error: errorMessage });
     }
   }
+}
+
+function getErrorMessage(err) {
+  if (err.data.error.errors) {
+    return err.data.error.errors[0].error;
+  }
+
+  return err.data.error.message;
 }

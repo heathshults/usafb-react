@@ -198,13 +198,15 @@ class Profile extends Component {
               {!this.props.location.pathname.slice(7) &&
                 <Password openChangePasswordModal={this.props.toggleChangePasswordModal} />
               }
-              <SelectField
-                label="Role"
-                options={this.props.roles}
-                value={this.state.role_name}
-                editing={this.state.editing}
-                onChange={this.changeRole}
-              />
+              {this.props.location.pathname.slice(7) &&
+                <SelectField
+                  label="Role"
+                  options={this.props.roles}
+                  value={this.state.role_name}
+                  editing={this.state.editing}
+                  onChange={this.changeRole}
+                />
+              }
               {this.props.location.pathname.slice(7) &&
                 <Status
                   active={this.props.active}

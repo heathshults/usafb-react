@@ -34,6 +34,7 @@ if (history.location.pathname !== '/login') {
   store.dispatch({ type: INITIALIZE_APP });
 }
 
+// random comment so pipeline will build
 const app = () => (
   <Provider store={store}>
     <Router history={history}>

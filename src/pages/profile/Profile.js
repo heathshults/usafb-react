@@ -54,8 +54,8 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.saving) {
-      this.setState({ ...nextProps });
+    if (!nextProps.userInformation.saving) {
+      this.setState({ ...nextProps.userInformation, appReducer: nextProps.appReducer });
     }
   }
 
@@ -145,7 +145,7 @@ class Profile extends Component {
   }
 
   transformRolesForDropdown = () => {
-    const roles = this.props.roles.map(role => ({
+    const roles = this.props.appReducer.roles.map(role => ({
       label: role.name,
       value: role._id //eslint-disable-line
     }));
@@ -158,11 +158,11 @@ class Profile extends Component {
       <BlueContainer>
         <HeaderContentDivider />
         <ChangePasswordModal
-          open={this.props.changePasswordModalOpen}
+          open={this.props.userInformation.changePasswordModalOpen}
           setPassword={this.setPassword}
           cancel={this.cancelChangePasswordModal}
-          changingPassword={this.props.changingPassword}
-          passwordError={this.props.changingPasswordError}
+          changingPassword={this.props.userInformation.changingPassword}
+          passwordError={this.props.userInformation.changingPasswordError}
         />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>
@@ -175,7 +175,7 @@ class Profile extends Component {
                   toggleEdit={this.toggleEdit}
                   saveChanges={this.saveChanges}
                   cancelEdit={this.cancelEdit}
-                  saving={this.props.saving}
+                  saving={this.props.userInformation.saving}
                 />
                 <InputField
                   label="First Name"
@@ -219,9 +219,9 @@ class Profile extends Component {
               }
               {this.props.location.pathname.slice(7) &&
                 <Status
-                  active={this.props.active}
+                  active={this.props.userInformation.active}
                   onChange={this.changeStatus}
-                  disabled={this.props.togglingUserStatus}
+                  disabled={this.props.userInformation.togglingUserStatus}
                 />
               }
             </Content>
@@ -236,24 +236,19 @@ Profile.propTypes = {
   location: PropTypes.object.isRequired,
   getUserInformation: PropTypes.func.isRequired,
   saveUserInformation: PropTypes.func.isRequired,
-  saving: PropTypes.bool.isRequired,
+  userInformation: PropTypes.object.isRequired,
+  appReducer: PropTypes.object.isRequired,
   getMyInformation: PropTypes.func.isRequired,
   saveMyInformation: PropTypes.func.isRequired,
-  roles: PropTypes.array.isRequired,
   activateUser: PropTypes.func.isRequired,
   disableUser: PropTypes.func.isRequired,
-  togglingUserStatus: PropTypes.bool.isRequired,
-  active: PropTypes.bool.isRequired,
-  changingPassword: PropTypes.bool.isRequired,
   setPassword: PropTypes.func.isRequired,
-  changePasswordModalOpen: PropTypes.bool.isRequired,
-  toggleChangePasswordModal: PropTypes.func.isRequired,
-  changingPasswordError: PropTypes.string.isRequired
+  toggleChangePasswordModal: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  ...state.userInformation,
-  ...state.appReducer
+const mapStateToProps = ({ userInformation, appReducer }) => ({
+  userInformation,
+  appReducer
 });
 
 const mapDispatchToProps = dispatch => ({

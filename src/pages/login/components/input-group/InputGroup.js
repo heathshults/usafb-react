@@ -5,7 +5,7 @@ import './inputGroup.css';
 
 const inputGroup = props => (
   <div className="container">
-    <form className="input-group__form-container" onSubmit={props.login}>
+    <form className="m-0 p-0" onSubmit={props.login}>
       {React.Children.map(props.children, child => child)}
     </form>
   </div>

@@ -6,16 +6,16 @@ import FontAwesome from 'react-fontawesome';
 import './input.css';
 
 const input = props => (
-  <div className="row form-group">
-    <div className="col-md-12 input-group">
-      <label htmlFor={props.inputId} className="login-page__input-label sr-only">
+  <div className="row bss form-group mb-4">
+    <div className="col-md-12 input-group pt-0 pb-0">
+      <label htmlFor={props.inputId} className="sr-only">
         {props.placeholder}
       </label>
-      <div className="col login__input-wrapper">
+      <div className="col-md-12 input-wrapper">
         <FontAwesome name={props.icon} className="fa-layer" />
         <input
           type={props.inputType}
-          className="form-control form-control-theme login__input-form pt-2 pb-2"
+          className="form-control form-control-theme"
           id={props.inputId}
           placeholder={props.placeholder}
           value={props.value}

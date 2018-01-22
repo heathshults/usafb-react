@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
     case actions.PASSWORD_CHANGED:
       return { ...state, changingPassword: false, changePasswordModalOpen: false };
     case actions.CHANGE_PASSWORD_ERROR:
-      return { ...state, changingPassword: false, changingPasswordError: action.error };
+      return { ...state, changingPassword: false };
     case actions.TOGGLE_CHANGE_PASSWORD_MODAL:
       return { ...state, changePasswordModalOpen: !state.changePasswordModalOpen };
     default:

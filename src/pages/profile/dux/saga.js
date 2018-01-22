@@ -118,6 +118,8 @@ function* changePasswordFlow() {
       yield toast.success('Password changed successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
+    } else {
+      yield put({ type: actions.CHANGE_PASSWORD_ERROR });
     }
   }
 }

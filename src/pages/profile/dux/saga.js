@@ -53,8 +53,8 @@ function* getMyUserInformationFlow() {
 }
 
 function* setUserData(response) {
-  const responseData = yield response.json();
   if (response.ok) {
+    const responseData = yield response.json();
     yield put({
       type: actions.USER_INFORMATION_RECEIVED,
       userInformation: responseData.data
@@ -66,8 +66,8 @@ function* saveMyInformationFlow() {
   while (true) {
     const { data } = yield take(actions.SAVE_MY_INFORMATION);
     const response = yield call(saveMyInfo, data);
-    const responseData = yield response.json();
     if (response.ok) {
+      const responseData = yield response.json();
       yield put({
         type: actions.USER_INFORMATION_SAVED,
         userInformation: responseData.data
@@ -85,11 +85,13 @@ function* activateUserFlow() {
   while (true) {
     const { id } = yield take(actions.ACTIVATE_USER);
     const response = yield call(activateUser, id);
-    const responseData = yield response.json();
-    yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
-    yield toast.success('User activated!', {
-      position: toast.POSITION.BOTTOM_RIGHT
-    });
+    if (response.ok) {
+      const responseData = yield response.json();
+      yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
+      yield toast.success('User activated!', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    }
   }
 }
 
@@ -97,11 +99,13 @@ function* disableUserFlow() {
   while (true) {
     const { id } = yield take(actions.DISABLE_USER);
     const response = yield call(deactivateUser, id);
-    const responseData = yield response.json();
-    yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
-    yield toast.success('User disabled!', {
-      position: toast.POSITION.BOTTOM_RIGHT
-    });
+    if (response.ok) {
+      const responseData = yield response.json();
+      yield put({ type: actions.USER_STATUS_UPDATED, active: responseData.data.active });
+      yield toast.success('User disabled!', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    }
   }
 }
 
@@ -109,13 +113,10 @@ function* changePasswordFlow() {
   while (true) {
     const { data } = yield take(actions.CHANGE_PASSWORD);
     const response = yield call(changePassword, data);
-    const responseData = yield response.json();
     if (response.ok) {
       yield toast.success('Password changed successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
-    } else {
-      yield put({ type: actions.CHANGE_PASSWORD_ERROR, error: responseData.data.errors[0].error });
     }
   }
 }

@@ -1,17 +1,29 @@
 import { take, call, put } from 'redux-saga/effects';
 
 import * as actions from './actions';
-import getRoles from './api';
+import getRoles, { getUserInformation } from './api';
 
-// TODO need to find a way to inform users to refresh the page so we can get the roles
-// again and application will work
-export default function* coachSearchFlow() {
+export default function* appInitFlow() {
   while (true) {
-    yield take(actions.GET_ROLES);
-    const response = yield call(getRoles);
+    yield take(actions.INITIALIZE_APP);
+    yield call(getUserInformationFlow);
+    yield call(getRolesFlow);
+  }
+}
+
+// get information of the user that is currently logged in
+function* getUserInformationFlow() {
+  const response = yield call(getUserInformation);
+  if (response.ok) {
     const responseData = yield response.json();
-    if (response.ok) {
-      yield put({ type: actions.RECEIVED_ROLES, roles: responseData.data });
-    }
+    yield put({ type: actions.SET_USER_INFORMATION, userInformation: responseData.data });
+  }
+}
+
+function* getRolesFlow() {
+  const response = yield call(getRoles);
+  if (response.ok) {
+    const responseData = yield response.json();
+    yield put({ type: actions.RECEIVED_ROLES, roles: responseData.data });
   }
 }

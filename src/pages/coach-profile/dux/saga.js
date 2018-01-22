@@ -8,8 +8,8 @@ export default function* coachProfileFlow() {
     try {
       const { data } = yield take(actions.GET_COACH_PROFILE);
       const response = yield call(getCoachProfile, data);
-      const responseData = yield response.json();
       if (response.ok) {
+        const responseData = yield response.json();
         yield put({ type: actions.GET_COACH_PROFILE_SUCCESS, coachData: responseData.data });
       }
     } catch (e) {

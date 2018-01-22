@@ -45,8 +45,10 @@ function* getImportsFlow() {
 function* getImportsCall(userType, data) {
   try {
     const response = yield call(getImports, userType, data);
-    const responseData = yield response.json();
-    yield put({ type: actions.RECEIVED_IMPORTS, imports: responseData.data, total: responseData.meta.pagination.total });
+    if (response.ok) {
+      const responseData = yield response.json();
+      yield put({ type: actions.RECEIVED_IMPORTS, imports: responseData.data, total: responseData.meta.pagination.total });
+    }
   } catch (e) {
     const errorMessage = `An error occurred while we were trying to get a list of imports! 
     Please check your network and try again`;

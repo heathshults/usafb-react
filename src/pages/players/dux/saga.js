@@ -10,8 +10,8 @@ export default function* playerSearchFlow() {
       yield put({ type: actions.SET_SEARCH_VALUES, searchValues: data });
       const nonEmptyValues = yield getNoneEmptyValues(data);
       const response = yield call(searchPlayer, nonEmptyValues);
-      const responseData = yield response.json();
       if (response.ok) {
+        const responseData = yield response.json();
         yield put({
           type: actions.SEARCH_PLAYERS_SUCCESS,
           players: responseData.data,

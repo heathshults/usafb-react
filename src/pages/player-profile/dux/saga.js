@@ -8,8 +8,8 @@ export default function* playerProfileFlow() {
     try {
       const { data } = yield take(actions.GET_PLAYER_PROFILE);
       const response = yield call(getPlayerProfile, data);
-      const responseData = yield response.json();
       if (response.ok) {
+        const responseData = yield response.json();
         yield put({ type: actions.GET_PLAYER_PROFILE_SUCCESS, playerData: responseData.data });
       }
     } catch (e) {

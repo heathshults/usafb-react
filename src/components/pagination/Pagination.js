@@ -36,7 +36,7 @@ class PaginationComponent extends Component {
 
   getPaginationLinks = () => {
     if (this.state.mobilePaginationMode) {
-      return <div>{this.state.currentPage}</div>;
+      return this.getStandardPaginationLink(this.state.currentPage);
     }
     return (
       [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {

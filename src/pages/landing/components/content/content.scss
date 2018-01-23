@@ -10,6 +10,7 @@
     flex-basis: 30%;
   }
   @media (max-width: 576px) {
-    flex-basis: 80%;
+    // flex-basis: 80%;
+    width: 80%;
   }
 }

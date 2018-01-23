@@ -43,7 +43,7 @@ const renderValue = (editing, label, value, onChange, options) => {
 };
 
 const selectField = props => (
-  <div className="d-flex align-items-center mt-1 mb-1">
+  <div className="d-flex flex-wrap align-items-center mt-1 mb-1">
     <p className="m-0 profile__input-label">
       <Label htmlFor={`profile-${props.label}`}>
         {props.label}

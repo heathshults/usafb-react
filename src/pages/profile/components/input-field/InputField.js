@@ -24,7 +24,7 @@ const renderValue = (editing, value, onChange) => {
 };
 
 const inputField = props => (
-  <div className="d-flex align-items-center mt-1 mb-1">
+  <div className="d-flex flex-wrap align-items-center mt-1 mb-1">
     <p className="m-0 profile__input-label">
       {props.label}
     </p>

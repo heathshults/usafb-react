@@ -12,7 +12,7 @@ import DataTable from 'components/data-table/DataTable';
 import DataHeader from 'components/data-header/DataHeader';
 import Pagination from 'components/pagination/Pagination';
 
-import ReactTooltip from 'react-tooltip';
+import { UncontrolledTooltip } from 'reactstrap';
 
 import CreateUserButton from './components/create-user-button/CreateUserButton';
 import UserModal from './components/user-modal/UserModal';
@@ -135,17 +135,22 @@ class Users extends Component {
 
   renderUserStatusToggleButton = (user) => {
     if (user.active) {
+      /* eslint-disable no-underscore-dangle */
       return (
-        <a
-          className="user-management__status-disabled customTooltip"
-          onClick={() => this.props.deactivateUser(user)}
-          role="button"
-          tabIndex={0}
-          data-tip="Disable"
-        >
-          <i className="fa fa-minus-square pr-2 text-lg" />
-          <ReactTooltip />
-        </a>
+        <span>
+          <a
+            className="user-management__status-disabled customTooltip"
+            onClick={() => this.props.deactivateUser(user)}
+            role="button"
+            tabIndex={0}
+            id={`DisabledTooltip${user._id}`}
+          >
+            <i className="fa fa-minus-square pr-2 text-lg" />
+            <UncontrolledTooltip placement="left" target={`DisabledTooltip${user._id}`}>
+              Disable
+            </UncontrolledTooltip>
+          </a>
+        </span>
       );
     }
 
@@ -155,10 +160,12 @@ class Users extends Component {
         onClick={() => this.props.activateUser(user)}
         role="button"
         tabIndex={0}
-        data-tip="Enable"
+        id={`EnabledTooltip${user._id}`}
       >
         <i className="fa pr-2 fa-plus-square status-enabled text-lg" />
-        <ReactTooltip />
+        <UncontrolledTooltip placement="left" target={`EnabledTooltip${user._id}`}>
+          Enable
+        </UncontrolledTooltip>
       </a>
     );
   }

@@ -100,7 +100,12 @@ export default class Interceptor {
 
   getErrorMessage = (err) => {
     if (err.data.error.errors) {
-      return err.data.error.errors[0].error;
+      const errors = err.data.error.errors;
+
+      if (typeof errors === 'object') {
+        return errors[Object.keys(errors)[0]][0];
+      }
+      return errors[0].error;
     }
 
     return err.data.error.message;

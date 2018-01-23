@@ -105,24 +105,31 @@ function* getUpdatedUsers() {
 
 function* editUserFlow() {
   while (true) {
-    const { data } = yield take(actions.EDIT_USER);
-    const response = yield call(editUser, data);
-    if (response.ok) {
-      yield put({ type: actions.USER_EDITED });
+    try {
+      const { data } = yield take(actions.EDIT_USER);
+      const response = yield call(editUser, data);
+      if (response.ok) {
+        yield put({ type: actions.USER_EDITED });
 
-      // We need to find the user and replace all values with updated fields.
-      // Cannot simply get data from API because pagination will reset
-      const { users, totalUsers } = yield select(userManagementSelector);
-      const updatedUser = yield extractUserData(data);
-      const updatedUsers = yield updateUser(users, updatedUser);
+        // We need to find the user and replace all values with updated fields.
+        // Cannot simply get data from API because pagination will reset
+        const { users, totalUsers } = yield select(userManagementSelector);
+        const updatedUser = yield extractUserData(data);
+        const updatedUsers = yield updateUser(users, updatedUser);
 
-      yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
-      yield put({ type: actions.TOGGLE_USER_MODAL });
-      yield toast.success(`${data.name_first} ${data.name_last} updated successfully!`, {
-        position: toast.POSITION.BOTTOM_RIGHT
-      });
-    } else {
+        yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+        yield put({ type: actions.TOGGLE_USER_MODAL });
+        yield toast.success(`${data.name_first} ${data.name_last} updated successfully!`, {
+          position: toast.POSITION.BOTTOM_RIGHT
+        });
+      } else {
+        yield put({ type: actions.EDIT_USER_ERROR });
+      }
+    } catch (e) {
       yield put({ type: actions.EDIT_USER_ERROR });
+      const errorMessage = `An error occurred when we tried to edit this user! Please
+      make sure all values are correct and try again.`;
+      yield displayErrorToast(errorMessage);
     }
   }
 }

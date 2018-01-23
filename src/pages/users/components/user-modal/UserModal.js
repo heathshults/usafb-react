@@ -202,7 +202,7 @@ class UserModal extends Component {
     this.state.name_first === '' || this.state.name_last === '' ||
     this.state.email === '' || this.state.role_id === '' ||
     this.state.phone === '' || this.state.address1 === '' ||
-    this.state.city === '' || this.setState.state === '' ||
+    this.state.city === '' || this.state.state === '' ||
     this.state.zip === '';
 
   modalAction = () => {

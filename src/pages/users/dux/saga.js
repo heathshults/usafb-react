@@ -72,23 +72,18 @@ const extractUserData = (data) => {
 
 function* createUserFlow() {
   while (true) {
-    try {
-      const { data } = yield take(actions.CREATE_USER);
-      const userData = yield extractUserData(data);
-      const response = yield call(createUser, userData);
-      if (response.ok) {
-        yield put({ type: actions.USER_CREATED });
-        yield call(getUpdatedUsers);
-        yield toast.success('User has been successfully created!', {
-          position: toast.POSITION.BOTTOM_RIGHT
-        });
-      } else {
-        yield put({ type: actions.CREATE_USER_ERROR });
-      }
-    } catch (e) {
-      const errorMessage = `An error occurred while we were trying to create a new user! 
-      Please check your network and try again`;
-      displayErrorToast(errorMessage);
+    const { data } = yield take(actions.CREATE_USER);
+    const userData = yield extractUserData(data);
+    const response = yield call(createUser, userData);
+    if (response.ok) {
+      yield put({ type: actions.USER_CREATED });
+      yield call(getUpdatedUsers);
+      yield put({ type: actions.TOGGLE_USER_MODAL });
+      yield toast.success('User has been successfully created!', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    } else {
+      yield put({ type: actions.CREATE_USER_ERROR });
     }
   }
 }
@@ -110,30 +105,26 @@ function* getUpdatedUsers() {
 
 function* editUserFlow() {
   while (true) {
-    try {
-      const { data } = yield take(actions.EDIT_USER);
-      const response = yield call(editUser, data);
-      if (response.ok) {
-        yield put({ type: actions.USER_EDITED });
+    const { data } = yield take(actions.EDIT_USER);
+    const response = yield call(editUser, data);
+    if (response.ok) {
+      yield put({ type: actions.USER_EDITED });
 
-        // We need to find the user and replace all values with updated fields.
-        // Cannot simply get data from API because pagination will reset
-        const { users, totalUsers } = yield select(userManagementSelector);
-        const updatedUser = yield extractUserData(data);
-        const updatedUsers = yield updateUser(users, updatedUser);
+      // We need to find the user and replace all values with updated fields.
+      // Cannot simply get data from API because pagination will reset
+      const { users, totalUsers } = yield select(userManagementSelector);
+      const updatedUser = yield extractUserData(data);
+      const updatedUsers = yield updateUser(users, updatedUser);
 
-        yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
-        yield toast.success(`${data.name_first} ${data.name_last} updated successfully!`, {
-          position: toast.POSITION.BOTTOM_RIGHT
-        });
-      }
-    } catch (e) {
-      const errorMessage = `An error occurred while we were trying to edit this user! 
-      Please check your network and try again`;
-      displayErrorToast(errorMessage);
+      yield put({ type: actions.USERS_RECEIVED, users: updatedUsers, total: totalUsers });
+      yield put({ type: actions.TOGGLE_USER_MODAL });
+      yield toast.success(`${data.name_first} ${data.name_last} updated successfully!`, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
     }
   }
 }
+
 
 function updateUser(users, updatedUser) {
   let userToUpdate = users.find(user => user._id === updatedUser._id); //eslint-disable-line

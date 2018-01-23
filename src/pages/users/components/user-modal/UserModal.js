@@ -12,10 +12,7 @@ class UserModal extends Component {
   constructor() {
     super();
     this.states = states;
-    this.EDIT_USER_STATUS = 'edit user';
-    this.CREATE_USER_STATUS = 'create user';
-    this.CANCELED = 'canceled';
-    this.SAVED = 'saved';
+
     this.state = {
       // this variable will indicate whether or not
       // the modal should update state on componentWillReceiveProps
@@ -143,12 +140,12 @@ class UserModal extends Component {
       modalActive: true
     });
 
-  modalClosedCallback = () => {
-    const transformedData = this.transformData();
-    this.setState({
-      modalActive: false
-    }, this.props.onClosed(transformedData));
-  }
+  // modalClosedCallback = () => {
+  //   const transformedData = this.transformData();
+  //   this.setState({
+  //     modalActive: false
+  //   }, this.props.onClosed(transformedData));
+  // }
 
   transformData = () => {
     const data = {
@@ -178,26 +175,26 @@ class UserModal extends Component {
   }
 
   dismissModal = (value) => {
-    if (value === this.CANCELED) {
-      this.setState({
-        name_first: '',
-        name_last: '',
-        email: '',
-        role_id: '',
-        phone: '',
-        organization_name: '',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: '',
-        dismissStatus: value
-      }, this.props.toggle);
-    } else {
-      this.setState({
-        dismissStatus: value
-      }, this.props.toggle);
-    }
+    // if (value === this.CANCELED) {
+    this.setState({
+      name_first: '',
+      name_last: '',
+      email: '',
+      role_id: '',
+      phone: '',
+      organization_name: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: '',
+      dismissStatus: value
+    }, this.props.toggle);
+    // } else {
+    //   this.setState({
+    //     dismissStatus: value
+    //   });
+    // }
   }
 
   canSaveOrEdit = () =>
@@ -207,14 +204,18 @@ class UserModal extends Component {
     this.state.city === '' || this.setState.state === '' ||
     this.state.zip === '';
 
+  modalAction = () => {
+    const data = this.transformData();
+    this.props.action(data);
+  }
+
   render() {
     return (
       <Modal
         isOpen={this.props.open}
-        toggle={this.props.toggle}
         onClosed={this.modalClosedCallback}
       >
-        <ModalHeader toggle={this.props.toggle}>
+        <ModalHeader>
           <i className="fa fa-user" aria-hidden="true" /> {this.props.header}
         </ModalHeader>
         <ModalBody>
@@ -329,10 +330,12 @@ class UserModal extends Component {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => this.dismissModal(this.CANCELED)}>Close</Button>&nbsp;
+          <Button color="secondary mr-2" onClick={this.dismissModal}>
+            Cancel
+          </Button>
           <Button
             color="primary"
-            onClick={() => this.dismissModal(this.SAVED)}
+            onClick={this.modalAction}
             disabled={this.canSaveOrEdit()}
           >
             {this.props.header.toUpperCase() === 'CREATE NEW USER' ? 'Create' : 'Save'}
@@ -348,8 +351,8 @@ UserModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  onClosed: PropTypes.func.isRequired,
-  roles: PropTypes.array.isRequired
+  roles: PropTypes.array.isRequired,
+  action: PropTypes.func.isRequired
 };
 
 export default UserModal;

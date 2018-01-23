@@ -35,7 +35,10 @@ class Users extends Component {
     this.states = states;
     this.state = {
       userModalHeader: '',
-      editableUser: {}
+      editableUser: {},
+      // userModalAction is going to store which API call the user modal action button should
+      // trigger
+      userModalAction: () => { }
     };
   }
 
@@ -116,26 +119,17 @@ class Users extends Component {
   toggleCreateUserModal = () => {
     this.setState({
       userModalHeader: 'create new user',
-      editableUser: {}
+      editableUser: {},
+      userModalAction: this.props.createUser
     }, this.props.toggleUserModal);
   }
 
   toggleEditUserModal = (user) => {
     this.setState({
       userModalHeader: 'edit user',
-      editableUser: user
+      editableUser: user,
+      userModalAction: this.props.editUser
     }, this.props.toggleUserModal);
-  }
-
-  modalDismissed = (data) => {
-    // we only want to dispatch actions if user clicked the save button
-    if (data.dismissStatus === 'saved') {
-      if (data.modalStatus === 'create user') {
-        this.props.createUser(data);
-      } else {
-        this.props.editUser(data);
-      }
-    }
   }
 
   renderUserStatusToggleButton = (user) => {
@@ -179,12 +173,12 @@ class Users extends Component {
     return (
       <Container>
         <UserModal
-          header={this.state.userModalHeader}
           open={this.props.userModalOpen}
-          toggle={this.props.toggleUserModal}
-          user={this.state.editableUser}
-          onClosed={this.modalDismissed}
+          header={this.state.userModalHeader}
           roles={this.props.roles}
+          user={this.state.editableUser}
+          toggle={this.props.toggleUserModal}
+          action={this.state.userModalAction}
         />
         <HeaderContentDivider />
         <DataHeader

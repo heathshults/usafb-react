@@ -152,7 +152,7 @@ class Profile extends Component {
   cancelEdit = () => {
     this.setState({
       editing: false,
-      ...this.props
+      ...this.props.userInformation
     });
   }
 

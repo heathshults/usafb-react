@@ -39,12 +39,12 @@ dropdownField.propTypes = {
   icon: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired,
-  width: PropTypes.number,
+  width: PropTypes.any,
   onChange: PropTypes.func.isRequired
 };
 
 dropdownField.defaultProps = {
-  width: 80
+  width: '100%'
 };
 
 export default dropdownField;

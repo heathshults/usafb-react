@@ -147,7 +147,7 @@ class Users extends Component {
           >
             <i className="fa fa-minus-square pr-2 text-lg" />
             <UncontrolledTooltip placement="left" target={`DisabledTooltip${user._id}`}>
-              Disable
+              Enable
             </UncontrolledTooltip>
           </a>
         </span>
@@ -164,7 +164,7 @@ class Users extends Component {
       >
         <i className="fa pr-2 fa-plus-square status-enabled text-lg" />
         <UncontrolledTooltip placement="left" target={`EnabledTooltip${user._id}`}>
-          Enable
+          Disable
         </UncontrolledTooltip>
       </a>
     );

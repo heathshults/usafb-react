@@ -76,9 +76,9 @@ function* createUserFlow() {
     const userData = yield extractUserData(data);
     const response = yield call(createUser, userData);
     if (response.ok) {
+      yield put({ type: actions.TOGGLE_USER_MODAL });
       yield put({ type: actions.USER_CREATED });
       yield call(getUpdatedUsers);
-      yield put({ type: actions.TOGGLE_USER_MODAL });
       yield toast.success('User has been successfully created!', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
@@ -121,6 +121,8 @@ function* editUserFlow() {
       yield toast.success(`${data.name_first} ${data.name_last} updated successfully!`, {
         position: toast.POSITION.BOTTOM_RIGHT
       });
+    } else {
+      yield put({ type: actions.EDIT_USER_ERROR });
     }
   }
 }

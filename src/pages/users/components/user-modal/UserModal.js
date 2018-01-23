@@ -74,6 +74,19 @@ class UserModal extends Component {
     }
   }
 
+  getButtonLabel = () => {
+    if (this.props.saving) {
+      return (
+        <div>
+          <i className="fa fa-spinner fa-spin mr-2" />
+          {this.props.header.toUpperCase() === 'CREATE NEW USER' ? 'Creating...' : 'Saving...'}
+        </div>
+      );
+    }
+
+    return this.props.header.toUpperCase() === 'CREATE NEW USER' ? 'Create' : 'Save';
+  }
+
   updateFirstName = event =>
     this.setState({
       name_first: event.target.value,
@@ -140,13 +153,7 @@ class UserModal extends Component {
       modalActive: true
     });
 
-  // modalClosedCallback = () => {
-  //   const transformedData = this.transformData();
-  //   this.setState({
-  //     modalActive: false
-  //   }, this.props.onClosed(transformedData));
-  // }
-
+  // we need to format the state data in a way that will be accepted by the API
   transformData = () => {
     const data = {
       modalStatus: this.state.modalStatus,
@@ -175,7 +182,6 @@ class UserModal extends Component {
   }
 
   dismissModal = (value) => {
-    // if (value === this.CANCELED) {
     this.setState({
       name_first: '',
       name_last: '',
@@ -190,11 +196,6 @@ class UserModal extends Component {
       zip: '',
       dismissStatus: value
     }, this.props.toggle);
-    // } else {
-    //   this.setState({
-    //     dismissStatus: value
-    //   });
-    // }
   }
 
   canSaveOrEdit = () =>
@@ -213,7 +214,6 @@ class UserModal extends Component {
     return (
       <Modal
         isOpen={this.props.open}
-        onClosed={this.modalClosedCallback}
       >
         <ModalHeader>
           <i className="fa fa-user" aria-hidden="true" /> {this.props.header}
@@ -330,15 +330,19 @@ class UserModal extends Component {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary mr-2" onClick={this.dismissModal}>
+          <Button
+            color="secondary mr-2"
+            onClick={this.dismissModal}
+            disabled={this.props.saving}
+          >
             Cancel
           </Button>
           <Button
             color="primary"
             onClick={this.modalAction}
-            disabled={this.canSaveOrEdit()}
+            disabled={this.canSaveOrEdit() || this.props.saving}
           >
-            {this.props.header.toUpperCase() === 'CREATE NEW USER' ? 'Create' : 'Save'}
+            {this.getButtonLabel()}
           </Button>
         </ModalFooter>
       </Modal>
@@ -352,7 +356,8 @@ UserModal.propTypes = {
   toggle: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   roles: PropTypes.array.isRequired,
-  action: PropTypes.func.isRequired
+  action: PropTypes.func.isRequired,
+  saving: PropTypes.bool.isRequired
 };
 
 export default UserModal;

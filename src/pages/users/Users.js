@@ -19,7 +19,6 @@ import Columns from './models/columns';
 import {
   GET_USERS,
   CREATE_USER,
-  DISMISS_HEADER_MESSAGE,
   UPDATE_ROWS_PER_PAGE,
   EDIT_USER,
   ACTIVATE_USER,
@@ -179,6 +178,7 @@ class Users extends Component {
           user={this.state.editableUser}
           toggle={this.props.toggleUserModal}
           action={this.state.userModalAction}
+          saving={this.props.creatingUser || this.props.editingUser}
         />
         <HeaderContentDivider />
         <DataHeader
@@ -214,7 +214,8 @@ Users.propTypes = {
   activateUser: PropTypes.func.isRequired,
   deactivateUser: PropTypes.func.isRequired,
   toggleUserModal: PropTypes.func.isRequired,
-  userModalOpen: PropTypes.bool.isRequired
+  userModalOpen: PropTypes.bool.isRequired,
+  editingUser: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;

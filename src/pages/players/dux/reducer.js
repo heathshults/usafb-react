@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
         totalPlayers: action.total
       };
     case actions.SEARCH_PLAYERS_ERROR:
-      return { ...state, searchingPlayers: false, searchingPlayersError: action.searchingPlayersError };
+      return { ...state, searchingPlayers: false };
     case actions.UPDATE_ROWS_PER_PAGE:
       return { ...state, rowsPerPage: action.rowsPerPage };
     case actions.SET_SEARCH_VALUES:

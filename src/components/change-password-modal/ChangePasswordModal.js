@@ -170,9 +170,23 @@ class ChangePasswordModal extends Component {
     }
   }
 
+  clearValues = () => {
+    this.setState({
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+      currentPasswordTouched: false,
+      newPasswordTouched: false,
+      confirmPasswordTouched: false,
+      currentPasswordError: '',
+      newPasswordError: '',
+      confirmPasswordError: ''
+    });
+  }
+
   render() {
     return (
-      <Modal isOpen={this.props.open} >
+      <Modal isOpen={this.props.open} onClosed={this.clearValues} >
         <ModalHeader>Change your password</ModalHeader>
         <ModalBody>
           {this.props.passwordError !== '' &&

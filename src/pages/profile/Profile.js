@@ -32,6 +32,8 @@ class Profile extends Component {
   constructor() {
     super();
 
+    this.userIdParam = '';
+
     this.state = {
       editing: false,
       email: '',
@@ -46,21 +48,29 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    if (this.props.location.pathname.slice(7)) {
-      this.props.getUserInformation(this.props.location.pathname.slice(7));
-    } else {
-      this.props.getMyInformation();
-    }
+    this.userIdParam = this.props.location.pathname.slice(7);
+    this.initializePage();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.userInformation.saving) {
+    this.userIdParam = nextProps.location.pathname.slice(7);
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.initializePage();
+    } else if (!nextProps.userInformation.saving) {
       this.setState({ ...nextProps.userInformation, appReducer: nextProps.appReducer });
     }
   }
 
   setPassword = (data) => {
     this.props.setPassword(data);
+  }
+
+  initializePage = () => {
+    if (this.userIdParam) {
+      this.props.getUserInformation(this.userIdParam);
+    } else {
+      this.props.getMyInformation();
+    }
   }
 
   toggleEdit = () =>
@@ -100,9 +110,9 @@ class Profile extends Component {
 
   changeStatus = () => {
     if (this.state.active) {
-      this.props.disableUser(this.props.location.pathname.slice(7));
+      this.props.disableUser(this.userIdParam);
     } else {
-      this.props.activateUser(this.props.location.pathname.slice(7));
+      this.props.activateUser(this.userIdParam);
     }
   }
 
@@ -113,7 +123,7 @@ class Profile extends Component {
 
     const data = this.transformDataForAPI();
 
-    if (this.props.location.pathname.slice(7)) {
+    if (this.userIdParam) {
       this.props.saveUserInformation(data);
     } else {
       this.props.saveMyInformation(data);
@@ -214,10 +224,10 @@ class Profile extends Component {
                 editing={false}
                 onChange={this.changeEmail}
               />
-              {!this.props.location.pathname.slice(7) &&
+              {!this.userIdParam &&
                 <Password openChangePasswordModal={this.props.toggleChangePasswordModal} />
               }
-              {this.props.location.pathname.slice(7) &&
+              {this.userIdParam &&
                 <SelectField
                   label="Role"
                   options={this.transformRolesForDropdown()}
@@ -226,7 +236,7 @@ class Profile extends Component {
                   onChange={this.changeRole}
                 />
               }
-              {this.props.location.pathname.slice(7) &&
+              {this.userIdParam &&
                 <Status
                   active={this.props.userInformation.active}
                   onChange={this.changeStatus}

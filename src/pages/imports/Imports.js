@@ -73,7 +73,7 @@ class Imports extends Component {
 
     Papa.parse(files[0], {
       complete: (result) => {
-        if (result.data.length > 2600) {
+        if (result.data.length > 2500) {
           this.props.csvFileRejected();
         } else {
           this.props.csvFileAccepted();

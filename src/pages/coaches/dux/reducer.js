@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
         totalCoaches: action.total
       };
     case actions.SEARCH_COACHES_ERROR:
-      return { ...state, searchingCoaches: false, searchingCoachesError: action.searchingCoachesError };
+      return { ...state, searchingCoaches: false };
     case actions.UPDATE_ROWS_PER_PAGE:
       return { ...state, rowsPerPage: action.rowsPerPage };
     case actions.SET_SEARCH_VALUES:

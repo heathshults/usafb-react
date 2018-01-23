@@ -1,13 +1,13 @@
 import React from 'react';
 
-import sampleImage from 'images/sample/profile.jpg';
+import defaultImg from 'images/user/default.png';
 import './avatar.css';
 
 const avatar = () => (
   <div className="d-flex flex-column profile__avatar-container">
     <img
       className="profile__avatar"
-      src={sampleImage}
+      src={defaultImg}
       alt=""
     />
     <button className="profile__edit-user-button">

@@ -32,6 +32,8 @@ class Profile extends Component {
   constructor() {
     super();
 
+    this.userIdParam = '';
+
     this.state = {
       editing: false,
       email: '',
@@ -39,27 +41,36 @@ class Profile extends Component {
       name_last: '',
       phone: '',
       role_name: '',
+      role_id: '',
       active: false,
       displayChangePasswordModal: false,
     };
   }
 
   componentWillMount() {
-    if (this.props.match.params.id) {
-      this.props.getUserInformation(this.props.match.params.id);
-    } else {
-      this.props.getMyInformation();
-    }
+    this.userIdParam = this.props.location.pathname.slice(7);
+    this.initializePage();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.saving) {
-      this.setState({ ...nextProps });
+    this.userIdParam = nextProps.location.pathname.slice(7);
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.initializePage();
+    } else if (!nextProps.userInformation.saving) {
+      this.setState({ ...nextProps.userInformation, appReducer: nextProps.appReducer });
     }
   }
 
   setPassword = (data) => {
     this.props.setPassword(data);
+  }
+
+  initializePage = () => {
+    if (this.userIdParam) {
+      this.props.getUserInformation(this.userIdParam);
+    } else {
+      this.props.getMyInformation();
+    }
   }
 
   toggleEdit = () =>
@@ -89,7 +100,7 @@ class Profile extends Component {
 
   changeRole = event =>
     this.setState({
-      role_name: event.target.value
+      role_id: event.target.value
     });
 
   changeOrganization = event =>
@@ -99,9 +110,9 @@ class Profile extends Component {
 
   changeStatus = () => {
     if (this.state.active) {
-      this.props.disableUser(this.props.match.params.id);
+      this.props.disableUser(this.userIdParam);
     } else {
-      this.props.activateUser(this.props.match.params.id);
+      this.props.activateUser(this.userIdParam);
     }
   }
 
@@ -112,27 +123,36 @@ class Profile extends Component {
 
     const data = this.transformDataForAPI();
 
-    if (this.props.match.params.id) {
+    if (this.userIdParam) {
       this.props.saveUserInformation(data);
     } else {
       this.props.saveMyInformation(data);
     }
   }
 
-  transformDataForAPI = () => ({
-    id: this.state._id, //eslint-disable-line
-    name_first: this.state.name_first,
-    name_last: this.state.name_last,
-    phone: this.state.phone || '',
-    email: this.state.email,
-    role_name: this.state.role_name,
-    address: this.state.address
-  });
+  transformDataForAPI = () => {
+    const data = {
+      id: this.state._id, //eslint-disable-line
+      name_first: this.state.name_first,
+      name_last: this.state.name_last,
+      phone: this.state.phone,
+      email: this.state.email,
+      role_id: this.state.role_id,
+      address: this.state.address
+    };
+
+    if (!this.props.location.pathname.slice(7)) {
+      delete data.id;
+    }
+
+    return data;
+  }
+
 
   cancelEdit = () => {
     this.setState({
       editing: false,
-      ...this.props
+      ...this.props.userInformation
     });
   }
 
@@ -143,16 +163,25 @@ class Profile extends Component {
     });
   }
 
+  transformRolesForDropdown = () => {
+    const roles = this.props.appReducer.roles.map(role => ({
+      label: role.name,
+      value: role._id //eslint-disable-line
+    }));
+
+    return roles;
+  }
+
   render() {
     return (
       <BlueContainer>
         <HeaderContentDivider />
         <ChangePasswordModal
-          open={this.props.changePasswordModalOpen}
+          open={this.props.userInformation.changePasswordModalOpen}
           setPassword={this.setPassword}
           cancel={this.cancelChangePasswordModal}
-          changingPassword={this.props.changingPassword}
-          passwordError={this.props.changingPasswordError}
+          changingPassword={this.props.userInformation.changingPassword}
+          passwordError={this.props.userInformation.changingPasswordError}
         />
         <div className="d-flex flex-column align-items-center">
           <Block editing={this.state.editing}>
@@ -165,7 +194,7 @@ class Profile extends Component {
                   toggleEdit={this.toggleEdit}
                   saveChanges={this.saveChanges}
                   cancelEdit={this.cancelEdit}
-                  saving={this.props.saving}
+                  saving={this.props.userInformation.saving}
                 />
                 <InputField
                   label="First Name"
@@ -195,21 +224,23 @@ class Profile extends Component {
                 editing={false}
                 onChange={this.changeEmail}
               />
-              {!this.props.match.params.id &&
+              {!this.userIdParam &&
                 <Password openChangePasswordModal={this.props.toggleChangePasswordModal} />
               }
-              <SelectField
-                label="Role"
-                options={this.props.roles}
-                value={this.state.role_name}
-                editing={this.state.editing}
-                onChange={this.changeRole}
-              />
-              {this.props.match.params.id &&
+              {this.userIdParam &&
+                <SelectField
+                  label="Role"
+                  options={this.transformRolesForDropdown()}
+                  value={this.state.role_id}
+                  editing={this.state.editing}
+                  onChange={this.changeRole}
+                />
+              }
+              {this.userIdParam &&
                 <Status
-                  active={this.props.active}
+                  active={this.props.userInformation.active}
                   onChange={this.changeStatus}
-                  disabled={this.props.togglingUserStatus}
+                  disabled={this.props.userInformation.togglingUserStatus}
                 />
               }
             </Content>
@@ -221,27 +252,22 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   getUserInformation: PropTypes.func.isRequired,
   saveUserInformation: PropTypes.func.isRequired,
-  saving: PropTypes.bool.isRequired,
+  userInformation: PropTypes.object.isRequired,
+  appReducer: PropTypes.object.isRequired,
   getMyInformation: PropTypes.func.isRequired,
   saveMyInformation: PropTypes.func.isRequired,
-  roles: PropTypes.array.isRequired,
   activateUser: PropTypes.func.isRequired,
   disableUser: PropTypes.func.isRequired,
-  togglingUserStatus: PropTypes.bool.isRequired,
-  active: PropTypes.bool.isRequired,
-  changingPassword: PropTypes.bool.isRequired,
   setPassword: PropTypes.func.isRequired,
-  changePasswordModalOpen: PropTypes.bool.isRequired,
-  toggleChangePasswordModal: PropTypes.func.isRequired,
-  changingPasswordError: PropTypes.string.isRequired
+  toggleChangePasswordModal: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  ...state.userInformation,
-  ...state.appReducer
+const mapStateToProps = ({ userInformation, appReducer }) => ({
+  userInformation,
+  appReducer
 });
 
 const mapDispatchToProps = dispatch => ({

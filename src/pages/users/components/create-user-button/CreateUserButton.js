@@ -1,22 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const getButtonLabel = (creating) => {
-  if (creating) {
-    return (
-      <div>
-        <i className="fa fa-spinner fa-spin" /> Creating...
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <i className="fa fa-user" aria-hidden="true" /> Create New
-    </div>
-  );
-};
-
 const createUserButton = props => (
   <div className="col-4">
     <div className="d-flex h-100">
@@ -25,7 +9,8 @@ const createUserButton = props => (
         onClick={props.toggle}
         disabled={props.creatingUser}
       >
-        {getButtonLabel(props.creatingUser)}
+        <i className="fa fa-user" aria-hidden="true" />&nbsp;
+        Create New
       </button>
     </div>
   </div>

@@ -128,7 +128,7 @@ class Players extends Component {
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
-          display={!this.state.searchModalOpen} // hide pagination when the modal is open
+          display={!this.state.searchModalOpen && this.props.totalPlayers !== 0} // hide pagination when the modal is open or if there are no players
         />
       </Container>
     );

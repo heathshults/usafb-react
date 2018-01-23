@@ -130,7 +130,7 @@ class Coaches extends Component {
           rowsPerPage={this.props.rowsPerPage}
           updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
-          display={!this.state.searchModalOpen} // hide pagination when the modal is open
+          display={!this.state.searchModalOpen && this.props.totalCoaches !== 0} // hide pagination when the modal is open and if there are no coaches
         />
       </Container>
     );

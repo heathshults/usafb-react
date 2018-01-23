@@ -31,6 +31,8 @@ export default (state = initialState, action) => {
       return { ...state, saving: true, error: '' };
     case actions.USER_INFORMATION_SAVED:
       return { ...state, saving: false, ...action.userInformation };
+    case actions.SAVE_INFO_ERROR:
+      return { ...state, saving: false };
     case actions.ACTIVATE_USER || actions.DISABLE_USER:
       return { ...state, togglingUserStatus: true };
     case actions.USER_STATUS_UPDATED:
@@ -38,9 +40,9 @@ export default (state = initialState, action) => {
     case actions.CHANGE_PASSWORD:
       return { ...state, changingPassword: true, changingPasswordError: '' };
     case actions.PASSWORD_CHANGED:
-      return { ...state, changingPassword: false };
+      return { ...state, changingPassword: false, changePasswordModalOpen: false };
     case actions.CHANGE_PASSWORD_ERROR:
-      return { ...state, changingPassword: false, changingPasswordError: action.error };
+      return { ...state, changingPassword: false };
     case actions.TOGGLE_CHANGE_PASSWORD_MODAL:
       return { ...state, changePasswordModalOpen: !state.changePasswordModalOpen };
     default:

@@ -25,7 +25,7 @@ export const getMyInfo = () =>
 export const saveMyInfo = data =>
   fetch(`${process.env.REACT_APP_API_URL}/user`, {
     method: 'PUT',
-    headers: headers.authorizedHeader(),
+    headers: headers.jsonHeader(),
     body: JSON.stringify(data)
   });
 

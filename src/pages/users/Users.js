@@ -19,11 +19,11 @@ import Columns from './models/columns';
 import {
   GET_USERS,
   CREATE_USER,
-  DISMISS_HEADER_MESSAGE,
   UPDATE_ROWS_PER_PAGE,
   EDIT_USER,
   ACTIVATE_USER,
-  DEACTIVATE_USER
+  DEACTIVATE_USER,
+  TOGGLE_USER_MODAL
 } from './dux/actions';
 
 import './users.css';
@@ -33,9 +33,11 @@ class Users extends Component {
     super();
     this.states = states;
     this.state = {
-      userModalOpen: false,
       userModalHeader: '',
-      editableUser: {}
+      editableUser: {},
+      // userModalAction is going to store which API call the user modal action button should
+      // trigger
+      userModalAction: () => { }
     };
   }
 
@@ -113,36 +115,20 @@ class Users extends Component {
     );
   }
 
-  toggleUserModal = () => {
-    this.setState({
-      userModalOpen: !this.state.userModalOpen
-    });
-  }
-
   toggleCreateUserModal = () => {
     this.setState({
       userModalHeader: 'create new user',
-      userModalOpen: !this.state.userModalOpen,
-      editableUser: {}
-    });
+      editableUser: {},
+      userModalAction: this.props.createUser
+    }, this.props.toggleUserModal);
   }
 
   toggleEditUserModal = (user) => {
     this.setState({
       userModalHeader: 'edit user',
-      userModalOpen: !this.state.userModalOpen,
-      editableUser: user
-    });
-  }
-
-  modalDismissed = (data) => {
-    if (data.dismissStatus === 'saved') {
-      if (data.modalStatus === 'create user') {
-        this.props.createUser(data);
-      } else {
-        this.props.editUser(data);
-      }
-    }
+      editableUser: user,
+      userModalAction: this.props.editUser
+    }, this.props.toggleUserModal);
   }
 
   renderUserStatusToggleButton = (user) => {
@@ -186,12 +172,13 @@ class Users extends Component {
     return (
       <Container>
         <UserModal
+          open={this.props.userModalOpen}
           header={this.state.userModalHeader}
-          open={this.state.userModalOpen}
-          toggle={this.toggleUserModal}
-          user={this.state.editableUser}
-          onClosed={this.modalDismissed}
           roles={this.props.roles}
+          user={this.state.editableUser}
+          toggle={this.props.toggleUserModal}
+          action={this.state.userModalAction}
+          saving={this.props.creatingUser || this.props.editingUser}
         />
         <HeaderContentDivider />
         <DataHeader
@@ -225,7 +212,10 @@ Users.propTypes = {
   editUser: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
   activateUser: PropTypes.func.isRequired,
-  deactivateUser: PropTypes.func.isRequired
+  deactivateUser: PropTypes.func.isRequired,
+  toggleUserModal: PropTypes.func.isRequired,
+  userModalOpen: PropTypes.bool.isRequired,
+  editingUser: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
@@ -236,7 +226,8 @@ const mapDispatchToProps = dispatch => ({
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
   editUser: data => dispatch({ type: EDIT_USER, data }),
   activateUser: user => dispatch({ type: ACTIVATE_USER, user }),
-  deactivateUser: user => dispatch({ type: DEACTIVATE_USER, user })
+  deactivateUser: user => dispatch({ type: DEACTIVATE_USER, user }),
+  toggleUserModal: () => dispatch({ type: TOGGLE_USER_MODAL })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

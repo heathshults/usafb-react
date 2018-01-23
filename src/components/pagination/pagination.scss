@@ -1,15 +1,3 @@
-// .usafb-pagination__container {
-//   width: 100%;
-//   @media screen and (max-width: 895px) {
-//     flex-direction: column !important;
-//     align-items: center !important;
-
-//     .div {
-//       flex-basis: 100%;
-//     }
-//   }
-// }
-
 .usafb-pagiation__container {
   margin-left: 15px;
   margin-right: 15px;
@@ -26,7 +14,7 @@
 }
 
 .usafb-pagination__hide {
-  > div {
+  div, ul {
     display: none !important;
   }
 }

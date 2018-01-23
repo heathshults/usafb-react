@@ -23,7 +23,8 @@ import {
   UPDATE_ROWS_PER_PAGE,
   EDIT_USER,
   ACTIVATE_USER,
-  DEACTIVATE_USER
+  DEACTIVATE_USER,
+  TOGGLE_USER_MODAL
 } from './dux/actions';
 
 import './users.css';
@@ -33,7 +34,6 @@ class Users extends Component {
     super();
     this.states = states;
     this.state = {
-      userModalOpen: false,
       userModalHeader: '',
       editableUser: {}
     };
@@ -113,29 +113,22 @@ class Users extends Component {
     );
   }
 
-  toggleUserModal = () => {
-    this.setState({
-      userModalOpen: !this.state.userModalOpen
-    });
-  }
-
   toggleCreateUserModal = () => {
     this.setState({
       userModalHeader: 'create new user',
-      userModalOpen: !this.state.userModalOpen,
       editableUser: {}
-    });
+    }, this.props.toggleUserModal);
   }
 
   toggleEditUserModal = (user) => {
     this.setState({
       userModalHeader: 'edit user',
-      userModalOpen: !this.state.userModalOpen,
       editableUser: user
-    });
+    }, this.props.toggleUserModal);
   }
 
   modalDismissed = (data) => {
+    // we only want to dispatch actions if user clicked the save button
     if (data.dismissStatus === 'saved') {
       if (data.modalStatus === 'create user') {
         this.props.createUser(data);
@@ -187,8 +180,8 @@ class Users extends Component {
       <Container>
         <UserModal
           header={this.state.userModalHeader}
-          open={this.state.userModalOpen}
-          toggle={this.toggleUserModal}
+          open={this.props.userModalOpen}
+          toggle={this.props.toggleUserModal}
           user={this.state.editableUser}
           onClosed={this.modalDismissed}
           roles={this.props.roles}
@@ -225,7 +218,9 @@ Users.propTypes = {
   editUser: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
   activateUser: PropTypes.func.isRequired,
-  deactivateUser: PropTypes.func.isRequired
+  deactivateUser: PropTypes.func.isRequired,
+  toggleUserModal: PropTypes.func.isRequired,
+  userModalOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;
@@ -236,7 +231,8 @@ const mapDispatchToProps = dispatch => ({
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
   editUser: data => dispatch({ type: EDIT_USER, data }),
   activateUser: user => dispatch({ type: ACTIVATE_USER, user }),
-  deactivateUser: user => dispatch({ type: DEACTIVATE_USER, user })
+  deactivateUser: user => dispatch({ type: DEACTIVATE_USER, user }),
+  toggleUserModal: () => dispatch({ type: TOGGLE_USER_MODAL })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

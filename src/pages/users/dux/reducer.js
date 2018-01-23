@@ -11,7 +11,8 @@ const initialState = {
   headerMessage: '',
   headerStatus: '',
   headerMessageOpen: false,
-  rowsPerPage: 10
+  rowsPerPage: 10,
+  userModalOpen: false
 };
 
 export default (state = initialState, action) => {
@@ -69,6 +70,8 @@ export default (state = initialState, action) => {
         headerMessageOpen: true,
         headerStatus: 'success'
       };
+    case actions.TOGGLE_USER_MODAL:
+      return { ...state, userModalOpen: !state.userModalOpen };
     default:
       return state;
   }

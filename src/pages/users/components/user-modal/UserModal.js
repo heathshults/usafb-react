@@ -335,7 +335,7 @@ class UserModal extends Component {
             onClick={() => this.dismissModal(this.SAVED)}
             disabled={this.canSaveOrEdit()}
           >
-            Save
+            {this.props.header.toUpperCase() === 'CREATE NEW USER' ? 'Create' : 'Save'}
           </Button>
         </ModalFooter>
       </Modal>

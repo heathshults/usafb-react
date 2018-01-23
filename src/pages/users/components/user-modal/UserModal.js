@@ -12,10 +12,7 @@ class UserModal extends Component {
   constructor() {
     super();
     this.states = states;
-    this.EDIT_USER_STATUS = 'edit user';
-    this.CREATE_USER_STATUS = 'create user';
-    this.CANCELED = 'canceled';
-    this.SAVED = 'saved';
+
     this.state = {
       // this variable will indicate whether or not
       // the modal should update state on componentWillReceiveProps
@@ -75,6 +72,19 @@ class UserModal extends Component {
         });
       }
     }
+  }
+
+  getButtonLabel = () => {
+    if (this.props.saving) {
+      return (
+        <div>
+          <i className="fa fa-spinner fa-spin mr-2" />
+          {this.props.header.toUpperCase() === 'CREATE NEW USER' ? 'Creating...' : 'Saving...'}
+        </div>
+      );
+    }
+
+    return this.props.header.toUpperCase() === 'CREATE NEW USER' ? 'Create' : 'Save';
   }
 
   updateFirstName = event =>
@@ -143,13 +153,7 @@ class UserModal extends Component {
       modalActive: true
     });
 
-  modalClosedCallback = () => {
-    const transformedData = this.transformData();
-    this.setState({
-      modalActive: false
-    }, this.props.onClosed(transformedData));
-  }
-
+  // we need to format the state data in a way that will be accepted by the API
   transformData = () => {
     const data = {
       modalStatus: this.state.modalStatus,
@@ -178,43 +182,40 @@ class UserModal extends Component {
   }
 
   dismissModal = (value) => {
-    if (value === this.CANCELED) {
-      this.setState({
-        name_first: '',
-        name_last: '',
-        email: '',
-        role_id: '',
-        phone: '',
-        organization_name: '',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: '',
-        dismissStatus: value
-      }, this.props.toggle);
-    } else {
-      this.setState({
-        dismissStatus: value
-      }, this.props.toggle);
-    }
+    this.setState({
+      name_first: '',
+      name_last: '',
+      email: '',
+      role_id: '',
+      phone: '',
+      organization_name: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: '',
+      dismissStatus: value
+    }, this.props.toggle);
   }
 
   canSaveOrEdit = () =>
     this.state.name_first === '' || this.state.name_last === '' ||
     this.state.email === '' || this.state.role_id === '' ||
     this.state.phone === '' || this.state.address1 === '' ||
-    this.state.city === '' || this.setState.state === '' ||
+    this.state.city === '' || this.state.state === '' ||
     this.state.zip === '';
+
+  modalAction = () => {
+    const data = this.transformData();
+    this.props.action(data);
+  }
 
   render() {
     return (
       <Modal
         isOpen={this.props.open}
-        toggle={this.props.toggle}
-        onClosed={this.modalClosedCallback}
       >
-        <ModalHeader toggle={this.props.toggle}>
+        <ModalHeader>
           <i className="fa fa-user" aria-hidden="true" /> {this.props.header}
         </ModalHeader>
         <ModalBody>
@@ -329,13 +330,19 @@ class UserModal extends Component {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => this.dismissModal(this.CANCELED)}>Close</Button>&nbsp;
+          <Button
+            color="secondary mr-2"
+            onClick={this.dismissModal}
+            disabled={this.props.saving}
+          >
+            Cancel
+          </Button>
           <Button
             color="primary"
-            onClick={() => this.dismissModal(this.SAVED)}
-            disabled={this.canSaveOrEdit()}
+            onClick={this.modalAction}
+            disabled={this.canSaveOrEdit() || this.props.saving}
           >
-            Save
+            {this.getButtonLabel()}
           </Button>
         </ModalFooter>
       </Modal>
@@ -348,8 +355,9 @@ UserModal.propTypes = {
   open: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  onClosed: PropTypes.func.isRequired,
-  roles: PropTypes.array.isRequired
+  roles: PropTypes.array.isRequired,
+  action: PropTypes.func.isRequired,
+  saving: PropTypes.bool.isRequired
 };
 
 export default UserModal;

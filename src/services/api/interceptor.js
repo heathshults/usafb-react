@@ -1,6 +1,7 @@
 import fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
 import * as headers from 'services/api/headers';
+import displayErrorToast from '../toast/error-toast';
 
 /**
  * The purpose of this class is to check if the API
@@ -36,7 +37,10 @@ export default class Interceptor {
 
         return [url, config];
       },
-      requestError: error => Promise.reject(error),
+      requestError: (error) => {
+        displayErrorToast('Could not complete your request! Please check your network connection and try again');
+        return Promise.reject(error);
+      },
       response: (response) => {
         // if the user token is invalid and they have a refresh token, get a new access token
         if (response.statusText.toUpperCase() === 'UNAUTHORIZED' && response.status === 401 && !!window.localStorage.getItem('access_token') && !!window.localStorage.getItem('refresh_token')) {
@@ -58,7 +62,10 @@ export default class Interceptor {
 
         return response;
       },
-      responseError: error => Promise.reject(error)
+      responseError: (error) => {
+        displayErrorToast('Could not complete your request! Please check your network connection and try again');
+        return Promise.reject(error);
+      }
     });
 
   refreshToken = () =>

@@ -21,8 +21,11 @@ import {
   CSV_ACCEPTING,
   UPLOAD_DATA,
   GET_IMPORTS,
-  UPDATE_ROWS_PER_PAGE
+  UPDATE_ROWS_PER_PAGE,
+  DOWNLOAD_FILE
 } from './dux/actions';
+
+import './imports.css';
 
 class Imports extends Component {
   constructor() {
@@ -32,15 +35,20 @@ class Imports extends Component {
       open: false,
       file: {}
     };
+
+    // a variable that will store the value of either 'players' or 'coaches'
+    this.userType = '';
   }
 
   componentWillMount() {
     this.columns = new Columns();
+    this.userType = this.props.location.pathname.slice(9);
+
     const data = {
       page: 1,
       per_page: this.props.rowsPerPage
     };
-    this.getImports(this.props.location.pathname.slice(9), data);
+    this.getImports(this.userType, data);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,7 +58,9 @@ class Imports extends Component {
         per_page: this.props.rowsPerPage
       };
 
-      this.getImports(nextProps.location.pathname.slice(9), data);
+      this.userType = nextProps.location.pathname.slice(9);
+
+      this.getImports(this.userType, data);
     }
   }
 
@@ -95,11 +105,27 @@ class Imports extends Component {
     </div>
   )
 
-  getFileNameFormatter = (cell, row) => (
-    <a href={row.file_path_remote} target="_blank">
-      {cell}
-    </a>
-  )
+  getFileNameFormatter = (cell, row) => {
+    if (row.downloadingSource) {
+      return (
+        <div>
+          <i className="fa fa-spinner fa-spin mr-2" />
+          downloading...
+        </div>
+      );
+    }
+
+    return (
+      <a
+        role="button"
+        tabIndex={0}
+        className="imports__download-link"
+        onClick={() => this.props.downloadFile(row._id, 'source', this.userType)} //eslint-disable-line
+      >
+        {cell}
+      </a>
+    );
+  }
 
   getRecordsFormatter = cell => (
     <div>
@@ -151,13 +177,12 @@ class Imports extends Component {
     });
   }
 
-  // TODO add upload API endpoint
   uploadCsv = () => {
     this.setState({
       open: false
     });
 
-    this.props.uploadCsv(this.props.location.pathname.slice(9), this.state.file);
+    this.props.uploadCsv(this.userType, this.state.file);
   }
 
   paginationOnChange = (currentPage, perPage) => {
@@ -165,7 +190,7 @@ class Imports extends Component {
       page: currentPage,
       per_page: perPage
     };
-    this.getImports(this.props.location.pathname.slice(9), data);
+    this.getImports(this.userType, data);
   }
 
   render() {
@@ -215,7 +240,8 @@ Imports.propTypes = {
   totalImports: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
-  gettingImports: PropTypes.bool.isRequired
+  gettingImports: PropTypes.bool.isRequired,
+  downloadFile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = selector;
@@ -226,7 +252,8 @@ const mapDispatchToProps = dispatch => ({
   csvFileAccepting: () => dispatch({ type: CSV_ACCEPTING }),
   uploadCsv: (userType, file) => dispatch({ type: UPLOAD_DATA, userType, file }),
   getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
-  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
+  downloadFile: (id, fileType, userType) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

@@ -19,3 +19,9 @@ export const importFile = (type, file) => {
     body: data
   });
 };
+
+export const downloadFile = (id, fileType, userType) =>
+  fetch(`${apiURL}/${userType}/${id}/${fileType}`, {
+    method: 'GET',
+    headers: headers.authorizedHeader()
+  });

@@ -25,6 +25,8 @@ class navBar extends Component {
     window.localStorage.clear();
     window.location.href = '/login';
   };
+
+  // 1205 hide image, 899 align right profile section, hamburger menu for rest at some px
   render() {
     return (
       <span>

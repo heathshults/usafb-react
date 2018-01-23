@@ -1,12 +1,18 @@
 .nav-bar__logo-container {
   display: flex;
   align-items: center;
+  @media screen and (max-width: 1220px) {
+    display: none;
+  }
 }
 
 .nav-bar__logo {
   width: 125px;
   max-width: 100%;
   max-height: 100%;
+  @media screen and (max-width: 1220px) {
+    display: none;
+  }
 }
 
 .nav-bar__header {
@@ -19,9 +25,11 @@
   padding-left: 10px;
   border-left: solid;
   margin-left: 10px;
-
   h4 {
     margin: 0;
     font-size: 16px !important;
+  }
+  @media screen and (max-width: 1220px) {
+    display: none;
   }
 }

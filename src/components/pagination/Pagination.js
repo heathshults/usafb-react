@@ -14,15 +14,37 @@ class PaginationComponent extends Component {
     super();
     this.state = {
       dropdownOpen: false,
-      currentPage: 1
+      currentPage: 1,
+      mobilePaginationMode: false
     };
   }
 
-  getPaginationLinks = () =>
-    [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {
-      const paginationValue = this.getPageValue(index);
-      return this.getStandardPaginationLink(paginationValue);
-    });
+  /**
+   * Add event listener
+   */
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
+  }
+
+  /**
+   * Remove event listener
+   */
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  getPaginationLinks = () => {
+    if (this.state.mobilePaginationMode) {
+      return <div>{this.state.currentPage}</div>;
+    }
+    return (
+      [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {
+        const paginationValue = this.getPageValue(index);
+        return this.getStandardPaginationLink(paginationValue);
+      })
+    );
+  }
 
   getPageValue = (index) => {
     const totalPages = this.calculateTotalPages();
@@ -98,6 +120,21 @@ class PaginationComponent extends Component {
     }
   }
 
+  /**
+   * Calculate & Update state of new dimensions
+   */
+  updateDimensions = () => {
+    if (window.innerWidth < 500) {
+      this.setState({
+        mobilePaginationMode: true
+      });
+    } else {
+      this.setState({
+        mobilePaginationMode: false
+      });
+    }
+  }
+
   calculateTotalPaginationLinks = () => {
     const totalPages = this.calculateTotalPages();
     if (totalPages <= 7) {
@@ -162,7 +199,7 @@ class PaginationComponent extends Component {
 
   render() {
     return (
-      <div className={`${this.props.display ? '' : 'usafb-pagination__hide '} usafb-pagiation__container d-flex justify-content-between mb-3`} >
+      <div className={`${this.props.display ? '' : 'usafb-pagination__hide '} usafb-pagination__container d-flex justify-content-between mb-3`} >
         <Label
           startingIndex={this.calculateStartingIndex()}
           endingIndex={this.calculateEndingIndex()}

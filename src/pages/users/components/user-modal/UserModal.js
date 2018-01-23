@@ -214,6 +214,7 @@ class UserModal extends Component {
     return (
       <Modal
         isOpen={this.props.open}
+        size="lg"
       >
         <ModalHeader>
           <i className="fa fa-user" aria-hidden="true" /> {this.props.header}
@@ -257,7 +258,6 @@ class UserModal extends Component {
                   value={this.state.role_id}
                   onChange={this.updateRole}
                   options={this.props.roles}
-                  width={170}
                 />
               </div>
               <div className="col-md-6 users__input-container">

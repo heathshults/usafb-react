@@ -1,5 +1,7 @@
-.user-management__status-disabled, .user-management__edit-user-button, .user-management__status-enabled {
-  :hover {
+.user-management__status-disabled,
+.user-management__edit-user-button,
+.user-management__status-enabled {
+   :hover {
     cursor: pointer;
   }
 }
@@ -23,5 +25,11 @@
     color: #09254a;
     text-decoration: none;
     background-color: transparent;
+  }
+}
+
+.customTooltip {
+  &-hide {
+    opacity: 0;
   }
 }

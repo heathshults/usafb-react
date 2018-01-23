@@ -65,6 +65,7 @@
     "react-test-renderer": "^16.2.0",
     "react-toastify": "^3.2.2",
     "react-toggle": "^4.0.2",
+    "react-tooltip": "^3.4.0",
     "react-virtualized-select": "^3.1.0",
     "reactstrap": "^5.0.0-alpha.4",
     "recharts": "^1.0.0-beta.9",

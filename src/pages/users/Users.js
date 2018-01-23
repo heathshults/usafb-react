@@ -12,6 +12,8 @@ import DataTable from 'components/data-table/DataTable';
 import DataHeader from 'components/data-header/DataHeader';
 import Pagination from 'components/pagination/Pagination';
 
+import ReactTooltip from 'react-tooltip';
+
 import CreateUserButton from './components/create-user-button/CreateUserButton';
 import UserModal from './components/user-modal/UserModal';
 import Columns from './models/columns';
@@ -135,12 +137,14 @@ class Users extends Component {
     if (user.active) {
       return (
         <a
-          className="user-management__status-disabled"
+          className="user-management__status-disabled customTooltip"
           onClick={() => this.props.deactivateUser(user)}
           role="button"
           tabIndex={0}
+          data-tip="Disable"
         >
           <i className="fa fa-minus-square pr-2 text-lg" />
+          <ReactTooltip />
         </a>
       );
     }
@@ -151,8 +155,10 @@ class Users extends Component {
         onClick={() => this.props.activateUser(user)}
         role="button"
         tabIndex={0}
+        data-tip="Enable"
       >
         <i className="fa pr-2 fa-plus-square status-enabled text-lg" />
+        <ReactTooltip />
       </a>
     );
   }

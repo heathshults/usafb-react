@@ -163,7 +163,7 @@ class UserModal extends Component {
       email: this.state.email,
       role_id: this.state.role_id,
       phone: this.state.phone,
-      organization_name: this.state.organization_name,
+      // organization_name: this.state.organization_name,
       address: {
         city: this.state.city,
         postal_code: this.state.zip,
@@ -269,7 +269,7 @@ class UserModal extends Component {
                 />
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12 users__input-container">
                 <InputField
                   icon="building"
@@ -278,7 +278,7 @@ class UserModal extends Component {
                   onChange={this.updateOrganization}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-md-12 users__input-container">
                 <InputField

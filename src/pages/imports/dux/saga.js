@@ -1,15 +1,15 @@
 import { fork, all, take, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
-import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
-import getImports, { importFile } from './api';
+import getImports, { importFile, downloadFile } from './api';
 import importSelector from './selectors';
 
 export default function* userInformationFlow() {
   yield all({
     uploadCsvFlow: fork(uploadCsvFlow),
     getImportsFlow: fork(getImportsFlow),
+    downloadFilesFlow: fork(downloadFilesFlow),
   });
 }
 
@@ -43,15 +43,56 @@ function* getImportsFlow() {
 }
 
 function* getImportsCall(userType, data) {
-  try {
-    const response = yield call(getImports, userType, data);
+  const response = yield call(getImports, userType, data);
+  if (response.ok) {
+    const responseData = yield response.json();
+
+    const imports = yield responseData.data.map(values => ({
+      ...values,
+      downloadingSource: false,
+      downloadingResults: false,
+      downloadingErrors: false
+    }));
+
+    yield put({ type: actions.RECEIVED_IMPORTS, imports, total: responseData.meta.pagination.total });
+  }
+}
+
+function* downloadFilesFlow() {
+  while (true) {
+    const { id, fileType, userType } = yield take(actions.DOWNLOAD_FILE);
+    // toggle spinner for downloading file
+    yield updateImportsDownloadStatus(id, fileType);
+    const response = yield call(downloadFile, id, fileType, userType);
     if (response.ok) {
       const responseData = yield response.json();
-      yield put({ type: actions.RECEIVED_IMPORTS, imports: responseData.data, total: responseData.meta.pagination.total });
+      yield console.dir(responseData); //eslint-disable-line
+    } else {
+      // toggle spinner for downloading file
+      yield updateImportsDownloadStatus(id, fileType);
     }
-  } catch (e) {
-    const errorMessage = `An error occurred while we were trying to get a list of imports! 
-    Please check your network and try again`;
-    displayErrorToast(errorMessage);
   }
+}
+
+function* updateImportsDownloadStatus(id, fileType) {
+  const state = yield select(importSelector);
+
+  const updatedImports = yield state.imports.map((file) => {
+    if (file._id === id) { //eslint-disable-line
+      if (fileType === 'source') {
+        file.downloadingSource = !file.downloadingSource; //eslint-disable-line
+      }
+
+      if (fileType === 'errors') {
+        file.downloadingErrors = !file.downloadingErrors; //eslint-disable-line
+      }
+
+      if (fileType === 'results') {
+        file.downloadingResults = !file.downloadingResults; //eslint-disable-line
+      }
+    }
+    return file;
+  });
+
+  yield put({ type: actions.RECEIVED_IMPORTS, imports: updatedImports, total: state.totalImports });
 }

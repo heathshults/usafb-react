@@ -61,13 +61,13 @@ function* getImportsCall(userType, data) {
 
 function* downloadFilesFlow() {
   while (true) {
-    const { id, fileType, userType } = yield take(actions.DOWNLOAD_FILE);
+    const { id, fileType, userType, fileName } = yield take(actions.DOWNLOAD_FILE);
     // toggle spinner for downloading file
     yield updateImportsDownloadStatus(id, fileType);
     const response = yield call(downloadFile, id, fileType, userType);
     if (response.ok) {
       const responseData = yield response.json();
-      yield call(saveFile, responseData.data);
+      yield call(saveFile, responseData.data, fileName);
       yield updateImportsDownloadStatus(id, fileType);
     } else {
       // toggle spinner for downloading file
@@ -99,25 +99,11 @@ function* updateImportsDownloadStatus(id, fileType) {
   yield put({ type: actions.RECEIVED_IMPORTS, imports: updatedImports, total: state.totalImports });
 }
 
-function saveFile(data) {
-  // const blob = new Blob(data.content, {
-  //   type: data.content_type
-  // });
-  // FileSaver.saveAs(blob, 'test.csv');
-  if (window.navigator.msSaveOrOpenBlob) { // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
-    window.navigator.msSaveBlob(blob, 'filename.csv');
-  } else {
-    // const url = `data:text/csv;base64,${data.content}`;
-    const a = window.document.createElement('a');
-    a.setAttribute('href', `data:text/csv;base64,${data.content}`);
-    a.setAttribute('download', data.file_name);
-    window.document.body.appendChild(a);
-    a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
-    window.document.body.removeChild(a);
-    // a.href = window.URL.createObjectURL(blob, { type: 'text/plain' });
-    // a.download = 'filename.csv';
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
-  }
+function saveFile(data, fileName) {
+  const a = window.document.createElement('a');
+  a.setAttribute('href', `data:text/csv;base64,${data.content}`);
+  a.setAttribute('download', fileName);
+  window.document.body.appendChild(a);
+  a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+  window.document.body.removeChild(a);
 }

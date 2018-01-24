@@ -120,7 +120,7 @@ class Imports extends Component {
         role="button"
         tabIndex={0}
         className="imports__download-link"
-        onClick={() => this.props.downloadFile(row._id, 'source', this.userType)} //eslint-disable-line
+        onClick={() => this.props.downloadFile(row._id, 'source', this.userType, cell)} //eslint-disable-line
       >
         {cell}
       </a>
@@ -253,7 +253,7 @@ const mapDispatchToProps = dispatch => ({
   uploadCsv: (userType, file) => dispatch({ type: UPLOAD_DATA, userType, file }),
   getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
-  downloadFile: (id, fileType, userType) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType })
+  downloadFile: (id, fileType, userType, fileName) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType, fileName })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

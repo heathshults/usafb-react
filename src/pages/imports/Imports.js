@@ -22,7 +22,8 @@ import {
   UPLOAD_DATA,
   GET_IMPORTS,
   UPDATE_ROWS_PER_PAGE,
-  DOWNLOAD_FILE
+  DOWNLOAD_FILE,
+  DOWNLOAD_RESULTS
 } from './dux/actions';
 
 import './imports.css';
@@ -152,11 +153,26 @@ class Imports extends Component {
     );
   }
 
-  getRecordsFormatter = cell => (
-    <div>
-      {cell === 0 ? '-' : cell}
-    </div>
-  );
+  getRecordsFormatter = (cell, row) => {
+    if (cell === 0) {
+      return (
+        <div>
+          {cell === 0 ? '-' : cell}
+        </div>
+      );
+    }
+
+    return (
+      <a
+        role="button"
+        tabIndex={0}
+        className="imports__download-link"
+        onClick={() => this.props.downloadResults(row.results, row.file_name)}
+      >
+        {cell}
+      </a>
+    );
+  }
 
   getImportedFormatter = (cell, row) => {
     if (cell === 0) {
@@ -266,7 +282,8 @@ Imports.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
   gettingImports: PropTypes.bool.isRequired,
-  downloadFile: PropTypes.func.isRequired
+  downloadFile: PropTypes.func.isRequired,
+  downloadResults: PropTypes.func.isRequired
 };
 
 const mapStateToProps = selector;
@@ -278,7 +295,8 @@ const mapDispatchToProps = dispatch => ({
   uploadCsv: (userType, file) => dispatch({ type: UPLOAD_DATA, userType, file }),
   getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
-  downloadFile: (id, fileType, userType, fileName) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType, fileName })
+  downloadFile: (id, fileType, userType, fileName) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType, fileName }),
+  downloadResults: (results, fileName) => dispatch({ type: DOWNLOAD_RESULTS, results, fileName })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

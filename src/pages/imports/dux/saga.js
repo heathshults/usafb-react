@@ -1,6 +1,6 @@
 import { fork, all, take, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
-// import FileSaver from 'file-saver';
+import Papa from 'papaparse';
 
 import * as actions from './actions';
 import getImports, { importFile, downloadFile } from './api';
@@ -11,6 +11,7 @@ export default function* userInformationFlow() {
     uploadCsvFlow: fork(uploadCsvFlow),
     getImportsFlow: fork(getImportsFlow),
     downloadFilesFlow: fork(downloadFilesFlow),
+    downloadResults: fork(downloadResults)
   });
 }
 
@@ -67,7 +68,7 @@ function* downloadFilesFlow() {
     const response = yield call(downloadFile, id, fileType, userType);
     if (response.ok) {
       const responseData = yield response.json();
-      yield call(saveFile, responseData.data, fileName);
+      yield call(saveFile, responseData.data.content, fileName, true);
       yield updateImportsDownloadStatus(id, fileType);
     } else {
       // toggle spinner for downloading file
@@ -99,11 +100,20 @@ function* updateImportsDownloadStatus(id, fileType) {
   yield put({ type: actions.RECEIVED_IMPORTS, imports: updatedImports, total: state.totalImports });
 }
 
-function saveFile(data, fileName) {
+function saveFile(content, fileName, isBase64 = false) {
   const a = window.document.createElement('a');
-  a.setAttribute('href', `data:text/csv;base64,${data.content}`);
+  const downloadUrl = `data:text/csv;${isBase64 ? 'base64,' : ''}${content}`;
+  a.setAttribute('href', downloadUrl);
   a.setAttribute('download', fileName);
   window.document.body.appendChild(a);
   a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
   window.document.body.removeChild(a);
+}
+
+function* downloadResults() {
+  while (true) {
+    const { results, fileName } = yield take(actions.DOWNLOAD_RESULTS);
+    const csv = yield Papa.unparse(results);
+    yield saveFile(csv, `results-for-${fileName}`);
+  }
 }

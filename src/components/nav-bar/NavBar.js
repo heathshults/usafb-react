@@ -14,8 +14,15 @@ import NavDropdown from './components/nav-dropdown/NavDropdown';
 import NavDropdownItem from './components/nav-dropdown-item/NavDropdownItem';
 import NavLink from './components/nav-link/NavLink';
 import UserDropdown from './components/user-dropdown/UserDropdown';
+import MobileNavbar from './components/mobile-navbar/MobileNavbar';
 
 class navBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      navbarCollapsed: true
+    };
+  }
   goToPlayers = () => this.props.history.push('/players');
   goToCoaches = () => this.props.history.push('/coaches');
   goToPlayersDashboard = () => this.props.history.push('/dashboard');
@@ -25,8 +32,12 @@ class navBar extends Component {
     window.localStorage.clear();
     window.location.href = '/login';
   };
+  toggleNavbar = () => {
+    this.setState({
+      navbarCollapsed: !this.state.navbarCollapsed
+    });
+  }
 
-  // 1205 hide image, 899 align right profile section, hamburger menu for rest at some px
   render() {
     return (
       <span>
@@ -35,6 +46,7 @@ class navBar extends Component {
             <span /> :
             <Container>
               <Logo />
+              <MobileNavbar toggleNavbar={this.toggleNavbar} navbarCollapsed={this.state.navbarCollapsed} />
               <NavigationContainer>
                 <NavLink to="/" label="Home" />
                 <Auth role_permissions={this.props.role_permissions} permissionRequested={[EXPORT_PLAYERS, VIEW_PLAYERS, IMPORT_PLAYERS]}>

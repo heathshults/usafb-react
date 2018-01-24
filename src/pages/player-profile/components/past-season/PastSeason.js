@@ -22,11 +22,7 @@ const PastSeason = props => (
                     <div className="stats-wrapper past-season__stats-wrapper">
                       <div className="d-flex justify-content-between">
                         <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
-                          {team.positions && team.positions.map(position => (
-                            <div className="positions-list" key={`${team._id}+${position}`}>
-                              <p style={{ wordBreak: 'break-word' }}>{humanize(position)}</p>
-                            </div>
-                          ))}
+                          {humanize(team.position)}
                         </div>
                         <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
                           <div className="badge-grade ar-1by1"> {props.playerData.grade}th

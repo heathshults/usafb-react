@@ -20,7 +20,7 @@ const PlayerInfo = props => (
           <strong>Player ID: {props.playerData.id_external}</strong>
         </div>
       </div>
-      <p className="playerInfo-sidebarText">Position: {props.currentTeam.positions && props.currentTeam.positions.map(position => `${humanize(position)}, `)}</p>
+      <p className="playerInfo-sidebarText">Position: {humanize(props.currentTeam.position)}</p>
     </div>
   </div>
 );

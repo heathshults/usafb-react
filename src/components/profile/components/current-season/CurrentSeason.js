@@ -31,7 +31,7 @@ const CurrentSeason = props => (
 CurrentSeason.propTypes = {
   currentTeam: PropTypes.shape({
     team_name: PropTypes.string,
-    positions: PropTypes.array,
+    position: PropTypes.string,
     level_type: PropTypes.string,
     season_year: PropTypes.number,
     season: PropTypes.string,

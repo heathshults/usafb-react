@@ -11,3 +11,9 @@
 .usafb__data-table-hide {
   display: none !important;
 }
+
+.usafb__data-table, .react-bs-container-body {
+  th, td {
+    width: 235px !important;
+  }
+}

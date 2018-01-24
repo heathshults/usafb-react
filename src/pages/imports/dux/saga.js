@@ -66,7 +66,8 @@ function* downloadFilesFlow() {
     const response = yield call(downloadFile, id, fileType, userType);
     if (response.ok) {
       const responseData = yield response.json();
-      yield console.dir(responseData); //eslint-disable-line
+      yield call(saveFile, responseData.data);
+      yield updateImportsDownloadStatus(id, fileType);
     } else {
       // toggle spinner for downloading file
       yield updateImportsDownloadStatus(id, fileType);
@@ -95,4 +96,10 @@ function* updateImportsDownloadStatus(id, fileType) {
   });
 
   yield put({ type: actions.RECEIVED_IMPORTS, imports: updatedImports, total: state.totalImports });
+}
+
+function* saveFile(data) {
+  const uriContent = yield `${data.content_type},${encodeURIComponent(data.content)}`;
+  const appWindow = yield window.open(uriContent, 'test');
+  yield appWindow.focus();
 }

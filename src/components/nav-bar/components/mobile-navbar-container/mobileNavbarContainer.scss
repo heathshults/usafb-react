@@ -1,0 +1,8 @@
+.mobileNavbarContainer {
+  height: 0px;
+  width: 100%;
+  background-color: inherit;
+  &-expanded {
+    height: 80px;
+  }
+}

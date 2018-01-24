@@ -1,26 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
+import FontAwesome from 'react-fontawesome';
 import './mobileNavbar.css';
 
 const mobileNavbar = props => (
-  <div className="nav-bar__logo-container">
-    <NavbarToggler onClick={props.toggleNavbar} className="mr-2 mobileNavbar" />
-    <Collapse isOpen={!props.navbarCollapsed} navbar className="mobileNavbar">
-      <Nav navbar>
-        <NavItem>
-          <NavLink to="/" label="comps">Components</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/" label="github">Github</NavLink>
-        </NavItem>
-      </Nav>
-    </Collapse>
+  <div className="nav-bar__logo-container column">
+    <button
+      className="data-table-filter__button"
+      onClick={this.props.toggle}
+    >
+      <FontAwesome name="search" />
+      <span className="data-table-filter__label">
+        Advanced Search
+      </span>
+    </button>
   </div>
 );
 
 mobileNavbar.propTypes = {
-  navbarCollapsed: PropTypes.bool.isRequired,
   toggleNavbar: PropTypes.func.isRequired
 };
 

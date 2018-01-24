@@ -94,6 +94,7 @@ class Imports extends Component {
   getCellFormatters = () => ({
     Date: this.getDateFormatter,
     'File Name': this.getFileNameFormatter,
+    Status: this.getStatusFormatter,
     '# Records': this.getRecordsFormatter,
     '# Imported': this.getImportedFormatter,
     '# Errors': this.getErrorFormatter
@@ -124,6 +125,30 @@ class Imports extends Component {
       >
         {cell}
       </a>
+    );
+  }
+
+  getStatusFormatter = (cell) => {
+    if (cell === 1) {
+      return (
+        <div className="text-success">
+          imported successfully
+        </div>
+      );
+    }
+
+    if (cell === -1) {
+      return (
+        <div className="text-danger">
+          failed
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        processing...
+      </div>
     );
   }
 

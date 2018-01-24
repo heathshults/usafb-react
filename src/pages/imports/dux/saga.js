@@ -1,5 +1,6 @@
 import { fork, all, take, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
+// import FileSaver from 'file-saver';
 
 import * as actions from './actions';
 import getImports, { importFile, downloadFile } from './api';
@@ -98,8 +99,25 @@ function* updateImportsDownloadStatus(id, fileType) {
   yield put({ type: actions.RECEIVED_IMPORTS, imports: updatedImports, total: state.totalImports });
 }
 
-function* saveFile(data) {
-  const uriContent = yield `${data.content_type},${encodeURIComponent(data.content)}`;
-  const appWindow = yield window.open(uriContent, 'test');
-  yield appWindow.focus();
+function saveFile(data) {
+  // const blob = new Blob(data.content, {
+  //   type: data.content_type
+  // });
+  // FileSaver.saveAs(blob, 'test.csv');
+  if (window.navigator.msSaveOrOpenBlob) { // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+    window.navigator.msSaveBlob(blob, 'filename.csv');
+  } else {
+    // const url = `data:text/csv;base64,${data.content}`;
+    const a = window.document.createElement('a');
+    a.setAttribute('href', `data:text/csv;base64,${data.content}`);
+    a.setAttribute('download', data.file_name);
+    window.document.body.appendChild(a);
+    a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+    window.document.body.removeChild(a);
+    // a.href = window.URL.createObjectURL(blob, { type: 'text/plain' });
+    // a.download = 'filename.csv';
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
+  }
 }

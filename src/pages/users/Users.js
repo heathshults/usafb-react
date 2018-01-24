@@ -202,6 +202,7 @@ class Users extends Component {
           columns={this.columns.getUserColumns()}
           data={this.props.users}
           formatters={this.getCellFormatters()}
+          loading={this.props.gettingUsers}
         />
         <Pagination
           totalItems={this.props.totalUsers}
@@ -228,7 +229,8 @@ Users.propTypes = {
   deactivateUser: PropTypes.func.isRequired,
   toggleUserModal: PropTypes.func.isRequired,
   userModalOpen: PropTypes.bool.isRequired,
-  editingUser: PropTypes.bool.isRequired
+  editingUser: PropTypes.bool.isRequired,
+  gettingUsers: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ usersReducer }) => usersReducer;

@@ -2,6 +2,7 @@ import { fork, all, take, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import Papa from 'papaparse';
 
+import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
 import getImports, { importFile, downloadFile } from './api';
 import importSelector from './selectors';
@@ -101,19 +102,41 @@ function* updateImportsDownloadStatus(id, fileType) {
 }
 
 function saveFile(content, fileName, isBase64 = false) {
-  const a = window.document.createElement('a');
-  const downloadUrl = `data:text/csv;${isBase64 ? 'base64,' : ''}${content}`;
-  a.setAttribute('href', downloadUrl);
-  a.setAttribute('download', fileName);
-  window.document.body.appendChild(a);
-  a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
-  window.document.body.removeChild(a);
+  try {
+    const a = window.document.createElement('a');
+    const downloadUrl = `data:text/csv;${isBase64 ? 'base64,' : ''}${content}`;
+    a.setAttribute('href', downloadUrl);
+    a.setAttribute('download', fileName);
+    window.document.body.appendChild(a);
+    a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+    window.document.body.removeChild(a);
+  } catch (e) {
+    displayErrorToast('Unable to download file!');
+  }
 }
 
 function* downloadResults() {
   while (true) {
     const { results, fileName } = yield take(actions.DOWNLOAD_RESULTS);
-    const csv = yield Papa.unparse(results);
+    const data = yield results.map(result => ({
+      'User ID': result.id || "", //eslint-disable-line
+      'External ID': result.id_external || "", //eslint-disable-line
+      'USAFB ID': result.id_usafb || "", //eslint-disable-line
+      'First Name': result.name_first || "", //eslint-disable-line
+      'Last Name': result.name_last || "", //eslint-disable-line
+      'Middle Name': result.name_middle || "" //eslint-disable-line
+    }));
+
+    yield console.dir(data); //eslint-disable-line
+
+    const csv = yield Papa.unparse(data, {
+      quotes: false,
+      quoteChar: '"',
+      delimiter: '"',
+      header: true,
+      newline: '\r\n'
+    });
+
     yield saveFile(csv, `results-for-${fileName}`);
   }
 }

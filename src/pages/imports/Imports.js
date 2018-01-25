@@ -92,6 +92,8 @@ class Imports extends Component {
     <ImportButton toggle={this.displayImportModal} importing={this.props.importing} />
   )
 
+  // TODO filename, imported, and errors are using basically the same code
+  // we should extract a single function that takes in different params so we don't copy and paste everything
   getCellFormatters = () => ({
     Date: this.getDateFormatter,
     'File Name': this.getFileNameFormatter,

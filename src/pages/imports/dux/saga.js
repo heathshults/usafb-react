@@ -68,9 +68,12 @@ function* downloadFilesFlow() {
     // toggle spinner for downloading file
     yield updateImportsDownloadStatus(id, fileType);
     const response = yield call(downloadFile, id, fileType, userType);
+
     if (response.ok) {
       const responseData = yield response.json();
-      yield call(saveBase64File, responseData.data.content, fileName, true);
+      const uniqueFileName = yield call(setFileName, fileName, fileType);
+
+      yield call(saveBase64File, responseData.data.content, uniqueFileName, true);
       yield updateImportsDownloadStatus(id, fileType);
     } else {
       // toggle spinner for downloading file
@@ -124,4 +127,24 @@ function* downloadResults() {
     const csvData = yield new Blob([csv], { type: 'text/csv;charset=utf-8' });
     yield FileSaver.saveAs(csvData, fileName);
   }
+}
+
+// We need to distinguish each file download by the type of file it is,
+// so users will not be confused when they save something
+function setFileName(filename, fileType) {
+  const splitFileName = filename.split('.');
+  const updatedFileName = [];
+
+  splitFileName.forEach((value) => {
+    if (value === 'csv') {
+      updatedFileName.push(`-${fileType}.`);
+    } else {
+      updatedFileName.push(value);
+    }
+  });
+
+  // add the csv extension to the filename
+  updatedFileName.push(splitFileName[splitFileName.length - 1]);
+
+  return updatedFileName.join('');
 }

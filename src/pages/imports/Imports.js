@@ -92,8 +92,6 @@ class Imports extends Component {
     <ImportButton toggle={this.displayImportModal} importing={this.props.importing} />
   )
 
-  // TODO filename, imported, and errors are using basically the same code
-  // we should extract a single function that takes in different params so we don't copy and paste everything
   getCellFormatters = () => ({
     Date: this.getDateFormatter,
     'File Name': this.getFileNameFormatter,
@@ -109,27 +107,11 @@ class Imports extends Component {
     </div>
   )
 
-  getFileNameFormatter = (cell, row) => {
-    if (row.downloadingSource) {
-      return (
-        <div>
-          <i className="fa fa-spinner fa-spin mr-2" />
-          downloading...
-        </div>
-      );
-    }
+  getFileNameFormatter = (cell, row) => this.downloadLinkFormatter(cell, row.downloadingSource, row._id, 'source', row.file_name); //eslint-disable-line
 
-    return (
-      <a
-        role="button"
-        tabIndex={0}
-        className="imports__download-link"
-        onClick={() => this.props.downloadFile(row._id, 'source', this.userType, cell)} //eslint-disable-line
-      >
-        {cell}
-      </a>
-    );
-  }
+  getImportedFormatter = (cell, row) => this.downloadLinkFormatter(cell, row.downloadingResults, row._id, 'results', row.file_name); //eslint-disable-line
+
+  getErrorFormatter = (cell, row) => this.downloadLinkFormatter(cell, row.downloadingErrors, row._id, 'errors', row.file_name, true); //eslint-disable-line
 
   getStatusFormatter = (cell) => {
     if (cell === 1) {
@@ -176,7 +158,7 @@ class Imports extends Component {
     );
   }
 
-  getImportedFormatter = (cell, row) => {
+  downloadLinkFormatter = (cell, downloading, id, fileType, fileName, isErrors = false) => {
     if (cell === 0) {
       return (
         <div>
@@ -185,7 +167,7 @@ class Imports extends Component {
       );
     }
 
-    if (row.downloadingResults) {
+    if (downloading) {
       return (
         <div>
           <i className="fa fa-spinner fa-spin mr-2" />
@@ -198,38 +180,8 @@ class Imports extends Component {
       <a
         role="button"
         tabIndex={0}
-        className="imports__download-link"
-        onClick={() => this.props.downloadFile(row._id, 'results', this.userType, cell)} //eslint-disable-line
-      >
-        {cell}
-      </a>
-    );
-  }
-
-  getErrorFormatter = (cell, row) => {
-    if (cell === 0) {
-      return (
-        <div>
-          -
-        </div>
-      );
-    }
-
-    if (row.downloadingErrors) {
-      return (
-        <div>
-          <i className="fa fa-spinner fa-spin mr-2" />
-          downloading...
-        </div>
-      );
-    }
-
-    return (
-      <a
-        role="button"
-        tabIndex={0}
-        className="imports__download-link"
-        onClick={() => this.props.downloadFile(row._id, 'errors', this.userType, cell)} //eslint-disable-line
+        className={`${isErrors ? 'text-danger' : ''} imports__download-link`}
+        onClick={() => this.props.downloadFile(id, fileType, this.userType, fileName)}
       >
         {cell}
       </a>

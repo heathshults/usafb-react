@@ -10,10 +10,10 @@ const avatar = () => (
       src={defaultImg}
       alt=""
     />
-    <button className="profile__edit-user-button">
+    {/* <button className="profile__edit-user-button">
       <i id="editAvatarIcon" className="fa fa-edit action-button-icon" aria-hidden="true" />&nbsp;
       update
-    </button>
+    </button> */}
   </div>
 );
 

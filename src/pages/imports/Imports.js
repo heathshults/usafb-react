@@ -133,7 +133,7 @@ class Imports extends Component {
     if (cell === 1) {
       return (
         <div className="text-success">
-          imported successfully
+          Success
         </div>
       );
     }
@@ -141,14 +141,14 @@ class Imports extends Component {
     if (cell === -1) {
       return (
         <div className="text-danger">
-          failed
+          Failed
         </div>
       );
     }
 
     return (
       <div>
-        processing...
+        Processing...
       </div>
     );
   }
@@ -183,8 +183,22 @@ class Imports extends Component {
       );
     }
 
+    if (row.downloadingResults) {
+      return (
+        <div>
+          <i className="fa fa-spinner fa-spin mr-2" />
+          downloading...
+        </div>
+      );
+    }
+
     return (
-      <a href={row.file_path_result} target="_blank">
+      <a
+        role="button"
+        tabIndex={0}
+        className="imports__download-link"
+        onClick={() => this.props.downloadFile(row._id, 'results', this.userType, cell)} //eslint-disable-line
+      >
         {cell}
       </a>
     );
@@ -199,8 +213,22 @@ class Imports extends Component {
       );
     }
 
+    if (row.downloadingErrors) {
+      return (
+        <div>
+          <i className="fa fa-spinner fa-spin mr-2" />
+          downloading...
+        </div>
+      );
+    }
+
     return (
-      <a href={row.file_path_error} target="_blank">
+      <a
+        role="button"
+        tabIndex={0}
+        className="imports__download-link"
+        onClick={() => this.props.downloadFile(row._id, 'errors', this.userType, cell)} //eslint-disable-line
+      >
         {cell}
       </a>
     );

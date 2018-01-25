@@ -127,15 +127,7 @@ function* downloadResults() {
       'Middle Name': result.name_middle || "" //eslint-disable-line
     }));
 
-    yield console.dir(data); //eslint-disable-line
-
-    const csv = yield Papa.unparse(data, {
-      quotes: false,
-      quoteChar: '"',
-      delimiter: '"',
-      header: true,
-      newline: '\r\n'
-    });
+    const csv = yield Papa.unparse(data);
 
     yield saveFile(csv, `results-for-${fileName}`);
   }

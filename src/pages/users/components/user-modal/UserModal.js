@@ -198,6 +198,21 @@ class UserModal extends Component {
     }, this.props.toggle);
   }
 
+  resetState = () =>
+    this.setState({
+      name_first: '',
+      name_last: '',
+      email: '',
+      role_id: '',
+      phone: '',
+      organization_name: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: ''
+    });
+
   canSaveOrEdit = () =>
     this.state.name_first === '' || this.state.name_last === '' ||
     this.state.email === '' || this.state.role_id === '' ||
@@ -214,6 +229,7 @@ class UserModal extends Component {
     return (
       <Modal
         isOpen={this.props.open}
+        onClosed={this.resetState}
         size="lg"
       >
         <ModalHeader toggle={this.dismissModal}>

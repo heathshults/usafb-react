@@ -46,7 +46,7 @@ class SearchModal extends Component {
         isOpen={this.props.open}
         onClosed={this.modalClosedCallback}
       >
-        <ModalHeader>
+        <ModalHeader toggle={this.close}>
           {this.props.header}
         </ModalHeader>
         <ModalBody>

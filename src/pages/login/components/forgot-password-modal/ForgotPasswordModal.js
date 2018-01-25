@@ -198,7 +198,7 @@ class ForgotPasswordModal extends Component {
       <Modal
         isOpen={this.props.open}
       >
-        <ModalHeader>Forgot your password?</ModalHeader>
+        <ModalHeader toggle={this.props.toggle} >Forgot your password?</ModalHeader>
         <ModalBody>
           {(this.props.verificationCodeError || this.props.confirmationError) &&
             <Alert color="danger text-center text-white">

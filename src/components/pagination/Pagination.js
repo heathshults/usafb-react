@@ -124,7 +124,7 @@ class PaginationComponent extends Component {
    * Calculate & Update state of new dimensions
    */
   updateDimensions = () => {
-    if (window.innerWidth < 500) {
+    if (window.innerWidth < 890) {
       this.setState({
         mobilePaginationMode: true
       });

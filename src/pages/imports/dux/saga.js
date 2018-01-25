@@ -1,6 +1,7 @@
 import { fork, all, take, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import Papa from 'papaparse';
+import FileSaver from 'file-saver';
 
 import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
@@ -69,7 +70,7 @@ function* downloadFilesFlow() {
     const response = yield call(downloadFile, id, fileType, userType);
     if (response.ok) {
       const responseData = yield response.json();
-      yield call(saveFile, responseData.data.content, fileName, true);
+      yield call(saveBase64File, responseData.data.content, fileName, true);
       yield updateImportsDownloadStatus(id, fileType);
     } else {
       // toggle spinner for downloading file
@@ -101,10 +102,10 @@ function* updateImportsDownloadStatus(id, fileType) {
   yield put({ type: actions.RECEIVED_IMPORTS, imports: updatedImports, total: state.totalImports });
 }
 
-function saveFile(content, fileName, isBase64 = false) {
+function saveBase64File(content, fileName) {
   try {
     const a = window.document.createElement('a');
-    const downloadUrl = `data:text/csv;${isBase64 ? 'base64,' : ''}${content}`;
+    const downloadUrl = `data:text/csv;base64,${content}`;
     a.setAttribute('href', downloadUrl);
     a.setAttribute('download', fileName);
     window.document.body.appendChild(a);
@@ -118,17 +119,9 @@ function saveFile(content, fileName, isBase64 = false) {
 function* downloadResults() {
   while (true) {
     const { results, fileName } = yield take(actions.DOWNLOAD_RESULTS);
-    const data = yield results.map(result => ({
-      'User ID': result.id || "", //eslint-disable-line
-      'External ID': result.id_external || "", //eslint-disable-line
-      'USAFB ID': result.id_usafb || "", //eslint-disable-line
-      'First Name': result.name_first || "", //eslint-disable-line
-      'Last Name': result.name_last || "", //eslint-disable-line
-      'Middle Name': result.name_middle || "" //eslint-disable-line
-    }));
 
-    const csv = yield Papa.unparse(data);
-
-    yield saveFile(csv, `results-for-${fileName}`);
+    const csv = yield Papa.unparse(results);
+    const csvData = yield new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    yield FileSaver.saveAs(csvData, fileName);
   }
 }

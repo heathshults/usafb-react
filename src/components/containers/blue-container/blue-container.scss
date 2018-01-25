@@ -1,5 +1,10 @@
 .usafb__blue-container {
   height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+
   background: rgba(9, 48, 90, 0.93) url('../../../images/bg/usa-fb-bg.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -7,4 +12,8 @@
   background-blend-mode: multiply;
   object-fit: contain;
   overflow-y: auto;
+}
+
+.usafb__blue-container-top-margin {
+  margin-top: 100px;
 }

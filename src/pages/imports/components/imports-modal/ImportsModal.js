@@ -62,7 +62,7 @@ const importsModal = props => (
     </ModalBody>
     <ModalFooter>
       <Button color="secondary" onClick={props.cancel}>Cancel</Button>&nbsp;
-      <Button color="primary" onClick={props.upload} disabled={props.status.toUpperCase() !== 'ACCEPTED'}>Upload</Button>
+      <Button color="primary" onClick={props.upload} disabled={props.status.toUpperCase() !== 'ACCEPTED'}>Import</Button>
     </ModalFooter>
   </Modal>
 );

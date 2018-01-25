@@ -22,7 +22,8 @@ import {
   UPLOAD_DATA,
   GET_IMPORTS,
   UPDATE_ROWS_PER_PAGE,
-  DOWNLOAD_FILE
+  DOWNLOAD_FILE,
+  DOWNLOAD_RESULTS
 } from './dux/actions';
 
 import './imports.css';
@@ -94,6 +95,7 @@ class Imports extends Component {
   getCellFormatters = () => ({
     Date: this.getDateFormatter,
     'File Name': this.getFileNameFormatter,
+    Status: this.getStatusFormatter,
     '# Records': this.getRecordsFormatter,
     '# Imported': this.getImportedFormatter,
     '# Errors': this.getErrorFormatter
@@ -105,8 +107,67 @@ class Imports extends Component {
     </div>
   )
 
-  getFileNameFormatter = (cell, row) => {
-    if (row.downloadingSource) {
+  getFileNameFormatter = (cell, row) => this.downloadLinkFormatter(cell, row.downloadingSource, row._id, 'source', row.file_name); //eslint-disable-line
+
+  getImportedFormatter = (cell, row) => this.downloadLinkFormatter(cell, row.downloadingResults, row._id, 'results', row.file_name); //eslint-disable-line
+
+  getErrorFormatter = (cell, row) => this.downloadLinkFormatter(cell, row.downloadingErrors, row._id, 'errors', row.file_name, true); //eslint-disable-line
+
+  getStatusFormatter = (cell) => {
+    if (cell === 1) {
+      return (
+        <div className="text-success">
+          Success
+        </div>
+      );
+    }
+
+    if (cell === -1) {
+      return (
+        <div className="text-danger">
+          Failed
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        Processing...
+      </div>
+    );
+  }
+
+  getRecordsFormatter = (cell, row) => {
+    if (cell === 0) {
+      return (
+        <div>
+          {cell === 0 ? '-' : cell}
+        </div>
+      );
+    }
+
+    return (
+      <a
+        role="button"
+        tabIndex={0}
+        className="imports__download-link"
+        onClick={() => this.props.downloadResults(row.results, row.file_name)}
+      >
+        {cell}
+      </a>
+    );
+  }
+
+  downloadLinkFormatter = (cell, downloading, id, fileType, fileName, isErrors = false) => {
+    if (cell === 0) {
+      return (
+        <div>
+          -
+        </div>
+      );
+    }
+
+    if (downloading) {
       return (
         <div>
           <i className="fa fa-spinner fa-spin mr-2" />
@@ -119,47 +180,9 @@ class Imports extends Component {
       <a
         role="button"
         tabIndex={0}
-        className="imports__download-link"
-        onClick={() => this.props.downloadFile(row._id, 'source', this.userType)} //eslint-disable-line
+        className={`${isErrors ? 'text-danger' : ''} imports__download-link`}
+        onClick={() => this.props.downloadFile(id, fileType, this.userType, fileName)}
       >
-        {cell}
-      </a>
-    );
-  }
-
-  getRecordsFormatter = cell => (
-    <div>
-      {cell === 0 ? '-' : cell}
-    </div>
-  );
-
-  getImportedFormatter = (cell, row) => {
-    if (cell === 0) {
-      return (
-        <div>
-          -
-        </div>
-      );
-    }
-
-    return (
-      <a href={row.file_path_result} target="_blank">
-        {cell}
-      </a>
-    );
-  }
-
-  getErrorFormatter = (cell, row) => {
-    if (cell === 0) {
-      return (
-        <div>
-          -
-        </div>
-      );
-    }
-
-    return (
-      <a href={row.file_path_error} target="_blank">
         {cell}
       </a>
     );
@@ -241,7 +264,8 @@ Imports.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
   gettingImports: PropTypes.bool.isRequired,
-  downloadFile: PropTypes.func.isRequired
+  downloadFile: PropTypes.func.isRequired,
+  downloadResults: PropTypes.func.isRequired
 };
 
 const mapStateToProps = selector;
@@ -253,7 +277,8 @@ const mapDispatchToProps = dispatch => ({
   uploadCsv: (userType, file) => dispatch({ type: UPLOAD_DATA, userType, file }),
   getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
-  downloadFile: (id, fileType, userType) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType })
+  downloadFile: (id, fileType, userType, fileName) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType, fileName }),
+  downloadResults: (results, fileName) => dispatch({ type: DOWNLOAD_RESULTS, results, fileName })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Imports);

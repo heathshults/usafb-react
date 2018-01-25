@@ -22,11 +22,7 @@ const PastSeason = props => (
                   <div className="stats-wrapper past-season__stats-wrapper">
                     <div className="row text-center align-items-center mt-2">
                       <div className="col-3 current-stats past-season__stats">
-                        <div className="stat-title divider-br">{team.positions && team.positions.map(position => (
-                          <div className="positions-list" key={`${team._id}+${position}`}>
-                            <p>{humanize(position)}</p>
-                          </div>
-                        ))}</div>
+                        <div className="stat-title divider-br">{humanize(team.position)}</div>
                       </div>
                       <div className="col-3 current-stats past-season__stats">
                         <div className="stat-title divider-br">{humanize(team.level_type)}</div>

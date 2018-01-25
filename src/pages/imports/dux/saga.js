@@ -1,6 +1,9 @@
 import { fork, all, take, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
+import Papa from 'papaparse';
+import FileSaver from 'file-saver';
 
+import displayErrorToast from 'services/toast/error-toast';
 import * as actions from './actions';
 import getImports, { importFile, downloadFile } from './api';
 import importSelector from './selectors';
@@ -10,6 +13,7 @@ export default function* userInformationFlow() {
     uploadCsvFlow: fork(uploadCsvFlow),
     getImportsFlow: fork(getImportsFlow),
     downloadFilesFlow: fork(downloadFilesFlow),
+    downloadResults: fork(downloadResults)
   });
 }
 
@@ -60,13 +64,17 @@ function* getImportsCall(userType, data) {
 
 function* downloadFilesFlow() {
   while (true) {
-    const { id, fileType, userType } = yield take(actions.DOWNLOAD_FILE);
+    const { id, fileType, userType, fileName } = yield take(actions.DOWNLOAD_FILE);
     // toggle spinner for downloading file
     yield updateImportsDownloadStatus(id, fileType);
     const response = yield call(downloadFile, id, fileType, userType);
+
     if (response.ok) {
       const responseData = yield response.json();
-      yield console.dir(responseData); //eslint-disable-line
+      const uniqueFileName = yield call(setFileName, fileName, fileType);
+
+      yield call(saveBase64File, responseData.data.content, uniqueFileName, true);
+      yield updateImportsDownloadStatus(id, fileType);
     } else {
       // toggle spinner for downloading file
       yield updateImportsDownloadStatus(id, fileType);
@@ -95,4 +103,48 @@ function* updateImportsDownloadStatus(id, fileType) {
   });
 
   yield put({ type: actions.RECEIVED_IMPORTS, imports: updatedImports, total: state.totalImports });
+}
+
+function saveBase64File(content, fileName) {
+  try {
+    const a = window.document.createElement('a');
+    const downloadUrl = `data:text/csv;base64,${content}`;
+    a.setAttribute('href', downloadUrl);
+    a.setAttribute('download', fileName);
+    window.document.body.appendChild(a);
+    a.click(); // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+    window.document.body.removeChild(a);
+  } catch (e) {
+    displayErrorToast('Unable to download file!');
+  }
+}
+
+function* downloadResults() {
+  while (true) {
+    const { results, fileName } = yield take(actions.DOWNLOAD_RESULTS);
+
+    const csv = yield Papa.unparse(results);
+    const csvData = yield new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    yield FileSaver.saveAs(csvData, fileName);
+  }
+}
+
+// We need to distinguish each file download by the type of file it is,
+// so users will not be confused when they save something
+function setFileName(filename, fileType) {
+  const splitFileName = filename.split('.');
+  const updatedFileName = [];
+
+  splitFileName.forEach((value) => {
+    if (value === 'csv') {
+      updatedFileName.push(`-${fileType}.`);
+    } else {
+      updatedFileName.push(value);
+    }
+  });
+
+  // add the csv extension to the filename
+  updatedFileName.push(splitFileName[splitFileName.length - 1]);
+
+  return updatedFileName.join('');
 }

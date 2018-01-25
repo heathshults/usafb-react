@@ -22,7 +22,6 @@ import { GET_PLAYER_PROFILE } from './dux/actions';
 class PlayerProfile extends Component {
   componentWillMount() {
     const id = this.props.location.pathname.slice(9);
-    console.log('id', id); // eslint-disable-line
     this.getPlayerProfile({ id });
   }
 

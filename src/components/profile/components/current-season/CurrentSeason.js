@@ -17,13 +17,7 @@ const CurrentSeason = props => (
         </h4>
         <div className="current-season__stats-wrapper">
           <div className="d-flex justify-content-between">
-            <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">
-              {props.currentTeam.positions && props.currentTeam.positions.map(position => (
-                <div className="positions-list" key={`${props.currentTeam._id}+${position}`}>
-                  <p style={{ wordBreak: 'break-word' }}>{humanize(position)}</p>
-                </div>
-              ))}
-            </div>
+            <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{humanize(props.currentTeam.position)}</div>
             <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{humanize(props.currentTeam.level_type)}</div>
             <div className="stat-title current-season__stats text-center divider-br p-4 mt-2 mb-2">{humanize(props.currentTeam.organization_name)}</div>
             <div className="stat-title current-season__stats text-center p-4 mt-2 mb-2 ">{humanize(props.currentTeam.season)} {props.currentTeam.season_year}</div>
@@ -37,7 +31,7 @@ const CurrentSeason = props => (
 CurrentSeason.propTypes = {
   currentTeam: PropTypes.shape({
     team_name: PropTypes.string,
-    positions: PropTypes.array,
+    position: PropTypes.string,
     level_type: PropTypes.string,
     season_year: PropTypes.number,
     season: PropTypes.string,

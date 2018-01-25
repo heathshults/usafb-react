@@ -187,7 +187,9 @@ class ChangePasswordModal extends Component {
   render() {
     return (
       <Modal isOpen={this.props.open} onClosed={this.clearValues} >
-        <ModalHeader>Change your password</ModalHeader>
+        <ModalHeader toggle={this.props.cancel}>
+          Change your password
+        </ModalHeader>
         <ModalBody>
           {this.props.passwordError !== '' &&
             <Alert color="danger text-white text-center">

@@ -4,15 +4,12 @@ import FontAwesome from 'react-fontawesome';
 import './mobileNavbar.css';
 
 const mobileNavbar = props => (
-  <div className="nav-bar__logo-container column">
+  <div className="nav-bar column">
     <button
-      className="data-table-filter__button"
-      onClick={this.props.toggle}
+      className="navMenuButton"
+      onClick={props.toggleNavbar}
     >
-      <FontAwesome name="search" />
-      <span className="data-table-filter__label">
-        Advanced Search
-      </span>
+      <FontAwesome name="navicon" className="navMenuButton-icon" size="2x" />
     </button>
   </div>
 );

@@ -28,4 +28,7 @@
     color: white;
     text-decoration: none !important;
   }
+  @media (max-width: 683px) {
+    margin-left: auto;
+  }
 }

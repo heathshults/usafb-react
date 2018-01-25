@@ -2,7 +2,14 @@
   height: 0px;
   width: 100%;
   background-color: inherit;
+  transition-duration: 0.5s;
+  display: none;
   &-expanded {
-    height: 80px;
+    height: auto;
+    background-color: #0B2649;
+    display: flex;
+  }
+  @media (min-width: 683px) {
+    display: none;
   }
 }

@@ -1,0 +1,14 @@
+.nav-bar__mobileNavigation {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  margin-bottom: 0;
+  width: 100%;
+  padding-left: 0;
+  &-wrap {
+    flex-wrap: wrap;
+  }
+  @media screen and (min-width: 683px) {
+    display: none !important;
+  }
+}

@@ -21,7 +21,7 @@ class navBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      navbarCollapsed: true
+      showNavbar: false
     };
   }
   goToPlayers = () => this.props.history.push('/players');
@@ -35,7 +35,7 @@ class navBar extends Component {
   };
   toggleNavbar = () => {
     this.setState({
-      navbarCollapsed: !this.state.navbarCollapsed
+      showNavbar: !this.state.showNavbar
     });
   }
 
@@ -47,7 +47,6 @@ class navBar extends Component {
             <span /> :
             <span>
               <Container>
-                <MobileNavbar toggleNavbar={this.toggleNavbar} navbarCollapsed={this.state.navbarCollapsed} />
                 <Logo />
                 <NavigationContainer>
                   <NavLink to="/" label="Home" />
@@ -84,13 +83,14 @@ class navBar extends Component {
                     </NavDropdown>
                   </Auth>
                 </NavigationContainer>
+                <MobileNavbar toggleNavbar={this.toggleNavbar} />
                 <UserDropdown
                   name={`${this.props.name_first} ${this.props.name_last}`}
                   logout={this.logout}
                   role_permissions={this.props.role_permissions}
                 />
+                <MobileNavbarContainer showNavbar={this.state.showNavbar} goToCoaches={this.goToCoaches} goToPlayers={this.goToPlayers} goToPlayersDashboard={this.goToPlayersDashboard} goToCoachesDashboard={this.goToCoachesDashboard} goToImports={this.goToImports} role_permissions={this.props.role_permissions} togglePlayerExportModalOn={this.props.togglePlayerExportModalOn} toggleCoachExportModalOn={this.props.toggleCoachExportModalOn} />
               </Container>
-              <MobileNavbarContainer navbarCollapsed={this.state.navbarCollapsed} />
             </span>
         }
       </span>

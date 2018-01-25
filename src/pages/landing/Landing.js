@@ -49,12 +49,12 @@ class Landing extends Component {
                     axisLine={false}
                   />
                   <YAxis
-                    dataKey="num"
+                    dataKey="count"
                     tickLine={false}
                     axisLine={false}
                   />
                   <Tooltip />
-                  <Bar dataKey="num">
+                  <Bar dataKey="count">
                     {
                       this.props.players.map((entry, index) =>
                         <Cell fill={colors[index]} key={uuidv4()} />
@@ -72,7 +72,7 @@ class Landing extends Component {
                 <Pie
                   data={this.props.coaches}
                   fill="#8884d8"
-                  dataKey="num"
+                  dataKey="count"
                   label={this.renderCustomPieLabel}
                   labelLine={false}
                 >

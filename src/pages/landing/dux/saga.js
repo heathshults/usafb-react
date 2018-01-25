@@ -1,4 +1,6 @@
 import { put, take, call } from 'redux-saga/effects';
+import humanize from 'utils/transform';
+
 import * as actions from './actions';
 import getStats from './api';
 
@@ -12,9 +14,16 @@ export default function* getStatsFlow() {
       const data = {
         num_players: responseData.data.num_players,
         num_coaches: responseData.data.num_players,
-        coaches: responseData.data.coaches.levels,
-        players: responseData.data.players.levels
+        coaches: responseData.data.coaches.levels.map(coach => ({
+          name: humanize(coach.name),
+          count: coach.num
+        })),
+        players: responseData.data.players.levels.map(player => ({
+          name: humanize(player.name),
+          count: player.num
+        }))
       };
+
       yield put({ type: actions.RECEIVED_STATS, data });
     }
   }

@@ -216,7 +216,7 @@ class UserModal extends Component {
         isOpen={this.props.open}
         size="lg"
       >
-        <ModalHeader>
+        <ModalHeader toggle={this.dismissModal}>
           <i className="fa fa-user" aria-hidden="true" /> {this.props.header}
         </ModalHeader>
         <ModalBody>

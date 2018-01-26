@@ -105,14 +105,6 @@ class Players extends Component {
     this.props.searchPlayers(data);
   }
 
-  previousPage = (page) => {
-    if (this.state.currentPage !== 1) {
-      this.setState({
-        currentPage: page
-      });
-    }
-  }
-
   render() {
     return (
       <Container>

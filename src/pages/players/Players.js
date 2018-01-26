@@ -34,6 +34,10 @@ class Players extends Component {
     this.columns.clearColumns();
   }
 
+  onSortChange = (sortName, sortOrder) => {
+    console.log(sortName, sortOrder); //eslint-disable-line
+  }
+
   getSearchButton = () => (
     <SearchButton toggle={this.displaySearchModal} searching={false} />
   )
@@ -122,6 +126,7 @@ class Players extends Component {
           formatters={this.getCellFormatters()}
           display={!this.state.searchModalOpen} // hide the table when the modal is open
           loading={this.props.searchingPlayers}
+          onSortChange={this.onSortChange}
         />
         <Pagination
           totalItems={this.props.totalPlayers}

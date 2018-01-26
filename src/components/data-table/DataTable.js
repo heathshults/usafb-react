@@ -30,7 +30,10 @@ const dataTable = props => (
       scrollTop={'Bottom'}
       trClassName={tableRowStyle}
       data={props.data}
-      options={{ noDataText: getNoDataText(props.loading) }}
+      options={{
+        noDataText: getNoDataText(props.loading),
+        onSortChange: props.onSortChange
+      }}
     >
       {props.columns.map(column =>
         (
@@ -57,14 +60,16 @@ dataTable.propTypes = {
   data: PropTypes.array,
   columns: PropTypes.array.isRequired,
   formatters: PropTypes.object,
-  display: PropTypes.bool
+  display: PropTypes.bool,
+  onSortChange: PropTypes.func
 };
 
 dataTable.defaultProps = {
   data: [],
   loading: true,
   formatters: {},
-  display: true
+  display: true,
+  onSortChange: () => { }
 };
 
 export default dataTable;

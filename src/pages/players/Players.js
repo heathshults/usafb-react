@@ -21,8 +21,8 @@ class Players extends Component {
 
     this.state = {
       searchModalOpen: true,
-      rowsPerPage: 10, // used to calculate dummy id. delete later,
-      currentPage: 1 // used to calculate dummy id. delete later,
+      rowsPerPage: 10,
+      currentPage: 1
     };
   }
 
@@ -96,11 +96,20 @@ class Players extends Component {
   }
 
   paginationOnChange = (currentPage, perPage) => {
+    this.props.updateRowsPerPage(perPage);
     const data = this.props.searchValues;
     data.page = currentPage;
     data.per_page = perPage;
 
     this.props.searchPlayers(data);
+  }
+
+  previousPage = (page) => {
+    if (this.state.currentPage !== 1) {
+      this.setState({
+        currentPage: page
+      });
+    }
   }
 
   render() {
@@ -129,9 +138,10 @@ class Players extends Component {
           onSortChange={this.onSortChange}
         />
         <Pagination
+          currentPage={this.state.currentPage}
+          previousPage={this.previousPage}
           totalItems={this.props.totalPlayers}
           rowsPerPage={this.props.rowsPerPage}
-          updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
           display={!this.state.searchModalOpen && this.props.totalPlayers !== 0} // hide pagination when the modal is open or if there are no players
         />

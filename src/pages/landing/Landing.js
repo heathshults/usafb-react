@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
@@ -34,9 +34,9 @@ class Landing extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Container>
         <HeaderContentDivider />
-        <Container className="landing__container">
+        <div className="landing__container">
           <Content>
             <Header count={this.props.num_players} header="players" />
             <div className="landing__bar-chart-container">
@@ -49,12 +49,12 @@ class Landing extends Component {
                     axisLine={false}
                   />
                   <YAxis
-                    dataKey="num"
+                    dataKey="count"
                     tickLine={false}
                     axisLine={false}
                   />
                   <Tooltip />
-                  <Bar dataKey="num">
+                  <Bar dataKey="count">
                     {
                       this.props.players.map((entry, index) =>
                         <Cell fill={colors[index]} key={uuidv4()} />
@@ -72,7 +72,7 @@ class Landing extends Component {
                 <Pie
                   data={this.props.coaches}
                   fill="#8884d8"
-                  dataKey="num"
+                  dataKey="count"
                   label={this.renderCustomPieLabel}
                   labelLine={false}
                 >
@@ -86,8 +86,8 @@ class Landing extends Component {
               </PieChart>
             </ResponsiveContainer>
           </Content>
-        </Container>
-      </Fragment>
+        </div>
+      </Container>
     );
   }
 }

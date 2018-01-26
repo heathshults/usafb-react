@@ -5,6 +5,7 @@ import './blue-container.css';
 
 const blueContainer = props => (
   <section className={`usafb__blue-container ${props.className}`}>
+    <div className="usafb__blue-container-top-margin" />
     {React.Children.map(props.children, child => child)}
   </section>
 );

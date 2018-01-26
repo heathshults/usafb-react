@@ -1,5 +1,9 @@
 .usafb__blue-container {
   height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 10;
   background: rgba(9, 48, 90, 0.93) url('../../../images/bg/usa-fb-bg.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -7,7 +11,23 @@
   background-blend-mode: multiply;
   object-fit: contain;
   overflow-y: auto;
-  @media (max-width: 1199px) {
-    background-size: unset;
+}
+
+.usafb__blue-container-top-margin {
+  margin-top: 100px;
+  @media screen and (max-width: 1205px) {
+    margin-top: 145px;
+  }
+  @media screen and (max-width: 900px) {
+    margin-top: 189px;
+  }
+  @media screen and (max-width: 682px) {
+    margin-top: 225px;
+  }
+  @media screen and (max-width: 433px) {
+    margin-top: 261px;
+  }
+  @media screen and (max-width: 385px) {
+    margin-top: 286px;
   }
 }

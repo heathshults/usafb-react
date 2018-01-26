@@ -124,7 +124,7 @@ class PaginationComponent extends Component {
    * Calculate & Update state of new dimensions
    */
   updateDimensions = () => {
-    if (window.innerWidth < 500) {
+    if (window.innerWidth < 890) {
       this.setState({
         mobilePaginationMode: true
       });
@@ -199,7 +199,7 @@ class PaginationComponent extends Component {
 
   render() {
     return (
-      <div className={`${this.props.display ? '' : 'usafb-pagination__hide '} usafb-pagination__container d-flex justify-content-between mb-3`} >
+      <div className={`${this.props.display ? '' : 'usafb-pagination__hide '} usafb-pagination__container`} >
         <Label
           startingIndex={this.calculateStartingIndex()}
           endingIndex={this.calculateEndingIndex()}
@@ -210,7 +210,7 @@ class PaginationComponent extends Component {
           toggleDropdown={this.toggleDropdown}
           updateRowsPerPage={this.updateRowsPerPage}
         />
-        <Pagination className="mb-0 pr-3 justify-content-end usafb-pagination__content">
+        <Pagination className="mb-0 justify-content-end usafb-pagination__content">
           <PaginationItem className="usafb-pagination__link" onClick={this.previousPage}>
             <PaginationLink previous />
           </PaginationItem>

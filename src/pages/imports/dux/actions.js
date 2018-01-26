@@ -11,6 +11,7 @@ export const CSV_REJECTED = 'imports csv rejected';
 export const CSV_ACCEPTING = 'imports csv accepting';
 
 export const UPDATE_ROWS_PER_PAGE = 'imports update rows per page';
+export const UPDATE_CURRENT_PAGE = 'imports update current page';
 
 export const DOWNLOAD_FILE = 'imports download file';
 export const DOWNLOAD_RESULTS = 'imports download results';

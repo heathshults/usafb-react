@@ -23,7 +23,8 @@ import {
   GET_IMPORTS,
   UPDATE_ROWS_PER_PAGE,
   DOWNLOAD_FILE,
-  DOWNLOAD_RESULTS
+  DOWNLOAD_RESULTS,
+  UPDATE_CURRENT_PAGE
 } from './dux/actions';
 
 import './imports.css';
@@ -209,6 +210,9 @@ class Imports extends Component {
   }
 
   paginationOnChange = (currentPage, perPage) => {
+    this.props.updateCurrentPage(currentPage);
+    this.props.updateRowsPerPage(perPage);
+
     const data = {
       page: currentPage,
       per_page: perPage
@@ -239,9 +243,9 @@ class Imports extends Component {
           loading={this.props.gettingImports}
         />
         <Pagination
-          totalItems={this.props.totalImports}
+          currentPage={this.props.currentPage}
           rowsPerPage={this.props.rowsPerPage}
-          updateRowsPerPage={this.props.updateRowsPerPage}
+          totalItems={this.props.totalImports}
           onChange={this.paginationOnChange}
         />
       </Container>
@@ -261,11 +265,13 @@ Imports.propTypes = {
   getImports: PropTypes.func.isRequired,
   imports: PropTypes.array.isRequired,
   totalImports: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
   gettingImports: PropTypes.bool.isRequired,
   downloadFile: PropTypes.func.isRequired,
-  downloadResults: PropTypes.func.isRequired
+  downloadResults: PropTypes.func.isRequired,
+  updateCurrentPage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = selector;
@@ -277,6 +283,7 @@ const mapDispatchToProps = dispatch => ({
   uploadCsv: (userType, file) => dispatch({ type: UPLOAD_DATA, userType, file }),
   getImports: (userType, data) => dispatch({ type: GET_IMPORTS, userType, data }),
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
+  updateCurrentPage: currentPage => dispatch({ type: UPDATE_CURRENT_PAGE, currentPage }),
   downloadFile: (id, fileType, userType, fileName) => dispatch({ type: DOWNLOAD_FILE, id, fileType, userType, fileName }),
   downloadResults: (results, fileName) => dispatch({ type: DOWNLOAD_RESULTS, results, fileName })
 });

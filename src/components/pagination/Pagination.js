@@ -6,9 +6,6 @@ import uuidv4 from 'uuid/v4';
 import Label from './components/label/Label';
 import './pagination.css';
 
-// TODO make sure currentPage and set currentPage are passed
-// in through props. This will make code cleaner and logic simpler
-// when making API calls
 class PaginationComponent extends Component {
   constructor() {
     super();
@@ -182,9 +179,9 @@ class PaginationComponent extends Component {
   nextPage = () => {
     const totalPages = this.calculateTotalPages();
 
-    if (this.props.currentPage !== totalPages) {
+    if (this.state.currentPage !== totalPages) {
       this.setState({
-        currentPage: this.props.currentPage + 1
+        currentPage: this.state.currentPage + 1
       }, this.callback);
     }
   }

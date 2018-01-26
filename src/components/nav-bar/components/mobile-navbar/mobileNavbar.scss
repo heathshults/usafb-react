@@ -1,0 +1,18 @@
+.navMenuButton {
+  display: none;
+  background-color: transparent;
+  border: none;
+  &-icon {
+    color: white;
+    transition-duration: 0.3s;
+    &:hover {
+      color: #9C0E17;
+    }
+  }
+  &:focus {
+    outline: 0;
+  }
+  @media (max-width: 683px) {
+    display: flex !important;
+  }
+}

@@ -5,8 +5,19 @@
   align-items: center !important;
   box-shadow: none !important;
   color: #8AB8E4 !important;
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
 }
 
 .nav-bar__dropdown-menu {
   width: auto !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    color: transparent;
+  }
+  100% {
+    color: #8AB8E4 !important;
+  }
 }

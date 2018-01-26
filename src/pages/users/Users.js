@@ -22,6 +22,7 @@ import {
   GET_USERS,
   CREATE_USER,
   UPDATE_ROWS_PER_PAGE,
+  UPDATE_CURRENT_PAGE,
   EDIT_USER,
   ACTIVATE_USER,
   DEACTIVATE_USER,
@@ -55,6 +56,9 @@ class Users extends Component {
   }
 
   getUsers = (currentPage, perPage) => {
+    this.props.updateRowsPerPage(perPage);
+    this.props.updateCurrentPage(currentPage);
+
     this.props.getUsers(currentPage, perPage);
   }
 
@@ -205,10 +209,10 @@ class Users extends Component {
           loading={this.props.gettingUsers}
         />
         <Pagination
+          currentPage={this.props.currentPage}
+          rowsPerPage={this.props.rowsPerPage}
           totalItems={this.props.totalUsers}
           onChange={this.getUsers}
-          rowsPerPage={this.props.rowsPerPage}
-          updateRowsPerPage={this.props.updateRowsPerPage}
         />
       </Container>
     );
@@ -221,8 +225,10 @@ Users.propTypes = {
   users: PropTypes.array.isRequired,
   createUser: PropTypes.func.isRequired,
   creatingUser: PropTypes.bool.isRequired,
+  currentPage: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
+  updateCurrentPage: PropTypes.func.isRequired,
   editUser: PropTypes.func.isRequired,
   roles: PropTypes.array.isRequired,
   activateUser: PropTypes.func.isRequired,
@@ -239,6 +245,7 @@ const mapDispatchToProps = dispatch => ({
   createUser: data => dispatch({ type: CREATE_USER, data }),
   dismissHeaderMessage: () => dispatch({ type: DISMISS_HEADER_MESSAGE }),
   updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
+  updateCurrentPage: currentPage => dispatch({ type: UPDATE_CURRENT_PAGE, currentPage }),
   editUser: data => dispatch({ type: EDIT_USER, data }),
   activateUser: user => dispatch({ type: ACTIVATE_USER, user }),
   deactivateUser: user => dispatch({ type: DEACTIVATE_USER, user }),

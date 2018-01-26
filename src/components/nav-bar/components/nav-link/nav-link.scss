@@ -12,8 +12,23 @@
   font-weight: 500;
   letter-spacing: .9px;
   text-align: left;
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
   &:hover {
     color: #fff !important;
     text-decoration: none !important;
+  }
+}
+
+.noPadding {
+  padding: 8px 12px;
+}
+
+@keyframes fadeIn {
+  0% {
+    color: transparent;
+  }
+  100% {
+    color: #8AB8E4 !important;
   }
 }

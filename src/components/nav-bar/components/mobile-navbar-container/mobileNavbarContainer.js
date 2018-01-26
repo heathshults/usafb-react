@@ -11,7 +11,7 @@ import './mobileNavbarContainer.css';
 
 const mobileNavbarContainer = props => (
   <div className={`nav-bar column mobileNavbarContainer ${props.showNavbar && 'mobileNavbarContainer-expanded'}`}>
-    <MobileNavigationContainer>
+    <MobileNavigationContainer mobileSize>
       <NavLink to="/" label="Home" hideSlash />
       <Auth role_permissions={props.role_permissions} permissionRequested={[EXPORT_PLAYERS, VIEW_PLAYERS, IMPORT_PLAYERS]}>
         <NavDropdown label="players" hideSlash>

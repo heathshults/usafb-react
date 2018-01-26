@@ -11,4 +11,9 @@
   @media screen and (min-width: 683px) {
     display: none !important;
   }
+  @media screen and (max-width: 683px) {
+    &-mobileSize {
+      justify-content: space-between !important;
+    }
+  }
 }

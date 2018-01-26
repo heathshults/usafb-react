@@ -43,11 +43,11 @@ class NavDropdown extends Component {
 NavDropdown.propTypes = {
   label: PropTypes.string.isRequired,
   children: PropTypes.array.isRequired,
-  hideSlash: PropTypes.bool
+  hideSlash: PropTypes.bool,
 };
 
 NavDropdown.defaultProps = {
-  hideSlash: false
+  hideSlash: false,
 };
 
 export default NavDropdown;

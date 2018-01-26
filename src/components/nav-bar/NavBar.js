@@ -15,7 +15,7 @@ import NavDropdownItem from './components/nav-dropdown-item/NavDropdownItem';
 import NavLink from './components/nav-link/NavLink';
 import UserDropdown from './components/user-dropdown/UserDropdown';
 import MobileNavbar from './components/mobile-navbar/MobileNavbar';
-import MobileNavbarContainer from './components/mobile-navbar-container/MobileNavbarContainer';
+import MobileNavbarContainer from './components/mobile-navbar-container/mobileNavbarContainer';
 
 class navBar extends Component {
   constructor(props) {

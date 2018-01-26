@@ -8,8 +8,37 @@
     height: auto;
     background-color: #0B2649;
     display: flex;
+    animation-duration: 0.3s;
+    animation-name: tabletSlideIn;
+    @media (max-width: 543px) {
+      animation-name: mobileSlideIn;
+    }
   }
   @media (min-width: 683px) {
     display: none;
+  }
+}
+
+@keyframes mobileSlideIn {
+  0% {
+    height: 0px;
+  }
+  99% {
+    height: 85px;
+  }
+  100% {
+    height: auto;
+  }
+}
+
+@keyframes tabletSlideIn {
+  0% {
+    height: 0px;
+  }
+  99% {
+    height: 50px;
+  }
+  100% {
+    height: auto;
   }
 }

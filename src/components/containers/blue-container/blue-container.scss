@@ -15,19 +15,16 @@
 
 .usafb__blue-container-top-margin {
   margin-top: 100px;
-  @media screen and (max-width: 1205px) {
-    margin-top: 145px;
+
+  @media screen and (max-width: 898px) {
+    margin-top: 144px;
   }
-  @media screen and (max-width: 900px) {
-    margin-top: 189px;
+
+  @media screen and (max-width: 683px) {
+    margin-top: 100px;
   }
-  @media screen and (max-width: 682px) {
-    margin-top: 225px;
-  }
-  @media screen and (max-width: 433px) {
-    margin-top: 261px;
-  }
-  @media screen and (max-width: 385px) {
-    margin-top: 286px;
+
+  @media screen and (max-width: 353px) {
+    margin-top: 135px;
   }
 }

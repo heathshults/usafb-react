@@ -164,6 +164,7 @@ class PaginationComponent extends Component {
   updateRowsPerPage = (event) => {
     event.persist();
     this.setState({
+      currentPage: 1,
       rowsPerPage: +event.target.value
     }, this.callback);
   }

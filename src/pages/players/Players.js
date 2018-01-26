@@ -35,7 +35,14 @@ class Players extends Component {
   }
 
   onSortChange = (sortName, sortOrder) => {
-    console.log(sortName, sortOrder); //eslint-disable-line
+    const data = this.props.searchValues;
+    data.sort = sortOrder === 'desc' ? `-${sortName}` : `+${sortName}`;
+
+    data.page = 1;
+    data.per_page = this.state.rowsPerPage;
+
+    this.props.updateCurrentPage(1);
+    this.props.searchPlayers(data);
   }
 
   getSearchButton = () => (

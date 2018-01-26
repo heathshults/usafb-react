@@ -14,7 +14,10 @@ class PaginationComponent extends Component {
     super();
     this.state = {
       dropdownOpen: false,
+      // we need to track currentPage and rowsPerPage so we can successfully
+      // make callbacks to the parent component
       currentPage: 1,
+      rowsPerPage: 10,
       mobilePaginationMode: false
     };
   }
@@ -163,23 +166,15 @@ class PaginationComponent extends Component {
 
   updateRowsPerPage = (event) => {
     event.persist();
-    this.callback(+event.target.value);
-    // this.setState({
-    //   currentPage: 1
-    // }, () => this.updateRowsPerPageCallback(+event.target.value));
+    this.setState({
+      rowsPerPage: +event.target.value
+    }, this.callback);
   }
 
-  // updateRowsPerPageCallback = (value) => {
-  //   this.props.updateRowsPerPage(value);
-  //   setTimeout(() => {
-  //     this.callback();
-  //   });
-  // }
-
   previousPage = () => {
-    if (this.props.currentPage !== 1) {
+    if (this.state.currentPage !== 1) {
       this.setState({
-        currentPage: this.props.currentPage - 1
+        currentPage: this.state.currentPage - 1
       }, this.callback);
     }
   }
@@ -194,8 +189,8 @@ class PaginationComponent extends Component {
     }
   }
 
-  callback = (rowsPerPage) => {
-    this.props.onChange(this.props.currentPage, rowsPerPage);
+  callback = () => {
+    this.props.onChange(this.state.currentPage, this.state.rowsPerPage);
   }
 
   render() {
@@ -212,7 +207,7 @@ class PaginationComponent extends Component {
           updateRowsPerPage={this.updateRowsPerPage}
         />
         <Pagination className="mb-0 justify-content-end usafb-pagination__content">
-          <PaginationItem className="usafb-pagination__link" onClick={this.props.previousPage}>
+          <PaginationItem className="usafb-pagination__link" onClick={this.previousPage}>
             <PaginationLink previous />
           </PaginationItem>
           {this.getPaginationLinks()}
@@ -230,7 +225,6 @@ PaginationComponent.propTypes = {
   totalItems: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  previousPage: PropTypes.func.isRequired,
   display: PropTypes.bool
 };
 

@@ -97,6 +97,7 @@ class Players extends Component {
 
   paginationOnChange = (currentPage, perPage) => {
     this.props.updateRowsPerPage(perPage);
+    this.props.updateCurrentPage(currentPage);
     const data = this.props.searchValues;
     data.page = currentPage;
     data.per_page = perPage;
@@ -138,8 +139,7 @@ class Players extends Component {
           onSortChange={this.onSortChange}
         />
         <Pagination
-          currentPage={this.state.currentPage}
-          previousPage={this.previousPage}
+          currentPage={this.props.currentPage}
           totalItems={this.props.totalPlayers}
           rowsPerPage={this.props.rowsPerPage}
           onChange={this.paginationOnChange}
@@ -157,13 +157,16 @@ Players.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
   searchPlayers: PropTypes.func.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
+  updateCurrentPage: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
   searchingPlayers: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ playerSearchReducer }) => playerSearchReducer;
 const mapDispatchToProps = dispatch => ({
   searchPlayers: data => dispatch({ type: SEARCH_PLAYERS, data }),
-  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
+  updateCurrentPage: currentPage => dispatch({ type: UPDATE_CURRENT_PAGE, currentPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);

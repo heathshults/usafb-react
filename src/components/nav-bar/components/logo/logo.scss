@@ -19,9 +19,17 @@
   padding-left: 10px;
   border-left: solid;
   margin-left: 10px;
-
   h4 {
     margin: 0;
     font-size: 16px !important;
+  }
+}
+
+@media screen and (max-width: 1220px) {
+  .nav-bar__header {
+    display: none;
+  }
+  .nav-bar__logo-container {
+    display: none;
   }
 }

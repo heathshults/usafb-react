@@ -64,7 +64,11 @@ PlayerProfile.defaultProps = {
 
 const mapStateToProps = ({ playerProfileReducer }) => {
   const currentTeam = _.find(playerProfileReducer.playerData.registrations, team => team.current === true);
-  return { playerData: playerProfileReducer.playerData, currentTeam };
+  const playerData = playerProfileReducer.playerData;
+  if (playerData.guardians && !Array.isArray(playerData.guardians)) {
+    playerData.guardians = [playerData.guardians];
+  }
+  return { playerData, currentTeam };
 };
 const mapDispatchToProps = dispatch => ({
   getPlayerProfile: player => dispatch({ type: GET_PLAYER_PROFILE, data: { player } })

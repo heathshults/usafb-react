@@ -8,11 +8,7 @@
   &-wrap {
     flex-wrap: wrap;
   }
-}
-
-@media screen and (max-width: 683px) {
-  display: none !important;
-  .nav-bar__mobileNavigation {
+  @media screen and (max-width: 683px) {
     &-mobileSize {
       justify-content: space-between !important;
     }

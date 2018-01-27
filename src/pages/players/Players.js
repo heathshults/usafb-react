@@ -57,7 +57,7 @@ class Players extends Component {
   });
 
   getPaddedDummyID = (id) => {
-    let dummyID = this.state.currentPage === 1 ? 1 : this.state.rowsPerPage * (this.state.currentPage - 1) + 1;
+    let dummyID = this.props.currentPage === 1 ? 1 : this.props.rowsPerPage * (this.props.currentPage - 1) + 1;
 
     for (let i = 0; i < this.props.players.length; i++) { //eslint-disable-line
       if (this.props.players[i].id === id) {

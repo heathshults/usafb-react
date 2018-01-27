@@ -15,7 +15,7 @@ const input = props => (
         <FontAwesome name={props.icon} className="fa-layer" />
         <input
           type={props.inputType}
-          className="form-control form-control-theme"
+          className="form-control form-control-theme txtEmail"
           id={props.inputId}
           placeholder={props.placeholder}
           value={props.value}

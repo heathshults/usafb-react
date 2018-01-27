@@ -1,11 +1,14 @@
 import React from 'react';
 
-// import image from 'images/bg/bg-sign-in-player-bg-01.png';
+// import image from './images/FB-Hero.png';
+// import imageShadow from './images/FB-Hero-shadow.png';
 import './player-image.css';
 
 const playerImage = () => (
-  <div className="col-md-8 player-container">
-    <div className="players  align-self-center" />
+  <div className="col-md-8">
+    <div className="login__player-container">
+      <div className=""><img src={require('images/bg/players/FB-Hero.svg')} alt="USA Football" className="login__player align-self-center" /></div>
+    </div>
   </div>
 );
 

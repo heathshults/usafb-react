@@ -8892,7 +8892,7 @@ button:hover {
 }
 
 .full-screen-bg-landing-page {
-  background-image: url("images/bg/usa-fb-bg.jpg");
+  background-image: url("/styles/css/images/bg/usa-fb-bg.jpg");
   background-color: rgba(9, 48, 90, 0.93);
   background-size: cover;
   background-repeat: no-repeat;
@@ -9106,7 +9106,7 @@ option {
 
 .custom-select:disabled {
   background: none;
-  background-image: url("images/clear.png") !important;
+  background-image: url("/styles/css/images/clear.png") !important;
   background-color: transparent;
   color: #fff;
   border: 1px solid transparent;
@@ -9175,10 +9175,6 @@ option {
   background-image: linear-gradient(to bottom, #09254a, #2e69a3);
   height: 236px;
 }
-
-/* .text-field-email {
-  background: url("img/icons/email.png");
-} */
 
 .col-form-label {
   color: #ccc;
@@ -9434,7 +9430,7 @@ thead.cpl th .th-inner {
 
 .mc-container {
   position: relative;
-  background-image: url(images/bg/usa-fb-bg.jpg);
+  background-image: url('/styles/css/bg/images/bg/usa-fb-bg.jpg');
   background-color: rgba(9, 48, 90, 0.93);
   background-blend-mode: multiply;
   object-fit: contain;

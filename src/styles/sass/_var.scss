@@ -201,7 +201,8 @@ $darkblue-button-gradient:          linear-gradient(to bottom, $blue, $blue-200)
 $skew-divider-gradient:             linear-gradient(180deg, $blue-350, $blue--01) !default;
 $darkred-gradient-reverse:          linear-gradient(to bottom, $red-000, $red) !default;
 $green-gradient-reverse:            linear-gradient(to bottom, $green-00, $green) !default;
-$blue-gradient-pill:                linear-gradient(to bottom, #45517e, $blue) !default;
+$blue-gradient-pill:                linear-gradient(to bottom, $blue-475, $blue) !default;
+$blue-gradient-pill-hover:          linear-gradient(to bottom, $blue-200, $blue) !default;
 
 
 // Spacing
@@ -622,7 +623,7 @@ $custom-select-bg-size:             8px 10px !default; // In pixels because imag
 $custom-select-indicator-color:     $gray-20 !default;
 $custom-select-indicator:           str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='#{$custom-select-indicator-color}' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E"), "#", "%23") !default;
 $custom-select-indicator-color-2:   transparent !default;
-$custom-select-indicator-2:         url("images/clear.png") !default;
+$custom-select-indicator-2:         url("/styles/css/mages/clear.png") !default;
 $custom-select-border-width:        $input-btn-border-width !default;
 $custom-select-border-color:        $input-border-color !default;
 $custom-select-border-radius:       $border-radius !default;

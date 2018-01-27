@@ -1,11 +1,16 @@
-.login__player-container {
-  position: relative;
-  height: 100%;
-}
+@import "src/styles/sass/_functicions.scss";
+@import "src/styles/sass/_var.scss";
 
-.login__player {
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: bottom;
-  background-size: 35%;
+.login__player-container {
+  flex: 1 auto;
+  height: 100%;
+  max-width: 100%;
+  align-items: flex-start;
+  
+  .login__player {
+    flex: 1 auto;
+    align-self: flex-end;
+    max-height: 97vh;
+    filter: drop-shadow(-16px 15px 14px rgba(0, 0, 0, 0.5));
+  }
 }

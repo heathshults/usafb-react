@@ -4,12 +4,12 @@ import './login-button.css';
 
 const loginButton = () => (
   <div className="row pt-0 pb-0">
-    <div className="col-md-12 pt-0 pb- text-center">
+    <div className="col-md-12 pt-1 pb- text-center bss">
       <button
         type="submit"
-        className="btn btn-primary login__btn w-75 mr-auto ml-auto"
+        className="btn btn-blue-grad-pill w-50 mt-2 mx-auto login__btn"
       >
-        Login
+        Sign In
       </button>
     </div>
   </div>

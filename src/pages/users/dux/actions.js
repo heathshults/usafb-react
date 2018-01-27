@@ -18,3 +18,4 @@ export const USER_STATUS_UPDATED = 'user-management user status updated';
 export const TOGGLE_USER_MODAL = 'user-management toggle user modal';
 
 export const UPDATE_ROWS_PER_PAGE = 'user-management update rows per page';
+export const UPDATE_CURRENT_PAGE = 'user-managemetn update current page';

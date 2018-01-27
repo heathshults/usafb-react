@@ -13,7 +13,7 @@ import SearchButton from 'components/search-button/SearchButton';
 import SearchModal from 'components/search-modal/SearchModal';
 
 import Columns from './models/columns';
-import { SEARCH_PLAYERS, UPDATE_ROWS_PER_PAGE } from './dux/actions';
+import { SEARCH_PLAYERS, UPDATE_ROWS_PER_PAGE, UPDATE_CURRENT_PAGE } from './dux/actions';
 
 class Players extends Component {
   constructor() {
@@ -21,8 +21,8 @@ class Players extends Component {
 
     this.state = {
       searchModalOpen: true,
-      rowsPerPage: 10, // used to calculate dummy id. delete later,
-      currentPage: 1 // used to calculate dummy id. delete later,
+      rowsPerPage: 10,
+      currentPage: 1
     };
   }
 
@@ -32,6 +32,17 @@ class Players extends Component {
 
   componentWillUnmount() {
     this.columns.clearColumns();
+  }
+
+  onSortChange = (sortName, sortOrder) => {
+    const data = this.props.searchValues;
+    data.sort = sortOrder === 'desc' ? `-${sortName}` : `+${sortName}`;
+
+    data.page = 1;
+    data.per_page = this.state.rowsPerPage;
+
+    this.props.updateCurrentPage(1);
+    this.props.searchPlayers(data);
   }
 
   getSearchButton = () => (
@@ -46,7 +57,7 @@ class Players extends Component {
   });
 
   getPaddedDummyID = (id) => {
-    let dummyID = this.state.currentPage === 1 ? 1 : this.state.rowsPerPage * (this.state.currentPage - 1) + 1;
+    let dummyID = this.props.currentPage === 1 ? 1 : this.props.rowsPerPage * (this.props.currentPage - 1) + 1;
 
     for (let i = 0; i < this.props.players.length; i++) { //eslint-disable-line
       if (this.props.players[i].id === id) {
@@ -92,6 +103,8 @@ class Players extends Component {
   }
 
   paginationOnChange = (currentPage, perPage) => {
+    this.props.updateRowsPerPage(perPage);
+    this.props.updateCurrentPage(currentPage);
     const data = this.props.searchValues;
     data.page = currentPage;
     data.per_page = perPage;
@@ -122,11 +135,12 @@ class Players extends Component {
           formatters={this.getCellFormatters()}
           display={!this.state.searchModalOpen} // hide the table when the modal is open
           loading={this.props.searchingPlayers}
+          onSortChange={this.onSortChange}
         />
         <Pagination
+          currentPage={this.props.currentPage}
           totalItems={this.props.totalPlayers}
           rowsPerPage={this.props.rowsPerPage}
-          updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
           display={!this.state.searchModalOpen && this.props.totalPlayers !== 0} // hide pagination when the modal is open or if there are no players
         />
@@ -142,13 +156,16 @@ Players.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
   searchPlayers: PropTypes.func.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired,
+  updateCurrentPage: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
   searchingPlayers: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ playerSearchReducer }) => playerSearchReducer;
 const mapDispatchToProps = dispatch => ({
   searchPlayers: data => dispatch({ type: SEARCH_PLAYERS, data }),
-  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
+  updateCurrentPage: currentPage => dispatch({ type: UPDATE_CURRENT_PAGE, currentPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Players);

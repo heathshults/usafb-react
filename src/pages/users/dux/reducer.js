@@ -10,6 +10,7 @@ const initialState = {
   editingUser: false,
   userCreated: false,
   rowsPerPage: 10,
+  currentPage: 1,
   userModalOpen: false
 };
 
@@ -33,6 +34,8 @@ export default (state = initialState, action) => {
       return { ...state, editingUser: false };
     case actions.UPDATE_ROWS_PER_PAGE:
       return { ...state, rowsPerPage: action.rowsPerPage };
+    case actions.UPDATE_CURRENT_PAGE:
+      return { ...state, currentPage: action.currentPage };
     case actions.SET_ROLES:
       return { ...state, roles: action.roles };
     case actions.TOGGLE_USER_MODAL:

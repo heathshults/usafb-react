@@ -6,15 +6,15 @@ import uuidv4 from 'uuid/v4';
 import Label from './components/label/Label';
 import './pagination.css';
 
-// TODO make sure currentPage and set currentPage are passed
-// in through props. This will make code cleaner and logic simpler
-// when making API calls
 class PaginationComponent extends Component {
   constructor() {
     super();
     this.state = {
       dropdownOpen: false,
+      // we need to track currentPage and rowsPerPage so we can successfully
+      // make callbacks to the parent component
       currentPage: 1,
+      rowsPerPage: 10,
       mobilePaginationMode: false
     };
   }
@@ -36,7 +36,7 @@ class PaginationComponent extends Component {
 
   getPaginationLinks = () => {
     if (this.state.mobilePaginationMode) {
-      return this.getStandardPaginationLink(this.state.currentPage);
+      return this.getStandardPaginationLink(this.props.currentPage);
     }
     return (
       [...Array(this.calculateTotalPaginationLinks())].map((val, index) => {
@@ -50,15 +50,15 @@ class PaginationComponent extends Component {
     const totalPages = this.calculateTotalPages();
     // isRelevancyState will determine if the current page is between the [...] buttons
     // http://patternry.com/p=search-pagination/
-    const isRelevancyState = this.state.currentPage >= 5 && this.state.currentPage < totalPages - 3;
-    const onLastThreePages = this.state.currentPage >= totalPages - 3;
+    const isRelevancyState = this.props.currentPage >= 5 && this.props.currentPage < totalPages - 3;
+    const onLastThreePages = this.props.currentPage >= totalPages - 3;
     const isSevenPagesOrLess = totalPages <= 7;
 
     switch (index) {
       case 0: // first page
         return 1;
       case 1:
-        if (isRelevancyState || (this.state.currentPage >= 5 && totalPages > 7)) {
+        if (isRelevancyState || (this.props.currentPage >= 5 && totalPages > 7)) {
           return '...';
         }
         return index + 1;
@@ -67,12 +67,12 @@ class PaginationComponent extends Component {
           return totalPages - 4;
         }
         if (isRelevancyState) {
-          return this.state.currentPage - 1;
+          return this.props.currentPage - 1;
         }
         return index + 1;
       case 3:
         if (isRelevancyState) {
-          return this.state.currentPage;
+          return this.props.currentPage;
         }
         if (onLastThreePages && !isSevenPagesOrLess) {
           return totalPages - 3;
@@ -83,11 +83,11 @@ class PaginationComponent extends Component {
           return totalPages - 2;
         }
         if (isRelevancyState) {
-          return this.state.currentPage + 1;
+          return this.props.currentPage + 1;
         }
         return index + 1;
       case 5:
-        if (isRelevancyState || (this.state.currentPage < 5 && totalPages > 7)) {
+        if (isRelevancyState || (this.props.currentPage < 5 && totalPages > 7)) {
           return '...';
         }
         if (onLastThreePages && !isSevenPagesOrLess) {
@@ -102,7 +102,7 @@ class PaginationComponent extends Component {
   getStandardPaginationLink = value => (
     <PaginationItem
       key={uuidv4()}
-      active={this.state.currentPage === value}
+      active={this.props.currentPage === value}
       className={`${value !== '...' ? 'usafb-pagination__link' : 'usafb-pagination__more-pages'}`}
       onClick={() => this.setPage(value)}
     >
@@ -113,7 +113,7 @@ class PaginationComponent extends Component {
   );
 
   setPage = (value) => {
-    if (value !== '...' && value !== this.state.currentPage) {
+    if (value !== '...' && value !== this.props.currentPage) {
       this.setState({
         currentPage: value
       }, this.callback);
@@ -145,14 +145,14 @@ class PaginationComponent extends Component {
   }
 
   // Used to determine the starting index the pagination label is displaying
-  calculateStartingIndex = () => (this.state.currentPage * this.props.rowsPerPage) - this.props.rowsPerPage + 1;
+  calculateStartingIndex = () => (this.props.currentPage * this.props.rowsPerPage) - this.props.rowsPerPage + 1;
 
   // Used to determine the ending index the pagination label is displaying
   calculateEndingIndex = () => {
-    if (this.state.currentPage === this.calculateTotalPages()) {
+    if (this.props.currentPage === this.calculateTotalPages()) {
       return this.props.totalItems;
     }
-    return this.state.currentPage * this.props.rowsPerPage;
+    return this.props.currentPage * this.props.rowsPerPage;
   }
 
   calculateTotalPages = () => Math.ceil(this.props.totalItems / this.props.rowsPerPage);
@@ -164,15 +164,9 @@ class PaginationComponent extends Component {
   updateRowsPerPage = (event) => {
     event.persist();
     this.setState({
-      currentPage: 1
-    }, () => this.updateRowsPerPageCallback(+event.target.value));
-  }
-
-  updateRowsPerPageCallback = (value) => {
-    this.props.updateRowsPerPage(value);
-    setTimeout(() => {
-      this.callback();
-    });
+      currentPage: 1,
+      rowsPerPage: +event.target.value
+    }, this.callback);
   }
 
   previousPage = () => {
@@ -194,7 +188,7 @@ class PaginationComponent extends Component {
   }
 
   callback = () => {
-    this.props.onChange(this.state.currentPage, this.props.rowsPerPage);
+    this.props.onChange(this.state.currentPage, this.state.rowsPerPage);
   }
 
   render() {
@@ -203,7 +197,7 @@ class PaginationComponent extends Component {
         <Label
           startingIndex={this.calculateStartingIndex()}
           endingIndex={this.calculateEndingIndex()}
-          currentPage={this.state.currentPage}
+          currentPage={this.props.currentPage}
           totalItems={this.props.totalItems}
           rowsPerPage={this.props.rowsPerPage}
           dropdownOpen={this.state.dropdownOpen}
@@ -225,10 +219,10 @@ class PaginationComponent extends Component {
 }
 
 PaginationComponent.propTypes = {
+  currentPage: PropTypes.number.isRequired,
   totalItems: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  updateRowsPerPage: PropTypes.func.isRequired,
   display: PropTypes.bool
 };
 

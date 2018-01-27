@@ -13,7 +13,7 @@ import SearchButton from 'components/search-button/SearchButton';
 import SearchModal from 'components/search-modal/SearchModal';
 
 import Columns from './models/columns';
-import { SEARCH_COACHES, UPDATE_ROWS_PER_PAGE } from './dux/actions';
+import { SEARCH_COACHES, UPDATE_ROWS_PER_PAGE, UPDATE_CURRENT_PAGE } from './dux/actions';
 
 class Coaches extends Component {
   constructor() {
@@ -32,6 +32,17 @@ class Coaches extends Component {
 
   componentWillUnmount() {
     this.columns.clearColumns();
+  }
+
+  onSortChange = (sortName, sortOrder) => {
+    const data = this.props.searchValues;
+    data.sort = sortOrder === 'desc' ? `-${sortName}` : `+${sortName}`;
+
+    data.page = 1;
+    data.per_page = this.state.rowsPerPage;
+
+    this.props.updateCurrentPage(1);
+    this.props.searchCoaches(data);
   }
 
   getSearchButton = () => (
@@ -93,6 +104,9 @@ class Coaches extends Component {
   }
 
   paginationOnChange = (currentPage, perPage) => {
+    this.props.updateRowsPerPage(perPage);
+    this.props.updateCurrentPage(currentPage);
+
     const data = this.props.searchValues;
     data.page = currentPage;
     data.per_page = perPage;
@@ -124,11 +138,12 @@ class Coaches extends Component {
           formatters={this.getCellFormatters()}
           display={!this.state.searchModalOpen} // hide the table when the modal is open
           loading={this.props.searchingCoaches}
+          onSortChange={this.onSortChange}
         />
         <Pagination
+          currentPage={this.props.currentPage}
           totalItems={this.props.totalCoaches}
           rowsPerPage={this.props.rowsPerPage}
-          updateRowsPerPage={this.props.updateRowsPerPage}
           onChange={this.paginationOnChange}
           display={!this.state.searchModalOpen && this.props.totalCoaches !== 0} // hide pagination when the modal is open and if there are no coaches
         />
@@ -142,15 +157,18 @@ Coaches.propTypes = {
   searchingCoaches: PropTypes.bool.isRequired,
   searchValues: PropTypes.object.isRequired,
   totalCoaches: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   searchCoaches: PropTypes.func.isRequired,
+  updateCurrentPage: PropTypes.func.isRequired,
   updateRowsPerPage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ coachSearchReducer }) => coachSearchReducer;
 const mapDispatchToProps = dispatch => ({
   searchCoaches: data => dispatch({ type: SEARCH_COACHES, data }),
-  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage })
+  updateRowsPerPage: rowsPerPage => dispatch({ type: UPDATE_ROWS_PER_PAGE, rowsPerPage }),
+  updateCurrentPage: currentPage => dispatch({ type: UPDATE_CURRENT_PAGE, currentPage })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Coaches);

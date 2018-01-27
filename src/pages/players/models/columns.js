@@ -16,7 +16,7 @@ export default class UserColumns {
 
   setCoachesColumns = () => {
     columns.push(
-      new Column('ID', 'id', false, true, true),
+      new Column('ID', 'id_usafb', false, true, true),
       new Column('Last Name', 'name_last'),
       new Column('First Name', 'name_first'),
       new Column('Date of Birth', 'dob'),

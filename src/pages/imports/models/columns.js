@@ -16,12 +16,12 @@ export default class UserColumns {
 
   setColumns = () => {
     columns.push(
-      new Column('Date', 'created_at', false, true, true),
-      new Column('File Name', 'file_name'),
-      new Column('Status', 'status'),
-      new Column('# Records', 'num_records'),
-      new Column('# Imported', 'num_imported'),
-      new Column('# Errors', 'num_errors')
+      new Column('Date', 'created_at', false, true, false),
+      new Column('File Name', 'file_name', false, false, false),
+      new Column('Status', 'status', false, false, false),
+      new Column('# Records', 'num_records', false, false, false),
+      new Column('# Imported', 'num_imported', false, false, false),
+      new Column('# Errors', 'num_errors', false, false, false)
     );
   }
 

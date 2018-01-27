@@ -4,6 +4,7 @@ const initialState = {
   gettingImports: false,
   imports: [],
   totalImports: 0,
+  currentPage: 1,
   rowsPerPage: 10,
   importing: false,
   dropzoneStatus: 'accepting'
@@ -31,6 +32,8 @@ export default (state = initialState, action) => {
       return { ...state, dropzoneStatus: 'accepted' };
     case actions.UPDATE_ROWS_PER_PAGE:
       return { ...state, rowsPerPage: action.rowsPerPage };
+    case actions.UPDATE_CURRENT_PAGE:
+      return { ...state, currentPage: action.currentPage };
     default:
       return state;
   }

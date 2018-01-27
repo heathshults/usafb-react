@@ -1,7 +1,8 @@
 import fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
 import * as headers from 'services/api/headers';
-import displayErrorToast from '../toast/error-toast';
+import displayErrorToast from 'services/toast/error-toast';
+import store from 'services/redux/store';
 
 /**
  * The purpose of this class is to check if the API
@@ -83,6 +84,7 @@ export default class Interceptor {
   }
 
   retryApiCall = () => {
+    this.reloadAppIfInitFailed();
     const data = this.getFetchData();
     return fetch(this.url, data);
   }
@@ -117,4 +119,15 @@ export default class Interceptor {
 
     return err.data.error.message;
   };
+
+  // as a workaround for now, we will refresh the page when
+  // users open up the application, their token is expired, and the application failed
+  // to retrieved their information/permissions
+  reloadAppIfInitFailed = () => {
+    const { appReducer } = store.getState();
+
+    if (!appReducer.name_first || !appReducer.role_permissions) {
+      window.location.reload();
+    }
+  }
 }

@@ -12,11 +12,10 @@ class UserModal extends Component {
   constructor() {
     super();
     this.states = states;
+    this.CREATE_USER_STATUS = 'create';
+    this.EDIT_USER_STATUS = 'edit';
 
     this.state = {
-      // this variable will indicate whether or not
-      // the modal should update state on componentWillReceiveProps
-      modalActive: false,
       modalStatus: this.CREATE_USER_STATUS,
       dismissStatus: this.CANCELED,
       name_first: '',
@@ -34,8 +33,7 @@ class UserModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.modalActive) {
-      // only set the state if the user object is not empty
+    if (!nextProps.saving) {
       if (Object.keys(nextProps.user).length !== 0) {
         this.setState({
           modalStatus: this.EDIT_USER_STATUS,
@@ -89,68 +87,57 @@ class UserModal extends Component {
 
   updateFirstName = event =>
     this.setState({
-      name_first: event.target.value,
-      modalActive: true
+      name_first: event.target.value
     });
 
   updateLastName = event =>
     this.setState({
-      name_last: event.target.value,
-      modalActive: true
+      name_last: event.target.value
     });
 
   updateEmail = event =>
     this.setState({
-      email: event.target.value,
-      modalActive: true
+      email: event.target.value
     });
 
   updateRole = event =>
     this.setState({
-      role_id: event.target.value,
-      modalActive: true
+      role_id: event.target.value
     });
 
   updatePhone = event =>
     this.setState({
-      phone: event.target.value,
-      modalActive: true
+      phone: event.target.value
     });
 
   updateOrganization = event =>
     this.setState({
-      organization_name: event.target.value,
-      modalActive: true
+      organization_name: event.target.value
     });
 
   updateAddress1 = event =>
     this.setState({
-      address1: event.target.value,
-      modalActive: true
+      address1: event.target.value
     });
 
   updateAddress2 = event =>
     this.setState({
-      address2: event.target.value,
-      modalActive: true
+      address2: event.target.value
     });
 
   updateCity = event =>
     this.setState({
-      city: event.target.value,
-      modalActive: true
+      city: event.target.value
     });
 
   updateState = event =>
     this.setState({
-      state: event.target.value,
-      modalActive: true
+      state: event.target.value
     });
 
   updateZip = event =>
     this.setState({
-      zip: event.target.value,
-      modalActive: true
+      zip: event.target.value
     });
 
   // we need to format the state data in a way that will be accepted by the API

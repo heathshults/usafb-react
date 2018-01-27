@@ -34,6 +34,17 @@ class Coaches extends Component {
     this.columns.clearColumns();
   }
 
+  onSortChange = (sortName, sortOrder) => {
+    const data = this.props.searchValues;
+    data.sort = sortOrder === 'desc' ? `-${sortName}` : `+${sortName}`;
+
+    data.page = 1;
+    data.per_page = this.state.rowsPerPage;
+
+    this.props.updateCurrentPage(1);
+    this.props.searchCoaches(data);
+  }
+
   getSearchButton = () => (
     <SearchButton toggle={this.displaySearchModal} searching={false} />
   )
@@ -127,6 +138,7 @@ class Coaches extends Component {
           formatters={this.getCellFormatters()}
           display={!this.state.searchModalOpen} // hide the table when the modal is open
           loading={this.props.searchingCoaches}
+          onSortChange={this.onSortChange}
         />
         <Pagination
           currentPage={this.props.currentPage}

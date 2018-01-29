@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, InputGroup } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Input,
+  InputGroup,
+  Label,
+  FormGroup
+} from 'reactstrap';
 
 import states from 'services/data/states';
 import './search-modal.css';
@@ -50,15 +60,19 @@ class SearchModal extends Component {
           {this.props.header}
         </ModalHeader>
         <ModalBody>
-          <InputGroup className="usafb-search-modal__input-group">
-            <Input
-              id="dob"
-              value={this.state.dob}
-              type="text"
-              placeholder="Date of Birth"
-              onChange={this.updateSearchFilters}
-            />
-          </InputGroup>
+          <FormGroup>
+            <InputGroup className="usafb-search-modal__input-group flex-column">
+              <Label for="dob">Date of Birth</Label>
+              <Input
+                id="dob"
+                value={this.state.dob}
+                type="date"
+                placeholder="Date of Birth"
+                className="usafb-search-modal__dob"
+                onChange={this.updateSearchFilters}
+              />
+            </InputGroup>
+          </FormGroup>
           <InputGroup className="usafb-search-modal__input-group">
             <Input
               id="name_first"

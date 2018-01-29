@@ -1,3 +1,5 @@
+@import "src/styles/sass/_functicions.scss";
+@import "src/styles/sass/_var.scss";
 .login-page__input-label {
   position: absolute;
   width: 1px;
@@ -32,7 +34,8 @@
   border-radius: 10px;
 }
 
-.login-page__input-label-focusable:active, .login-page__input-label-focusable:focus {
+.login-page__input-label-focusable:active,
+.login-page__input-label-focusable:focus {
   position: static;
   width: auto;
   height: auto;
@@ -42,7 +45,12 @@
   clip-path: none;
 }
 
-.fa-envelope, .fa-lock {
+.fa-envelope {
+  font-size: 14px;
+}
+
+.fa-envelope,
+.fa-lock {
   position: absolute;
   top: .4375rem;
   left: .25rem;
@@ -54,4 +62,21 @@
   margin: 0 6px;
   color: #868e96;
   font-size: 1.25rem;
+}
+
+.bss.form-group .form-control.form-control-theme {
+  width: 100%;
+  padding-left: 40px;
+  margin: 0;
+  font-size: $font-size-sm;
+  font-stretch: condensed;
+  line-height: 1.57;
+  color: $white;
+  letter-spacing: .8px;
+  background: rgba(0, 0, 0, .15);
+  border-radius: 10px;
+  
+}
+.row.bss.form-group.mb-4 .input-wrapper {
+  margin-top: 6px !important;
 }

@@ -21,10 +21,10 @@ const getButtonLabel = (loggingIn) => {
 
 const loginButton = props => (
   <div className="row pt-0 pb-0">
-    <div className="col-md-12 pt-0 pb- text-center">
+    <div className="col-md-12 pt-1 pb- text-center bss">
       <button
         type="submit"
-        className="btn btn-primary login__btn w-75 mr-auto ml-auto"
+        className="btn tn-blue-grad-pill login__btn w-75 w-50 mt-2 mx-auto"
         disabled={props.loggingIn}
       >
         {getButtonLabel(props.loggingIn)}

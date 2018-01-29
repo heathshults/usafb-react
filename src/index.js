@@ -8,9 +8,9 @@ import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import 'styles/usafb-bootstrap-red.css';
 
 import App from 'pages/app/App';
-import 'styles/usafb/usafb-bootstrap.css';
+import 'styles/usafb-bootstrap.css';
 import 'styles/application.css';
-import './index.css';
+import 'index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 const render = (Component) => {

@@ -7,10 +7,12 @@ import './form.css';
 
 const form = props => (
   <div className="col-md-4 text-center">
-    <Logo />
-    <div id="si-form" className="width-si-form">
-      <h1>NATIONAL DATABASE</h1>
-      {React.Children.map(props.children, child => child)}
+    <div className="sign-in-form-container text-center">
+      <Logo />
+      <div id="si-form" className="sign-in-form">
+        <h1 className="page-title text-light font-50" id="fadeInH1">NATIONAL DATABASE</h1>
+        {React.Children.map(props.children, child => child)}
+      </div>
     </div>
   </div>
 );

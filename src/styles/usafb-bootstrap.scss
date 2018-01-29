@@ -9197,7 +9197,7 @@ button:hover {
 }
 
 .full-screen-bg-landing-page {
-  background-image: url("images/bg/usa-fb-bg.jpg");
+  background-image: url("/styles/css/images/bg/usa-fb-bg.jpg");
   background-color: rgba(9, 48, 90, 0.93);
   background-size: cover;
   background-repeat: no-repeat;
@@ -9209,22 +9209,22 @@ button:hover {
   width: 100vw;
 }
 
-.full-screen-container {
-  background-image: url("images/bg/USAF_introscreen-HeroBoy2.png");
-  background-color: #0d2240;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  bottom: 0;
-  left: 0;
-  position: relative;
-  right: 0;
-  top: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  align-self: stretch;
-  align-items: center;
-}
+// .full-screen-container {
+//   background-image: url("images/bg/USAF_introscreen-HeroBoy2.png");
+//   background-color: #0d2240;
+//   background-size: 100%;
+//   background-repeat: no-repeat;
+//   bottom: 0;
+//   left: 0;
+//   position: relative;
+//   right: 0;
+//   top: 0;
+//   padding: 0;
+//   height: 100vh;
+//   display: flex;
+//   align-self: stretch;
+//   align-items: center;
+// }
 
 .header-container {
   display: flex;
@@ -9428,7 +9428,7 @@ option {
 
 .custom-select:disabled {
   background: none;
-  background-image: url("images/clear.png") !important;
+  background-image: url("/styles/css/images/clear.png") !important;
   background-color: transparent;
   color: #fff;
   border: 1px solid transparent;
@@ -9499,7 +9499,7 @@ option {
 }
 
 .text-field-email {
-  background: url("img/icons/email.png");
+  background: url("/styles/css/bg/email.png");
 }
 
 .col-form-label {
@@ -9760,7 +9760,7 @@ thead.cpl th .th-inner {
 
 .mc-container {
   position: relative;
-  background-image: url(images/bg/usa-fb-bg.jpg);
+  background-image: url('/styles/css/images/bg/usa-fb-bg.jpg');
   background-color: rgba(9, 48, 90, 0.93);
   background-blend-mode: multiply;
   object-fit: contain;

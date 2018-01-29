@@ -1,0 +1,6 @@
+@each $color, $value in $theme-colors {
+  @include bg-variant('.bg-#{$color}', $value);
+}
+
+.bg-white { background: $white !important; }
+.bg-transparent { background: transparent !important; }

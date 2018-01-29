@@ -26,3 +26,4 @@ src/**/*.css
 .env
 
 /.vscode
+.vscode/settings.json

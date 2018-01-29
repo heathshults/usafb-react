@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import states from 'services/data/states';
-import { validateEmail } from 'services/validations/validation';
 
 import InputField from '../input-field/InputField';
 import DropdownField from '../dropdown-field/DropdownField';
@@ -99,11 +98,7 @@ class UserModal extends Component {
   updateEmail = (event) => {
     this.setState({
       email: event.target.value
-    }, this.validateEmail);
-  }
-
-  validateEmail = () => {
-    console.log(validateEmail(this.state.email)); //eslint-disable-line
+    });
   }
 
   updateRole = event =>

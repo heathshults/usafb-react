@@ -45,6 +45,10 @@
   clip-path: none;
 }
 
+.fa-envelope {
+  font-size: 14px;
+}
+
 .fa-envelope,
 .fa-lock {
   position: absolute;
@@ -62,8 +66,8 @@
 
 .bss.form-group .form-control.form-control-theme {
   width: 100%;
-  padding-left: 50px;
-  margin-bottom: 0;
+  padding-left: 40px;
+  margin: 0;
   font-size: $font-size-sm;
   font-stretch: condensed;
   line-height: 1.57;
@@ -72,4 +76,7 @@
   background: rgba(0, 0, 0, .15);
   border-radius: 10px;
   
+}
+.row.bss.form-group.mb-4 .input-wrapper {
+  margin-top: 6px !important;
 }

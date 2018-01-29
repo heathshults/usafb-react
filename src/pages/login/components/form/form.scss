@@ -3,7 +3,7 @@
 .sign-in-form {
     position: relative;
     width: 398.9px;
-    height: 344px;
+    // height: 344px;
     padding: 29px 20px;
     color: $white;
     background: rgba(255, 255, 255, .18);
@@ -13,26 +13,37 @@
     border-top-right-radius: 20px;
     border-image-source: linear-gradient(to top, rgba(255, 255, 255, .1), rgb(255, 255, 255)); // border-image-slice: 1;
     backdrop-filter: blur(4px);
-    box-shadow: 11px 11px 11px 0 rgba(0, 0, 0, .2);
+    box-shadow: 0 -1px 20px 20px rgba(0, 0, 0, .25);
     &::before {
         width: 398.9px;
         height: 344px;
         padding: 29px 20px;
     }
+    .page-title {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+        letter-spacing: 2px;
+        font-weight: 300px;
+    }
     .bss .input-wrapper .fa {
         position: absolute;
         z-index: 1042;
-        left: 22px;
+        // left: 22px;
+    }
+    .bss .input-wrapper .fa-envelope {
+        font-size: 14px;
+        margin-top: 4px;
     }
     .input-wrapper {
         flex-grow: 1;
         padding-right: 0;
         padding-left: 0;
         white-space: nowrap; 
-        background: rgba(0, 0, 0, .15) !important;
-        border: solid 3px transparent !important;
+        background: rgba(0, 0, 0, .2) !important;
+        border: solid 3px rgba(0, 0, 0, .25) !important;
         border-radius: 10px !important;
         .input-icon-wrapper {
+            width: 35px;
             border-top-left-radius: 10px !important;
             border-bottom-left-radius: 10px !important;
              /* stylelint-disable */
@@ -40,17 +51,21 @@
             input[type="email"] {
                 width: 100%;
                 height: 47.1px;
-                padding-left: 100px;
+                padding-left: 35px;
                 border-radius: 10px !important;
             }
             .txtEmail {
                 &::before {
                     content: "\f0e0";
+                    font-family: 'FontAwesome';
+                    font-size: .8rem;
                 }
             }
             .txtPass {
                 &::before {
                     content: "\f023";
+                    font-family: 'FontAwesome';
+                    font-size: .8rem;
                 }
             }
         /* stylelint-enable */
@@ -82,9 +97,8 @@
             padding-bottom: 0;
         }
         .form-control {
-            padding-left: 44px;
+            // padding-left: 44px;
             &:focus {
-                color: $white;
                 background: rgba(255, 255, 255, .15) !important;
                 border: 1px solid rgba(0, 0, 0, .16) !important;
                 outline: $clear-black-md;

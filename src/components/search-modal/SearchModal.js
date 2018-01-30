@@ -60,7 +60,7 @@ class SearchModal extends Component {
           {this.props.header}
         </ModalHeader>
         <ModalBody>
-          <FormGroup>
+          {/* <FormGroup>
             <InputGroup className="usafb-search-modal__input-group flex-column">
               <Label for="dob">Date of Birth</Label>
               <Input
@@ -72,7 +72,7 @@ class SearchModal extends Component {
                 onChange={this.updateSearchFilters}
               />
             </InputGroup>
-          </FormGroup>
+          </FormGroup> */}
           <InputGroup className="usafb-search-modal__input-group">
             <Input
               id="name_first"

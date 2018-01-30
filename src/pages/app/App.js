@@ -19,9 +19,9 @@ import PlayerProfile from 'pages/player-profile/PlayerProfile';
 import CoachProfile from 'pages/coach-profile/CoachProfile';
 import Users from 'pages/users/Users';
 import Profile from 'pages/profile/Profile';
-import MyExports from 'pages/my-exports/MyExports';
-import PlayerExportModal from 'pages/player-export-modal/PlayerExportModal';
-import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
+// import MyExports from 'pages/my-exports/MyExports';
+// import PlayerExportModal from 'pages/player-export-modal/PlayerExportModal';
+// import CoachExportModal from 'pages/coach-export-modal/CoachExportModal';
 import ImportsPage from 'pages/imports/Imports';
 
 import './app.css';
@@ -59,11 +59,11 @@ export default class App extends Component {
               <PrivateRoute exact path="/users" component={Users} />
               <PrivateRoute exact path="/users/:id" component={Profile} />
               <PrivateRoute exact path="/me" component={Profile} />
-              <PrivateRoute exact path="/my-exports" component={MyExports} />
+              {/* <PrivateRoute exact path="/my-exports" component={MyExports} /> */}
               <PrivateRoute exact path="/imports/:type" component={ImportsPage} />
             </Switch>
-            <PlayerExportModal />
-            <CoachExportModal />
+            {/* <PlayerExportModal />
+            <CoachExportModal /> */}
           </Fragment>
         </Router>
       </Provider>

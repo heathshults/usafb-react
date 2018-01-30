@@ -20,10 +20,20 @@ class PlayerExportModal extends Component {
         { label: 'State', value: 'State' },
         { label: 'USAFB_ID', value: 'USAFB ID' },
         { label: 'Organization Name', value: 'Organization Name' },
-        { label: 'School Name', value: 'School Name' },
-        { label: 'School City', value: 'School City' },
-        { label: 'School State', value: 'School State' },
+        { label: 'Organization State', value: 'Organization State' },
         { label: 'Date of Birth', value: 'Date of Birth' },
+        { label: 'Email', value: 'Email' },
+        { label: 'Postal Code', value: 'Postal Code' },
+        { label: 'Years of Experience', value: 'Years of Experience' },
+        { label: 'Opt In Marketing', value: 'Opt In Marketing' },
+        { label: 'Registration Date', value: 'Registration Date' },
+        { label: 'Season', value: 'Season' },
+        { label: 'Season Year', value: 'Season Year' },
+        { label: 'Level', value: 'Level' },
+        { label: 'Level Type', value: 'Level Type' },
+        { label: 'League Name', value: 'League Name' },
+        { label: 'Team Name', value: 'Team Name' },
+        { label: 'Position', value: 'Position' },
       ],
       showModal: false,
       selectedValues: [],
@@ -56,12 +66,6 @@ class PlayerExportModal extends Component {
     this.setState({
       activeFilterValue: event.target.value,
       filterValueEmptyError: false
-    });
-  }
-
-  updateDateOfBirthDirection = (event) => {
-    this.setState({
-      dateOfBirthDirection: event.target.value
     });
   }
 
@@ -140,6 +144,7 @@ class PlayerExportModal extends Component {
         <ModalHeader toggle={this.props.toggleExportModalOff}>Player Export</ModalHeader>
         <ModalBody>
           <StepperContainer
+            positions={['quarterback', 'center', 'running_back', 'fullback', 'wide_receiver', 'tight_end', 'left_guard', 'right_guard', 'left_tackle', 'right_tackle', 'defensive_tackle', 'defensive_end', 'linebacker', 'safety', 'cornerback', 'punter', 'not_available']}
             updateSelectedItem={this.updateSelectedItem}
             selectedItem={this.state.selectedItem}
             selectedValues={this.state.selectedValues}
@@ -155,7 +160,6 @@ class PlayerExportModal extends Component {
             validationError={this.state.validationError}
             triggerValidationError={this.triggerValidationError}
             dateOfBirthDirection={this.state.dateOfBirthDirection}
-            updateDateOfBirthDirection={this.updateDateOfBirthDirection}
           />
         </ModalBody>
       </Modal>

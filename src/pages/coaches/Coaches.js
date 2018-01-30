@@ -21,8 +21,8 @@ class Coaches extends Component {
 
     this.state = {
       searchModalOpen: true,
-      rowsPerPage: 10, // used to calculate dummy id. delete later,
-      currentPage: 1 // used to calculate dummy id. delete later,
+      rowsPerPage: 10,
+      currentPage: 1
     };
   }
 

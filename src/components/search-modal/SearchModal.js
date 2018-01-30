@@ -8,8 +8,8 @@ import {
   ModalFooter,
   Input,
   InputGroup,
-  Label,
-  FormGroup
+  // Label,
+  // FormGroup
 } from 'reactstrap';
 
 import states from 'services/data/states';

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class dashboard extends Component {
   constructor() {
     super();
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   render() {
+    const iframeUrl = this.props.location.pathname.includes('coaches') ? process.env.REACT_APP_PERISCOPE_COACH_DASHBOARD_URL : process.env.REACT_APP_PERISCOPE_PLAYER_DASHBOARD_URL;
     return (
       <section id="main-content">
         <div className="container">
@@ -17,7 +17,7 @@ export default class dashboard extends Component {
               <iframe
                 title="periscope"
                 id="statsFrame"
-                src="https://app.periscopedata.com/shared/b20d184b-8851-4ce0-86fd-d4381b9deadb?embed=true"
+                src={iframeUrl}
                 width="100%"
                 height="2000"
                 frameBorder="0"
@@ -31,3 +31,9 @@ export default class dashboard extends Component {
     );
   }
 }
+
+dashboard.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired
+};

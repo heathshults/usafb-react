@@ -50,7 +50,8 @@ export default class App extends Component {
             <NavBar />
             <Switch>
               <PrivateRoute exact path="/" component={Landing} />
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard/players" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard/coaches" component={Dashboard} />
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/players" component={Players} />
               <PrivateRoute exact path="/coaches" component={Coaches} />

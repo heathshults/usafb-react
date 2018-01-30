@@ -8,12 +8,37 @@ import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
+// import BarChart1 from './components/bar-chart/BarChart';
 
 import { GET_STATS } from './dux/actions';
 import colors from './models/colors';
 import './landing.css';
 
+// NOTE: we are using echarts for this page
+// https://github.com/hustcc/echarts-for-react
+
 class Landing extends Component {
+  constructor() {
+    super();
+
+    this.barChartOptions = {
+      series: [
+        {
+          name: 'Reference Page',
+          type: 'bar',
+          radius: '55%',
+          data: [
+            { value: 400, name: 'Searching Engine' },
+            { value: 335, name: 'Direct' },
+            { value: 310, name: 'Email' },
+            { value: 274, name: 'Alliance Advertisement' },
+            { value: 235, name: 'Video Advertisement' }
+          ]
+        }
+      ]
+    };
+  }
+
   componentWillMount() {
     this.props.getStats();
   }
@@ -37,6 +62,7 @@ class Landing extends Component {
       <Container>
         <HeaderContentDivider />
         <div className="landing__container">
+          {/* <BarChart1 option={this.barChartOptions} /> */}
           <Content>
             <Header count={this.props.num_players} header="players" />
             <div className="landing__bar-chart-container">

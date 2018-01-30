@@ -74,7 +74,7 @@ export default class Interceptor {
     });
 
   async refreshTokenFlow(response) {
-    this.refreshingToken = true;
+    await (this.refreshingToken = true);
     try {
       const refreshTokenResponse = await this.refreshToken();
 
@@ -82,14 +82,14 @@ export default class Interceptor {
         const data = await refreshTokenResponse.json();
         await this.storeTokens(data);
         const retryApiCallResponse = await this.retryApiCall();
-        this.refreshingToken = false;
+        await (this.refreshingToken = false);
         return retryApiCallResponse;
       }
 
-      this.redirectToLogin();
-      return response;
+      await this.redirectToLogin();
+      return await response;
     } catch (e) {
-      this.redirectToLogin();
+      await this.redirectToLogin();
       return response;
     }
   }
@@ -146,7 +146,6 @@ export default class Interceptor {
   };
 
   redirectToLogin = () => {
-    window.localStorage.clear();
     window.location = '/login';
     this.refreshingToken = false;
   }

@@ -24,6 +24,7 @@ class navBar extends Component {
       showNavbar: false
     };
   }
+
   goToPlayers = () => this.props.history.push('/players');
   goToCoaches = () => this.props.history.push('/coaches');
   goToPlayersDashboard = () => this.props.history.push('/dashboard/players');
@@ -46,7 +47,7 @@ class navBar extends Component {
           this.props.location.pathname === '/login' || !localStorage.getItem('access_token') ?
             <span /> :
             <span>
-              <Container>
+              <Container redNavbar={this.props.redNavbar}>
                 <Logo />
                 <NavigationContainer>
                   <NavLink to="/" label="Home" />
@@ -105,7 +106,8 @@ navBar.propTypes = {
   toggleCoachExportModalOn: PropTypes.func.isRequired,
   role_permissions: PropTypes.array,
   name_last: PropTypes.string.isRequired,
-  name_first: PropTypes.string.isRequired
+  name_first: PropTypes.string.isRequired,
+  redNavbar: PropTypes.bool.isRequired
 };
 
 navBar.defaultProps = {

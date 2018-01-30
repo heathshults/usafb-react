@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+// import PropTypes from 'prop-types';
 import { Router } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
@@ -31,6 +32,10 @@ export default class App extends Component {
   constructor() {
     super();
 
+    this.state = {
+      showRedNavbar: false
+    };
+
     this.history = createHistory();
     this.interceptor = new Interceptor();
   }
@@ -41,13 +46,25 @@ export default class App extends Component {
     }
   }
 
+  componentWillUpdate(newProps) {
+    console.log('newpros', newProps); // eslint-disable-line
+
+    if (Object.is(this.props, newProps)) {
+      // const showRedNavbar = this.props.location.pathname.includes('players/') || this.props.location.pathname.includes('coaches/');
+      // this.setState({
+      //   showRedNavbar
+      // });
+    }
+  }
+
   render() {
+    console.log('window.location.href', window.location.href); // eslint-disable-line
     return (
       <Provider store={store}>
         <Router history={this.history}>
           <Fragment>
             <ToastContainer />
-            <NavBar />
+            <NavBar redNavbar={this.state.showRedNavbar} />
             <Switch>
               <PrivateRoute exact path="/" component={Landing} />
               <PrivateRoute exact path="/dashboard/players" component={Dashboard} />

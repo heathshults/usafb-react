@@ -91,6 +91,7 @@ class Players extends Component {
     if (!cancelled) {
       data.page = 1; //eslint-disable-line
       data.per_page = 10; //eslint-disable-line
+      this.props.updateCurrentPage(1);
       this.props.searchPlayers(data);
       this.setState({
         searchModalOpen: false

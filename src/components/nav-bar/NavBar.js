@@ -26,8 +26,8 @@ class navBar extends Component {
   }
   goToPlayers = () => this.props.history.push('/players');
   goToCoaches = () => this.props.history.push('/coaches');
-  goToPlayersDashboard = () => this.props.history.push('/dashboard');
-  goToCoachesDashboard = () => this.props.history.push('/dashboard');
+  goToPlayersDashboard = () => this.props.history.push('/dashboard/players');
+  goToCoachesDashboard = () => this.props.history.push('/dashboard/coaches');
   goToImports = type => this.props.history.push(`/imports/${type}`);
   logout = () => {
     window.localStorage.clear();

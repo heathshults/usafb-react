@@ -52,21 +52,8 @@ class Coaches extends Component {
   getCellFormatters = () => ({
     'First Name': this.linkToCoachFormatter,
     'Last Name': this.linkToCoachFormatter,
-    ID: this.idFormatter,
     'Date of Birth': this.DOBFormatter
   });
-
-  getPaddedDummyID = (id) => {
-    let dummyID = this.state.currentPage === 1 ? 1 : this.state.rowsPerPage * (this.state.currentPage - 1) + 1;
-
-    for (let i = 0; i < this.props.coaches.length; i++) { //eslint-disable-line
-      if (this.props.coaches[i].id === id) {
-        dummyID += i;
-      }
-    }
-
-    return dummyID.toString().padStart(8, '0');
-  }
 
   DOBFormatter = dob => (
     <div>
@@ -74,14 +61,9 @@ class Coaches extends Component {
     </div>
   )
 
-
   linkToCoachFormatter = (cell, row) => (
     <Link to={{ pathname: `/coaches/${row.id}` }}>{cell}</Link>
   )
-
-  idFormatter = (cell, row) => (
-    <div> {this.getPaddedDummyID(row.id)} </div>
-  );
 
   displaySearchModal = () =>
     this.setState({

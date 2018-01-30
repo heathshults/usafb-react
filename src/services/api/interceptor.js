@@ -14,6 +14,10 @@ export default class Interceptor {
   constructor() {
     this.registerInterceptor();
 
+    // we need a way to tell if we're in the middle of refreshing a token
+    // otherwise, if a fresh token is invalid, we will be caught in an endless loop
+    this.refreshingToken = false;
+
     // we need to store the url and config every time a request is made.
     // these values will allow us to retry any unauthorized calls that occurred because of expired tokens
     this.url = '';
@@ -44,12 +48,12 @@ export default class Interceptor {
       },
       response: (response) => {
         // if the user token is invalid and they have a refresh token, get a new access token
-        if (response.statusText.toUpperCase() === 'UNAUTHORIZED' && response.status === 401 && !!window.localStorage.getItem('access_token') && !!window.localStorage.getItem('refresh_token')) {
-          return this.refreshToken()
-            .then(resp => resp.json())
-            .then(data => this.storeTokens(data))
-            .then(() => this.retryApiCall())
-            .then(updatedResponse => updatedResponse);
+        if (response.statusText.toUpperCase() === 'UNAUTHORIZED' &&
+          response.status === 401 &&
+          !!window.localStorage.getItem('access_token') &&
+          !!window.localStorage.getItem('refresh_token') &&
+          !this.refreshingToken) {
+          return this.refreshTokenFlow();
         }
 
         // automatically display a toast error message for every failed API call
@@ -68,6 +72,27 @@ export default class Interceptor {
         return Promise.reject(error);
       }
     });
+
+  async refreshTokenFlow(response) {
+    this.refreshingToken = true;
+    try {
+      const refreshTokenResponse = await this.refreshToken();
+
+      if (refreshTokenResponse.ok) {
+        const data = await refreshTokenResponse.json();
+        await this.storeTokens(data);
+        const retryApiCallResponse = await this.retryApiCall();
+        this.refreshingToken = false;
+        return retryApiCallResponse;
+      }
+
+      this.redirectToLogin();
+      return response;
+    } catch (e) {
+      this.redirectToLogin();
+      return response;
+    }
+  }
 
   refreshToken = () =>
     fetch(`${process.env.REACT_APP_API_URL}/auth/refresh-token`, {
@@ -119,6 +144,12 @@ export default class Interceptor {
 
     return err.data.error.message;
   };
+
+  redirectToLogin = () => {
+    window.localStorage.clear();
+    window.location = '/login';
+    this.refreshingToken = false;
+  }
 
   // as a workaround for now, we will refresh the page when
   // users open up the application, their token is expired, and the application failed

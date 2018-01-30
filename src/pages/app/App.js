@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Router } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import createHistory from 'history/createBrowserHistory';
@@ -27,38 +27,46 @@ import ImportsPage from 'pages/imports/Imports';
 import './app.css';
 import { INITIALIZE_APP } from './dux/actions';
 
-const history = createHistory();
-const interceptor = new Interceptor(); //eslint-disable-line
+export default class App extends Component {
+  constructor() {
+    super();
 
-if (history.location.pathname !== '/login') {
-  store.dispatch({ type: INITIALIZE_APP });
+    this.history = createHistory();
+    this.interceptor = new Interceptor();
+  }
+
+  componentWillMount() {
+    if (this.history.location.pathname !== '/login') {
+      store.dispatch({ type: INITIALIZE_APP });
+    }
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <Router history={this.history}>
+          <Fragment>
+            <ToastContainer />
+            <NavBar />
+            <Switch>
+              <PrivateRoute exact path="/" component={Landing} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/players" component={Players} />
+              <PrivateRoute exact path="/coaches" component={Coaches} />
+              <PrivateRoute exact path="/players/:id" component={PlayerProfile} />
+              <PrivateRoute exact path="/coaches/:id" component={CoachProfile} />
+              <PrivateRoute exact path="/users" component={Users} />
+              <PrivateRoute exact path="/users/:id" component={Profile} />
+              <PrivateRoute exact path="/me" component={Profile} />
+              <PrivateRoute exact path="/my-exports" component={MyExports} />
+              <PrivateRoute exact path="/imports/:type" component={ImportsPage} />
+            </Switch>
+            <PlayerExportModal />
+            <CoachExportModal />
+          </Fragment>
+        </Router>
+      </Provider>
+    );
+  }
 }
-
-const app = () => (
-  <Provider store={store}>
-    <Router history={history}>
-      <Fragment>
-        <ToastContainer />
-        <NavBar />
-        <Switch>
-          <PrivateRoute exact path="/" component={Landing} />
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/login" component={Login} />
-          <PrivateRoute exact path="/players" component={Players} />
-          <PrivateRoute exact path="/coaches" component={Coaches} />
-          <PrivateRoute exact path="/players/:id" component={PlayerProfile} />
-          <PrivateRoute exact path="/coaches/:id" component={CoachProfile} />
-          <PrivateRoute exact path="/users" component={Users} />
-          <PrivateRoute exact path="/users/:id" component={Profile} />
-          <PrivateRoute exact path="/me" component={Profile} />
-          <PrivateRoute exact path="/my-exports" component={MyExports} />
-          <PrivateRoute exact path="/imports/:type" component={ImportsPage} />
-        </Switch>
-        <PlayerExportModal />
-        <CoachExportModal />
-      </Fragment>
-    </Router>
-  </Provider>
-);
-
-export default app;

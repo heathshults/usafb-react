@@ -23,6 +23,7 @@ class NavDropdown extends Component {
           isOpen={this.state.open}
           toggle={this.toggle}
           className="nav-bar__dropdown"
+          style={this.props.showRedNavbar ? { backgroundColor: 'transparent' } : {}}
         >
           <DropdownToggle
             caret
@@ -41,6 +42,7 @@ class NavDropdown extends Component {
 }
 
 NavDropdown.propTypes = {
+  showRedNavbar: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   children: PropTypes.array.isRequired,
   hideSlash: PropTypes.bool,

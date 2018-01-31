@@ -46,25 +46,24 @@ export default class App extends Component {
     }
   }
 
-  componentWillUpdate(newProps) {
-    console.log('newpros', newProps); // eslint-disable-line
-
-    if (Object.is(this.props, newProps)) {
-      // const showRedNavbar = this.props.location.pathname.includes('players/') || this.props.location.pathname.includes('coaches/');
-      // this.setState({
-      //   showRedNavbar
-      // });
-    }
-  }
-
   render() {
-    console.log('window.location.href', window.location.href); // eslint-disable-line
+    this.history.listen((location) => {
+      if (location.pathname.includes('players/') || location.pathname.includes('coaches/')) {
+        this.setState({
+          showRedNavbar: true
+        });
+      } else {
+        this.setState({
+          showRedNavbar: false
+        });
+      }
+    });
     return (
       <Provider store={store}>
-        <Router history={this.history}>
+        <Router history={this.history} onChange={this.yourHandler}>
           <Fragment>
             <ToastContainer />
-            <NavBar redNavbar={this.state.showRedNavbar} />
+            <NavBar showRedNavbar={this.state.showRedNavbar} />
             <Switch>
               <PrivateRoute exact path="/" component={Landing} />
               <PrivateRoute exact path="/dashboard/players" component={Dashboard} />

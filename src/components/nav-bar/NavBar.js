@@ -41,13 +41,14 @@ class navBar extends Component {
   }
 
   render() {
+    window.onhashchange = this.checkOnUrlChange;
     return (
       <span>
         {
           this.props.location.pathname === '/login' || !localStorage.getItem('access_token') ?
             <span /> :
             <span>
-              <Container redNavbar={this.props.redNavbar}>
+              <Container showRedNavbar={this.props.showRedNavbar}>
                 <Logo />
                 <NavigationContainer>
                   <NavLink to="/" label="Home" />
@@ -107,7 +108,7 @@ navBar.propTypes = {
   role_permissions: PropTypes.array,
   name_last: PropTypes.string.isRequired,
   name_first: PropTypes.string.isRequired,
-  redNavbar: PropTypes.bool.isRequired
+  showRedNavbar: PropTypes.bool.isRequired
 };
 
 navBar.defaultProps = {

@@ -1,46 +1,79 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
+import { ResponsiveContainer, PieChart, Cell, Pie, Tooltip } from 'recharts';
 import uuidv4 from 'uuid/v4';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
-// import BarChart1 from './components/bar-chart/BarChart';
+import BarChart1 from './components/bar-chart/BarChart';
 
 import { GET_STATS } from './dux/actions';
 import colors from './models/colors';
 import './landing.css';
 
 // NOTE: we are using echarts for this page
-// https://github.com/hustcc/echarts-for-react
+// https://ecomfe.github.io/echarts-doc/public/en/index.html
 
 class Landing extends Component {
   constructor() {
     super();
 
     this.barChartOptions = {
-      series: [
-        {
-          name: 'Reference Page',
-          type: 'bar',
-          radius: '55%',
-          data: [
-            { value: 400, name: 'Searching Engine' },
-            { value: 335, name: 'Direct' },
-            { value: 310, name: 'Email' },
-            { value: 274, name: 'Alliance Advertisement' },
-            { value: 235, name: 'Video Advertisement' }
-          ]
+      color: ['#0174CB', '#4EB3FF', '#0192FF', '#27597F', '#0175CC', '#81C8FF', '#4CB1FF'],
+      tooltip: {},
+      calculable: true,
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: []
+    };
+
+    this.barChartLabelOption = {
+      show: true,
+      position: 'insideBottom',
+      distance: 15,
+      align: 'left',
+      verticalAlign: 'middle',
+      rotate: 90,
+      fontSize: 16,
+      rich: {
+        name: {
+          textBorderColor: '#fff'
         }
-      ]
+      }
     };
   }
 
   componentWillMount() {
     this.props.getStats();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.players !== this.props.players || nextProps.coaches !== this.props.coaches) {
+      this.barChartOptions.xAxis.data = nextProps.players.map(player => player.name);
+      this.barChartOptions.series = [{
+        type: 'bar',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideBottom',
+            distance: 20,
+            align: 'left',
+            verticalAlign: 'middle',
+            rotate: 90,
+            formatter: '{b}',
+            fontSize: 16,
+          }
+        },
+        data: nextProps.players.map(player => player.count)
+      }];
+    }
   }
 
   // got code from http://jsfiddle.net/x5em3hdp/
@@ -62,32 +95,11 @@ class Landing extends Component {
       <Container>
         <HeaderContentDivider />
         <div className="landing__container">
-          {/* <BarChart1 option={this.barChartOptions} /> */}
           <Content>
             <Header count={this.props.num_players} header="players" />
             <div className="landing__bar-chart-container">
               <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={this.props.players}>
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="name"
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <YAxis
-                    dataKey="count"
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <Tooltip />
-                  <Bar dataKey="count">
-                    {
-                      this.props.players.map((entry, index) =>
-                        <Cell fill={colors[index]} key={uuidv4()} />
-                      )
-                    }
-                  </Bar>
-                </BarChart>
+                <BarChart1 option={this.barChartOptions} />
               </ResponsiveContainer>
             </div>
           </Content>

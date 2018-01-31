@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactEchartsCore from 'echarts-for-react/lib/core';
+import echarts from 'echarts';
 
-const barChart = props => (
-  <ReactEchartsCore
-    option={props.option}
-    lazyUpdate={true}
-  />
-);
+import './bar-chart.css';
 
-barChart.propTypes = {
+class BarChart extends Component {
+  constructor() {
+    super();
+
+    this.state = {};
+    this.chart = {};
+  }
+
+  componentDidMount() {
+    this.chart = echarts.init(document.getElementById('landing-bar-chart'));
+    this.chart.setOption(this.props.option);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.chart.setOption(nextProps.option);
+  }
+
+  render() {
+    return (
+      <div id="landing-bar-chart" className="landing__bar-chart" />
+    );
+  }
+}
+
+BarChart.propTypes = {
   option: PropTypes.object.isRequired
 };
 
-export default barChart;
+export default BarChart;

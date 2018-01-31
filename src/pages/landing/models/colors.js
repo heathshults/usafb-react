@@ -1,10 +1,11 @@
 export default [
-  '#50b2fc',
-  '#fccb50',
-  '#38f7be',
-  '#ed2a2a',
-  '#6f68d1',
-  '#acabbc'
+  '#f44242',
+  '#e00f0f',
+  '#31b70c',
+  '#9a0bb7',
+  '#eaea54',
+  '#5891e8',
+  '#27597F'
 ];
 
 export const barGraphColors = [

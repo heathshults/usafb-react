@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Auth from 'hoc/auth/Auth';
-import { MANAGE_USERS, EXPORT_PLAYERS, EXPORT_COACHES } from 'services/permissions/permissions';
+import { MANAGE_USERS } from 'services/permissions/permissions';
 
 import User from '../user/User';
 import './user-dropdown.css';
@@ -47,13 +47,13 @@ class NavDropdown extends Component {
               </DropdownItem>
             </Link>
           </Auth>
-          <Auth role_permissions={this.props.role_permissions} permissionRequested={[EXPORT_COACHES, EXPORT_PLAYERS]}>
+          {/* <Auth role_permissions={this.props.role_permissions} permissionRequested={[EXPORT_COACHES, EXPORT_PLAYERS]}>
             <Link to="/my-exports" className="link">
               <DropdownItem className="nav-bar__dropdown-button-item">
                 My exports
               </DropdownItem>
             </Link>
-          </Auth>
+          </Auth> */}
           <DropdownItem divider />
           <DropdownItem className="nav-bar__dropdown-button-item" onClick={this.props.logout} >
             Sign Out

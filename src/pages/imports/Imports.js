@@ -138,26 +138,11 @@ class Imports extends Component {
     );
   }
 
-  getRecordsFormatter = (cell, row) => {
-    if (cell === 0) {
-      return (
-        <div>
-          {cell === 0 ? '-' : cell}
-        </div>
-      );
-    }
-
-    return (
-      <a
-        role="button"
-        tabIndex={0}
-        className="imports__download-link"
-        onClick={() => this.props.downloadResults(row.results, row.file_name)}
-      >
-        {cell}
-      </a>
-    );
-  }
+  getRecordsFormatter = cell => (
+    <div>
+      {cell === 0 ? '-' : cell}
+    </div>
+  );
 
   downloadLinkFormatter = (cell, downloading, id, fileType, fileName, isErrors = false) => {
     if (cell === 0) {
@@ -270,7 +255,6 @@ Imports.propTypes = {
   updateRowsPerPage: PropTypes.func.isRequired,
   gettingImports: PropTypes.bool.isRequired,
   downloadFile: PropTypes.func.isRequired,
-  downloadResults: PropTypes.func.isRequired,
   updateCurrentPage: PropTypes.func.isRequired
 };
 

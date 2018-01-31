@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import uuidv4 from 'uuid/v4';
+import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar, Legend } from 'recharts';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
+// import BarChartLabel from './components/bar-chart-label/BarChartLabel';
 
 import { GET_STATS } from './dux/actions';
-import colors from './models/colors';
+import colors, { barGraphColors } from './models/colors';
 import './landing.css';
 
 class Landing extends Component {
@@ -57,7 +58,7 @@ class Landing extends Component {
                   <Bar dataKey="count">
                     {
                       this.props.players.map((entry, index) =>
-                        <Cell fill={colors[index]} key={uuidv4()} />
+                        <Cell fill={barGraphColors[index]} key={uuidv4()} />
                       )
                     }
                   </Bar>
@@ -69,6 +70,7 @@ class Landing extends Component {
             <Header count={this.props.num_coaches} header="Coaches" />
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
+                <Legend verticalAlign="top" height={36} />
                 <Pie
                   data={this.props.coaches}
                   fill="#8884d8"
@@ -87,7 +89,7 @@ class Landing extends Component {
             </ResponsiveContainer>
           </Content>
         </div>
-      </Container>
+      </Container >
     );
   }
 }

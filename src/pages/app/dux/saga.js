@@ -13,17 +13,25 @@ export default function* appInitFlow() {
 
 // get information of the user that is currently logged in
 function* getUserInformationFlow() {
-  const response = yield call(getUserInformation);
-  if (response.ok) {
-    const responseData = yield response.json();
-    yield put({ type: actions.SET_USER_INFORMATION, userInformation: responseData.data });
+  try {
+    const response = yield call(getUserInformation);
+    if (response && response.ok) {
+      const responseData = yield response.json();
+      yield put({ type: actions.SET_USER_INFORMATION, userInformation: responseData.data });
+    }
+  } catch (e) {
+    // do nothing
   }
 }
 
 function* getRolesFlow() {
-  const response = yield call(getRoles);
-  if (response.ok) {
-    const responseData = yield response.json();
-    yield put({ type: actions.RECEIVED_ROLES, roles: responseData.data });
+  try {
+    const response = yield call(getRoles);
+    if (response && response.ok) {
+      const responseData = yield response.json();
+      yield put({ type: actions.RECEIVED_ROLES, roles: responseData.data });
+    }
+  } catch (e) {
+    // do nothing
   }
 }

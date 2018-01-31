@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ResponsiveContainer, PieChart, Cell, Pie, Tooltip } from 'recharts';
-import uuidv4 from 'uuid/v4';
+import { ResponsiveContainer } from 'recharts';
+// import uuidv4 from 'uuid/v4';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
 import BarChart1 from './components/bar-chart/BarChart';
+import PieChart1 from './components/pie-chart/PieChart';
 
 import { GET_STATS } from './dux/actions';
-import colors from './models/colors';
+// import colors from './models/colors';
 import './landing.css';
 
 // NOTE: we are using echarts for this page
@@ -21,8 +22,10 @@ class Landing extends Component {
   constructor() {
     super();
 
+    this.colors = ['#0174CB', '#4EB3FF', '#0192FF', '#27597F', '#0175CC', '#81C8FF', '#4CB1FF'];
+
     this.barChartOptions = {
-      color: ['#0174CB', '#4EB3FF', '#0192FF', '#27597F', '#0175CC', '#81C8FF', '#4CB1FF'],
+      color: this.colors,
       tooltip: {},
       calculable: true,
       xAxis: {
@@ -33,6 +36,8 @@ class Landing extends Component {
       },
       series: []
     };
+
+    this.pieChartOptions = this.barChartOptions;
 
     this.barChartLabelOption = {
       show: true,
@@ -57,6 +62,8 @@ class Landing extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.players !== this.props.players || nextProps.coaches !== this.props.coaches) {
       this.barChartOptions.xAxis.data = nextProps.players.map(player => player.name);
+      this.pieChartOptions.xAxis.data = nextProps.coaches.map(coach => coach.name);
+
       this.barChartOptions.series = [{
         type: 'bar',
         label: {
@@ -72,6 +79,11 @@ class Landing extends Component {
           }
         },
         data: nextProps.players.map(player => player.count)
+      }];
+
+      this.pieChartOptions.series = [{
+        type: 'pie',
+        data: nextProps.coaches.map(coach => coach.count)
       }];
     }
   }
@@ -106,22 +118,7 @@ class Landing extends Component {
           <Content>
             <Header count={this.props.num_coaches} header="Coaches" />
             <ResponsiveContainer width="100%" height={400}>
-              <PieChart>
-                <Pie
-                  data={this.props.coaches}
-                  fill="#8884d8"
-                  dataKey="count"
-                  label={this.renderCustomPieLabel}
-                  labelLine={false}
-                >
-                  {
-                    this.props.coaches.map((entry, index) =>
-                      <Cell fill={colors[index]} stroke={colors[index]} key={uuidv4()} />
-                    )
-                  }
-                </Pie>
-                <Tooltip />
-              </PieChart>
+              <PieChart1 option={this.pieChartOptions} />
             </ResponsiveContainer>
           </Content>
         </div>

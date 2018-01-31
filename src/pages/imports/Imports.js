@@ -40,6 +40,14 @@ class Imports extends Component {
 
     // a variable that will store the value of either 'players' or 'coaches'
     this.userType = '';
+    this.fetchImportInterval = setInterval(() => {
+      const userType = this.props.location.pathname.slice(9);
+      const data = {
+        page: 1,
+        per_page: this.props.rowsPerPage
+      };
+      this.getImports(userType, data);
+    }, 15000);
   }
 
   componentWillMount() {
@@ -68,6 +76,7 @@ class Imports extends Component {
 
   componentWillUnmount() {
     this.columns.clearColumns();
+    clearInterval(this.fetchImportInterval);
   }
 
   onDrop = (files) => {
@@ -190,7 +199,8 @@ class Imports extends Component {
     this.setState({
       open: false
     });
-
+    clearInterval(this.fetchImportInterval);
+    this.fetchImportInterval();
     this.props.uploadCsv(this.userType, this.state.file);
   }
 

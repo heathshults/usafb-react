@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ResponsiveContainer } from 'recharts';
-// import uuidv4 from 'uuid/v4';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
@@ -12,7 +11,6 @@ import BarChart1 from './components/bar-chart/BarChart';
 import PieChart1 from './components/pie-chart/PieChart';
 
 import { GET_STATS } from './dux/actions';
-// import colors from './models/colors';
 import './landing.css';
 
 // NOTE: we are using echarts for this page
@@ -86,20 +84,6 @@ class Landing extends Component {
         data: nextProps.coaches.map(coach => coach.count)
       }];
     }
-  }
-
-  // got code from http://jsfiddle.net/x5em3hdp/
-  renderCustomPieLabel = (data) => {
-    const RADIAN = Math.PI / 180;
-    const radius = data.innerRadius + (data.outerRadius - data.innerRadius) * 0.5;
-    const x = data.cx + radius * Math.cos(-data.midAngle * RADIAN);
-    const y = data.cy + radius * Math.sin(-data.midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={x > data.cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(data.percent * 100).toFixed(0)}%`}
-      </text>
-    );
   }
 
   render() {

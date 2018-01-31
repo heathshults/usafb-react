@@ -3,6 +3,10 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
+
+  .recharts-legend-item-text {
+    color: #E0E0E0 !important;
+  }
 }
 
 .landing__bar-chart-container {

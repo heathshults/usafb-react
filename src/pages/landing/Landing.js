@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import uuidv4 from 'uuid/v4';
+import { ResponsiveContainer, CartesianGrid, PieChart, Cell, Pie, BarChart, XAxis, YAxis, Tooltip, Bar, Legend } from 'recharts';
 
 import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
@@ -70,6 +70,7 @@ class Landing extends Component {
             <Header count={this.props.num_coaches} header="Coaches" />
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
+                <Legend verticalAlign="top" height={36} />
                 <Pie
                   data={this.props.coaches}
                   fill="#8884d8"
@@ -88,7 +89,7 @@ class Landing extends Component {
             </ResponsiveContainer>
           </Content>
         </div>
-      </Container>
+      </Container >
     );
   }
 }

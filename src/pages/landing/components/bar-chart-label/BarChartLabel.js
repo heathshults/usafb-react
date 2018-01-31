@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './bar-chart-label.css';
+
 class BarChartLabel extends Component {
   constructor() {
     super();
     this.state = {};
   }
 
-  componentWillMount() {
-    console.dir(this.props); //eslint-disable-line
-  }
-
   render() {
     return (
       <text
         x={this.props.x}
-        y={this.props.y}
+        y={350}
         dy={-4}
         dx={20}
         fontSize="16"
@@ -29,10 +27,16 @@ class BarChartLabel extends Component {
 }
 
 BarChartLabel.propTypes = {
-  x: PropTypes.any.isRequired,
-  y: PropTypes.any.isRequired,
-  fill: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  x: PropTypes.any,
+  fill: PropTypes.any,
+  value: PropTypes.any
+};
+
+BarChartLabel.defaultProps = {
+  x: '',
+  y: '',
+  fill: '',
+  value: ''
 };
 
 export default BarChartLabel;

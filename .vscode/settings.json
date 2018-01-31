@@ -1,4 +1,13 @@
 {
     "eslint.enable": false,
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "editor.tabSize": 2,
+    "editor.fontSize": 14,
+    "editor.formatOnType": true,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.tabCompletion": true,
+    "editor.wordWrapColumn": 120,
+    "workbench.commandPalette.history": 150,
+    "html.format.endWithNewline": true,
+    "html.format.indentInnerHtml": true
 }

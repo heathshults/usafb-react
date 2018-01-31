@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const container = props => (
-  <section id="main-content" className="h-100 w-100">
+  <section id="main-content" className="vh100 w-100">
     <div className="container-fluid">
       {React.Children.map(props.children, child => child)}
     </div>

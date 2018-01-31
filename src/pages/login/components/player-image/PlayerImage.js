@@ -7,7 +7,7 @@ import './player-image.css';
 const playerImage = () => (
   <div className="col-md-8">
     <div className="login__player-container">
-      <div className=""><img src={require('images/bg/players/FB-Hero.svg')} alt="USA Football" className="login__player align-self-center" /></div>
+      <div className="login__players-signin"><img src={require('images/bg/players/FB-Hero.svg')} alt="USA Football" className="login__player align-self-center" /></div>
     </div>
   </div>
 );

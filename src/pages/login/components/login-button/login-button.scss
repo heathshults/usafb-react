@@ -6,21 +6,23 @@
   // color: #fff;
   // background: #404e78 linear-gradient(to bottom, #45517e, #09254a);
   // border: 2px solid #404e78;
-  // border-radius: 100px;
+  border-radius: 100px;
   // box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.32);
   // transition: all .25s ease-in-out;
 }
 
-.bss .btn-blue-grad-pill {
+.btn-blue-grad-pill, 
+.btn-blue-grad-pill:visited {
   width: 136.5px;
   height: 41px;
   color: $white;
-  background: $blue-gradient-pill;
+  background: $blue-300 $blue-gradient-pill !important;
   border: 2px solid $blue-200;
   border-radius: 100px;
   box-shadow: 0 6px 6px 0 rgba(0, 0, 0, .32);
   transition: all .25s ease-in-out;
-  &:hover {
-      background: $blue-200;
+  &:hover,
+  &:active {
+    background: $blue-gradient-pill-hover !important;
   }
 }

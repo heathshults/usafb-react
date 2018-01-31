@@ -2,15 +2,17 @@
 @import "src/styles/sass/_var.scss";
 
 .login__player-container {
-  flex: 1 auto;
-  height: 100%;
-  max-width: 100%;
-  align-items: flex-start;
-  
-  .login__player {
-    flex: 1 auto;
-    align-self: flex-end;
-    max-height: 97vh;
-    filter: drop-shadow(-16px 15px 14px rgba(0, 0, 0, 0.5));
+  display: flex;
+  flex-flow: row wrap;
+  bottom:0;
+  .login__players-signin {
+      flex: 1 auto;
+      align-self: flex-end;
+      // height: 97vh;
+      max-height: 865px;
+      filter: drop-shadow(-16px 15px 14px rgba(0, 0, 0, .5));
   }
+}
+.login__player {
+  z-index: 110;
 }

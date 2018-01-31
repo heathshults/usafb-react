@@ -24,7 +24,7 @@ const loginButton = props => (
     <div className="col-md-12 pt-1 pb- text-center bss">
       <button
         type="submit"
-        className="btn tn-blue-grad-pill login__btn w-75 w-50 mt-2 mx-auto"
+        className="btn-blue-grad-pill login__btn w-75 w-50 mt-2 mx-auto"
         disabled={props.loggingIn}
       >
         {getButtonLabel(props.loggingIn)}

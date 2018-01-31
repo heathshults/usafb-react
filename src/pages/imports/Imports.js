@@ -199,9 +199,10 @@ class Imports extends Component {
     this.setState({
       open: false
     });
-    clearInterval(this.fetchImportInterval);
-    this.fetchImportInterval();
+
+    // clearInterval(this.fetchImportInterval);
     this.props.uploadCsv(this.userType, this.state.file);
+    this.fetchImportInterval; // eslint-disable-line
   }
 
   paginationOnChange = (currentPage, perPage) => {

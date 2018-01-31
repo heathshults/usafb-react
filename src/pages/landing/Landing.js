@@ -8,9 +8,10 @@ import Container from 'components/containers/blue-container/BlueContainer';
 import HeaderContentDivider from 'components/header-content-divider/HeaderContentDivider';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
+// import BarChartLabel from './components/bar-chart-label/BarChartLabel';
 
 import { GET_STATS } from './dux/actions';
-import colors from './models/colors';
+import colors, { barGraphColors } from './models/colors';
 import './landing.css';
 
 class Landing extends Component {
@@ -57,7 +58,7 @@ class Landing extends Component {
                   <Bar dataKey="count">
                     {
                       this.props.players.map((entry, index) =>
-                        <Cell fill={colors[index]} key={uuidv4()} />
+                        <Cell fill={barGraphColors[index]} key={uuidv4()} />
                       )
                     }
                   </Bar>

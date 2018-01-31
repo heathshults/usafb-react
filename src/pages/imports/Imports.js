@@ -200,7 +200,7 @@ class Imports extends Component {
       open: false
     });
 
-    // clearInterval(this.fetchImportInterval);
+    clearInterval(this.fetchImportInterval);
     this.props.uploadCsv(this.userType, this.state.file);
     this.fetchImportInterval; // eslint-disable-line
   }

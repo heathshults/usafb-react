@@ -6,6 +6,7 @@ import searchPlayer from './api';
 export default function* playerSearchFlow() {
   while (true) {
     const { data } = yield take(actions.SEARCH_PLAYERS);
+    data.page = yield data.page - 1;
     yield put({ type: actions.SET_SEARCH_VALUES, searchValues: data });
     const nonEmptyValues = yield getNoneEmptyValues(data);
     const response = yield call(searchPlayer, nonEmptyValues);
@@ -26,7 +27,7 @@ function getNoneEmptyValues(data) {
   const nonEmptyValues = {};
 
   Object.keys(data).forEach((val) => {
-    if (data[val]) {
+    if (data[val] || val === 'page') {
       nonEmptyValues[val] = data[val];
     }
   });

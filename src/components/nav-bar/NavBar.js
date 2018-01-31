@@ -26,8 +26,8 @@ class navBar extends Component {
   }
   goToPlayers = () => this.props.history.push('/players');
   goToCoaches = () => this.props.history.push('/coaches');
-  goToPlayersDashboard = () => this.props.history.push('/dashboard');
-  goToCoachesDashboard = () => this.props.history.push('/dashboard');
+  goToPlayersDashboard = () => this.props.history.push('/dashboard/players');
+  goToCoachesDashboard = () => this.props.history.push('/dashboard/coaches');
   goToImports = type => this.props.history.push(`/imports/${type}`);
   logout = () => {
     window.localStorage.clear();
@@ -58,9 +58,9 @@ class navBar extends Component {
                       <Auth role_permissions={this.props.role_permissions} permissionRequested={IMPORT_PLAYERS}>
                         <NavDropdownItem label="Import" onClick={() => this.goToImports('players')} />
                       </Auth>
-                      <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_PLAYERS}>
+                      {/* <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_PLAYERS}>
                         <NavDropdownItem label="Export" onClick={this.props.togglePlayerExportModalOn} />
-                      </Auth>
+                      </Auth> */}
                     </NavDropdown>
                   </Auth>
                   <Auth role_permissions={this.props.role_permissions} permissionRequested={[EXPORT_COACHES, VIEW_COACHES, IMPORT_COACHES]}>
@@ -71,9 +71,9 @@ class navBar extends Component {
                       <Auth role_permissions={this.props.role_permissions} permissionRequested={IMPORT_COACHES}>
                         <NavDropdownItem label="Import" onClick={() => this.goToImports('coaches')} />
                       </Auth>
-                      <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_COACHES}>
+                      {/* <Auth role_permissions={this.props.role_permissions} permissionRequested={EXPORT_COACHES}>
                         <NavDropdownItem label="Export" onClick={this.props.toggleCoachExportModalOn} />
-                      </Auth>
+                      </Auth> */}
                     </NavDropdown>
                   </Auth>
                   <Auth role_permissions={this.props.role_permissions} permissionRequested={VIEW_DASHBOARD}>

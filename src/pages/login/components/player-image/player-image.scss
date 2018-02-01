@@ -5,14 +5,34 @@
   display: flex;
   flex-flow: row wrap;
   bottom:0;
+  height: 100vh;
+  opacity: 1;
+    transition: all .25s ease-in-out;
   .login__players-signin {
       flex: 1 auto;
       align-self: flex-end;
       // height: 97vh;
       max-height: 865px;
+      width: 98%;
+      margin-top: 50px;
       filter: drop-shadow(-16px 15px 14px rgba(0, 0, 0, .5));
+      transition: all .25s ease-in-out;
   }
 }
 .login__player {
   z-index: 110;
+}
+
+@media (max-width: 900px) {
+  .row > [class^="col-"] {
+    flex: 0 0 100%;
+    flex-flow: row wrap;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    transition: all .25s ease-in-out;
+  }
+  .login__player-container {
+    opacity: 0;
+    transition: all .25s ease-in-out;
+  }
 }

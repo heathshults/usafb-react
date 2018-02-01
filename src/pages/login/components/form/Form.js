@@ -6,7 +6,7 @@ import Logo from '../logo/Logo';
 import './form.css';
 
 const form = props => (
-  <div className="col-md-4 text-center">
+  <div className="col-md-5 text-center">
     <div className="sign-in-form-container text-center">
       <Logo />
       <div id="si-form" className="sign-in-form">
